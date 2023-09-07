@@ -5,6 +5,10 @@
 
 ---
 
+### Coding Convention
+[Flower Coding Convention](https://github.com/Guboneui/Flower/wiki/Coding-Convention)
+: 기본 Convention을 정의. 추후 Swift Lint 도입 예정
+
 ### Commit Convention
 Tag  | Description
 ---  | --- 
