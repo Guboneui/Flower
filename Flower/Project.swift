@@ -8,10 +8,11 @@ import Foundation
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+import ThirdPartyDependencyPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.flower.app"
-private let iOSTargetVersiong: String = "16.0"
+private let iOSTargetVersion: String = "16.0"
 private let buildVersion: String = "1.0.0"
 private let buildNumber: String = {
   let now = Date()
@@ -49,12 +50,14 @@ private let appTarget: Target = Target(
   platform: .iOS,
   product: .app,
   bundleId: bundleId,
-  deploymentTarget: .iOS(targetVersion: iOSTargetVersiong, devices: [.iphone]),
+  deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: [.iphone]),
   infoPlist: .extendingDefault(with: infoPlist),
   sources: ["Sources/**"],
   resources: ["Resources/**"],
   scripts: [.SwiftLintScript],
-  dependencies: [],
+  dependencies: [
+    .ThirdParty.Main
+  ],
   settings: settings
 )
 
