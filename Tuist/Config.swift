@@ -1,7 +1,7 @@
 import ProjectDescription
 
 let config = Config(
-    plugins: [
-        .local(path: .relativeToManifest("../../Plugins/Flower")),
-    ]
+  plugins: [
+    .local(path: .relativeToManifest("../../Plugins/ThirdPartyDependencyPlugin")),
+  ]
 )
