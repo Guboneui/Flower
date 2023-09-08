@@ -53,6 +53,7 @@ private let appTarget: Target = Target(
   infoPlist: .extendingDefault(with: infoPlist),
   sources: ["Sources/**"],
   resources: ["Resources/**"],
+  scripts: [.SwiftLintScript],
   dependencies: [],
   settings: settings
 )
@@ -67,4 +68,3 @@ let project = Project(
   settings: settings,
   targets: [appTarget]
 )
-

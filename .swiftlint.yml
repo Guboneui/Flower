@@ -1,0 +1,6 @@
+excluded:
+  - Sources/AppDelegate.swift
+
+opt_in_rules:
+  - empty_count
+
