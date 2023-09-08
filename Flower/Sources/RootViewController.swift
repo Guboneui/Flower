@@ -7,20 +7,20 @@
 
 import UIKit
 
+import SnapKit
+import Then
+
 final class RootViewController: UIViewController {
 
-	private let rootLabel: UILabel = {
-		let label = UILabel()
-		label.translatesAutoresizingMaskIntoConstraints = false
+	private let rootLabel: UILabel = UILabel().then { label in
 		label.text = "Hello World"
-		return label
-	}()
+	}
 
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		setupViews()
 	}
- 
+
 	private func setupViews() {
 		view.backgroundColor = .white
 
@@ -29,9 +29,9 @@ final class RootViewController: UIViewController {
 	}
 
 	private func setupConstraints() {
-		NSLayoutConstraint.activate([
-			rootLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-			rootLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-		])
+		rootLabel.snp.makeConstraints { make in
+			make.centerY.equalToSuperview()
+			make.centerX.equalToSuperview()
+		}
 	}
 }
