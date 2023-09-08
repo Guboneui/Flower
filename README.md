@@ -7,7 +7,7 @@
 
 ### Coding Convention
 [Flower Coding Convention](https://github.com/Guboneui/Flower/wiki/Coding-Convention)
-: 기본 Convention을 정의. 추후 Swift Lint 도입 예정
+: `SwiftLint` 적용
 
 ### Commit Convention
 Tag  | Description
@@ -18,6 +18,7 @@ Tag  | Description
 [TEST] | 테스트 코드 추가 및 수정
 [SETTING] | 환경 설정 추가 및 수정
 [REFACTOR] | 코드 리팩토링
+[LINT] | swiftlint.yml 수정
 
 ---
 
