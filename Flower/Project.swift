@@ -8,6 +8,7 @@ import Foundation
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
 
 private let projectName: String = "App"
@@ -56,7 +57,8 @@ private let appTarget: Target = Target(
   resources: ["Resources/**"],
   scripts: [.SwiftLintScript],
   dependencies: [
-    .ThirdParty.Main
+    .ThirdParty.Main,
+    .ResourceKit.Main
   ],
   settings: settings
 )
