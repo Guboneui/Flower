@@ -72,6 +72,7 @@ Tuist/Dependencies/SwiftPackageManager
 
 ### Fastlane ###
 /fastlane/.env
-/.cer
+*.cer
+*.mobileprovision
 /.mobileprovision
 /fastlane/report.xml
