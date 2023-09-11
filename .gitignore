@@ -69,3 +69,9 @@ Derived/
 ### Tuist managed dependencies ###
 Tuist/Dependencies
 Tuist/Dependencies/SwiftPackageManager
+
+### Fastlane ###
+/fastlane/.env
+/.cer
+/.mobileprovision
+/fastlane/report.xml
