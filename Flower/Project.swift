@@ -26,7 +26,8 @@ private let infoPlist: [String: InfoPlist.Value] = [
   "CFBundleShortVersionString": "1.0.0",
   "CFBundleVersion": "1",
   "UIMainStoryboardFile": "",
-  "UILaunchStoryboardName": "LaunchScreen"
+  "UILaunchStoryboardName": "LaunchScreen",
+  "CFBundleIconName": "AppIcon"
 ]
 
 private let baseSettings: [String: SettingValue] = [
