@@ -15,7 +15,7 @@ import Then
 final class RootViewController: UIViewController {
 
 	private let rootLabel: UILabel = UILabel().then { label in
-		label.text = "Hello World!"
+		label.text = "Hello World"
 		label.font = .FlowerFont.medium.font(size: 20)
 	}
 
