@@ -1,12 +1,13 @@
-## FLOWER
+## GuestHoust-User
 
 ### 소개
-우선은 꽃 집 예약...
+장소 별, 게스트하우스 추천 및 에약 제공
+주변 장소 추천
 
 ---
 
 ### Coding Convention
-[Flower Coding Convention](https://github.com/Guboneui/Flower/wiki/Coding-Convention)
+[GH Coding Convention](https://github.com/Guboneui/GuestHoust-User/wiki/Coding-Convention)
 : `SwiftLint` 적용
 
 ### Commit Convention
@@ -19,6 +20,7 @@ Tag  | Description
 [SETTING] | 환경 설정 추가 및 수정
 [REFACTOR] | 코드 리팩토링
 [LINT] | swiftlint.yml 수정
+[EDIT] | 기타 수정사항
 
 ---
 
