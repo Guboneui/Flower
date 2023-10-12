@@ -1,6 +1,6 @@
 //
 //  Project.swift
-//  FlowerManifests
+//  GuestHouseManifests
 //
 //  Created by 구본의 on 2023/09/08.
 //
@@ -12,7 +12,7 @@ import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
 
 private let projectName: String = "App"
-private let bundleId: String = "com.flower.app"
+private let bundleId: String = "com.guesthouse.user.app"
 private let iOSTargetVersion: String = "16.0"
 private let buildVersion: String = "1.0.0"
 private let buildNumber: String = {

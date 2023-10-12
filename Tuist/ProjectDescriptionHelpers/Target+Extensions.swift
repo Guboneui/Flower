@@ -24,7 +24,7 @@ public extension Target {
   ) -> [Target] {
     var targets: [Target] = []
     
-    let bundleID: String = "com.flower"
+    let bundleID: String = "com.guesthouse.user"
     
     targets.append(Target(
       name: name,
