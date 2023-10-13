@@ -8,7 +8,7 @@
 import UIKit
 
 public extension UIImage {
-  struct FlowerImage {
+  struct AppImage {
     public static let jjangu = ResourceKitAsset.Image.jjangu.image
   }
 }

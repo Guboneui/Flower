@@ -8,7 +8,7 @@
 import UIKit
 
 public extension UIColor {
-  struct FlowerColor {
+  struct AppColor {
     public static let primaryColor = ResourceKitAsset.Color.primaryColor.color
   }
 }

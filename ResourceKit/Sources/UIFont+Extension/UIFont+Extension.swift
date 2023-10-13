@@ -8,7 +8,7 @@
 import UIKit
 
 public extension UIFont {
-  struct FlowerFont {
+  struct AppFont {
     public static let medium = ResourceKitFontFamily.Suit.medium
   }
 }

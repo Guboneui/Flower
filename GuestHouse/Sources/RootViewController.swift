@@ -16,11 +16,11 @@ final class RootViewController: UIViewController {
 
 	private let rootLabel: UILabel = UILabel().then { label in
 		label.text = "Hello World"
-		label.font = .FlowerFont.medium.font(size: 20)
+		label.font = .AppFont.medium.font(size: 20)
 	}
 
 	private let rootImageView: UIImageView = UIImageView().then { imageView in
-		imageView.image = .FlowerImage.jjangu
+		imageView.image = .AppImage.jjangu
 		imageView.contentMode = .scaleAspectFit
 	}
 
@@ -30,7 +30,7 @@ final class RootViewController: UIViewController {
 	}
 
 	private func setupViews() {
-		view.backgroundColor = .FlowerColor.primaryColor
+		view.backgroundColor = .AppColor.primaryColor
 
 		view.addSubview(rootImageView)
 		view.addSubview(rootLabel)
