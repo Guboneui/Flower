@@ -62,7 +62,7 @@ private let appTarget: Target = Target(
   dependencies: [
     .ThirdParty.Main,
 
-    .Feature.Main
+      .Feature.Login.Main
   ],
   settings: settings
 )

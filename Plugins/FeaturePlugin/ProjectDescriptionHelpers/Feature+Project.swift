@@ -14,19 +14,6 @@ extension TargetDependency {
   }
 }
 
-public extension TargetDependency.Feature {
-  static let folderName: String = "Feature"
-  
-  static func project(name: String) -> TargetDependency {
-    return .project(
-      target: "\(name)",
-      path: .relativeToRoot("\(folderName)")
-    )
-  }
-  
-  static let Main = project(name: "Feature")
-}
-
 public extension TargetDependency.Feature.Login {
   static let folderName: String = "Login"
   
