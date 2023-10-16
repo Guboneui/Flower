@@ -7,31 +7,31 @@
 
 import UIKit
 
-import Then
 import SnapKit
+import Then
 
 public class LoginViewController: UIViewController {
-  
+
   private let titleLabel: UILabel = UILabel().then {
     $0.text = "LOGIN MAIN"
   }
-  
+
   public override func viewDidLoad() {
     super.viewDidLoad()
     setupViews()
     setupSubViews()
   }
-  
+
   private func setupViews() {
     view.backgroundColor = .systemGray
   }
-  
+
   private func setupSubViews() {
     view.addSubview(titleLabel)
-    
+
     setupLayouts()
   }
-  
+
   private func setupLayouts() {
     titleLabel.snp.makeConstraints { make in
       make.center.equalToSuperview()

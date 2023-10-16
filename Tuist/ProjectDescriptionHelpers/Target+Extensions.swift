@@ -80,6 +80,7 @@ public extension Target {
       infoPlist: .default,
       sources: ["Sources/**"],
       resources: ["Resources/**"],
+      scripts: [.SwiftLintScript],
       dependencies: dependencies
     ))
     
