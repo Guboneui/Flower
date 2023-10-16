@@ -18,7 +18,9 @@ public extension TargetDependency.ThirdParty {
   
   static let dependency: [TargetDependency] = [
     SnapKit,
-    Then
+    Then,
+    RxSwift,
+    RxGesture
   ]
   
   static func project(name: String) -> TargetDependency {
@@ -34,4 +36,6 @@ public extension TargetDependency.ThirdParty {
 extension TargetDependency.ThirdParty {
   static let SnapKit = TargetDependency.external(name: "SnapKit")
   static let Then = TargetDependency.external(name: "Then")
+  static let RxSwift = TargetDependency.external(name: "RxSwift")
+  static let RxGesture = TargetDependency.external(name: "RxGesture")
 }
