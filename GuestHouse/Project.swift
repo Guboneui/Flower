@@ -8,6 +8,8 @@ import Foundation
 
 import ProjectDescription
 import ProjectDescriptionHelpers
+
+import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
 
@@ -59,7 +61,8 @@ private let appTarget: Target = Target(
   scripts: [.SwiftLintScript],
   dependencies: [
     .ThirdParty.Main,
-    .ResourceKit.Main
+
+    .Feature.Main
   ],
   settings: settings
 )

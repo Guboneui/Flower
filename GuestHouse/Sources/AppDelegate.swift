@@ -7,6 +7,8 @@
 
 import UIKit
 
+import Login
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -23,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 private extension AppDelegate {
   func makeWindow() {
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = RootViewController()
+    window?.rootViewController = LoginViewController()
     window?.makeKeyAndVisible()
   }
 }

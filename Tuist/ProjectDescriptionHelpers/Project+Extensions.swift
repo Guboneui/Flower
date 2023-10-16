@@ -48,4 +48,37 @@ public extension Project {
       targets: target
     )
   }
+  
+  static func makeLibraryProject(
+    name: String,
+    iOSTargetVersion: String,
+    baseSetting: SettingsDictionary = [:],
+    dependencies: [TargetDependency],
+    isDynamic: Bool,
+    needTestTarget: Bool
+  ) -> Project {
+    
+    let settingConfigurations: [ProjectDescription.Configuration] = [
+      .debug(name: "Debug"),
+      .release(name: "Release")
+    ]
+    
+    let target = Target.makeLibraryTargets(
+      name: name,
+      iOSTargetVersion: iOSTargetVersion,
+      dependencies: dependencies,
+      isDynamic: isDynamic,
+      needTestTarget: needTestTarget
+    )
+    
+    return Project(
+      name: name,
+      settings: .settings(
+        base: baseSetting,
+        configurations: settingConfigurations,
+        defaultSettings: .recommended
+      ),
+      targets: target
+    )
+  }
 }

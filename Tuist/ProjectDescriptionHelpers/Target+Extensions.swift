@@ -50,12 +50,39 @@ public extension Target {
           deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: .iphone),
           infoPlist: .default,
           sources: ["Tests/**"],
-          dependencies: []
+          dependencies: [.target(name: name)]
         )
       )
     }
     
     return targets
   }
+  
+  static func makeLibraryTargets(
+    name: String,
+    iOSTargetVersion: String,
+    dependencies: [TargetDependency],
+    isDynamic: Bool,
+    needTestTarget: Bool
+  ) -> [Target] {
+    
+    var targets: [Target] = []
+    
+    let bundleID: String = "com.guesthouse.user"
+    
+    targets.append(Target(
+      name: name,
+      platform: .iOS,
+      product: isDynamic ? .dynamicLibrary : .staticLibrary,
+      productName: name,
+      bundleId: "\(bundleID).\(name)",
+      deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: .iphone),
+      infoPlist: .default,
+      sources: ["Sources/**"],
+      resources: ["Resources/**"],
+      dependencies: dependencies
+    ))
+    
+    return targets
+  }
 }
-
