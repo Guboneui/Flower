@@ -63,14 +63,15 @@ public extension Target {
     iOSTargetVersion: String,
     dependencies: [TargetDependency],
     isDynamic: Bool,
-    needTestTarget: Bool
+    needTestTarget: Bool,
+    needDemoAppTarget: Bool
   ) -> [Target] {
     
     var targets: [Target] = []
     
     let bundleID: String = "com.guesthouse.user"
     
-    targets.append(Target(
+    let mainTarget = Target(
       name: name,
       platform: .iOS,
       product: isDynamic ? .dynamicLibrary : .staticLibrary,
@@ -82,7 +83,14 @@ public extension Target {
       resources: ["Resources/**"],
       scripts: [.SwiftLintScript],
       dependencies: dependencies
-    ))
+    )
+    
+    targets.append(mainTarget)
+    
+    if needDemoAppTarget {
+      
+    }
+    
     
     return targets
   }

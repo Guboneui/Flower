@@ -22,5 +22,6 @@ let project = Project.makeLibraryProject(
     .ResourceKit.Main
   ],
   isDynamic: false,
-  needTestTarget: false
+  needTestTarget: false,
+  needDemoAppTarget: true
 )
