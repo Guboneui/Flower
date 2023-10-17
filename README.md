@@ -24,7 +24,7 @@ Tag  | Description
 
 ---
 
-#Build
+### Build
 - make generate: tuist generate
 - make LoginDemoApp: tuist generate LoginDemoApp
 ---
