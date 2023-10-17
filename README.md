@@ -24,6 +24,11 @@ Tag  | Description
 
 ---
 
+#Build
+- make generate: tuist generate
+- make LoginDemoApp: tuist generate LoginDemoApp
+---
+
 ### Branch
 Name  | Description
 ---  | --- 
