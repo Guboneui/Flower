@@ -83,7 +83,8 @@ private extension DefaultButton {
   /// DefatulButton의 기본 상태를 정의합니다.
   func setupConfiguration() {
     setTitle(title, for: .normal)
-    setupEnableButtonState()
+    if isEnabled { setupEnableButtonState() }
+    else { setupDisableButtonState() }
   }
   
   /// DefatulButton의 고정 높이를 지정합니다.
