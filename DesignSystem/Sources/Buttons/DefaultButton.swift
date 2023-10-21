@@ -39,6 +39,7 @@ public class DefaultButton: UIButton {
   // MARK: PROPERTY
   private let metric: Metric
   private let colorSet: ColorSet
+  private let buttonFont: UIFont
   private let disposeBag: DisposeBag
   
   // MARK: INITIALIZE
@@ -49,6 +50,7 @@ public class DefaultButton: UIButton {
     self.title = title
     self.metric = .init()
     self.colorSet = .init()
+    self.buttonFont = .AppFont.Bold_14
     self.disposeBag = .init()
     self.initEnableState = initEnableState
     super.init(frame: .zero)
@@ -85,6 +87,7 @@ private extension DefaultButton {
   /// DefatulButton의 기본 상태를 정의합니다.
   func setupConfiguration() {
     setTitle(title, for: .normal)
+    titleLabel?.font = buttonFont
     if isEnabled { setupEnableButtonState() }
     else { setupDisableButtonState() }
   }
