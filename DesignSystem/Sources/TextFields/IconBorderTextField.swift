@@ -42,6 +42,15 @@ public class IconBorderTextField: UIView {
         return .AppImage.password
       }
     }
+    
+    fileprivate var security: Bool {
+      switch self {
+      case .email:
+        return false
+      case .password:
+        return true
+      }
+    }
   }
   
   // MARK: METRIC
@@ -142,6 +151,7 @@ private extension IconBorderTextField {
     textField.textColor = textFieldColor
     textField.tintColor = textFieldColor
     textField.font = textFieldFont
+    textField.isSecureTextEntry = type.security
   }
   
   func setupBindings() {
