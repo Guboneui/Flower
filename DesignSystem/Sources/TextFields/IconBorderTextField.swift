@@ -143,7 +143,7 @@ private extension IconBorderTextField {
   
   /// IconBorderTextField의 타입에 따른 이미지를 정의합니다.
   func setupConfiguration() {
-    makeCornerRadiusWithBorder(16)
+    makeCornerRadiusWithBorder(metric.cornerRadius)
     
     iconImageView.image = type.iconImage
     
@@ -153,13 +153,6 @@ private extension IconBorderTextField {
     textField.tintColor = textFieldColor
     textField.font = textFieldFont
     textField.isSecureTextEntry = type.security
-  }
-  
-  /// IconBorderTextField의 CornerRadius 및 Border를 정의합니다.
-  func setupCornerRadiusWithBorder() {
-    makeCornerRadius(metric.cornerRadius)
-    layer.borderColor = UIColor.AppColor.appGrey70.cgColor
-    layer.borderWidth = 1
   }
   
   func setupBindings() {
