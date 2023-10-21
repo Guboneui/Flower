@@ -7,6 +7,8 @@
 
 import UIKit
 
+import ResourceKit
+
 import RxGesture
 import RxSwift
 import SnapKit
@@ -24,10 +26,10 @@ public class DefaultButton: UIButton {
   /// DefaultButton의 색상 요소를 정의합니다.
   private struct ColorSet {
     let enableTitleColor: UIColor = .white
-    let enableBackgroundColor: UIColor = .green
+    let enableBackgroundColor: UIColor = .AppColor.appPrimary
     let disableTitleColor: UIColor = .white
-    let disableBackgroundColor: UIColor = .green.withAlphaComponent(0.3)
-    let pressedColor: UIColor = .green.withAlphaComponent(0.75)
+    let disableBackgroundColor: UIColor = .AppColor.appGrey70
+    let pressedColor: UIColor = .AppColor.appPrimary.withAlphaComponent(0.75)
   }
   
   // MARK: INPUT PROPERTY
