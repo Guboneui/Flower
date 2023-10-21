@@ -86,7 +86,6 @@ public class IconBorderTextField: UIView {
     super.init(frame: .zero)
     self.setupSubViews()
     self.setupConfiguration()
-    self.setupCornerRadiusWithBorder()
     self.setupBindings()
   }
   
@@ -134,6 +133,8 @@ private extension IconBorderTextField {
   
   /// IconBorderTextField의 타입에 따른 이미지를 정의합니다.
   func setupConfiguration() {
+    makeCornerRadiusWithBorder(16)
+    
     iconImageView.image = type.iconImage
     
     textField.keyboardType = keyboardType
@@ -141,13 +142,6 @@ private extension IconBorderTextField {
     textField.textColor = textFieldColor
     textField.tintColor = textFieldColor
     textField.font = textFieldFont
-  }
-  
-  /// IconBorderTextField의 CornerRadius 및 Border를 정의합니다.
-  func setupCornerRadiusWithBorder() {
-    makeCorderRadius(16)
-    layer.borderColor = UIColor.AppColor.appGrey70.cgColor
-    layer.borderWidth = 1
   }
   
   func setupBindings() {
