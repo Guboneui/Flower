@@ -7,6 +7,8 @@
 
 import UIKit
 
+import ResourceKit
+
 public extension UIView {
   
   /// UIView의 CornerRadius를 추가합니다.
@@ -15,7 +17,7 @@ public extension UIView {
   /// - .onlyBottom: 하단 모서리에 CornerRadius를 적용합니다.
   /// - parameter radius: CGFloat
   /// - parameter edge: ViewCornerRadiuseType
-  func makeCorderRadius(
+  func makeCornerRadius(
     _ radius: CGFloat,
     edge type: ViewCornerRadiusType = .all
   ) {
@@ -30,4 +32,30 @@ public extension UIView {
     }
   }
   
+  /// UIView의 Border를 추가합니다.
+  /// - parameter width: CGFloat
+  /// - parameter color: UIColor
+  func makeBorder(
+    borderWidth: CGFloat = 1.0,
+    borderColor: UIColor = .AppColor.appGrey70
+  ) {
+    layer.masksToBounds = true
+    layer.borderWidth = borderWidth
+    layer.borderColor = borderColor.cgColor
+  }
+  
+  /// UIView의 CornerRadius와 Border를 함께 추가합니다.
+  /// - parameter radius: CGFloat
+  /// - parameter width: CGFloat
+  /// - parameter color: UIColor
+  func makeCornerRadiusWithBorder(
+    _ radius: CGFloat,
+    borderWidth: CGFloat = 1.0,
+    borderColor: UIColor = .AppColor.appGrey70
+  ) {
+    layer.masksToBounds = true
+    layer.cornerRadius = radius
+    layer.borderWidth = borderWidth
+    layer.borderColor = borderColor.cgColor
+  }
 }
