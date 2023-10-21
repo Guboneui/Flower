@@ -22,5 +22,11 @@ public extension UIImage {
     public static let showOff = ResourceKitAsset.Image.showOff.image
     public static let showOn = ResourceKitAsset.Image.showOn.image
     public static let xmark = ResourceKitAsset.Image.xmark.image
+    
+    // MARK: LOGIN
+    public static let naverLogin = ResourceKitAsset.Image.naverLogin.image
+    public static let kakaoLogin = ResourceKitAsset.Image.kakaoLogin.image
+    public static let appleLogin = ResourceKitAsset.Image.appleLogin.image
+    public static let emailLogin = ResourceKitAsset.Image.emailLogin.image
   }
 }
