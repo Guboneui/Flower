@@ -13,13 +13,16 @@ public extension UIColor {
     public static let appBlack = ResourceKitAsset.Color.black.color
     
     // MARK: - Grey
-    public static let appGrey100 = ResourceKitAsset.Color.grey100.color
-    public static let appGrey200 = ResourceKitAsset.Color.grey200.color
-    public static let appGrey700 = ResourceKitAsset.Color.grey700.color
-    public static let appGrey800 = ResourceKitAsset.Color.grey800.color
+    public static let appGrey70 = ResourceKitAsset.Color.grey70.color
+    public static let appGrey90 = ResourceKitAsset.Color.grey90.color
     
     // MARK: - Primary
     public static let appPrimary = ResourceKitAsset.Color.primary.color
-    public static let appPrimaryLight = ResourceKitAsset.Color.primaryLight.color
+
+    // MARK: - Secondary
+    public static let appSecondary = ResourceKitAsset.Color.secondary.color
+    
+    // MARK: - Wrarning
+    public static let appWarning = ResourceKitAsset.Color.warning.color
   }
 }
