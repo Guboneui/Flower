@@ -64,6 +64,7 @@ public class IconBorderTextField: UIView {
     let textFieldRightMargin = -16
     
     let height = 46
+    let cornerRadius = 16.0
     let iconSize = 18
   }
   
@@ -155,7 +156,7 @@ private extension IconBorderTextField {
   
   /// IconBorderTextField의 CornerRadius 및 Border를 정의합니다.
   func setupCornerRadiusWithBorder() {
-    makeCorderRadius(16)
+    makeCorderRadius(metric.cornerRadius)
     layer.borderColor = UIColor.AppColor.appGrey70.cgColor
     layer.borderWidth = 1
   }
