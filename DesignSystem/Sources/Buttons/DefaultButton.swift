@@ -19,7 +19,7 @@ public class DefaultButton: UIButton {
   /// DefaultButton의 크기 요소를 정의합니다.
   private struct Metric {
     let buttonHeight: CGFloat = 48
-    let buttonRadius: CGFloat = 10
+    let buttonRadius: CGFloat = 16
   }
   
   // MARK: COLORSET
