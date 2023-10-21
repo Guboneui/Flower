@@ -7,6 +7,8 @@
 
 import UIKit
 
+import ResourceKit
+
 import RxGesture
 import RxSwift
 import SnapKit
@@ -17,17 +19,17 @@ public class DefaultButton: UIButton {
   /// DefaultButton의 크기 요소를 정의합니다.
   private struct Metric {
     let buttonHeight: CGFloat = 48
-    let buttonRadius: CGFloat = 10
+    let buttonRadius: CGFloat = 16
   }
   
   // MARK: COLORSET
   /// DefaultButton의 색상 요소를 정의합니다.
   private struct ColorSet {
     let enableTitleColor: UIColor = .white
-    let enableBackgroundColor: UIColor = .green
+    let enableBackgroundColor: UIColor = .AppColor.appPrimary
     let disableTitleColor: UIColor = .white
-    let disableBackgroundColor: UIColor = .green.withAlphaComponent(0.3)
-    let pressedColor: UIColor = .green.withAlphaComponent(0.75)
+    let disableBackgroundColor: UIColor = .AppColor.appGrey70
+    let pressedColor: UIColor = .AppColor.appPrimary.withAlphaComponent(0.75)
   }
   
   // MARK: INPUT PROPERTY
@@ -37,6 +39,7 @@ public class DefaultButton: UIButton {
   // MARK: PROPERTY
   private let metric: Metric
   private let colorSet: ColorSet
+  private let buttonFont: UIFont
   private let disposeBag: DisposeBag
   
   // MARK: INITIALIZE
@@ -47,6 +50,7 @@ public class DefaultButton: UIButton {
     self.title = title
     self.metric = .init()
     self.colorSet = .init()
+    self.buttonFont = .AppFont.Bold_14
     self.disposeBag = .init()
     self.initEnableState = initEnableState
     super.init(frame: .zero)
@@ -83,6 +87,7 @@ private extension DefaultButton {
   /// DefatulButton의 기본 상태를 정의합니다.
   func setupConfiguration() {
     setTitle(title, for: .normal)
+    titleLabel?.font = buttonFont
     if isEnabled { setupEnableButtonState() }
     else { setupDisableButtonState() }
   }
