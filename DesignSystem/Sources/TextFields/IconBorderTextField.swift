@@ -157,7 +157,7 @@ private extension IconBorderTextField {
   
   /// IconBorderTextField의 CornerRadius 및 Border를 정의합니다.
   func setupCornerRadiusWithBorder() {
-    makeCorderRadius(metric.cornerRadius)
+    makeCornerRadius(metric.cornerRadius)
     layer.borderColor = UIColor.AppColor.appGrey70.cgColor
     layer.borderWidth = 1
   }
