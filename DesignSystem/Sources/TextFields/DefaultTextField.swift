@@ -20,7 +20,7 @@ public class DefaultTextField: UIView {
   public let currentText: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
   
   // MARK: ACTION CLOSURE
-  public var didTapRetryAuthButton: (() -> Void)?
+  public var didTapTextButton: (() -> Void)?
   
   // MARK: TYPE
   /// DefaultTextField에 적용할 타입입니다.
@@ -260,7 +260,7 @@ private extension DefaultTextField {
     textButton.rx.tap
       .throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
       .bind { [weak self] in
-        self?.didTapRetryAuthButton?()
+        self?.didTapTextButton?()
       }.disposed(by: disposeBag)
   }
 }
