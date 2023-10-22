@@ -7,6 +7,10 @@ excluded:
   - Sources/AppDelegate.swift
   - DemoApp/Sources/LoginAppDelegate.swift
 
+# 비활성화 룰
+disabled_rules:
+  - trailing_whitespace # line의 마지막에는 빈 여백이 있으면 안됩니다. https://realm.github.io/SwiftLint/trailing_whitespace.html
+
 # 활성화 룰
 opt_in_rules:
   - empty_count # count > 0 대신 isEmpty사용 https://realm.github.io/SwiftLint/empty_count.html
