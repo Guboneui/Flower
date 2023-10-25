@@ -16,6 +16,7 @@ public extension UIImage {
     public static let checkBoxOff = ResourceKitAsset.Image.checkBoxOff.image
     public static let checkBoxOn = ResourceKitAsset.Image.checkBoxOn.image
     public static let delete = ResourceKitAsset.Image.delete.image
+    public static let dropDown = ResourceKitAsset.Image.dropDown.image
     public static let email = ResourceKitAsset.Image.email.image
     public static let password = ResourceKitAsset.Image.password.image
     public static let profile = ResourceKitAsset.Image.profile.image
