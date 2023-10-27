@@ -57,7 +57,6 @@ public class DefaultButton: UIButton {
     self.isEnabled = initEnableState
     self.setupConfiguration()
     self.setupFrame()
-    self.setupCornerRadius()
   }
   
   required init?(coder: NSCoder) {
@@ -88,6 +87,9 @@ private extension DefaultButton {
   func setupConfiguration() {
     setTitle(title, for: .normal)
     titleLabel?.font = buttonFont
+    
+    makeCornerRadius(metric.buttonRadius)
+    
     if isEnabled { setupEnableButtonState() }
     else { setupDisableButtonState() }
   }
@@ -97,12 +99,6 @@ private extension DefaultButton {
     snp.makeConstraints { make in
       make.height.equalTo(metric.buttonHeight)
     }
-  }
-  
-  /// DefatulButton의 cornerRadius를 설정합니다.
-  func setupCornerRadius() {
-    layer.masksToBounds = true
-    layer.cornerRadius = metric.buttonRadius
   }
   
   /// DefatulButton의 'isEnable = true'의 상태를 정의합니다.
