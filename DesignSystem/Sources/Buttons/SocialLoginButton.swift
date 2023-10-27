@@ -44,7 +44,6 @@ public class SocialLoginButton: UIButton {
     super.init(frame: .zero)
     self.setupConfiguration()
     self.setupFrame()
-    self.setupCornerRadius()
   }
   
   required init?(coder: NSCoder) {
@@ -67,6 +66,8 @@ private extension SocialLoginButton {
     case .email:
       setImage(.AppImage.emailLogin, for: .normal)
     }
+    
+    makeCornerRadius(metric.buttonRadius)
   }
   
   /// LoginButton의 Frame을 정의합니다.
@@ -74,10 +75,5 @@ private extension SocialLoginButton {
     snp.makeConstraints { make in
       make.size.equalTo(metric.buttonSize)
     }
-  }
-  
-  func setupCornerRadius() {
-    layer.masksToBounds = true
-    layer.cornerRadius = metric.buttonRadius
   }
 }
