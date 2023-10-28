@@ -90,8 +90,11 @@ private extension DefaultButton {
     
     makeCornerRadius(metric.buttonRadius)
     
-    if isEnabled { setupEnableButtonState() }
-    else { setupDisableButtonState() }
+		if isEnabled {
+			setupEnableButtonState()
+		} else {
+			setupDisableButtonState()
+		}
   }
   
   /// DefatulButton의 고정 높이를 지정합니다.

@@ -33,7 +33,7 @@ public extension DimModalPresentable where Self: UIViewController {
   
   /// 모달을 사라지게 합니다.
   /// - parameter completion: 사라진 후 필요한 액션이 있다면 정의합니다.
-  func hideModal(_ completion: (() -> ())? = nil) {
+  func hideModal(_ completion: (() -> Void)? = nil) {
     guard let parentVC  else { return }
     animateToHideDown(parentVC: parentVC, completion)
   }
