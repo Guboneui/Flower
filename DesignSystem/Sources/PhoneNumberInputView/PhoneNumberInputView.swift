@@ -169,9 +169,12 @@ private extension PhoneNumberInputView {
   func setupConstraints() {
     
     firstNumberLabel.snp.makeConstraints { make in
-      make.leading.equalToSuperview().offset(metric.firstNumberLabelLeftMargin)
-      make.trailing.equalTo(dropDownImageView.snp.leading).offset(metric.firstNumberLabelRightMargin)
-      make.verticalEdges.equalToSuperview().inset(metric.textFieldVerticalMargin)
+      make.leading.equalToSuperview()
+				.offset(metric.firstNumberLabelLeftMargin)
+      make.trailing.equalTo(dropDownImageView.snp.leading)
+				.offset(metric.firstNumberLabelRightMargin)
+      make.verticalEdges.equalToSuperview()
+				.inset(metric.textFieldVerticalMargin)
     }
     
     dropDownImageView.snp.makeConstraints { make in
@@ -222,12 +225,12 @@ private extension PhoneNumberInputView {
     ) { $0 && $1 }
     
     middleNumberTextField.rx.text.orEmpty
-      .map{ String($0.prefix(4)) }
+      .map { String($0.prefix(4)) }
       .bind(to: middleNumberTextField.rx.text)
       .disposed(by: disposeBag)
     
     lastNumberTextField.rx.text.orEmpty
-      .map{ String($0.prefix(4)) }
+      .map { String($0.prefix(4)) }
       .bind(to: lastNumberTextField.rx.text)
       .disposed(by: disposeBag)
     
@@ -259,7 +262,7 @@ private extension PhoneNumberInputView {
       .drive(dropDownExtendableCollectionView.rx.items(
         cellIdentifier: PhoneNumberListCell.idendifier,
         cellType: PhoneNumberListCell.self
-      )) { index, phoneNumber, cell in
+      )) { _, phoneNumber, cell in
         UIView.performWithoutAnimation {
           /// cell의 애니메이션을 명시적으로 비활성화 합니다.
           /// collectionView 최초 높이 변경 시 cell 내부에도 애니메이션이 적용되는 현상을 막습니다.

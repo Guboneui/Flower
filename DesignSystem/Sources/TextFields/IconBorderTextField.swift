@@ -157,7 +157,7 @@ private extension IconBorderTextField {
   
   func setupBindings() {
     textField.rx.text
-      .map{ $0 ?? "" }
+      .map { $0 ?? "" }
       .asDriver(onErrorJustReturn: "")
       .drive(onNext: { [weak self] text in
         self?.currentText.accept(text)

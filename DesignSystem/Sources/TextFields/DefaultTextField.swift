@@ -234,7 +234,7 @@ private extension DefaultTextField {
   /// DefaultTextField의 Binding을 정의합니다.
   func setupBindings() {
     textField.rx.text
-      .map{ $0 ?? "" }
+      .map { $0 ?? "" }
       .asDriver(onErrorJustReturn: "")
       .drive(onNext: { [weak self] text in
         self?.currentText.accept(text)
@@ -264,4 +264,3 @@ private extension DefaultTextField {
       }.disposed(by: disposeBag)
   }
 }
-
