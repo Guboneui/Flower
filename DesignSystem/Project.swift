@@ -22,5 +22,6 @@ let project = Project.makeFrameworkProject(
     .ThirdParty.Main,
   ],
   isDynamic: false,
-  needTestTarget: false
+  needTestTarget: false,
+  needDemoAppTarget: false
 )

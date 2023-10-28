@@ -57,14 +57,17 @@ public extension Target {
     
     return targets
   }
-  
+}
+
+// MARK: - Library
+
+public extension Target {
   static func makeLibraryTargets(
     name: String,
     iOSTargetVersion: String,
     dependencies: [TargetDependency],
     isDynamic: Bool,
-    needTestTarget: Bool,
-    needDemoAppTarget: Bool
+    needTestTarget: Bool
   ) -> [Target] {
     
     var targets: [Target] = []
@@ -86,12 +89,7 @@ public extension Target {
     )
     
     targets.append(mainTarget)
-    
-    if needDemoAppTarget {
-      
-    }
-    
-    
+
     return targets
   }
 }

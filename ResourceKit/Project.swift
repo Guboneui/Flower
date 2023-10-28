@@ -16,5 +16,6 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [],
   isDynamic: false,
-  needTestTarget: false
+  needTestTarget: false,
+  needDemoAppTarget: false
 )
