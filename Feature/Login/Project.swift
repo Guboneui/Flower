@@ -14,7 +14,7 @@ import ThirdPartyDependencyPlugin
 let projectName: String = "Login"
 let iOSTargetVersion: String = "16.0"
 
-let project = Project.makeLibraryProject(
+let project = Project.makeFrameworkProject(
   name: projectName,
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
