@@ -36,6 +36,7 @@ public extension Target {
       infoPlist: .default,
       sources: ["Sources/**"],
       resources: ["Resources/**"],
+      scripts: [.SwiftLintScript],
       dependencies: dependencies
     ))
     
@@ -50,6 +51,7 @@ public extension Target {
           deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: .iphone),
           infoPlist: .default,
           sources: ["Tests/**"],
+          scripts: [.SwiftLintScript],
           dependencies: [.target(name: name)]
         )
       )

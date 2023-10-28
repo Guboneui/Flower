@@ -6,4 +6,4 @@
 //
 
 import Foundation
-let a = 10
+let num = 10
