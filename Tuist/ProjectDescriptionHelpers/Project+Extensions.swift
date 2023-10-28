@@ -80,6 +80,10 @@ public extension Project {
     
     return Project(
       name: name,
+      options: .options(
+        developmentRegion: "ko",
+        textSettings: .textSettings(usesTabs: true, indentWidth: 2, tabWidth: 2)
+      ),
       settings: .settings(
         base: baseSetting,
         configurations: settingConfigurations,
@@ -154,6 +158,10 @@ public extension Project {
     
     return Project(
       name: name,
+      options: .options(
+        developmentRegion: "ko",
+        textSettings: .textSettings(usesTabs: true, indentWidth: 2, tabWidth: 2)
+      ),
       settings: .settings(
         base: baseSetting,
         configurations: settingConfigurations,

@@ -19,7 +19,7 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
     .ResourceKit.Main,
-    .ThirdParty.Main,
+    .ThirdParty.Main
   ],
   isDynamic: false,
   needTestTarget: false,
