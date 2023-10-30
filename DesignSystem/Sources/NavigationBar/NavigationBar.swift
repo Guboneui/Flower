@@ -35,14 +35,26 @@ public class NavigationBar: UIView {
 	}
 	
 	// MARK: METRIC
-	private struct Metric {
-		let navigationBarHeight: CGFloat = 50
+	private enum Metric {
+		static let navigationBarHeight: CGFloat = 50
+
+		static let leftButtonSize: CGSize = .init(width: 30, height: 30)
+		static let leftButtonLeftMargin: CGFloat = 20
 		
-		let leftButtonSize: CGSize = .init(width: 30, height: 30)
-		let leftButtonLeftMargin: CGFloat = 20
-		
-		let navigationTitleTopMargin: CGFloat = 14
-		let navigationTitleBottomMargin: CGFloat = -15
+		static let navigationTitleTopMargin: CGFloat = 14
+		static let navigationTitleBottomMargin: CGFloat = -15
+	}
+	
+	// MARK: Font
+	private enum Font {
+		static let navigationTitleFont: UIFont = .AppFont.Bold_18
+	}
+	
+	// MARK: ColorSet
+	private enum ColorSet {
+		static let backgroundColor: UIColor = .AppColor.appWhite
+		static let navigationTitleColor: UIColor = .AppColor.appBlack
+		static let navigationLeftButtonColor: UIColor = .AppColor.appBlack
 	}
 	
 	// MARK: - OUTPUT
@@ -51,10 +63,6 @@ public class NavigationBar: UIView {
 	// MARK: - PROPERTY
 	private let navigationType: NavigationType
 	private let navigationTitle: String
-	private let navigationLeftButtonColor: UIColor
-	private let navigationTitleFont: UIFont
-	private let navigationTitleColor: UIColor
-	private let metric: Metric
 	private let disposeBag: DisposeBag
 	
 	private let navigationLeftButton: UIButton = UIButton(type: .system)
@@ -67,10 +75,6 @@ public class NavigationBar: UIView {
 	) {
 		self.navigationType = navigationType
 		self.navigationTitle = title
-		self.navigationLeftButtonColor = .AppColor.appBlack
-		self.navigationTitleFont = .AppFont.Bold_18
-		self.navigationTitleColor = .AppColor.appBlack
-		self.metric = .init()
 		self.disposeBag = .init()
 		super.init(frame: .zero)
 		setupConfigure()
@@ -90,14 +94,14 @@ public class NavigationBar: UIView {
 
 private extension NavigationBar {
 	func setupConfigure() {
-		backgroundColor = .AppColor.appWhite
+		backgroundColor = ColorSet.backgroundColor
 		
 		navigationLeftButton.setImage(navigationType.buttonImage, for: .normal)
-		navigationLeftButton.tintColor = navigationLeftButtonColor
+		navigationLeftButton.tintColor = ColorSet.navigationLeftButtonColor
 		
 		navigationTitleLabel.text = navigationTitle
-		navigationTitleLabel.font = navigationTitleFont
-		navigationTitleLabel.textColor = navigationTitleColor
+		navigationTitleLabel.font = Font.navigationTitleFont
+		navigationTitleLabel.textColor = ColorSet.navigationTitleColor
 	}
 	
 	func setupSubViews() {
@@ -109,18 +113,18 @@ private extension NavigationBar {
 	
 	func setupConstraints() {
 		snp.makeConstraints { make in
-			make.height.equalTo(metric.navigationBarHeight)
+			make.height.equalTo(Metric.navigationBarHeight)
 		}
 		
 		navigationLeftButton.snp.makeConstraints { make in
-			make.leading.equalToSuperview().offset(metric.leftButtonLeftMargin)
+			make.leading.equalToSuperview().offset(Metric.leftButtonLeftMargin)
 			make.centerY.equalToSuperview()
-			make.size.equalTo(navigationType == .none ? 0 : metric.leftButtonSize)
+			make.size.equalTo(navigationType == .none ? 0 : Metric.leftButtonSize)
 		}
 		
 		navigationTitleLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(metric.navigationTitleTopMargin)
-			make.bottom.equalToSuperview().offset(metric.navigationTitleBottomMargin)
+			make.top.equalToSuperview().offset(Metric.navigationTitleTopMargin)
+			make.bottom.equalToSuperview().offset(Metric.navigationTitleBottomMargin)
 			make.centerX.equalToSuperview()
 		}
 	}

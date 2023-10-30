@@ -64,34 +64,40 @@ public class DefaultTextField: UIView {
   
   // MARK: METRIC
   /// DefaultTextField의 크기 요소를 정의합니다.
-  private struct Metric {
-    let textFieldLeftMargin = 16
-    let textFieldRightMargin = -8
-    let textFieldTopMargin = 14
-    let textFieldBottomMargin = -15
+  private enum Metric {
+    static let textFieldLeftMargin = 16
+    static let textFieldRightMargin = -8
+    static let textFieldTopMargin = 14
+    static let textFieldBottomMargin = -15
     
-    let clearButtonSize = 16
-    let clearButtonRightMargin = -16
+    static let clearButtonSize = 16
+    static let clearButtonRightMargin = -16
     
-    let securityButtonSize = 16
-    let securitRightMargin = -8
+    static let securityButtonSize = 16
+    static let securitRightMargin = -8
     
-    let textButtonVerticalMargin = 17
-    let textButtonRightMargin = -16
+    static let textButtonVerticalMargin = 17
+    static let textButtonRightMargin = -16
     
-    let height = 46
-    let cornerRadius = 16.0
+    static let height = 46
+    static let cornerRadius = 16.0
   }
+	
+	// MARK: Font
+	private enum Font {
+		static let textFieldFont: UIFont = .AppFont.Regular_12
+	}
+	
+	private enum ColorSet {
+		static let baseBackgroundColor: UIColor = .AppColor.appGrey90
+		static let textFieldColor: UIColor = .AppColor.appBlack
+	}
   
   // MARK: INPUT PROPERTY
   private let type: DefaultTextFieldType
   private let keyboardType: UIKeyboardType
   
   // MARK: PROPERTY
-  private let baseBackgroundColor: UIColor
-  private let textFieldFont: UIFont
-  private let textFieldColor: UIColor
-  private let metric: Metric
   private let disposeBag: DisposeBag
   
   // MARK: UI PROPERTY
@@ -119,10 +125,6 @@ public class DefaultTextField: UIView {
   ) {
     self.type = type
     self.keyboardType = keyboardType
-    self.baseBackgroundColor = .AppColor.appGrey90
-    self.textFieldFont = .AppFont.Regular_12
-    self.textFieldColor = .AppColor.appBlack
-    self.metric = .init()
     self.disposeBag = .init()
     super.init(frame: .zero)
     self.setupSubViews()
@@ -164,56 +166,56 @@ private extension DefaultTextField {
   /// DefaultTextField의 SubView의 오토레이아웃을 정의합니다.
   func setupConstrains() {
     snp.makeConstraints { make in
-      make.height.equalTo(metric.height)
+      make.height.equalTo(Metric.height)
     }
     
     switch type {
     case .email, .name:
       clearButton.snp.makeConstraints { make in
-        make.trailing.equalToSuperview().offset(metric.clearButtonRightMargin)
+        make.trailing.equalToSuperview().offset(Metric.clearButtonRightMargin)
         make.centerY.equalToSuperview()
-        make.size.equalTo(metric.clearButtonSize)
+        make.size.equalTo(Metric.clearButtonSize)
       }
       
       textField.snp.makeConstraints { make in
-        make.top.equalToSuperview().offset(metric.textFieldTopMargin)
-        make.leading.equalToSuperview().offset(metric.textFieldLeftMargin)
-        make.trailing.equalTo(clearButton.snp.leading).offset(metric.textFieldRightMargin)
-        make.bottom.equalToSuperview().offset(metric.textFieldBottomMargin)
+        make.top.equalToSuperview().offset(Metric.textFieldTopMargin)
+        make.leading.equalToSuperview().offset(Metric.textFieldLeftMargin)
+        make.trailing.equalTo(clearButton.snp.leading).offset(Metric.textFieldRightMargin)
+        make.bottom.equalToSuperview().offset(Metric.textFieldBottomMargin)
       }
 
     case .password:
       clearButton.snp.makeConstraints { make in
-        make.trailing.equalToSuperview().offset(metric.clearButtonRightMargin)
+        make.trailing.equalToSuperview().offset(Metric.clearButtonRightMargin)
         make.centerY.equalToSuperview()
-        make.size.equalTo(metric.clearButtonSize)
+        make.size.equalTo(Metric.clearButtonSize)
       }
       
       securityButton.snp.makeConstraints { make in
-        make.trailing.equalTo(clearButton.snp.leading).offset(metric.securitRightMargin)
+        make.trailing.equalTo(clearButton.snp.leading).offset(Metric.securitRightMargin)
         make.centerY.equalToSuperview()
-        make.size.equalTo(metric.securityButtonSize)
+        make.size.equalTo(Metric.securityButtonSize)
       }
       
       textField.snp.makeConstraints { make in
-        make.top.equalToSuperview().offset(metric.textFieldTopMargin)
-        make.leading.equalToSuperview().offset(metric.textFieldLeftMargin)
-        make.trailing.equalTo(securityButton.snp.leading).offset(metric.textFieldRightMargin)
-        make.bottom.equalToSuperview().offset(metric.textFieldBottomMargin)
+        make.top.equalToSuperview().offset(Metric.textFieldTopMargin)
+        make.leading.equalToSuperview().offset(Metric.textFieldLeftMargin)
+        make.trailing.equalTo(securityButton.snp.leading).offset(Metric.textFieldRightMargin)
+        make.bottom.equalToSuperview().offset(Metric.textFieldBottomMargin)
       }
 
     case .emailAuthCode:
       textButton.snp.makeConstraints { make in
-        make.trailing.equalToSuperview().offset(metric.textButtonRightMargin)
-        make.verticalEdges.equalToSuperview().inset(metric.textButtonVerticalMargin)
+        make.trailing.equalToSuperview().offset(Metric.textButtonRightMargin)
+        make.verticalEdges.equalToSuperview().inset(Metric.textButtonVerticalMargin)
         make.width.equalTo(textButton.intrinsicContentSize.width)
       }
       
       textField.snp.makeConstraints { make in
-        make.top.equalToSuperview().offset(metric.textFieldTopMargin)
-        make.leading.equalToSuperview().offset(metric.textFieldLeftMargin)
-        make.trailing.equalTo(textButton.snp.leading).offset(metric.textFieldRightMargin)
-        make.bottom.equalToSuperview().offset(metric.textFieldBottomMargin)
+        make.top.equalToSuperview().offset(Metric.textFieldTopMargin)
+        make.leading.equalToSuperview().offset(Metric.textFieldLeftMargin)
+        make.trailing.equalTo(textButton.snp.leading).offset(Metric.textFieldRightMargin)
+        make.bottom.equalToSuperview().offset(Metric.textFieldBottomMargin)
       }
     }
   }
@@ -221,13 +223,13 @@ private extension DefaultTextField {
   /// DefaultTextField의 타입에 따른 이미지를 정의합니다.
   func setupConfiguration() {
     makeCornerRadius(16)
-    backgroundColor = baseBackgroundColor
+		backgroundColor = ColorSet.baseBackgroundColor
     
     textField.keyboardType = keyboardType
     textField.placeholder = type.placeHolder
-    textField.textColor = textFieldColor
-    textField.tintColor = textFieldColor
-    textField.font = textFieldFont
+		textField.textColor = ColorSet.textFieldColor
+		textField.tintColor = ColorSet.textFieldColor
+		textField.font = Font.textFieldFont
     textField.isSecureTextEntry = type.security
   }
   

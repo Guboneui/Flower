@@ -17,19 +17,24 @@ public class DefaultButton: UIButton {
   
   // MARK: METRIC
   /// DefaultButton의 크기 요소를 정의합니다.
-  private struct Metric {
-    let buttonHeight: CGFloat = 48
-    let buttonRadius: CGFloat = 16
+  private enum Metric {
+    static let buttonHeight: CGFloat = 48
+    static let buttonRadius: CGFloat = 16
   }
+	
+	// MARK: Font
+	private enum Font {
+		static let buttonFont: UIFont = .AppFont.Bold_14
+	}
   
   // MARK: COLORSET
   /// DefaultButton의 색상 요소를 정의합니다.
-  private struct ColorSet {
-		let enableTitleColor: UIColor = .AppColor.appWhite
-    let enableBackgroundColor: UIColor = .AppColor.appPrimary
-		let disableTitleColor: UIColor = .AppColor.appWhite
-    let disableBackgroundColor: UIColor = .AppColor.appGrey70
-    let pressedColor: UIColor = .AppColor.appPrimary.withAlphaComponent(0.75)
+  private enum ColorSet {
+		static let enableTitleColor: UIColor = .AppColor.appWhite
+    static let enableBackgroundColor: UIColor = .AppColor.appPrimary
+		static let disableTitleColor: UIColor = .AppColor.appWhite
+    static let disableBackgroundColor: UIColor = .AppColor.appGrey70
+    static let pressedColor: UIColor = .AppColor.appPrimary.withAlphaComponent(0.75)
   }
   
   // MARK: INPUT PROPERTY
@@ -37,9 +42,6 @@ public class DefaultButton: UIButton {
   private let initEnableState: Bool
   
   // MARK: PROPERTY
-  private let metric: Metric
-  private let colorSet: ColorSet
-  private let buttonFont: UIFont
   private let disposeBag: DisposeBag
   
   // MARK: INITIALIZE
@@ -48,9 +50,6 @@ public class DefaultButton: UIButton {
     initEnableState: Bool = true
   ) {
     self.title = title
-    self.metric = .init()
-    self.colorSet = .init()
-    self.buttonFont = .AppFont.Bold_14
     self.disposeBag = .init()
     self.initEnableState = initEnableState
     super.init(frame: .zero)
@@ -86,9 +85,9 @@ private extension DefaultButton {
   /// DefatulButton의 기본 상태를 정의합니다.
   func setupConfiguration() {
     setTitle(title, for: .normal)
-    titleLabel?.font = buttonFont
+		titleLabel?.font = Font.buttonFont
     
-    makeCornerRadius(metric.buttonRadius)
+    makeCornerRadius(Metric.buttonRadius)
     
 		if isEnabled {
 			setupEnableButtonState()
@@ -100,29 +99,29 @@ private extension DefaultButton {
   /// DefatulButton의 고정 높이를 지정합니다.
   func setupFrame() {
     snp.makeConstraints { make in
-      make.height.equalTo(metric.buttonHeight)
+      make.height.equalTo(Metric.buttonHeight)
     }
   }
   
   /// DefatulButton의 'isEnable = true'의 상태를 정의합니다.
   func setupEnableButtonState() {
-    backgroundColor = colorSet.enableBackgroundColor
-    setTitleColor(colorSet.enableTitleColor, for: .normal)
+    backgroundColor = ColorSet.enableBackgroundColor
+    setTitleColor(ColorSet.enableTitleColor, for: .normal)
   }
   
   /// DefatulButton의 'isEnable = false'의 상태를 정의합니다.
   func setupDisableButtonState() {
-    backgroundColor = colorSet.disableBackgroundColor
-    setTitleColor(colorSet.disableTitleColor, for: .disabled)
+    backgroundColor = ColorSet.disableBackgroundColor
+    setTitleColor(ColorSet.disableTitleColor, for: .disabled)
   }
   
   /// DefatulButton의 'isHighlighted = true'의 상태를 정의합니다.
   func setupStartPressingButton() {
-    backgroundColor = colorSet.pressedColor
+    backgroundColor = ColorSet.pressedColor
   }
   
   /// DefatulButton의 'isHighlighted = false'의 상태를 정의합니다.
   func setupEndPressingButton() {
-    backgroundColor = colorSet.enableBackgroundColor
+    backgroundColor = ColorSet.enableBackgroundColor
   }
 }

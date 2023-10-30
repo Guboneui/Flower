@@ -13,7 +13,20 @@ import SnapKit
 import Then
 
 internal final class PhoneNumberListCell: UICollectionViewCell {
+	
+	// MARK: IDENTIFIER
   static let idendifier: String = "PhoneNumberListCell"
+	
+	// MARK: METRIC
+	private enum Metric {
+		static let phoneNumberLabelHorzontalMargin: CGFloat = 28
+		static let phoneNumberLabelVerticalMargin: CGFloat = 18
+	}
+	
+	// MARK: ColorSet
+	private enum ColorSet {
+		static let backgroundColor: UIColor = .AppColor.appSecondary
+	}
   
   private let phoneNumberLabel: UILabel = UILabel().then {
     $0.font = .AppFont.Bold_20
@@ -45,7 +58,7 @@ internal final class PhoneNumberListCell: UICollectionViewCell {
 // MARK: - PRIVATE METHOD
 private extension PhoneNumberListCell {
   private func setupView() {
-    contentView.backgroundColor = .AppColor.appSecondary
+		contentView.backgroundColor = ColorSet.backgroundColor
   }
   
   private func setupLayout() {
@@ -56,8 +69,8 @@ private extension PhoneNumberListCell {
   
   private func setupConstraints() {
     phoneNumberLabel.snp.makeConstraints { make in
-      make.horizontalEdges.equalToSuperview().inset(28)
-      make.verticalEdges.equalToSuperview().inset(18)
+			make.horizontalEdges.equalToSuperview().inset(Metric.phoneNumberLabelHorzontalMargin)
+			make.verticalEdges.equalToSuperview().inset(Metric.phoneNumberLabelVerticalMargin)
     }
   }
 }

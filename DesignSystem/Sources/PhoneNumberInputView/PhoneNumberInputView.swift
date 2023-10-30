@@ -24,13 +24,13 @@ public class PhoneNumberInputView: UIView {
   public var isPhoneNumberComplete: Observable<Bool>!
   
   // MARK: - METRIC
-  private struct Metric {
-    let firstNumberLabelLeftMargin: CGFloat = 16
-    let firstNumberLabelRightMargin: CGFloat = 8
-    let dropDownImageSize: CGSize = CGSize(width: 24, height: 24)
-    let dropDownImageRightMargin: CGFloat = -12
-    let textFieldHorizontalMargin: CGFloat = 28
-    let textFieldVerticalMargin: CGFloat = 18
+  private enum Metric {
+   static let firstNumberLabelLeftMargin: CGFloat = 16
+   static let firstNumberLabelRightMargin: CGFloat = 8
+   static let dropDownImageSize: CGSize = CGSize(width: 24, height: 24)
+   static let dropDownImageRightMargin: CGFloat = -12
+   static let textFieldHorizontalMargin: CGFloat = 28
+   static let textFieldVerticalMargin: CGFloat = 18
   }
   
   private let firstNumberBaseView: UIView = UIView().then {
@@ -102,7 +102,6 @@ public class PhoneNumberInputView: UIView {
     $0.distribution = .fillEqually
   }
   
-  private let metric: Metric
   private let viewModel: PhoneNumberInputViewModel
   private let disposeBag: DisposeBag
   
@@ -110,7 +109,6 @@ public class PhoneNumberInputView: UIView {
   
   /// firstNumber가 될 수 있는 배열을 생성자에서 받습니다.
   public init(with firstPhoneNumbers: [String]) {
-    self.metric = .init()
     self.disposeBag = .init()
     self.viewModel = PhoneNumberInputViewModelImpl()
     super.init(frame: .zero)
@@ -170,17 +168,17 @@ private extension PhoneNumberInputView {
     
     firstNumberLabel.snp.makeConstraints { make in
       make.leading.equalToSuperview()
-				.offset(metric.firstNumberLabelLeftMargin)
+				.offset(Metric.firstNumberLabelLeftMargin)
       make.trailing.equalTo(dropDownImageView.snp.leading)
-				.offset(metric.firstNumberLabelRightMargin)
+				.offset(Metric.firstNumberLabelRightMargin)
       make.verticalEdges.equalToSuperview()
-				.inset(metric.textFieldVerticalMargin)
+				.inset(Metric.textFieldVerticalMargin)
     }
     
     dropDownImageView.snp.makeConstraints { make in
       make.centerY.equalToSuperview()
-      make.trailing.equalToSuperview().offset(metric.dropDownImageRightMargin)
-      make.size.equalTo(metric.dropDownImageSize)
+      make.trailing.equalToSuperview().offset(Metric.dropDownImageRightMargin)
+      make.size.equalTo(Metric.dropDownImageSize)
     }
     
     dropDownExtendableCollectionView.snp.makeConstraints { make in
@@ -190,13 +188,13 @@ private extension PhoneNumberInputView {
     }
     
     middleNumberTextField.snp.makeConstraints { make in
-      make.horizontalEdges.equalToSuperview().inset(metric.textFieldHorizontalMargin)
-      make.verticalEdges.equalToSuperview().inset(metric.textFieldVerticalMargin)
+      make.horizontalEdges.equalToSuperview().inset(Metric.textFieldHorizontalMargin)
+      make.verticalEdges.equalToSuperview().inset(Metric.textFieldVerticalMargin)
     }
     
     lastNumberTextField.snp.makeConstraints { make in
-      make.horizontalEdges.equalToSuperview().inset(metric.textFieldHorizontalMargin)
-      make.verticalEdges.equalToSuperview().inset(metric.textFieldVerticalMargin)
+      make.horizontalEdges.equalToSuperview().inset(Metric.textFieldHorizontalMargin)
+      make.verticalEdges.equalToSuperview().inset(Metric.textFieldVerticalMargin)
     }
     
     phoneNumberInputStackView.snp.makeConstraints { make in
