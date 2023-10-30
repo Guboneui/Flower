@@ -22,6 +22,11 @@ internal final class PhoneNumberListCell: UICollectionViewCell {
 		static let phoneNumberLabelHorzontalMargin: CGFloat = 28
 		static let phoneNumberLabelVerticalMargin: CGFloat = 18
 	}
+	
+	// MARK: ColorSet
+	private enum ColorSet {
+		static let backgroundColor: UIColor = .AppColor.appSecondary
+	}
   
   private let phoneNumberLabel: UILabel = UILabel().then {
     $0.font = .AppFont.Bold_20
@@ -53,7 +58,7 @@ internal final class PhoneNumberListCell: UICollectionViewCell {
 // MARK: - PRIVATE METHOD
 private extension PhoneNumberListCell {
   private func setupView() {
-    contentView.backgroundColor = .AppColor.appSecondary
+		contentView.backgroundColor = ColorSet.backgroundColor
   }
   
   private func setupLayout() {

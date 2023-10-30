@@ -82,15 +82,22 @@ public class DefaultTextField: UIView {
     static let height = 46
     static let cornerRadius = 16.0
   }
+	
+	// MARK: Font
+	private enum Font {
+		static let textFieldFont: UIFont = .AppFont.Regular_12
+	}
+	
+	private enum ColorSet {
+		static let baseBackgroundColor: UIColor = .AppColor.appGrey90
+		static let textFieldColor: UIColor = .AppColor.appBlack
+	}
   
   // MARK: INPUT PROPERTY
   private let type: DefaultTextFieldType
   private let keyboardType: UIKeyboardType
   
   // MARK: PROPERTY
-  private let baseBackgroundColor: UIColor
-  private let textFieldFont: UIFont
-  private let textFieldColor: UIColor
   private let disposeBag: DisposeBag
   
   // MARK: UI PROPERTY
@@ -118,9 +125,6 @@ public class DefaultTextField: UIView {
   ) {
     self.type = type
     self.keyboardType = keyboardType
-    self.baseBackgroundColor = .AppColor.appGrey90
-    self.textFieldFont = .AppFont.Regular_12
-    self.textFieldColor = .AppColor.appBlack
     self.disposeBag = .init()
     super.init(frame: .zero)
     self.setupSubViews()
@@ -219,13 +223,13 @@ private extension DefaultTextField {
   /// DefaultTextField의 타입에 따른 이미지를 정의합니다.
   func setupConfiguration() {
     makeCornerRadius(16)
-    backgroundColor = baseBackgroundColor
+		backgroundColor = ColorSet.baseBackgroundColor
     
     textField.keyboardType = keyboardType
     textField.placeholder = type.placeHolder
-    textField.textColor = textFieldColor
-    textField.tintColor = textFieldColor
-    textField.font = textFieldFont
+		textField.textColor = ColorSet.textFieldColor
+		textField.tintColor = ColorSet.textFieldColor
+		textField.font = Font.textFieldFont
     textField.isSecureTextEntry = type.security
   }
   

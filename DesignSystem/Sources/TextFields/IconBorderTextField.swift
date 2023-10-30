@@ -67,14 +67,22 @@ public class IconBorderTextField: UIView {
    static let cornerRadius = 16.0
    static let iconSize = 18
   }
+	
+	// MARK: Font
+	private enum Font {
+		static let textFieldFont: UIFont = .AppFont.Regular_12
+	}
+	
+	// MARK: ColorSet
+	private enum ColorSet {
+		static let textFieldColor: UIColor = .AppColor.appBlack
+	}
   
   // MARK: INPUT PROPERTY
   private let type: IconBorderTextFieldType
   private let keyboardType: UIKeyboardType
   
   // MARK: PROPERTY
-  private let textFieldFont: UIFont
-  private let textFieldColor: UIColor
   private let disposeBag: DisposeBag
   
   // MARK: UI PROPERTY
@@ -88,8 +96,6 @@ public class IconBorderTextField: UIView {
   ) {
     self.type = type
     self.keyboardType = keyboardType
-    self.textFieldFont = .AppFont.Regular_12
-    self.textFieldColor = .AppColor.appBlack
     self.disposeBag = .init()
     super.init(frame: .zero)
     self.setupSubViews()
@@ -147,9 +153,9 @@ private extension IconBorderTextField {
     
     textField.keyboardType = keyboardType
     textField.placeholder = type.placeHolder
-    textField.textColor = textFieldColor
-    textField.tintColor = textFieldColor
-    textField.font = textFieldFont
+		textField.textColor = ColorSet.textFieldColor
+		textField.tintColor = ColorSet.textFieldColor
+		textField.font = Font.textFieldFont
     textField.isSecureTextEntry = type.security
   }
   

@@ -45,15 +45,24 @@ public class NavigationBar: UIView {
 		static let navigationTitleBottomMargin: CGFloat = -15
 	}
 	
+	// MARK: Font
+	private enum Font {
+		static let navigationTitleFont: UIFont = .AppFont.Bold_18
+	}
+	
+	// MARK: ColorSet
+	private enum ColorSet {
+		static let backgroundColor: UIColor = .AppColor.appWhite
+		static let navigationTitleColor: UIColor = .AppColor.appBlack
+		static let navigationLeftButtonColor: UIColor = .AppColor.appBlack
+	}
+	
 	// MARK: - OUTPUT
 	public var didTapLeftButton: (() -> Void)?
 	
 	// MARK: - PROPERTY
 	private let navigationType: NavigationType
 	private let navigationTitle: String
-	private let navigationLeftButtonColor: UIColor
-	private let navigationTitleFont: UIFont
-	private let navigationTitleColor: UIColor
 	private let disposeBag: DisposeBag
 	
 	private let navigationLeftButton: UIButton = UIButton(type: .system)
@@ -66,9 +75,6 @@ public class NavigationBar: UIView {
 	) {
 		self.navigationType = navigationType
 		self.navigationTitle = title
-		self.navigationLeftButtonColor = .AppColor.appBlack
-		self.navigationTitleFont = .AppFont.Bold_18
-		self.navigationTitleColor = .AppColor.appBlack
 		self.disposeBag = .init()
 		super.init(frame: .zero)
 		setupConfigure()
@@ -88,14 +94,14 @@ public class NavigationBar: UIView {
 
 private extension NavigationBar {
 	func setupConfigure() {
-		backgroundColor = .AppColor.appWhite
+		backgroundColor = ColorSet.backgroundColor
 		
 		navigationLeftButton.setImage(navigationType.buttonImage, for: .normal)
-		navigationLeftButton.tintColor = navigationLeftButtonColor
+		navigationLeftButton.tintColor = ColorSet.navigationLeftButtonColor
 		
 		navigationTitleLabel.text = navigationTitle
-		navigationTitleLabel.font = navigationTitleFont
-		navigationTitleLabel.textColor = navigationTitleColor
+		navigationTitleLabel.font = Font.navigationTitleFont
+		navigationTitleLabel.textColor = ColorSet.navigationTitleColor
 	}
 	
 	func setupSubViews() {

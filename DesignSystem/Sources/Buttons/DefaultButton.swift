@@ -21,6 +21,11 @@ public class DefaultButton: UIButton {
     static let buttonHeight: CGFloat = 48
     static let buttonRadius: CGFloat = 16
   }
+	
+	// MARK: Font
+	private enum Font {
+		static let buttonFont: UIFont = .AppFont.Bold_14
+	}
   
   // MARK: COLORSET
   /// DefaultButton의 색상 요소를 정의합니다.
@@ -37,7 +42,6 @@ public class DefaultButton: UIButton {
   private let initEnableState: Bool
   
   // MARK: PROPERTY
-  private let buttonFont: UIFont
   private let disposeBag: DisposeBag
   
   // MARK: INITIALIZE
@@ -46,7 +50,6 @@ public class DefaultButton: UIButton {
     initEnableState: Bool = true
   ) {
     self.title = title
-    self.buttonFont = .AppFont.Bold_14
     self.disposeBag = .init()
     self.initEnableState = initEnableState
     super.init(frame: .zero)
@@ -82,7 +85,7 @@ private extension DefaultButton {
   /// DefatulButton의 기본 상태를 정의합니다.
   func setupConfiguration() {
     setTitle(title, for: .normal)
-    titleLabel?.font = buttonFont
+		titleLabel?.font = Font.buttonFont
     
     makeCornerRadius(Metric.buttonRadius)
     
