@@ -24,23 +24,19 @@ public class SocialLoginButton: UIButton {
   
   // MARK: METRIC
   /// LoginButton의 크기 요소를 정의합니다.
-  private struct Metric {
-    let buttonSize: CGFloat = 54
-    let buttonRadius: CGFloat = 27
+  private enum Metric {
+    static let buttonSize: CGFloat = 54
+    static let buttonRadius: CGFloat = 27
   }
   
   // MARK: INPUT PROPERTY
   private let type: SocialLoginType
-  
-  // MARK: PROPERTY
-  private let metric: Metric
   
   // MARK: INITIALIZE
   public init(
     _ type: SocialLoginType
   ) {
     self.type = type
-    self.metric = .init()
     super.init(frame: .zero)
     self.setupConfiguration()
     self.setupFrame()
@@ -67,13 +63,13 @@ private extension SocialLoginButton {
       setImage(.AppImage.emailLogin, for: .normal)
     }
     
-    makeCornerRadius(metric.buttonRadius)
+    makeCornerRadius(Metric.buttonRadius)
   }
   
   /// LoginButton의 Frame을 정의합니다.
   func setupFrame() {
     snp.makeConstraints { make in
-      make.size.equalTo(metric.buttonSize)
+      make.size.equalTo(Metric.buttonSize)
     }
   }
 }

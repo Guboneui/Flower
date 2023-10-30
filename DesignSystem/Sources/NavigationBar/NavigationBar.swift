@@ -35,14 +35,14 @@ public class NavigationBar: UIView {
 	}
 	
 	// MARK: METRIC
-	private struct Metric {
-		let navigationBarHeight: CGFloat = 50
+	private enum Metric {
+		static let navigationBarHeight: CGFloat = 50
+
+		static let leftButtonSize: CGSize = .init(width: 30, height: 30)
+		static let leftButtonLeftMargin: CGFloat = 20
 		
-		let leftButtonSize: CGSize = .init(width: 30, height: 30)
-		let leftButtonLeftMargin: CGFloat = 20
-		
-		let navigationTitleTopMargin: CGFloat = 14
-		let navigationTitleBottomMargin: CGFloat = -15
+		static let navigationTitleTopMargin: CGFloat = 14
+		static let navigationTitleBottomMargin: CGFloat = -15
 	}
 	
 	// MARK: - OUTPUT
@@ -54,7 +54,6 @@ public class NavigationBar: UIView {
 	private let navigationLeftButtonColor: UIColor
 	private let navigationTitleFont: UIFont
 	private let navigationTitleColor: UIColor
-	private let metric: Metric
 	private let disposeBag: DisposeBag
 	
 	private let navigationLeftButton: UIButton = UIButton(type: .system)
@@ -70,7 +69,6 @@ public class NavigationBar: UIView {
 		self.navigationLeftButtonColor = .AppColor.appBlack
 		self.navigationTitleFont = .AppFont.Bold_18
 		self.navigationTitleColor = .AppColor.appBlack
-		self.metric = .init()
 		self.disposeBag = .init()
 		super.init(frame: .zero)
 		setupConfigure()
@@ -109,18 +107,18 @@ private extension NavigationBar {
 	
 	func setupConstraints() {
 		snp.makeConstraints { make in
-			make.height.equalTo(metric.navigationBarHeight)
+			make.height.equalTo(Metric.navigationBarHeight)
 		}
 		
 		navigationLeftButton.snp.makeConstraints { make in
-			make.leading.equalToSuperview().offset(metric.leftButtonLeftMargin)
+			make.leading.equalToSuperview().offset(Metric.leftButtonLeftMargin)
 			make.centerY.equalToSuperview()
-			make.size.equalTo(navigationType == .none ? 0 : metric.leftButtonSize)
+			make.size.equalTo(navigationType == .none ? 0 : Metric.leftButtonSize)
 		}
 		
 		navigationTitleLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(metric.navigationTitleTopMargin)
-			make.bottom.equalToSuperview().offset(metric.navigationTitleBottomMargin)
+			make.top.equalToSuperview().offset(Metric.navigationTitleTopMargin)
+			make.bottom.equalToSuperview().offset(Metric.navigationTitleBottomMargin)
 			make.centerX.equalToSuperview()
 		}
 	}

@@ -55,17 +55,17 @@ public class IconBorderTextField: UIView {
   
   // MARK: METRIC
   /// IconBorderTextField의 크기 요소를 정의합니다.
-  private struct Metric {
-    let iconImageLeftMargin = 16
-    let iconImageTopMargin = 13
-    let iconImageBottomMargin = -15
-    
-    let textFieldLeftMargin = 8
-    let textFieldRightMargin = -16
-    
-    let height = 46
-    let cornerRadius = 16.0
-    let iconSize = 18
+  private enum Metric {
+   static let iconImageLeftMargin = 16
+   static let iconImageTopMargin = 13
+   static let iconImageBottomMargin = -15
+   
+   static let textFieldLeftMargin = 8
+   static let textFieldRightMargin = -16
+   
+   static let height = 46
+   static let cornerRadius = 16.0
+   static let iconSize = 18
   }
   
   // MARK: INPUT PROPERTY
@@ -75,7 +75,6 @@ public class IconBorderTextField: UIView {
   // MARK: PROPERTY
   private let textFieldFont: UIFont
   private let textFieldColor: UIColor
-  private let metric: Metric
   private let disposeBag: DisposeBag
   
   // MARK: UI PROPERTY
@@ -91,7 +90,6 @@ public class IconBorderTextField: UIView {
     self.keyboardType = keyboardType
     self.textFieldFont = .AppFont.Regular_12
     self.textFieldColor = .AppColor.appBlack
-    self.metric = .init()
     self.disposeBag = .init()
     super.init(frame: .zero)
     self.setupSubViews()
@@ -124,26 +122,26 @@ private extension IconBorderTextField {
   /// IconBorderTextField의 SubView의 오토레이아웃을 정의합니다.
   func setupConstrains() {
     snp.makeConstraints { make in
-      make.height.equalTo(metric.height)
+      make.height.equalTo(Metric.height)
     }
     
     iconImageView.snp.makeConstraints { make in
-      make.leading.equalToSuperview().offset(metric.iconImageLeftMargin)
-      make.top.equalToSuperview().offset(metric.iconImageTopMargin)
-      make.bottom.equalToSuperview().offset(metric.iconImageBottomMargin)
-      make.size.equalTo(metric.iconSize)
+      make.leading.equalToSuperview().offset(Metric.iconImageLeftMargin)
+      make.top.equalToSuperview().offset(Metric.iconImageTopMargin)
+      make.bottom.equalToSuperview().offset(Metric.iconImageBottomMargin)
+      make.size.equalTo(Metric.iconSize)
     }
     
     textField.snp.makeConstraints { make in
-      make.leading.equalTo(iconImageView.snp.trailing).offset(metric.textFieldLeftMargin)
-      make.trailing.equalToSuperview().offset(metric.textFieldRightMargin)
+      make.leading.equalTo(iconImageView.snp.trailing).offset(Metric.textFieldLeftMargin)
+      make.trailing.equalToSuperview().offset(Metric.textFieldRightMargin)
       make.centerY.equalTo(iconImageView.snp.centerY)
     }
   }
   
   /// IconBorderTextField의 타입에 따른 이미지를 정의합니다.
   func setupConfiguration() {
-    makeCornerRadiusWithBorder(metric.cornerRadius)
+    makeCornerRadiusWithBorder(Metric.cornerRadius)
     
     iconImageView.image = type.iconImage
     
