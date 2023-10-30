@@ -18,6 +18,7 @@ public extension UIFont {
     public static let Bold_10 = ResourceKitFontFamily.Pretendard.bold.font(size: 10)
     public static let Bold_14 = ResourceKitFontFamily.Pretendard.bold.font(size: 14)
     public static let Bold_16 = ResourceKitFontFamily.Pretendard.bold.font(size: 16)
+		public static let Bold_18 = ResourceKitFontFamily.Pretendard.bold.font(size: 18)
     public static let Bold_20 = ResourceKitFontFamily.Pretendard.bold.font(size: 20)
   }
 }
