@@ -25,9 +25,9 @@ public class DefaultButton: UIButton {
   // MARK: COLORSET
   /// DefaultButton의 색상 요소를 정의합니다.
   private struct ColorSet {
-    let enableTitleColor: UIColor = .white
+		let enableTitleColor: UIColor = .AppColor.appWhite
     let enableBackgroundColor: UIColor = .AppColor.appPrimary
-    let disableTitleColor: UIColor = .white
+		let disableTitleColor: UIColor = .AppColor.appWhite
     let disableBackgroundColor: UIColor = .AppColor.appGrey70
     let pressedColor: UIColor = .AppColor.appPrimary.withAlphaComponent(0.75)
   }
