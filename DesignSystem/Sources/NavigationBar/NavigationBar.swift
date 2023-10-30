@@ -90,7 +90,7 @@ public class NavigationBar: UIView {
 
 private extension NavigationBar {
 	func setupConfigure() {
-		backgroundColor = .white
+		backgroundColor = .AppColor.appWhite
 		
 		navigationLeftButton.setImage(navigationType.buttonImage, for: .normal)
 		navigationLeftButton.tintColor = navigationLeftButtonColor

@@ -7,6 +7,8 @@
 
 import UIKit
 
+import ResourceKit
+
 import SnapKit
 import Then
 
@@ -47,7 +49,7 @@ private extension DimModalPresentable where Self: UIViewController {
   var hideAnimationDurationTime: TimeInterval { 0.5 }
   
   var backgroundViewColor: UIColor { .black.withAlphaComponent(0.3) }
-  var modalViewColor: UIColor { .white }
+	var modalViewColor: UIColor { .AppColor.appWhite }
   var modalViewRadius: CGFloat { 20.0 }
   
   // MARK: - METHOD

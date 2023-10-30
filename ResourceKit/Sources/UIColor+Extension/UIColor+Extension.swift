@@ -12,6 +12,9 @@ public extension UIColor {
     // MARK: - Black
     public static let appBlack = ResourceKitAsset.Color.black.color
     
+		// MARK: - White
+		public static let appWhite = ResourceKitAsset.Color.white.color
+		
     // MARK: - Grey
     public static let appGrey70 = ResourceKitAsset.Color.grey70.color
     public static let appGrey90 = ResourceKitAsset.Color.grey90.color
