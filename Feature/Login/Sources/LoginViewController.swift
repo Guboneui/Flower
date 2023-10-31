@@ -59,7 +59,8 @@ public final class LoginViewController: UIViewController {
 
   private func setupLayouts() {
     loginLabel.snp.makeConstraints { make in
-      make.center.equalToSuperview()
+      make.centerX.equalToSuperview()
+      make.top.equalToSuperview().offset(415)
     }
     
     logoView.snp.makeConstraints { make in
