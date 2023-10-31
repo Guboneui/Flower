@@ -74,7 +74,6 @@ public class LoginViewController: UIViewController {
     loginIconStackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
       make.horizontalEdges.equalToSuperview().inset(52)
-      make.height.equalTo(54)
       make.top.equalTo(loginLabel.snp.bottom).offset(28)
     }
   }
