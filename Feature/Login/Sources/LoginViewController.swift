@@ -30,11 +30,8 @@ public final class LoginViewController: UIViewController {
   }
   
   private let naverLoginButton: SocialLoginButton = SocialLoginButton(.naver)
-  
   private let kakaoLoginButton: SocialLoginButton = SocialLoginButton(.kakao)
-  
   private let appleLoginButton: SocialLoginButton = SocialLoginButton(.apple)
-  
   private let emailLoginButton: SocialLoginButton = SocialLoginButton(.email)
 
   public override func viewDidLoad() {
