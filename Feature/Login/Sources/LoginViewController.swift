@@ -25,7 +25,7 @@ public final class LoginViewController: UIViewController {
     $0.textColor = .AppColor.appBlack
   }
   
-  private let loginIconStackView: UIStackView = UIStackView().then {
+  private let loginStackView: UIStackView = UIStackView().then {
     $0.distribution = .equalSpacing
   }
   
@@ -33,6 +33,11 @@ public final class LoginViewController: UIViewController {
   private let kakaoLoginButton: SocialLoginButton = SocialLoginButton(.kakao)
   private let appleLoginButton: SocialLoginButton = SocialLoginButton(.apple)
   private let emailLoginButton: SocialLoginButton = SocialLoginButton(.email)
+  
+  private enum Metric {
+    static let loginStackViewTop = 28
+    static let loginStackViewInset = 52
+  }
 
   public override func viewDidLoad() {
     super.viewDidLoad()
@@ -47,22 +52,22 @@ public final class LoginViewController: UIViewController {
   private func setupSubViews() {
     view.addSubview(logoView)
     view.addSubview(loginLabel)
-    view.addSubview(loginIconStackView)
+    view.addSubview(loginStackView)
     
-    loginIconStackView.addArrangedSubview(naverLoginButton)
-    loginIconStackView.addArrangedSubview(kakaoLoginButton)
-    loginIconStackView.addArrangedSubview(appleLoginButton)
-    loginIconStackView.addArrangedSubview(emailLoginButton)
+    loginStackView.addArrangedSubview(naverLoginButton)
+    loginStackView.addArrangedSubview(kakaoLoginButton)
+    loginStackView.addArrangedSubview(appleLoginButton)
+    loginStackView.addArrangedSubview(emailLoginButton)
 
     setupLayouts()
   }
 
   private func setupLayouts() {
     loginLabel.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.top.equalToSuperview().offset(415)
+      make.center.equalToSuperview()
     }
     
+    // MARK: TODO 민희
     logoView.snp.makeConstraints { make in
       make.size.equalTo(100)
       make.height.width.equalTo(100)
@@ -70,10 +75,10 @@ public final class LoginViewController: UIViewController {
       make.bottom.equalTo(loginLabel.snp.top).offset(-38)
     }
     
-    loginIconStackView.snp.makeConstraints { make in
+    loginStackView.snp.makeConstraints { make in
       make.centerX.equalToSuperview()
-      make.horizontalEdges.equalToSuperview().inset(52)
-      make.top.equalTo(loginLabel.snp.bottom).offset(28)
+      make.horizontalEdges.equalToSuperview().inset(Metric.loginStackViewInset)
+      make.top.equalTo(loginLabel.snp.bottom).offset(Metric.loginStackViewTop)
     }
   }
 }
