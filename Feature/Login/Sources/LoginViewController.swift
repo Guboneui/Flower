@@ -13,7 +13,7 @@ import ResourceKit
 import SnapKit
 import Then
 
-public class LoginViewController: UIViewController {
+public final class LoginViewController: UIViewController {
 
   private let logoView: UIView = UIView().then {
     $0.backgroundColor = .lightGray
