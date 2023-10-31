@@ -66,6 +66,7 @@ public class LoginViewController: UIViewController {
     }
     
     logoView.snp.makeConstraints { make in
+      make.size.equalTo(100)
       make.height.width.equalTo(100)
       make.centerX.equalToSuperview()
       make.bottom.equalTo(loginLabel.snp.top).offset(-38)
