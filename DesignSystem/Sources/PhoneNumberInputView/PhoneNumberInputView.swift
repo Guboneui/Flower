@@ -135,7 +135,7 @@ public class PhoneNumberInputView: UIView {
 			)
 			
 			return phoneNumber
-		}
+	}
 		return nil
 	}
 }
