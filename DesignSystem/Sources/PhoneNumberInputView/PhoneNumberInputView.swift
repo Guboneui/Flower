@@ -123,11 +123,18 @@ public class PhoneNumberInputView: UIView {
 	}
 	
 	/// 입력된 번호를 옵셔널 Tuple 형태로 제공받습니다.
-	public func getUserPhoneNumber() -> (first: String, middle: String, last: String)? {
+	public func getUserPhoneNumber() -> PhoneNumber? {
 		if let first = firstNumberDropdownButton.currentTitle,
 			 let middle = middleNumberTextField.text,
 			 let last = lastNumberTextField.text {
-			return (first, middle, last)
+			
+			let phoneNumber: PhoneNumber = .init(
+				first: first,
+				middle: middle,
+				last: last
+			)
+			
+			return phoneNumber
 		}
 		return nil
 	}
