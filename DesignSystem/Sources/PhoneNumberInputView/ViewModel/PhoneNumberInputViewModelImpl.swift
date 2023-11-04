@@ -11,10 +11,8 @@ import RxRelay
 
 internal class PhoneNumberInputViewModelImpl: PhoneNumberInputViewModel {
   let phoneNumbers: BehaviorRelay<[String]>
-  let isDisplayDropDown: RxRelay.BehaviorRelay<Bool>
   
   init() {
     self.phoneNumbers = .init(value: [])
-    self.isDisplayDropDown = .init(value: false)
   }
 }
