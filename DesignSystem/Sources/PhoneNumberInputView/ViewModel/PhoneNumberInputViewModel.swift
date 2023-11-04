@@ -11,5 +11,4 @@ import RxRelay
 
 internal protocol PhoneNumberInputViewModel {
   var phoneNumbers: BehaviorRelay<[String]> { get }
-  var isDisplayDropDown: BehaviorRelay<Bool> { get }
 }
