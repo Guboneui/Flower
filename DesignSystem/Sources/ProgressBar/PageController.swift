@@ -109,7 +109,7 @@ public class PageController: UIView {
     UIView.animate(
       withDuration: durationTime,
       animations: {
-        self.currentPage = 0
+        self.initCurrentPage()
         self.progressBar.snp.remakeConstraints { make in
           make.leading.equalTo(self.pageControllerCollection[self.currentPage].snp.leading)
           make.centerY.equalTo(self.pageControllerStackView.snp.centerY)
@@ -121,6 +121,13 @@ public class PageController: UIView {
     
     pageControllerCollection.forEach { $0.backgroundColor = defaultColor }
   }
+	
+	/// 외부에서 현재 페이지를 0으로 초기화 할 때 사용합니다.
+	/// moveToFirstPage와는 다르게, UI 변경사항이 없습니다.
+	/// 따라서 moveToFirstPage와 함께 사용할 필요는 없습니다.
+	public func initCurrentPage() {
+		currentPage = 0
+	}
 }
 
 // MARK: - PRIVATE METHOD
