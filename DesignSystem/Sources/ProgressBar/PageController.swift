@@ -24,7 +24,7 @@ public class PageController: UIView {
   private let selectedControllerSize: CGSize
   private let durationTime: TimeInterval
   
-  private var currentIndex: Int = 0
+  private var currentPage: Int = 0
   private var pageControllerCollection: [UIView] = []
   
   private let pageControllerStackView: UIStackView = UIStackView()
@@ -65,16 +65,16 @@ public class PageController: UIView {
     UIView.animate(
       withDuration: durationTime,
       animations: {
-        if self.currentIndex < self.pageCount - 1 {
-          self.currentIndex += 1
+        if self.currentPage < self.pageCount - 1 {
+          self.currentPage += 1
           self.progressBar.snp.remakeConstraints { make in
-            make.leading.equalTo(self.pageControllerCollection[self.currentIndex].snp.leading)
+            make.leading.equalTo(self.pageControllerCollection[self.currentPage].snp.leading)
             make.centerY.equalTo(self.pageControllerStackView.snp.centerY)
             make.size.equalTo(self.selectedControllerSize)
           }
           
-          self.pageControllerCollection[self.currentIndex-1].backgroundColor = self.defaultColor
-          self.pageControllerCollection[self.currentIndex].backgroundColor = .clear
+          self.pageControllerCollection[self.currentPage-1].backgroundColor = self.defaultColor
+          self.pageControllerCollection[self.currentPage].backgroundColor = .clear
 
           self.layoutIfNeeded()
         }
@@ -87,9 +87,9 @@ public class PageController: UIView {
     UIView.animate(
       withDuration: durationTime,
       animations: {
-        self.currentIndex = 0
+        self.currentPage = 0
         self.progressBar.snp.remakeConstraints { make in
-          make.leading.equalTo(self.pageControllerCollection[self.currentIndex].snp.leading)
+          make.leading.equalTo(self.pageControllerCollection[self.currentPage].snp.leading)
           make.centerY.equalTo(self.pageControllerStackView.snp.centerY)
           make.size.equalTo(self.selectedControllerSize)
         }
@@ -141,7 +141,7 @@ private extension PageController {
     }
     
     progressBar.snp.makeConstraints { make in
-      make.leading.equalTo(pageControllerCollection[currentIndex].snp.leading)
+      make.leading.equalTo(pageControllerCollection[currentPage].snp.leading)
       make.centerY.equalTo(pageControllerStackView.snp.centerY)
       make.size.equalTo(selectedControllerSize)
     }
