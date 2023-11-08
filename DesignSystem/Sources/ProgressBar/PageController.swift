@@ -81,6 +81,28 @@ public class PageController: UIView {
       }
     )
   }
+	
+	/// 외부에서 이전 페이지로 넘어가기 위해 사용됩니다.
+	public func moveToPrevPage() {
+		UIView.animate(
+			withDuration: durationTime,
+			animations: {
+				if self.currentPage > 0 {
+					self.currentPage -= 1
+					self.progressBar.snp.remakeConstraints { make in
+						make.leading.equalTo(self.pageControllerCollection[self.currentPage].snp.leading)
+						make.centerY.equalTo(self.pageControllerStackView.snp.centerY)
+						make.size.equalTo(self.selectedControllerSize)
+					}
+					
+					self.pageControllerCollection[self.currentPage+1].backgroundColor = self.defaultColor
+					self.pageControllerCollection[self.currentPage].backgroundColor = .clear
+
+					self.layoutIfNeeded()
+				}
+			}
+		)
+	}
   
   /// 외부에서 첫 페이지로 넘어가기 위해 사용됩니다.
   public func moveToFirstPage() {
