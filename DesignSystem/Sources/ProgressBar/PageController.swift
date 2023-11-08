@@ -128,6 +128,11 @@ public class PageController: UIView {
 	public func initCurrentPage() {
 		currentPage = 0
 	}
+	
+	/// 외부에서 현재 페이지를 조회할 때 사용되는 함수입니다.
+	public func getCurrentPage() -> Int {
+		return currentPage
+	}
 }
 
 // MARK: - PRIVATE METHOD
