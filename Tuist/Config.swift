@@ -8,6 +8,7 @@ let config = Config(
     .local(path: .relativeToManifest("../../Plugins/DesignSystemPlugin")),
     .local(path: .relativeToManifest("../../Plugins/EntityPlugin")),
     .local(path: .relativeToManifest("../../Plugins/DomainPlugin")),
-    .local(path: .relativeToManifest("../../Plugins/DataPlugin"))
+    .local(path: .relativeToManifest("../../Plugins/DataPlugin")),
+    .local(path: .relativeToManifest("../../Plugins/NetworkHelperPlugin"))
   ]
 )
