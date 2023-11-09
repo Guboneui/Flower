@@ -85,7 +85,6 @@ public extension Target {
       deploymentTarget: .iOS(targetVersion: iOSTargetVersion, devices: .iphone),
       infoPlist: .default,
       sources: ["Sources/**"],
-      resources: ["Resources/**"],
       scripts: [.SwiftLintScript],
       dependencies: dependencies
     )
