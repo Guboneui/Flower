@@ -5,6 +5,7 @@ let config = Config(
     .local(path: .relativeToManifest("../../Plugins/ThirdPartyDependencyPlugin")),
     .local(path: .relativeToManifest("../../Plugins/ResourceKitPlugin")),
     .local(path: .relativeToManifest("../../Plugins/FeaturePlugin")),
-    .local(path: .relativeToManifest("../../Plugins/DesignSystemPlugin"))
+    .local(path: .relativeToManifest("../../Plugins/DesignSystemPlugin")),
+    .local(path: .relativeToManifest("../../Plugins/EntityPlugin"))
   ]
 )
