@@ -8,8 +8,6 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import ThirdPartyDependencyPlugin
-
 let projectName: String = "NetworkHelper"
 let iOSTargetVersion: String = "16.0"
 
@@ -18,7 +16,7 @@ let project = Project.makeLibraryProject(
   iOSTargetVersion: "16.0",
   baseSetting: .init(),
   dependencies: [
-    .ThirdParty.Main
+    .external(name: "RxMoya")
   ],
   isDynamic: false,
   needTestTarget: false,
