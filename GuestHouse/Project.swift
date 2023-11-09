@@ -13,6 +13,7 @@ import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
 import DomainPlugin
+import DataPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.guesthouse.user.app"
@@ -64,7 +65,8 @@ private let appTarget: Target = Target(
     .ThirdParty.Main,
 
       .Feature.Login.Main,
-    .Entity.Main
+    .Domain.Main,
+    .Data.Main
   ],
   settings: settings
 )

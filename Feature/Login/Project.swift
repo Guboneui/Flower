@@ -8,6 +8,7 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
+import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
 import ThirdPartyDependencyPlugin
@@ -22,6 +23,7 @@ let project = Project.makeFrameworkProject(
     .ThirdParty.Main,
     .DesignSystem.Main,
     .Domain.LoginDomain.Main,
+    .Data.LoginData.Main
   ],
   isDynamic: false,
   needTestTarget: false,
