@@ -8,19 +8,21 @@
 import UIKit
 
 import Moya
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 
 public class TestViewController: UIViewController {
 
-	private let titleLabel: UILabel = UILabel().then {
-		$0.text = "LOGIN MAIN"
-	}
+	private let titleLabel: UILabel = UILabel()
 
 	private let testViewModel: TestViewModel
+	private let disposeBag: DisposeBag
 	
 	public init(testViewModel: TestViewModel) {
 		self.testViewModel = testViewModel
+		self.disposeBag = .init()
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -35,6 +37,10 @@ public class TestViewController: UIViewController {
 		
 		// MARK: - 뷰모델 메소드 호출
 		testViewModel.testViewModelMethod()
+		
+		testViewModel.userGender
+			.bind(to: titleLabel.rx.text)
+			.disposed(by: disposeBag)
 	}
 
 	private func setupViews() {
@@ -53,4 +59,3 @@ public class TestViewController: UIViewController {
 		}
 	}
 }
-

@@ -9,6 +9,8 @@ import Foundation
 
 import LoginEntity
 
+import RxSwift
+
 public protocol TestRepositoryInterface {
-	func fetchTest() -> TestDTO
+	func fetchTest() -> Single<TestDTO>
 }
