@@ -15,6 +15,7 @@ import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
 import DomainPlugin
+import DataPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.guesthouse.user.app"
@@ -70,7 +71,6 @@ private let appTarget: Target = Target(
     
     .Feature.Login.Main,
     .Feature.SearchFilter.Main,
-    
     .Domain.Main,
     .Data.Main
   ],
