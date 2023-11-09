@@ -9,6 +9,7 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 import DesignSystemPlugin
+import EntityPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Login"
@@ -19,7 +20,8 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
     .ThirdParty.Main,
-    .DesignSystem.Main
+    .DesignSystem.Main,
+    .Entity.LoginEntity.Main
   ],
   isDynamic: false,
   needTestTarget: false,

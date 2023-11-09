@@ -12,6 +12,7 @@ import ProjectDescriptionHelpers
 import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
+import EntityPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.guesthouse.user.app"
@@ -62,7 +63,8 @@ private let appTarget: Target = Target(
   dependencies: [
     .ThirdParty.Main,
 
-      .Feature.Login.Main
+      .Feature.Login.Main,
+    .Entity.Main
   ],
   settings: settings
 )

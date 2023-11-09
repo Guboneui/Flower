@@ -128,33 +128,34 @@ public extension Project {
       needTestTarget: needTestTarget
     )
     
-    target.append(
-      Target(
-        name: "\(name)DemoApp",
-        platform: .iOS,
-        product: .app,
-        bundleId: "com.boni.\(name)Demoapp",
-        deploymentTarget: .iOS(
-          targetVersion: iOSTargetVersion,
-          devices: [.iphone]
-        ),
-        infoPlist: InfoPlist.extendingDefault(
-          with:
-            [
-              "CFBundleDevelopmentRegion": "ko_KR",
-              "CFBundleShortVersionString": "1.0",
-              "CFBundleVersion": "1",
-              "UILaunchStoryboardName": "LaunchScreen"
-            ]
-          
-        ),
-        sources: ["./DemoApp/Sources/**"],
-        resources: ["./DemoApp/Resources/**"],
-        dependencies: [.target(name: name)],
-        settings: .settings(base: demoAppSetting, configurations: [])
+    if needDemoAppTarget {
+      target.append(
+        Target(
+          name: "\(name)DemoApp",
+          platform: .iOS,
+          product: .app,
+          bundleId: "com.boni.\(name)Demoapp",
+          deploymentTarget: .iOS(
+            targetVersion: iOSTargetVersion,
+            devices: [.iphone]
+          ),
+          infoPlist: InfoPlist.extendingDefault(
+            with:
+              [
+                "CFBundleDevelopmentRegion": "ko_KR",
+                "CFBundleShortVersionString": "1.0",
+                "CFBundleVersion": "1",
+                "UILaunchStoryboardName": "LaunchScreen"
+              ]
+            
+          ),
+          sources: ["./DemoApp/Sources/**"],
+          resources: ["./DemoApp/Resources/**"],
+          dependencies: [.target(name: name)],
+          settings: .settings(base: demoAppSetting, configurations: [])
+        )
       )
-    )
-    
+    }
     
     return Project(
       name: name,
