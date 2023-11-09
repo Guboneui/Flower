@@ -7,10 +7,18 @@
 
 import Foundation
 
-public struct TestDTO {
-	public let name: String
+public struct TestDTO: Codable {
+	public let results: [Test]
 	
-	public init(name: String) {
-		self.name = name
+	init(results: [Test]) {
+		self.results = results
+	}
+}
+
+public struct Test: Codable {
+	public let gender: String
+	
+	public init(gender: String) {
+		self.gender = gender
 	}
 }
