@@ -20,7 +20,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "Then": .framework,
     "RxSwift": .framework,
     "RxGesture": .framework,
-    "Moya": .framework
+    "Moya": .framework,
+    "RxMoya": .framework
   ]
 )
 
