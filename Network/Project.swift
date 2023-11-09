@@ -8,23 +8,22 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import DataPlugin
-import DomainPlugin
+import NetworkHelperPlugin
 import NetworkPlugin
+import ThirdPartyDependencyPlugin
 
-let projectName: String = "LoginData"
+let projectName: String = "Network"
 let iOSTargetVersion: String = "16.0"
 
 let project = Project.makeLibraryProject(
-  name: "LoginData",
+  name: "Network",
   iOSTargetVersion: "16.0",
   baseSetting: .init(),
   dependencies: [
-    .Domain.LoginDomain.Main,
+    .NetworkHelper.Main,
     .Network.LoginNetwork.Main
   ],
   isDynamic: false,
   needTestTarget: false,
   needDemoAppTarget: false
 )
-
