@@ -9,6 +9,8 @@ import Foundation
 
 import LoginEntity
 
+import RxSwift
+
 public protocol TestUseCaseInterface {
-	func testUseCaseMethod() -> String
+	func testUseCaseMethod() -> Single<String>
 }
