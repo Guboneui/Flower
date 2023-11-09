@@ -9,7 +9,7 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 import DesignSystemPlugin
-import EntityPlugin
+import DomainPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Login"
@@ -21,7 +21,7 @@ let project = Project.makeFrameworkProject(
   dependencies: [
     .ThirdParty.Main,
     .DesignSystem.Main,
-    .Entity.LoginEntity.Main
+    .Domain.LoginDomain.Main,
   ],
   isDynamic: false,
   needTestTarget: false,
