@@ -12,7 +12,7 @@ import ProjectDescriptionHelpers
 import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
-import EntityPlugin
+import DomainPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.guesthouse.user.app"
