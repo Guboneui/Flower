@@ -10,6 +10,7 @@ import ProjectDescriptionHelpers
 
 import DomainPlugin
 import DataPlugin
+import NetworkPlugin
 
 let projectName: String = "Data"
 let iOSTargetVersion: String = "16.0"
@@ -20,7 +21,8 @@ let project = Project.makeLibraryProject(
   baseSetting: .init(),
   dependencies: [
     .Domain.Main,
-    .Data.LoginData.Main
+    .Data.LoginData.Main,
+    .Network.Main
   ],
   isDynamic: false,
   needTestTarget: false,
