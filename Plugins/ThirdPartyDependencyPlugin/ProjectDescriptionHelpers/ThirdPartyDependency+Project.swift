@@ -20,7 +20,8 @@ public extension TargetDependency.ThirdParty {
     SnapKit,
     Then,
     RxSwift,
-    RxGesture
+    RxGesture,
+    Moya
   ]
   
   static func project(name: String) -> TargetDependency {
@@ -38,4 +39,5 @@ extension TargetDependency.ThirdParty {
   static let Then = TargetDependency.external(name: "Then")
   static let RxSwift = TargetDependency.external(name: "RxSwift")
   static let RxGesture = TargetDependency.external(name: "RxGesture")
+  static let Moya = TargetDependency.external(name: "Moya")
 }
