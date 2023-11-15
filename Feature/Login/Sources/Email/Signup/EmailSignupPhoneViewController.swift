@@ -34,11 +34,6 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	// MARK: FONT
 	private enum Font {
 		static let phoneNumberLabelFont: UIFont = .AppFont.Bold_20
-		
-	}
-	
-	// MARK: Image
-	private enum Image {
 	}
 	
 	// MARK: COLORSET
@@ -127,7 +122,7 @@ private extension EmailSignupPhoneViewController {
 		completionButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind {[weak self] in guard let self else { return }
 				guard let viewControllerStack = self.navigationController?.viewControllers else { return }
 				// 뷰 스택에서 RedViewController를 찾아서 거기까지 pop 합니다.

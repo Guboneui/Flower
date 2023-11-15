@@ -81,7 +81,6 @@ extension EmailLoginModalViewController {
 				self.didTapBackgroundView()
 			}
 			.disposed(by: disposeBag)
-		
 	}
 	
 	func didTapBackgroundView() {

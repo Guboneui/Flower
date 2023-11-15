@@ -19,6 +19,19 @@ import Then
 public final class EmailSignupNameViewController: UIViewController {
 	// MARK: METRIC
 	private enum Metric {
+		static let profileViewBorderRadius: CGFloat = 54
+		static let profileViewSize: CGFloat = 108
+		static let profileViewTopMargin: CGFloat = 52
+		
+		static let profileImageViewSize: CGFloat = 48
+
+		static let cameraViewBorderRadius: CGFloat = 18
+		static let cameraViewSize: CGFloat = 36
+		static let cameraViewTopMargin: CGFloat = 76
+		static let cameraViewLeftMargin: CGFloat = 76
+
+		static let cameraImageViewSize: CGFloat = 18
+
 		static let nameViewHeightMargin: CGFloat = 73
 		static let nameViewTopMargin: CGFloat = 60
 		static let nameViewBothSidesMargin: CGFloat = 24
@@ -34,18 +47,22 @@ public final class EmailSignupNameViewController: UIViewController {
 	// MARK: FONT
 	private enum Font {
 		static let nameLabelFont: UIFont = .AppFont.Bold_16
-		
 	}
 	
 	// MARK: Image
 	private enum Image {
+		static let profileImage: UIImage = .AppImage.profile
+		static let cameraImage: UIImage = .AppImage.camera
 	}
 	
 	// MARK: COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = .AppColor.appWhite
 		static let nameLabelColor: UIColor = .AppColor.appBlack
-		
+		static let profileViewBackgroundColor: UIColor = .AppColor.appWhite
+		static let profileImageViewColor: UIColor = .AppColor.appGrey70 //grey40으로 변경
+		static let cameraViewBackgroundColor: UIColor = .AppColor.appPrimary
+		static let cameraImageViewColor: UIColor = .AppColor.appWhite
 	}
 	
 	// MARK: TEXTSET
@@ -57,8 +74,24 @@ public final class EmailSignupNameViewController: UIViewController {
 	
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
-	private let imageView: UIView = UIView().then {
-		$0.backgroundColor = .AppColor.appBlack
+	private let profileView: UIView = UIView().then {
+		$0.backgroundColor = ColorSet.profileViewBackgroundColor
+		$0.makeCornerRadiusWithBorder(Metric.profileViewBorderRadius)
+	}
+	
+	private let profileImageView: UIImageView = UIImageView().then {
+		$0.image = Image.profileImage
+		$0.tintColor = ColorSet.profileImageViewColor
+	}
+	
+	private let cameraView: UIView = UIView().then {
+		$0.backgroundColor = ColorSet.cameraViewBackgroundColor
+		$0.makeCornerRadiusWithBorder(Metric.cameraViewBorderRadius)
+	}
+	
+	private let cameraImageView: UIImageView = UIImageView().then {
+		$0.image = Image.cameraImage
+		$0.tintColor = ColorSet.cameraImageViewColor
 	}
 	
 	private let nameView: UIView = UIView().then {
@@ -94,7 +127,11 @@ private extension EmailSignupNameViewController {
 	func setupViews() {
 		view.addSubview(navigationBar)
 		
-		view.addSubview(imageView)
+		view.addSubview(profileView)
+		profileView.addSubview(profileImageView)
+		
+		view.addSubview(cameraView)
+		cameraView.addSubview(cameraImageView)
 		
 		view.addSubview(nameView)
 		nameView.addSubview(nameLabel)
@@ -111,15 +148,31 @@ private extension EmailSignupNameViewController {
 			make.horizontalEdges.equalToSuperview()
 		}
 		
-		imageView.snp.makeConstraints { make in
-			make.height.width.equalTo(108)
-			make.top.equalTo(navigationBar.snp.bottom).offset(52)
+		profileView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.profileViewSize)
+			make.top.equalTo(navigationBar.snp.bottom).offset(Metric.profileViewTopMargin)
 			make.centerX.equalToSuperview()
+		}
+		
+		profileImageView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.profileImageViewSize)
+			make.centerX.centerY.equalToSuperview()
+		}
+		
+		cameraView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.cameraViewSize)
+			make.top.equalTo(profileView.snp.top).inset(Metric.cameraViewTopMargin)
+			make.leading.equalTo(profileView.snp.leading).inset(Metric.cameraViewLeftMargin)
+		}
+		
+		cameraImageView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.cameraImageViewSize)
+			make.centerX.centerY.equalToSuperview()
 		}
 		
 		nameView.snp.makeConstraints { make in
 			make.height.equalTo(Metric.nameViewHeightMargin)
-			make.top.equalTo(imageView.snp.bottom).offset(Metric.nameViewTopMargin)
+			make.top.equalTo(profileView.snp.bottom).offset(Metric.nameViewTopMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.nameViewBothSidesMargin)
 		}
 		
