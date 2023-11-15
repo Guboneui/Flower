@@ -101,7 +101,6 @@ private extension LoginViewController {
 			)
 			.bind {[weak self] in 
 				guard let self else { return }
-				
 				let repository: UsersRepositoryInterface = UsersRepository()
 				let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
 				let viewModel: EmailLoginViewModel = EmailLoginViewModel(useCase: useCase)
