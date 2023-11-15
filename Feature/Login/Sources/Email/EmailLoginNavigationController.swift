@@ -12,17 +12,28 @@ import DesignSystem
 import SnapKit
 
 public class EmailLoginNavigationController: UINavigationController {
+	// MARK: METRIC
+	private enum Metric {
+		static let pageControllerPageCount: Int = 4
+		static let pageControllerDefaulSize: CGFloat = 8
+		static let pageControllerSelectedHeight: CGFloat = 10
+		static let pageControllerTopMargin: CGFloat = 70
+	}
+	
 	public let pageController = PageController(
-		pageCount: 4,
-		defaultControllerSize: .init(width: 8, height: 8),
-		selectedControllerHeight: 10
+		pageCount: Metric.pageControllerPageCount,
+		defaultControllerSize: .init(
+			width: Metric.pageControllerDefaulSize,
+			height: Metric.pageControllerDefaulSize),
+		selectedControllerHeight: Metric.pageControllerSelectedHeight
 	)
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.addSubview(pageController)
 		pageController.snp.makeConstraints { make in
-			make.top.equalTo(view.safeAreaLayoutGuide).offset(70)
+			make.top.equalTo(view.safeAreaLayoutGuide).offset(
+				Metric.pageControllerTopMargin)
 			make.centerX.equalToSuperview()
 		}
 	}

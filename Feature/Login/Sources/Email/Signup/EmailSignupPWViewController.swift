@@ -63,6 +63,8 @@ public final class EmailSignupPWViewController: UIViewController {
 	// MARK: COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = .AppColor.appWhite
+		static let pwViewBackgroundColor: UIColor = .AppColor.appWhite
+		static let pwCheckViewBackgroundColor: UIColor = .AppColor.appWhite
 		static let pwLabelColor: UIColor = .AppColor.appBlack
 		static let pwCautionLabelColor: UIColor = .AppColor.appGrey70
 		static let pwRedCautionLabelFont: UIColor = .AppColor.appWarning
@@ -81,7 +83,7 @@ public final class EmailSignupPWViewController: UIViewController {
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let pwView: UIView = UIView().then {
-		$0.backgroundColor = ColorSet.backgroundColor
+		$0.backgroundColor = ColorSet.pwViewBackgroundColor
 	}
 	
 	private let pwLabel: UILabel = UILabel().then {
@@ -111,7 +113,7 @@ public final class EmailSignupPWViewController: UIViewController {
 	}
 	
 	private let pwCheckView: UIView = UIView().then {
-		$0.backgroundColor = ColorSet.backgroundColor
+		$0.backgroundColor = ColorSet.pwCheckViewBackgroundColor
 	}
 	
 	private let pwCheckLabel: UILabel = UILabel().then {
@@ -239,7 +241,7 @@ private extension EmailSignupPWViewController {
 		nextButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind {[weak self] in guard let self else { return }
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
@@ -248,6 +250,5 @@ private extension EmailSignupPWViewController {
 				}
 			}
 			.disposed(by: disposeBag)
-		
 	}
 }

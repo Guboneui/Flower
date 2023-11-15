@@ -117,7 +117,6 @@ public final class EmailLoginViewController: UIViewController {
 	
 	private let idSaveCheckButton: UIButton = UIButton().then {
 		$0.setImage(Image.idSaveCheckButtonOffImage, for: .normal)
-		$0.setImage(Image.idSaveCheckButtonOnImage, for: .selected)
 	}
 	
 	private let idSaveCheckLabel: UILabel = UILabel().then {
@@ -277,6 +276,10 @@ private extension EmailLoginViewController {
 	}
 	
 	func setupGestures() {
+		navigationBar.didTapLeftButton = {
+			self.dismiss(animated: true)
+		}
+		
 		emailSignupButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
@@ -293,7 +296,8 @@ private extension EmailLoginViewController {
 								scheduler: MainScheduler.instance
 			)// 이 밀리초안에 첫째값만
 			.bind {[weak self] in guard let self else { return }
-				print("sadasd")
+				print("자동 로그인 체크 버튼 클릭")
+				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
 			}
 			.disposed(by: disposeBag)
 	}

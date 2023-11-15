@@ -63,7 +63,7 @@ public final class EmailSignupViewController: UIViewController {
 		static let cautionLabelFont: UIFont = .AppFont.Regular_12
 		static let authLabelFont: UIFont = .AppFont.Bold_16
 		static let authResendButtonFont: UIFont = .AppFont.Bold_10
-		static let authCautionLabelFont: UIFont = .AppFont.Bold_10 //10으로 바꾸기
+		static let authCautionLabelFont: UIFont = .AppFont.Bold_10 //레귤러 10으로 바꾸기
 	}
 	
 	// MARK: Image
@@ -77,7 +77,7 @@ public final class EmailSignupViewController: UIViewController {
 		static let cautionViewColor: UIColor = .AppColor.appWhite
 		static let emailLabelColor: UIColor = .AppColor.appBlack
 		static let cautionLabelColor: UIColor = .AppColor.appGrey70
-		static let authViewColor: UIColor = .AppColor.appWhite
+		static let authViewBackgroundColor: UIColor = .AppColor.appWhite
 		static let authLabelColor: UIColor = .AppColor.appBlack
 		static let authResendButtonColor: UIColor = .AppColor.appBlack
 		static let authCautionLabelColor: UIColor = .AppColor.appGrey70
@@ -122,7 +122,7 @@ public final class EmailSignupViewController: UIViewController {
 	}
 	
 	private let authView: UIView = UIView().then {
-		$0.backgroundColor = .AppColor.appWhite
+		$0.backgroundColor = ColorSet.authViewBackgroundColor
 		$0.alpha = Metric.authViewDefaultAlpha
 	}
 	
@@ -174,6 +174,7 @@ private extension EmailSignupViewController {
 	
 	func setupViews() {
 		view.addSubview(navigationBar)
+		
 		view.addSubview(emailLabel)
 		view.addSubview(emailTextField)
 		
@@ -274,7 +275,6 @@ private extension EmailSignupViewController {
 								scheduler: MainScheduler.instance
 			)// 이 밀리초안에 첫째값만
 			.bind {[weak self] in guard let self else { return }
-				
 				if count == 1 {
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
@@ -298,7 +298,7 @@ private extension EmailSignupViewController {
 								scheduler: MainScheduler.instance
 			)// 이 밀리초안에 첫째값만
 			.bind {[weak self] in guard let self else { return }
-				print("asdasd")
+				print("인증번호 재발송 버튼 클릭")
 			}
 			.disposed(by: disposeBag)
 	}
