@@ -297,14 +297,12 @@ private extension EmailLoginViewController {
 		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
-				
 				self.dismiss(animated: true)
 			}.disposed(by: disposeBag)
 		
 		emailSignupButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
-				
 				let parentViewController = EmailLoginModalViewController()
 				parentViewController.parentVC = self
 				parentViewController.showModal()
