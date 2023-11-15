@@ -13,72 +13,102 @@ import ResourceKit
 import SnapKit
 import Then
 
+public class LoginNavigationController: UINavigationController {
+	public let pageController = PageController(
+		pageCount: 4,
+		defaultControllerSize: .init(width: 8, height: 8),
+		selectedControllerHeight: 10
+	)
+	
+	public override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		pageController.isHidden = true
+		self.view.addSubview(pageController)
+		pageController.snp.makeConstraints { make in
+			make.top.equalTo(view.safeAreaLayoutGuide).offset(62)
+			make.centerX.equalToSuperview()
+		}
+	}
+}
+
 public final class LoginViewController: UIViewController {
 
-  private let logoView: UIView = UIView().then {
-    $0.backgroundColor = .lightGray
-  }
-  
-  private let loginLabel: UILabel = UILabel().then {
-    $0.text = "로그인/회원가입"
-    $0.font = .AppFont.Regular_14
-    $0.textColor = .AppColor.appBlack
-  }
-  
-  private let loginStackView: UIStackView = UIStackView().then {
-    $0.distribution = .equalSpacing
-  }
-  
-  private let naverLoginButton: SocialLoginButton = SocialLoginButton(.naver)
-  private let kakaoLoginButton: SocialLoginButton = SocialLoginButton(.kakao)
-  private let appleLoginButton: SocialLoginButton = SocialLoginButton(.apple)
-  private let emailLoginButton: SocialLoginButton = SocialLoginButton(.email)
-  
-  private enum Metric {
-    static let loginStackViewTop = 28
-    static let loginStackViewInset = 52
-  }
+	private let logoView: UIView = UIView().then {
+		$0.backgroundColor = .lightGray
+	}
+	
+	private let loginLabel: UILabel = UILabel().then {
+		$0.text = "로그인/회원가입"
+		$0.font = .AppFont.Regular_14
+		$0.textColor = .AppColor.appBlack
+	}
+	
+	private let loginStackView: UIStackView = UIStackView().then {
+		$0.distribution = .equalSpacing
+	}
+	
+	private let naverLoginButton: SocialLoginButton = SocialLoginButton(.naver)
+	private let kakaoLoginButton: SocialLoginButton = SocialLoginButton(.kakao)
+	private let appleLoginButton: SocialLoginButton = SocialLoginButton(.apple)
+	private let emailLoginButton: SocialLoginButton = SocialLoginButton(.email)
+	
+	private enum Metric {
+		static let loginStackViewTop = 28
+		static let loginStackViewInset = 52
+	}
 
-  public override func viewDidLoad() {
-    super.viewDidLoad()
-    setupViews()
-    setupSubViews()
-  }
+	public override func viewDidLoad() {
+		super.viewDidLoad()
+		setupViews()
+		setupSubViews()
+		setupGestures()
+	}
 
-  private func setupViews() {
-    view.backgroundColor = .white
-  }
+	private func setupViews() {
+		view.backgroundColor = .AppColor.appWhite
+	}
 
-  private func setupSubViews() {
-    view.addSubview(logoView)
-    view.addSubview(loginLabel)
-    view.addSubview(loginStackView)
-    
-    loginStackView.addArrangedSubview(naverLoginButton)
-    loginStackView.addArrangedSubview(kakaoLoginButton)
-    loginStackView.addArrangedSubview(appleLoginButton)
-    loginStackView.addArrangedSubview(emailLoginButton)
+	private func setupSubViews() {
+		view.addSubview(logoView)
+		view.addSubview(loginLabel)
+		view.addSubview(loginStackView)
+		
+		loginStackView.addArrangedSubview(naverLoginButton)
+		loginStackView.addArrangedSubview(kakaoLoginButton)
+		loginStackView.addArrangedSubview(appleLoginButton)
+		loginStackView.addArrangedSubview(emailLoginButton)
 
-    setupLayouts()
-  }
+		setupLayouts()
+	}
 
-  private func setupLayouts() {
-    loginLabel.snp.makeConstraints { make in
-      make.center.equalToSuperview()
-    }
-    
-    // MARK: TODO 민희
-    logoView.snp.makeConstraints { make in
-      make.size.equalTo(100)
-      make.height.width.equalTo(100)
-      make.centerX.equalToSuperview()
-      make.bottom.equalTo(loginLabel.snp.top).offset(-38)
-    }
-    
-    loginStackView.snp.makeConstraints { make in
-      make.centerX.equalToSuperview()
-      make.horizontalEdges.equalToSuperview().inset(Metric.loginStackViewInset)
-      make.top.equalTo(loginLabel.snp.bottom).offset(Metric.loginStackViewTop)
-    }
-  }
+	private func setupLayouts() {
+		loginLabel.snp.makeConstraints { make in
+			make.center.equalToSuperview()
+		}
+		
+		// MARK: TODO 민희
+		logoView.snp.makeConstraints { make in
+			make.size.equalTo(100)
+			make.height.width.equalTo(100)
+			make.centerX.equalToSuperview()
+			make.bottom.equalTo(loginLabel.snp.top).offset(-38)
+		}
+		
+		loginStackView.snp.makeConstraints { make in
+			make.centerX.equalToSuperview()
+			make.horizontalEdges.equalToSuperview().inset(Metric.loginStackViewInset)
+			make.top.equalTo(loginLabel.snp.bottom).offset(Metric.loginStackViewTop)
+		}
+	}
+	
+	private func setupGestures() {
+		emailLoginButton.addTarget(self, action: #selector(didTapEmailLogin(_:)), for: .touchUpInside)
+	}
+	
+	@objc private func didTapEmailLogin(_ sender: UIButton) {
+		let EmailLoginViewController = EmailLoginViewController()
+		EmailLoginViewController.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+		present(EmailLoginViewController, animated: true, completion: nil)
+	}
 }
