@@ -242,7 +242,8 @@ private extension EmailSignupPWViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] in guard let self else { return }
+			.bind { [weak self] in
+				guard let self else { return }
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					let signupNameVC = EmailSignupNameViewController()
