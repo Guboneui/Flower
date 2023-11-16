@@ -34,7 +34,6 @@ final class EmailLoginModalViewController: UIViewController, DimModalPresentable
 	var backgroundView: UIView = UIView()
 	var modalView: UIView = UIView()
 	
-	//가방에 담아 놓고 메모리 해제시 다 없앰
 	private let disposeBag = DisposeBag()
 	
 	private let signupButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText)
@@ -65,7 +64,7 @@ extension EmailLoginModalViewController {
 		signupButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind {[weak self] in guard let self else { return }
 				self.didTapButton()
 			}
