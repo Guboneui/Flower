@@ -40,7 +40,6 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	private enum ColorSet {
 		static let backgroundColor: UIColor = .AppColor.appWhite
 		static let phoneNumberLabelColor: UIColor = .AppColor.appBlack
-		
 	}
 	
 	// MARK: TEXTSET
