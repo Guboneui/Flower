@@ -91,10 +91,12 @@ private extension LoginViewController {
 	
 	func setupGestures() {
 		emailLoginButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] in guard let self else { return }
+			.bind {[weak self] in 
+				guard let self else { return }
 				let emailLoginNavi = EmailLoginNavigationController(
 					rootViewController: EmailLoginViewController()
 				)

@@ -280,7 +280,8 @@ private extension EmailLoginViewController {
 		}
 		
 		emailSignupButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] in
@@ -292,7 +293,8 @@ private extension EmailLoginViewController {
 			.disposed(by: disposeBag)
 		
 		idSaveCheckButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] in

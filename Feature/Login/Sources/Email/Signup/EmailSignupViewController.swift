@@ -270,9 +270,10 @@ private extension EmailSignupViewController {
 		}
 		
 		authSendButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind { [weak self] in 
 				guard let self else { return }
 				if count == 1 {
@@ -294,7 +295,8 @@ private extension EmailSignupViewController {
 			.disposed(by: disposeBag)
 		
 		authResendButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] in

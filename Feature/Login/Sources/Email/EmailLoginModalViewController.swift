@@ -61,7 +61,8 @@ extension EmailLoginModalViewController {
 	
 	func setupGestures() {
 		signupButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind {[weak self] in guard let self else { return }
@@ -71,7 +72,8 @@ extension EmailLoginModalViewController {
 		
 		backgroundView.rx.tapGesture()
 			.when(.recognized)
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] _ in
