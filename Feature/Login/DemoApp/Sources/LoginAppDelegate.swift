@@ -20,16 +20,8 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-		
 		makeWindow()
 		
-//    let window = UIWindow(frame: UIScreen.main.bounds)
-//		let testRepository: TestRepositoryInterface = TestRepository()
-//		let testUseCase: TestUseCaseInterface = TestUseCase(testRepository: testRepository)
-//		let testViewModel = TestViewModel(testUseCase: testUseCase)
-//    window.rootViewController = TestViewController(testViewModel: testViewModel)
-//    window.makeKeyAndVisible()
-//    self.window = window
     return true
   }
 }
@@ -37,9 +29,6 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
 private extension LoginAppDelegate {
 	func makeWindow() {
 		window = UIWindow(frame: UIScreen.main.bounds)
-//		window?.rootViewController = EmailLoginNavigationController(
-//			rootViewController: EmailLoginViewController()
-//		)
 		window?.rootViewController = LoginViewController()
 		window?.makeKeyAndVisible()
 	}
