@@ -11,7 +11,6 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
-import RxGesture
 import RxSwift
 import SnapKit
 import Then
