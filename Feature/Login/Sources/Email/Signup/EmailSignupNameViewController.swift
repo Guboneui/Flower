@@ -203,7 +203,7 @@ private extension EmailSignupNameViewController {
 		nextButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind {[weak self] in guard let self else { return }
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()

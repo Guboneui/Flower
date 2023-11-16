@@ -283,7 +283,7 @@ private extension EmailLoginViewController {
 		emailSignupButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind {[weak self] in guard let self else { return }
 				let parentViewController = EmailLoginModalViewController()
 				parentViewController.parentVC = self
@@ -294,7 +294,7 @@ private extension EmailLoginViewController {
 		idSaveCheckButton.rx.tap
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
-			)// 이 밀리초안에 첫째값만
+			)
 			.bind {[weak self] in guard let self else { return }
 				print("자동 로그인 체크 버튼 클릭")
 				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)

@@ -125,7 +125,6 @@ private extension EmailSignupPhoneViewController {
 			)
 			.bind {[weak self] in guard let self else { return }
 				guard let viewControllerStack = self.navigationController?.viewControllers else { return }
-				// 뷰 스택에서 RedViewController를 찾아서 거기까지 pop 합니다.
 				for viewController in viewControllerStack {
 					if let emailLoginView = viewController as? EmailLoginViewController {
 						self.navigationController?.popToViewController(emailLoginView, animated: true)
