@@ -122,7 +122,8 @@ private extension EmailSignupPhoneViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] in guard let self else { return }
+			.bind { [weak self] in
+				guard let self else { return }
 				guard let viewControllerStack = self.navigationController?.viewControllers else { return }
 				for viewController in viewControllerStack {
 					if let emailLoginView = viewController as? EmailLoginViewController {

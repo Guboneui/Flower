@@ -274,7 +274,8 @@ private extension EmailSignupViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)// 이 밀리초안에 첫째값만
-			.bind {[weak self] in guard let self else { return }
+			.bind { [weak self] in 
+				guard let self else { return }
 				if count == 1 {
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
@@ -297,7 +298,8 @@ private extension EmailSignupViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] in guard let self else { return }
+			.bind { [weak self] in
+				guard let self else { return }
 				print("인증번호 재발송 버튼 클릭")
 			}
 			.disposed(by: disposeBag)

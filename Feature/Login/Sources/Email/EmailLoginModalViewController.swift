@@ -75,7 +75,7 @@ extension EmailLoginModalViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] _ in
+			.bind { [weak self] _ in
 				guard let self else { return }
 				self.didTapBackgroundView()
 			}

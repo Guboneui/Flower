@@ -284,7 +284,8 @@ private extension EmailLoginViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] in guard let self else { return }
+			.bind { [weak self] in
+				guard let self else { return }
 				let parentViewController = EmailLoginModalViewController()
 				parentViewController.parentVC = self
 				parentViewController.showModal()
@@ -295,8 +296,8 @@ private extension EmailLoginViewController {
 			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
 								scheduler: MainScheduler.instance
 			)
-			.bind {[weak self] in guard let self else { return }
-				print("자동 로그인 체크 버튼 클릭")
+			.bind { [weak self] in
+				guard let self else { return }
 				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
 			}
 			.disposed(by: disposeBag)
