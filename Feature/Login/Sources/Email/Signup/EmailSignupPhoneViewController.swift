@@ -118,7 +118,8 @@ private extension EmailSignupPhoneViewController {
 		}
 		
 		completionButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] in

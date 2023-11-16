@@ -238,13 +238,15 @@ private extension EmailSignupPWViewController {
 		}
 		
 		nextButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds), latest: false,
+			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
+								latest: false,
 								scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] in
 				guard let self else { return }
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
+					
 					let signupNameVC = EmailSignupNameViewController()
 					navigation.pushViewController(signupNameVC, animated: true)
 				}
