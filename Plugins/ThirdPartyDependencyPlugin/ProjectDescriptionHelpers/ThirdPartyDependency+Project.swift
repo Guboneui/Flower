@@ -21,7 +21,8 @@ public extension TargetDependency.ThirdParty {
     Then,
     RxSwift,
     RxGesture,
-    Moya
+    Moya,
+    NMapsMap
   ]
   
   static func project(name: String) -> TargetDependency {
@@ -40,4 +41,5 @@ extension TargetDependency.ThirdParty {
   static let RxSwift = TargetDependency.external(name: "RxSwift")
   static let RxGesture = TargetDependency.external(name: "RxGesture")
   static let Moya = TargetDependency.external(name: "Moya")
+  static let NMapsMap = TargetDependency.external(name: "NMapsMap")
 }
