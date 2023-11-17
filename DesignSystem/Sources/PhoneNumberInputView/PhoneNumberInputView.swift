@@ -34,14 +34,14 @@ public class PhoneNumberInputView: UIView {
 	}
 	
 	private let firstNumberBaseView: UIView = UIView().then {
-		$0.backgroundColor = .AppColor.appSecondary
+		$0.backgroundColor = AppTheme.Color.secondary
 		$0.makeCornerRadius(20)
 	}
 	
 	private let firstNumberDropdownButton: UIButton = UIButton(primaryAction: nil).then {
-		$0.titleLabel?.font = .AppFont.Bold_20
+		$0.titleLabel?.font = AppTheme.Font.Bold_20
 		$0.titleLabel?.textAlignment = .left
-		$0.tintColor = .AppColor.appBlack
+		$0.tintColor = AppTheme.Color.black
 		$0.showsMenuAsPrimaryAction = true
 		$0.changesSelectionAsPrimaryAction = true
 		$0.contentEdgeInsets = .init(
@@ -51,30 +51,30 @@ public class PhoneNumberInputView: UIView {
 	}
 	
 	private let dropDownImageView: UIImageView = UIImageView().then {
-		$0.image = .AppImage.dropDown
+		$0.image = AppTheme.Image.dropDown
 		$0.contentMode = .scaleAspectFit
 	}
 	
 	private let middleNumberBaseView: UIView = UIView().then {
-		$0.backgroundColor = .AppColor.appSecondary
+		$0.backgroundColor = AppTheme.Color.secondary
 		$0.makeCornerRadius(20)
 	}
 	
 	private let middleNumberTextField: UITextField = UITextField().then {
-		$0.font = .AppFont.Bold_20
-		$0.textColor = .AppColor.appBlack
+		$0.font = AppTheme.Font.Bold_20
+		$0.textColor = AppTheme.Color.black
 		$0.textAlignment = .center
 		$0.keyboardType = .numberPad
 	}
 	
 	private let lastNumberBaseView: UIView = UIView().then {
-		$0.backgroundColor = .AppColor.appSecondary
+		$0.backgroundColor = AppTheme.Color.secondary
 		$0.makeCornerRadius(20)
 	}
 	
 	private let lastNumberTextField: UITextField = UITextField().then {
-		$0.font = .AppFont.Bold_20
-		$0.textColor = .AppColor.appBlack
+		$0.font = AppTheme.Font.Bold_20
+		$0.textColor = AppTheme.Color.black
 		$0.textAlignment = .center
 		$0.keyboardType = .numberPad
 	}

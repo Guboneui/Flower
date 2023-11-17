@@ -28,21 +28,21 @@ public class HeaderSlideView: UIView {
 		var backgroundColor: UIColor {
 			switch self {
 			case .loginError:
-				return .AppColor.appWarning
+				return AppTheme.Color.warning
 			}
 		}
 		
 		var textColor: UIColor {
 			switch self {
 			case .loginError:
-				return .AppColor.appWhite
+				return AppTheme.Color.white
 			}
 		}
 		
 		var font: UIFont {
 			switch self {
 			case .loginError:
-				return .AppFont.Regular_14
+				return AppTheme.Font.Regular_14
 			}
 		}
 	}

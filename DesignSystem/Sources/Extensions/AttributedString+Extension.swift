@@ -15,7 +15,7 @@ public extension AttributedString {
 	/// 원하는 텍스트와, 폰트를 적용할 수 있습니다.
 	static func makeAttributedStringWithFont(
 		text: String,
-		font: UIFont = .AppFont.Regular_12
+		font: UIFont = AppTheme.Font.Regular_12
 	) -> AttributedString {
 		
 		let attributes: [NSAttributedString.Key: Any] = [

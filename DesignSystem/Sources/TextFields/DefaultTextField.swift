@@ -27,9 +27,9 @@ public class DefaultTextField: UIView {
 			case .normal:
 				makeBorder(borderColor: .clear)
 			case .success:
-				makeBorder(borderColor: .AppColor.appPrimary)
+				makeBorder(borderColor: AppTheme.Color.primary)
 			case .failure:
-				makeBorder(borderColor: .AppColor.appWarning)
+				makeBorder(borderColor: AppTheme.Color.warning)
 			}
 		}
 	}
@@ -95,12 +95,12 @@ public class DefaultTextField: UIView {
 	
 	// MARK: Font
 	private enum Font {
-		static let textFieldFont: UIFont = .AppFont.Regular_12
+		static let textFieldFont: UIFont = AppTheme.Font.Regular_12
 	}
 	
 	private enum ColorSet {
-		static let baseBackgroundColor: UIColor = .AppColor.appGrey90
-		static let textFieldColor: UIColor = .AppColor.appBlack
+		static let baseBackgroundColor: UIColor = AppTheme.Color.grey90
+		static let textFieldColor: UIColor = AppTheme.Color.black
 	}
 	
 	// MARK: INPUT PROPERTY
@@ -113,13 +113,13 @@ public class DefaultTextField: UIView {
 	// MARK: UI PROPERTY
 	private let textField: UITextField = UITextField()
 	private let clearButton: UIButton = UIButton().then {
-		$0.setImage(.AppImage.delete, for: .normal)
-		$0.tintColor = .AppColor.appGrey70
+		$0.setImage(AppTheme.Image.delete, for: .normal)
+		$0.tintColor = AppTheme.Color.grey70
 	}
 	
 	private let securityButton: UIButton = UIButton().then {
-		$0.setImage(.AppImage.showOff, for: .normal)
-		$0.setImage(.AppImage.showOn, for: .selected)
+		$0.setImage(AppTheme.Image.showOff, for: .normal)
+		$0.setImage(AppTheme.Image.showOn, for: .selected)
 	}
 	
 	private let customView: UIView
