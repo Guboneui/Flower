@@ -49,7 +49,7 @@ private extension DimModalPresentable where Self: UIViewController {
   var hideAnimationDurationTime: TimeInterval { 0.5 }
   
   var backgroundViewColor: UIColor { .black.withAlphaComponent(0.3) }
-	var modalViewColor: UIColor { .AppColor.appWhite }
+	var modalViewColor: UIColor { AppTheme.Color.white }
   var modalViewRadius: CGFloat { 20.0 }
   
   // MARK: - METHOD

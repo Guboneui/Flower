@@ -37,7 +37,7 @@ public extension UIView {
   /// - parameter color: UIColor
   func makeBorder(
     borderWidth: CGFloat = 1.0,
-    borderColor: UIColor = .AppColor.appGrey70
+		borderColor: UIColor = AppTheme.Color.grey70
   ) {
     layer.masksToBounds = true
     layer.borderWidth = borderWidth
@@ -51,7 +51,7 @@ public extension UIView {
   func makeCornerRadiusWithBorder(
     _ radius: CGFloat,
     borderWidth: CGFloat = 1.0,
-    borderColor: UIColor = .AppColor.appGrey70
+    borderColor: UIColor = AppTheme.Color.grey70
   ) {
     layer.masksToBounds = true
     layer.cornerRadius = radius

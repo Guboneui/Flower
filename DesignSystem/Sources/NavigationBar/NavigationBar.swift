@@ -25,9 +25,9 @@ public class NavigationBar: UIView {
 		fileprivate var buttonImage: UIImage? {
 			switch self {
 			case .back:
-				return .AppImage.arrowLeft
+				return AppTheme.Image.arrowLeft
 			case .close:
-				return .AppImage.xmark
+				return AppTheme.Image.xmark
 			case .none:
 				return nil
 			}
@@ -47,14 +47,14 @@ public class NavigationBar: UIView {
 	
 	// MARK: Font
 	private enum Font {
-		static let navigationTitleFont: UIFont = .AppFont.Bold_18
+		static let navigationTitleFont: UIFont = AppTheme.Font.Bold_18
 	}
 	
 	// MARK: ColorSet
 	private enum ColorSet {
-		static let backgroundColor: UIColor = .AppColor.appWhite
-		static let navigationTitleColor: UIColor = .AppColor.appBlack
-		static let navigationLeftButtonColor: UIColor = .AppColor.appBlack
+		static let backgroundColor: UIColor = AppTheme.Color.white
+		static let navigationTitleColor: UIColor = AppTheme.Color.black
+		static let navigationLeftButtonColor: UIColor = AppTheme.Color.black
 	}
 	
 	// MARK: - OUTPUT

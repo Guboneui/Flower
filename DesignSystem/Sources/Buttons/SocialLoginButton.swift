@@ -54,13 +54,13 @@ private extension SocialLoginButton {
   func setupConfiguration() {
     switch type {
     case .naver:
-      setImage(.AppImage.naverLogin, for: .normal)
+			setImage(AppTheme.Image.naverLogin, for: .normal)
     case .kakao:
-      setImage(.AppImage.kakaoLogin, for: .normal)
+			setImage(AppTheme.Image.kakaoLogin, for: .normal)
     case .apple:
-      setImage(.AppImage.appleLogin, for: .normal)
+			setImage(AppTheme.Image.appleLogin, for: .normal)
     case .email:
-      setImage(.AppImage.emailLogin, for: .normal)
+			setImage(AppTheme.Image.emailLogin, for: .normal)
     }
     
     makeCornerRadius(Metric.buttonRadius)
