@@ -37,9 +37,9 @@ public class IconBorderTextField: UIView {
     fileprivate var iconImage: UIImage {
       switch self {
       case .email:
-        return .AppImage.email
+				return AppTheme.Image.email
       case .password:
-        return .AppImage.password
+				return AppTheme.Image.password
       }
     }
     
@@ -70,12 +70,12 @@ public class IconBorderTextField: UIView {
 	
 	// MARK: Font
 	private enum Font {
-		static let textFieldFont: UIFont = .AppFont.Regular_12
+		static let textFieldFont: UIFont = AppTheme.Font.Regular_12
 	}
 	
 	// MARK: ColorSet
 	private enum ColorSet {
-		static let textFieldColor: UIColor = .AppColor.appBlack
+		static let textFieldColor: UIColor = AppTheme.Color.black
 	}
   
   // MARK: INPUT PROPERTY
@@ -165,7 +165,7 @@ private extension IconBorderTextField {
       .asDriver(onErrorJustReturn: "")
       .drive(onNext: { [weak self] text in
         self?.currentText.accept(text)
-        self?.iconImageView.tintColor = text.isEmpty ? .AppColor.appGrey70 : .AppColor.appBlack
+        self?.iconImageView.tintColor = text.isEmpty ? AppTheme.Color.grey70 : AppTheme.Color.black
       }).disposed(by: disposeBag)
   }
 }
