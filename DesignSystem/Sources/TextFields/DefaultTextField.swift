@@ -21,6 +21,25 @@ public class DefaultTextField: UIView {
   
   // MARK: ACTION CLOSURE
   public var didTapTextButton: (() -> Void)?
+	public var currentState: DefaultTextFieldState = .normal {
+		didSet {
+			switch currentState {
+			case .normal:
+				makeBorder(borderColor: .clear)
+			case .success:
+				makeBorder(borderColor: .AppColor.appPrimary)
+			case .failure:
+				makeBorder(borderColor: .AppColor.appWarning)
+			}
+		}
+	}
+	
+	// MARK: State
+	public enum DefaultTextFieldState {
+		case normal
+		case success
+		case failure
+	}
   
   // MARK: TYPE
   /// DefaultTextField에 적용할 타입입니다.
@@ -225,6 +244,8 @@ private extension DefaultTextField {
     makeCornerRadius(16)
 		backgroundColor = ColorSet.baseBackgroundColor
     
+		makeBorder(borderColor: .AppColor.appWarning)
+		
     textField.keyboardType = keyboardType
     textField.placeholder = type.placeHolder
 		textField.textColor = ColorSet.textFieldColor
