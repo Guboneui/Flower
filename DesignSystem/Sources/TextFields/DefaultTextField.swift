@@ -20,7 +20,6 @@ public class DefaultTextField: UIView {
 	public let currentText: BehaviorRelay<String> = BehaviorRelay<String>(value: "")
 	
 	// MARK: ACTION CLOSURE
-	public var didTapTextButton: (() -> Void)?
 	public var currentState: DefaultTextFieldState = .normal {
 		didSet {
 			switch currentState {
@@ -264,15 +263,13 @@ private extension DefaultTextField {
 	
 	/// DefaultTextField의 CornerRadius 및 Gesture를 정의합니다.
 	func setupGeustures() {
-		clearButton.rx.tap
-			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+		clearButton.rx.touchHandler()
 			.bind { [weak self] in
 				self?.textField.text = ""
 				self?.currentText.accept("")
 			}.disposed(by: disposeBag)
 		
-		securityButton.rx.tap
-			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+		securityButton.rx.touchHandler()
 			.bind { [weak self] in
 				self?.securityButton.isSelected.toggle()
 				self?.textField.isSecureTextEntry.toggle()

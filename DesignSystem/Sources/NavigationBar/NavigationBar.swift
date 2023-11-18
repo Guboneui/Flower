@@ -9,6 +9,7 @@ import UIKit
 
 import ResourceKit
 
+import RxCocoa
 import RxGesture
 import RxSwift
 import SnapKit
@@ -57,8 +58,8 @@ public class NavigationBar: UIView {
 		static let navigationLeftButtonColor: UIColor = AppTheme.Color.black
 	}
 	
-	// MARK: - OUTPUT
-	public var didTapLeftButton: (() -> Void)?
+	// MARK: - TAP SUBJECT
+	fileprivate var didTapLeftButton: PublishSubject<Void> = .init()
 	
 	// MARK: - PROPERTY
 	private let navigationType: NavigationType
@@ -130,16 +131,21 @@ private extension NavigationBar {
 	}
 	
 	func setupGestures() {
-		navigationLeftButton.rx.tap
-			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+		navigationLeftButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
 				switch navigationType {
 				case .back, .close:
-					didTapLeftButton?()
+					didTapLeftButton.onNext(())
 				case .none:
 					break
 				}
 			}.disposed(by: disposeBag)
+	}
+}
+
+extension Reactive where Base: NavigationBar {
+	public var tapLeftButton: ControlEvent<Void> {
+		ControlEvent(events: base.didTapLeftButton.asObservable())
 	}
 }
