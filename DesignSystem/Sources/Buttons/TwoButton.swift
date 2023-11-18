@@ -35,8 +35,8 @@ public final class TwoButton: UIView {
 	}
 	
 	// MARK: - TAP ACTION CLOSURE
-	public var didTapLeftButton: (() -> Void)?
-	public var didTapRightButton: (() -> Void)?
+	fileprivate var didTapLeftButton: PublishSubject<Void> = .init()
+	fileprivate var didTapRightButton: PublishSubject<Void> = .init()
 	
 	// MARK: - CONFIGURE PROPERTY
 	private let sizeType: TwoButtonSizeType
@@ -171,18 +171,22 @@ private extension TwoButton {
 	}
 	
 	func setupGestures() {
-		leftButton.rx.tap
-			.bind { [weak self] in
-				guard let self else { return }
-				self.didTapLeftButton?()
-			}
+		leftButton.rx.touchHandler()
+			.bind(to: didTapLeftButton)
 			.disposed(by: disposeBag)
 		
-		rightButton.rx.tap
-			.bind { [weak self] in
-				guard let self else { return }
-				self.didTapRightButton?()
-			}
+		rightButton.rx.touchHandler()
+			.bind(to: didTapRightButton)
 			.disposed(by: disposeBag)
+	}
+}
+
+extension Reactive where Base: TwoButton {
+	public var tapLeftButton: ControlEvent<Void> {
+		ControlEvent(events: base.didTapLeftButton.asObservable())
+	}
+	
+	public var tapRightButton: ControlEvent<Void> {
+		ControlEvent(events: base.didTapRightButton.asObservable())
 	}
 }
