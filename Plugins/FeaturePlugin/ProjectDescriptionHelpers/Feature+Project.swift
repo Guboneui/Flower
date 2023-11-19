@@ -11,6 +11,7 @@ import ProjectDescription
 extension TargetDependency {
   public struct Feature {
     public struct Login { }
+    public struct SearchFilter { }
   }
 }
 
@@ -27,3 +28,15 @@ public extension TargetDependency.Feature.Login {
   static let Main = project(name: "Login")
 }
 
+public extension TargetDependency.Feature.SearchFilter {
+  static let folderName: String = "SearchFilter"
+  
+  static func project(name: String) -> TargetDependency {
+    return .project(
+      target: "\(name)",
+      path: .relativeToRoot("Feature/\(folderName)")
+    )
+  }
+  
+  static let Main = project(name: "SearchFilter")
+}
