@@ -11,6 +11,7 @@ import ProjectDescriptionHelpers
 import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
+import FeaturePlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Login"
@@ -23,7 +24,8 @@ let project = Project.makeFrameworkProject(
     .ThirdParty.Main,
     .DesignSystem.Main,
     .Domain.LoginDomain.Main,
-    .Data.LoginData.Main
+    .Data.LoginData.Main,
+    .Feature.SearchFilter.Main
   ],
   isDynamic: false,
   needTestTarget: false,
