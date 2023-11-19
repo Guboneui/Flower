@@ -63,8 +63,10 @@ private let appTarget: Target = Target(
   scripts: [.SwiftLintScript],
   dependencies: [
     .ThirdParty.Main,
-
-      .Feature.Login.Main,
+    
+    .Feature.Login.Main,
+    .Feature.SearchFilter.Main,
+    
     .Domain.Main,
     .Data.Main
   ],
