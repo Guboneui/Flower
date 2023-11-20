@@ -86,6 +86,7 @@ public final class EmailSignupViewController: UIViewController {
 	// MARK: TEXTSET
 	private enum TextSet {
 		static let authSendButtonText: String = "인증번호 전송"
+		static let authSendButtonDidSandText: String = "다음"
 		static let emailLabelText: String = "이메일"
 		static let navigationBarText: String = "회원가입"
 		static let cautionLabelText: String = "회원 가입시 ID는 반드시 본인 소유의 연락 가능한 이메일 주소를\n사용하여야 합니다."
@@ -279,7 +280,7 @@ private extension EmailSignupViewController {
 				if count == 1 {
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
-						self.authSendButton.setTitle("다음", for: .normal)
+						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 					})
 					count += 1
 				} else if count == 2 {
@@ -290,6 +291,7 @@ private extension EmailSignupViewController {
 					}
 					self.authView.alpha = 0
 					count = 1
+					self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
 				}
 			}
 			.disposed(by: disposeBag)
