@@ -17,6 +17,7 @@ import Then
 
 final class EmailLoginModalViewController: UIViewController, DimModalPresentable {
 	
+	//MARK: METRIC
 	private enum Metric {
 		static let signupButtonTopMargin: CGFloat = 330
 		static let signupButtonBothSidesMargin: CGFloat = 24
@@ -25,6 +26,7 @@ final class EmailLoginModalViewController: UIViewController, DimModalPresentable
 		static let tapGesturemilliseconds: Int = 300
 	}
 	
+	//MARK: TEXTSET
 	private enum TextSet {
 		static let loginButtonText: String = "동의하고 회원가입 계속하기"
 	}
@@ -44,7 +46,8 @@ final class EmailLoginModalViewController: UIViewController, DimModalPresentable
 	}
 }
 
-extension EmailLoginModalViewController {
+//MARK: EXTENSION SETUP FUNC 
+private extension EmailLoginModalViewController {
 	func setupViews() {
 		modalView.addSubview(signupButton)
 		
