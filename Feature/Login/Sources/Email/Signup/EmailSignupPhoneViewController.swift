@@ -57,7 +57,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	}
 	
 	private let phoneNumberInputView = PhoneNumberInputView(
-		with: ["010", "116", "017", "011", "018", "019"]
+		with: ["010", "011", "116", "017", "018", "019"]
 	)
 	
 	private let completionButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText)
