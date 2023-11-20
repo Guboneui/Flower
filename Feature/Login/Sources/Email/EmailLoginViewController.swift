@@ -104,9 +104,7 @@ public final class EmailLoginViewController: UIViewController {
 	}
 	
 	private let emailTextField: IconBorderTextField = IconBorderTextField(.email)
-	private let passwordTextField: IconBorderTextField = IconBorderTextField(
-		.password
-	)
+	private let passwordTextField: IconBorderTextField = IconBorderTextField(.password)
 	
 	private let loginButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText)
 	
