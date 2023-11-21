@@ -230,20 +230,22 @@ private extension EmailSignupPWViewController {
 	}
 	
 	func setupGestures() {
-		navigationBar.didTapLeftButton = {
-			if let navigation = self.navigationController as? EmailLoginNavigationController {
-				navigation.pageController.moveToPrevPage()
-				navigation.popViewController(animated: true)
-			}
-		}
 		
-		nextButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
-			)
+		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
+				
+				if let navigation = self.navigationController as? EmailLoginNavigationController {
+					navigation.pageController.moveToPrevPage()
+					navigation.popViewController(animated: true)
+				}
+			}
+			.disposed(by: disposeBag)
+		
+		nextButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					

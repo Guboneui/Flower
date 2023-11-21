@@ -207,7 +207,7 @@ private extension EmailLoginViewController {
 		view.addSubview(idSaveCheckView)
 		idSaveCheckView.addSubview(idSaveCheckButton)
 		idSaveCheckView.addSubview(idSaveCheckLabel)
-
+		
 		view.addSubview(passwordFindButton)
 		
 		view.addSubview(socialLoginsStackView)
@@ -273,30 +273,28 @@ private extension EmailLoginViewController {
 	}
 	
 	func setupGestures() {
-		navigationBar.didTapLeftButton = {
-			self.dismiss(animated: true)
-		}
-		
-		emailSignupButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
-			)
+		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
+				
+				self.dismiss(animated: true)
+			}
+			.disposed(by: disposeBag)
+		
+		emailSignupButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				
 				let parentViewController = EmailLoginModalViewController()
 				parentViewController.parentVC = self
 				parentViewController.showModal()
 			}
 			.disposed(by: disposeBag)
 		
-		idSaveCheckButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
-			)
+		idSaveCheckButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
+				
 				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
 			}
 			.disposed(by: disposeBag)

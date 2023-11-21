@@ -63,12 +63,10 @@ private extension EmailLoginModalViewController {
 	}
 	
 	func setupGestures() {
-		signupButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
-			)
-			.bind {[weak self] in guard let self else { return }
+		signupButton.rx.touchHandler()
+			.bind {[weak self] in
+				guard let self else { return }
+				
 				self.didTapButton()
 			}
 			.disposed(by: disposeBag)
@@ -81,6 +79,7 @@ private extension EmailLoginModalViewController {
 			)
 			.bind { [weak self] _ in
 				guard let self else { return }
+				
 				self.didTapBackgroundView()
 			}
 			.disposed(by: disposeBag)
