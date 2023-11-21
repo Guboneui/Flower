@@ -58,28 +58,28 @@ public final class EmailSignupViewController: UIViewController {
 	
 	// MARK: FONT
 	private enum Font {
-		static let emailLabelFont: UIFont = .AppFont.Bold_16
-		static let cautionLabelFont: UIFont = .AppFont.Regular_12
-		static let authLabelFont: UIFont = .AppFont.Bold_16
-		static let authResendButtonFont: UIFont = .AppFont.Bold_10
-		static let authCautionLabelFont: UIFont = .AppFont.Bold_10 //레귤러 10으로 바꾸기
+		static let emailLabelFont: UIFont = AppTheme.Font.Bold_16
+		static let cautionLabelFont: UIFont = AppTheme.Font.Regular_12
+		static let authLabelFont: UIFont = AppTheme.Font.Bold_16
+		static let authResendButtonFont: UIFont = AppTheme.Font.Bold_10
+		static let authCautionLabelFont: UIFont = AppTheme.Font.Regular_10 //레귤러 10으로 바꾸기
 	}
 	
 	// MARK: Image
 	private enum Image {
-		static let cautionImage: UIImage = .AppImage.caution
+		static let cautionImage: UIImage = AppTheme.Image.caution
 	}
 	
 	// MARK: COLORSET
 	private enum ColorSet {
-		static let backgroundColor: UIColor = .AppColor.appWhite
-		static let cautionViewColor: UIColor = .AppColor.appWhite
-		static let emailLabelColor: UIColor = .AppColor.appBlack
-		static let cautionLabelColor: UIColor = .AppColor.appGrey70
-		static let authViewBackgroundColor: UIColor = .AppColor.appWhite
-		static let authLabelColor: UIColor = .AppColor.appBlack
-		static let authResendButtonColor: UIColor = .AppColor.appBlack
-		static let authCautionLabelColor: UIColor = .AppColor.appGrey70
+		static let backgroundColor: UIColor = AppTheme.Color.white
+		static let cautionViewColor: UIColor = AppTheme.Color.white
+		static let emailLabelColor: UIColor = AppTheme.Color.black
+		static let cautionLabelColor: UIColor = AppTheme.Color.grey70
+		static let authViewBackgroundColor: UIColor = AppTheme.Color.white
+		static let authLabelColor: UIColor = AppTheme.Color.black
+		static let authResendButtonColor: UIColor = AppTheme.Color.black
+		static let authCautionLabelColor: UIColor = AppTheme.Color.grey70
 		
 	}
 	

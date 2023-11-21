@@ -47,28 +47,28 @@ public final class EmailLoginViewController: UIViewController {
 	
 	// MARK: FONT
 	private enum Font {
-		static let emailLoginLabelFont: UIFont = .AppFont.Bold_20
-		static let idSaveCheckLabelFont: UIFont = .AppFont.Regular_12
-		static let passwordFindButtonFont: UIFont = .AppFont.Regular_12
-		static let signupQuestionLabelFont: UIFont = .AppFont.Regular_14
-		static let emailSignupButtonFont: UIFont = .AppFont.Bold_14
+		static let emailLoginLabelFont: UIFont = AppTheme.Font.Bold_20
+		static let idSaveCheckLabelFont: UIFont = AppTheme.Font.Regular_12
+		static let passwordFindButtonFont: UIFont = AppTheme.Font.Regular_12
+		static let signupQuestionLabelFont: UIFont = AppTheme.Font.Regular_14
+		static let emailSignupButtonFont: UIFont = AppTheme.Font.Bold_14
 	}
 	
 	// MARK: Image
 	private enum Image {
-		static let idSaveCheckButtonOffImage: UIImage = .AppImage.checkBoxOff
-		static let idSaveCheckButtonOnImage: UIImage = .AppImage.checkBoxOn
+		static let idSaveCheckButtonOffImage: UIImage = AppTheme.Image.checkBoxOff
+		static let idSaveCheckButtonOnImage: UIImage = AppTheme.Image.checkBoxOn
 	}
 	
 	// MARK: COLORSET
 	private enum ColorSet {
-		static let backgroundColor: UIColor = .AppColor.appWhite
-		static let idSaveCheckViewColor: UIColor = .AppColor.appWhite
-		static let emailLoginLabelColor: UIColor = .AppColor.appBlack
-		static let idSaveCheckLabelColor: UIColor = .AppColor.appBlack
-		static let passwordFindButtonColor: UIColor = .AppColor.appBlack
-		static let signupQuestionLabelColor: UIColor = .AppColor.appBlack
-		static let emailSignupButtonColor: UIColor = .AppColor.appBlack
+		static let backgroundColor: UIColor = AppTheme.Color.white
+		static let idSaveCheckViewColor: UIColor = AppTheme.Color.white
+		static let emailLoginLabelColor: UIColor = AppTheme.Color.black
+		static let idSaveCheckLabelColor: UIColor = AppTheme.Color.black
+		static let passwordFindButtonColor: UIColor = AppTheme.Color.black
+		static let signupQuestionLabelColor: UIColor = AppTheme.Color.black
+		static let emailSignupButtonColor: UIColor = AppTheme.Color.black
 	}
 	
 	// MARK: TEXTSET

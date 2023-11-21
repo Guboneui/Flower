@@ -49,24 +49,24 @@ public final class EmailSignupPWViewController: UIViewController {
 	
 	// MARK: FONT
 	private enum Font {
-		static let pwLabelFont: UIFont = .AppFont.Bold_16
-		static let pwCautionLabelFont: UIFont = .AppFont.Bold_10
-		static let pwRedCautionLabelFont: UIFont = .AppFont.Bold_10
+		static let pwLabelFont: UIFont = AppTheme.Font.Bold_16
+		static let pwCautionLabelFont: UIFont = AppTheme.Font.Bold_10
+		static let pwRedCautionLabelFont: UIFont = AppTheme.Font.Bold_10
 	}
 	
 	// MARK: Image
 	private enum Image {
-		static let pwCautionImage: UIImage = .AppImage.caution
+		static let pwCautionImage: UIImage = AppTheme.Image.caution
 	}
 	
 	// MARK: COLORSET
 	private enum ColorSet {
-		static let backgroundColor: UIColor = .AppColor.appWhite
-		static let pwViewBackgroundColor: UIColor = .AppColor.appWhite
-		static let pwCheckViewBackgroundColor: UIColor = .AppColor.appWhite
-		static let pwLabelColor: UIColor = .AppColor.appBlack
-		static let pwCautionLabelColor: UIColor = .AppColor.appGrey70
-		static let pwRedCautionLabelFont: UIColor = .AppColor.appWarning
+		static let backgroundColor: UIColor = AppTheme.Color.white
+		static let pwViewBackgroundColor: UIColor = AppTheme.Color.white
+		static let pwCheckViewBackgroundColor: UIColor = AppTheme.Color.white
+		static let pwLabelColor: UIColor = AppTheme.Color.black
+		static let pwCautionLabelColor: UIColor = AppTheme.Color.grey70
+		static let pwRedCautionLabelFont: UIColor = AppTheme.Color.warning
 	}
 	
 	// MARK: TEXTSET

@@ -32,13 +32,13 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	
 	// MARK: FONT
 	private enum Font {
-		static let phoneNumberLabelFont: UIFont = .AppFont.Bold_20
+		static let phoneNumberLabelFont: UIFont = AppTheme.Font.Bold_20
 	}
 	
 	// MARK: COLORSET
 	private enum ColorSet {
-		static let backgroundColor: UIColor = .AppColor.appWhite
-		static let phoneNumberLabelColor: UIColor = .AppColor.appBlack
+		static let backgroundColor: UIColor = AppTheme.Color.white
+		static let phoneNumberLabelColor: UIColor = AppTheme.Color.black
 	}
 	
 	// MARK: TEXTSET

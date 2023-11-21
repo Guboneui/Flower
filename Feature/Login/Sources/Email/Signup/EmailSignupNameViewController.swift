@@ -45,23 +45,23 @@ public final class EmailSignupNameViewController: UIViewController {
 	
 	// MARK: FONT
 	private enum Font {
-		static let nameLabelFont: UIFont = .AppFont.Bold_16
+		static let nameLabelFont: UIFont = AppTheme.Font.Bold_16
 	}
 	
 	// MARK: Image
 	private enum Image {
-		static let profileImage: UIImage = .AppImage.profile
-		static let cameraImage: UIImage = .AppImage.camera
+		static let profileImage: UIImage = AppTheme.Image.profile
+		static let cameraImage: UIImage = AppTheme.Image.camera
 	}
 	
 	// MARK: COLORSET
 	private enum ColorSet {
-		static let backgroundColor: UIColor = .AppColor.appWhite
-		static let nameLabelColor: UIColor = .AppColor.appBlack
-		static let profileViewBackgroundColor: UIColor = .AppColor.appWhite
-		static let profileImageViewColor: UIColor = .AppColor.appGrey70 //grey40으로 변경
-		static let cameraViewBackgroundColor: UIColor = .AppColor.appPrimary
-		static let cameraImageViewColor: UIColor = .AppColor.appWhite
+		static let backgroundColor: UIColor = AppTheme.Color.white
+		static let nameLabelColor: UIColor = AppTheme.Color.black
+		static let profileViewBackgroundColor: UIColor = AppTheme.Color.white
+		static let profileImageViewColor: UIColor = AppTheme.Color.grey40
+		static let cameraViewBackgroundColor: UIColor = AppTheme.Color.primary
+		static let cameraImageViewColor: UIColor = AppTheme.Color.white
 	}
 	
 	// MARK: TEXTSET
