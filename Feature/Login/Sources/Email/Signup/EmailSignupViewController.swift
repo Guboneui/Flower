@@ -263,60 +263,56 @@ private extension EmailSignupViewController {
 	func setupGestures() {
 		var count = 1
 		
-		navigationBar.didTapLeftButton = {
-			if let navigation = self.navigationController as? EmailLoginNavigationController {
-				navigation.pageController.moveToPrevPage()
-				navigation.popViewController(animated: true)
-			}
-		}
-		
-		authSendButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
-			)
-			.bind { [weak self] in 
+		navigationBar.rx.tapLeftButton
+			.bind { [weak self] in
 				guard let self else { return }
-				if count == 1 {
-					UIView.animate(withDuration: 1, delay: 0, animations: {
-						self.authView.alpha = 1
-						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
-					})
-					count += 1
-				} else if count == 2 {
-					if let navigation = self.navigationController as? EmailLoginNavigationController {
-						navigation.pageController.moveToNextPage()
-						let secondVC = EmailSignupPWViewController()
-						navigation.pushViewController(secondVC, animated: true)
-					}
-					self.authView.alpha = 0
-					count = 1
-					self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
+				if let navigation = self.navigationController as? EmailLoginNavigationController {
+					navigation.pageController.moveToPrevPage()
+					navigation.popViewController(animated: true)
 				}
 			}
 			.disposed(by: disposeBag)
-		
-		authResendButton.rx.tap
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
-			)
-			.bind { [weak self] in
-				guard let self else { return }
-				print("인증번호 재발송 버튼 클릭")
+				
+				authSendButton.rx.touchHandler()
+					.bind { [weak self] in
+						guard let self else { return }
+						if count == 1 {
+							UIView.animate(withDuration: 1, delay: 0, animations: {
+								self.authView.alpha = 1
+								self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
+							})
+							count += 1
+						} else if count == 2 {
+							if let navigation = self.navigationController as? EmailLoginNavigationController {
+								navigation.pageController.moveToNextPage()
+								let secondVC = EmailSignupPWViewController()
+								navigation.pushViewController(secondVC, animated: true)
+							}
+							self.authView.alpha = 0
+							count = 1
+							self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
+						}
+					}
+					.disposed(by: disposeBag)
+				
+				authResendButton.rx.touchHandler()
+					.bind { [weak self] in
+						guard let self else { return }
+						
+						print("인증번호 재발송 버튼 클릭")
+					}
+					.disposed(by: disposeBag)
 			}
-			.disposed(by: disposeBag)
 	}
-}
-
-extension UIButton {
-	func setUnderline() {
-		guard let title = title(for: .normal) else { return }
-		let attributedString = NSMutableAttributedString(string: title)
-		attributedString.addAttribute(.underlineStyle,
-																	value: NSUnderlineStyle.single.rawValue,
-																	range: NSRange(location: 0, length: title.count)
-		)
-		setAttributedTitle(attributedString, for: .normal)
+	
+	private extension UIButton {
+		func setUnderline() {
+			guard let title = title(for: .normal) else { return }
+			let attributedString = NSMutableAttributedString(string: title)
+			attributedString.addAttribute(.underlineStyle,
+																		value: NSUnderlineStyle.single.rawValue,
+																		range: NSRange(location: 0, length: title.count)
+			)
+			setAttributedTitle(attributedString, for: .normal)
+		}
 	}
-}
