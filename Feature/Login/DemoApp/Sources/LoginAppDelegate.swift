@@ -11,8 +11,6 @@ import Login
 import LoginData
 import LoginDomain
 
-
-
 @main
 class LoginAppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
@@ -33,4 +31,3 @@ private extension LoginAppDelegate {
 		window?.makeKeyAndVisible()
 	}
 }
-
