@@ -62,7 +62,8 @@ public final class EmailSignupViewController: UIViewController {
 		static let cautionLabelFont: UIFont = AppTheme.Font.Regular_12
 		static let authLabelFont: UIFont = AppTheme.Font.Bold_16
 		static let authResendButtonFont: UIFont = AppTheme.Font.Bold_10
-		static let authCautionLabelFont: UIFont = AppTheme.Font.Regular_10 //레귤러 10으로 바꾸기
+		static let authCautionLabelFont: UIFont = AppTheme.Font.Regular_10
+		static let  timerLabelFont: UIFont = AppTheme.Font.Bold_10
 	}
 	
 	// MARK: Image
@@ -80,7 +81,7 @@ public final class EmailSignupViewController: UIViewController {
 		static let authLabelColor: UIColor = AppTheme.Color.black
 		static let authResendButtonColor: UIColor = AppTheme.Color.black
 		static let authCautionLabelColor: UIColor = AppTheme.Color.grey70
-		
+		static let  timerLabelColor: UIColor = AppTheme.Color.primary
 	}
 	
 	// MARK: TEXTSET
@@ -91,6 +92,8 @@ public final class EmailSignupViewController: UIViewController {
 		static let navigationBarText: String = "회원가입"
 		static let cautionLabelText: String = "회원 가입시 ID는 반드시 본인 소유의 연락 가능한 이메일 주소를\n사용하여야 합니다."
 		static let authLabelText: String = "인증번호 6자리"
+		static let timerLabelText: String = "10분 00초"
+		static let authTextFieldPlaceHolderText: String = "이메일 인증"
 		static let authResendButtonText: String = "인증번호 재전송"
 		static let authCautionLabelText: String =
 		"인증번호는 입력한 이메일 주소로 발송됩니다.\n수신하지 못했다면 스팸함 또는 해당 이메일 서비스의 설정을 확인해주세요."
@@ -139,8 +142,16 @@ public final class EmailSignupViewController: UIViewController {
 		$0.setUnderline()
 	}
 	
-	private let authTextField: DefaultTextField = DefaultTextField(
-		.emailAuthCode, keyboardType: .numberPad
+	private let timerLabel: UILabel = UILabel().then {
+		$0.text = TextSet.timerLabelText
+		$0.font = Font.timerLabelFont
+		$0.textColor = ColorSet.timerLabelColor
+	}
+	
+	private lazy var authTextField: DefaultTextField = DefaultTextField(
+		.custom,
+		customView: timerLabel,
+		customTypePlaceHolder: TextSet.authTextFieldPlaceHolderText
 	)
 	
 	private let authCautionLabel: UILabel = UILabel().then {
@@ -272,47 +283,47 @@ private extension EmailSignupViewController {
 				}
 			}
 			.disposed(by: disposeBag)
-				
-				authSendButton.rx.touchHandler()
-					.bind { [weak self] in
-						guard let self else { return }
-						if count == 1 {
-							UIView.animate(withDuration: 1, delay: 0, animations: {
-								self.authView.alpha = 1
-								self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
-							})
-							count += 1
-						} else if count == 2 {
-							if let navigation = self.navigationController as? EmailLoginNavigationController {
-								navigation.pageController.moveToNextPage()
-								let secondVC = EmailSignupPWViewController()
-								navigation.pushViewController(secondVC, animated: true)
-							}
-							self.authView.alpha = 0
-							count = 1
-							self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
-						}
+		
+		authSendButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				if count == 1 {
+					UIView.animate(withDuration: 1, delay: 0, animations: {
+						self.authView.alpha = 1
+						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
+					})
+					count += 1
+				} else if count == 2 {
+					if let navigation = self.navigationController as? EmailLoginNavigationController {
+						navigation.pageController.moveToNextPage()
+						let secondVC = EmailSignupPWViewController()
+						navigation.pushViewController(secondVC, animated: true)
 					}
-					.disposed(by: disposeBag)
-				
-				authResendButton.rx.touchHandler()
-					.bind { [weak self] in
-						guard let self else { return }
-						
-						print("인증번호 재발송 버튼 클릭")
-					}
-					.disposed(by: disposeBag)
+					self.authView.alpha = 0
+					count = 1
+					self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
+				}
 			}
+			.disposed(by: disposeBag)
+		
+		authResendButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				
+				print("인증번호 재발송 버튼 클릭")
+			}
+			.disposed(by: disposeBag)
 	}
-	
-	private extension UIButton {
-		func setUnderline() {
-			guard let title = title(for: .normal) else { return }
-			let attributedString = NSMutableAttributedString(string: title)
-			attributedString.addAttribute(.underlineStyle,
-																		value: NSUnderlineStyle.single.rawValue,
-																		range: NSRange(location: 0, length: title.count)
-			)
-			setAttributedTitle(attributedString, for: .normal)
-		}
+}
+
+private extension UIButton {
+	func setUnderline() {
+		guard let title = title(for: .normal) else { return }
+		let attributedString = NSMutableAttributedString(string: title)
+		attributedString.addAttribute(.underlineStyle,
+																	value: NSUnderlineStyle.single.rawValue,
+																	range: NSRange(location: 0, length: title.count)
+		)
+		setAttributedTitle(attributedString, for: .normal)
 	}
+}
