@@ -19,7 +19,7 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
 		makeWindow()
-		
+
     return true
   }
 }
