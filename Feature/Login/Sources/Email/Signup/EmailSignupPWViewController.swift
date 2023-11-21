@@ -91,7 +91,9 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.textColor = ColorSet.pwLabelColor
 	}
 	
-	private let pwTextField: DefaultTextField = DefaultTextField(.password)
+	private let pwTextField: DefaultTextField = DefaultTextField(.password).then {
+		$0.currentState = .normal
+	}
 	
 	private let pwCautionLabel: UILabel = UILabel().then {
 		$0.text = TextSet.pwCautionLabelText
@@ -121,7 +123,9 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.textColor = ColorSet.pwLabelColor
 	}
 	
-	private let pwCheckTextField: DefaultTextField = DefaultTextField(.password)
+	private let pwCheckTextField: DefaultTextField = DefaultTextField(.password).then {
+		$0.currentState = .normal
+	}
 	
 	private let pwCheckcautionImageView: UIImageView = UIImageView().then {
 		$0.image = Image.pwCautionImage

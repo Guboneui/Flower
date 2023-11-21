@@ -103,7 +103,9 @@ public final class EmailSignupNameViewController: UIViewController {
 		$0.textColor = ColorSet.nameLabelColor
 	}
 	
-	private let nameTextField: DefaultTextField = DefaultTextField(.name)
+	private let nameTextField: DefaultTextField = DefaultTextField(.name).then {
+		$0.currentState = .normal
+	}
 	
 	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText)
 	

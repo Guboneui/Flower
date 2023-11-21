@@ -107,7 +107,9 @@ public final class EmailSignupViewController: UIViewController {
 		$0.textColor = ColorSet.emailLabelColor
 	}
 	
-	private let emailTextField: DefaultTextField = DefaultTextField(.email)
+	private let emailTextField: DefaultTextField = DefaultTextField(.email).then {
+		$0.currentState = .normal
+	}
 	
 	private let cautionView: UIView = UIView().then {
 		$0.backgroundColor = ColorSet.cautionViewColor
@@ -152,7 +154,9 @@ public final class EmailSignupViewController: UIViewController {
 		.custom,
 		customView: timerLabel,
 		customTypePlaceHolder: TextSet.authTextFieldPlaceHolderText
-	)
+	).then {
+		$0.currentState = .normal
+	}
 	
 	private let authCautionLabel: UILabel = UILabel().then {
 		$0.text = TextSet.authCautionLabelText
