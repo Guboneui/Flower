@@ -90,12 +90,13 @@ final class TravelSpotSelectorView: UIView {
 		$0.textAlignment = .right
 	}
 	
-	public var currentState: BehaviorRelay<Bool> = .init(value: false)
+	public var currentState: BehaviorRelay<Bool> = .init(value: true)
 	private let disposeBag: DisposeBag = .init()
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupConfigure()
 		setupBindings()
+		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -103,17 +104,16 @@ final class TravelSpotSelectorView: UIView {
 	}
 	
 	public func setExtendableState() {
-		subviews.forEach {
-			$0.alpha = 0.0
-			$0.removeFromSuperview()
-			$0.snp.removeConstraints()
-		}
 		
+		subviews.forEach {
+//			$0.alpha = 0.0
+			$0.removeFromSuperview()
+		}
+//		
 		addSubview(stackView)
 		locationSearchContainerView.addSubview(searchImageView)
 		locationSearchContainerView.addSubview(searchLabel)
 		addSubview(popularSpotCollectionView)
-		subviews.forEach { $0.alpha = 1.0 }
 		
 		stackView.snp.makeConstraints { make in
 			make.top.equalToSuperview().offset(Metric.stackViewTopMargin)
@@ -131,14 +131,13 @@ final class TravelSpotSelectorView: UIView {
 		}
 		
 		searchLabel.snp.makeConstraints { make in
-			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchLabelLeftMargin)
+			make.leading.equalTo(self.searchImageView.snp.trailing).offset(Metric.searchLabelLeftMargin)
 			make.trailing.equalToSuperview().offset(-Metric.subViewHorizontalMargin)
 			make.centerY.equalToSuperview()
 		}
 		
-		
 		popularSpotCollectionView.snp.makeConstraints { make in
-			make.top.equalTo(stackView.snp.bottom).offset(Metric.popularSpotCollectionViewTopMargin)
+			make.top.equalTo(self.stackView.snp.bottom).offset(Metric.popularSpotCollectionViewTopMargin)
 			make.bottom.equalToSuperview().offset(Metric.popularSpotCollectionViewBottomMargin)
 			make.horizontalEdges.equalToSuperview()
 			make.height.equalTo(Metric.popularSpotCollectionViewHeight)
@@ -147,33 +146,28 @@ final class TravelSpotSelectorView: UIView {
 	}
 	
 	public func setTestState() {
+		
 		subviews.forEach {
-			$0.alpha = 0.0
 			$0.removeFromSuperview()
-			$0.snp.removeConstraints()
 		}
 		
 		addSubview(locationLabel)
 		locationLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 		addSubview(selectedLocationLabel)
 		
-		self.subviews.forEach { $0.alpha = 1.0 }
 		
-		
-		
-		locationLabel.snp.makeConstraints { make in
+		self.locationLabel.snp.makeConstraints { make in
 			make.leading.equalToSuperview().offset(32)
 			make.verticalEdges.equalToSuperview().inset(24)
 		}
 		
-		selectedLocationLabel.snp.makeConstraints { make in
-			make.leading.equalTo(locationLabel.snp.trailing).offset(8)
+		self.selectedLocationLabel.snp.makeConstraints { make in
+			make.leading.equalTo(self.locationLabel.snp.trailing).offset(8)
 			make.trailing.equalToSuperview().offset(-32)
 			make.centerY.equalToSuperview()
 		}
 		
 	}
-	
 }
 
 // MARK: - PRIVATE METHOD
