@@ -16,11 +16,11 @@ final class RootViewController: UIViewController {
 
 	private let rootLabel: UILabel = UILabel().then { label in
 		label.text = "Hello World"
-		label.font = .AppFont.medium.font(size: 20)
+		label.font = AppTheme.Font.Regular_20
 	}
 
 	private let rootImageView: UIImageView = UIImageView().then { imageView in
-		imageView.image = .AppImage.jjangu
+		imageView.image = AppTheme.Image.profile
 		imageView.contentMode = .scaleAspectFit
 	}
 
@@ -30,7 +30,7 @@ final class RootViewController: UIViewController {
 	}
 
 	private func setupViews() {
-		view.backgroundColor = .AppColor.primaryColor
+		view.backgroundColor = AppTheme.Color.primary
 
 		view.addSubview(rootImageView)
 		view.addSubview(rootLabel)

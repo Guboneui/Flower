@@ -9,11 +9,11 @@ import Foundation
 import ProjectDescription
 import ProjectDescriptionHelpers
 
+import DataPlugin
+import DomainPlugin
 import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
-import DomainPlugin
-import DataPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.guesthouse.user.app"
