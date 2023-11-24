@@ -24,10 +24,14 @@ public final class EmailSignupPWViewController: UIViewController {
 		
 		static let pwTextFieldTopMargin: CGFloat = 8
 		
-		static let pwCautionLabelTopMargin: CGFloat = 8
-		static let pwCautionLabelLeftMargin: CGFloat = 8
+		static let pwCautionImageViewSize: CGFloat = 14
+		static let pwCautionImageViewTopMargin: CGFloat = 8
+		static let pwCautionImageViewLeftMargin: CGFloat = 8
 		
-		static let pwRedCautionLabelRightMargin: CGFloat = 9
+		static let pwCautionLabelTopMargin: CGFloat = 8
+		static let pwCautionLabelLeftMargin: CGFloat = 4
+		
+		static let pwAnnouncementLabelRightMargin: CGFloat = 9
 		
 		static let pwCheckViewHeightMargin: CGFloat = 93
 		static let pwCheckViewTopMargin: CGFloat = 38
@@ -35,28 +39,27 @@ public final class EmailSignupPWViewController: UIViewController {
 		
 		static let pwCheckTextFieldTopMargin: CGFloat = 8
 		
-		static let pwCheckRedCautionLabelTopMargin: CGFloat = 8
-		static let pwCheckRedCautionLabelRightMargin: CGFloat = 9
+		static let pwCheckAnnouncementLabelTopMargin: CGFloat = 8
+		static let pwCheckAnnouncementLabelRightMargin: CGFloat = 9
 		
 		static let nextButtonBottomMargin: CGFloat = 34
 		static let nextButttonBothsides: CGFloat = 24
 		
 		static let pwCautionLabelNumberOfLines: Int = 1
-		static let pwRedCautionLabelNumberOfLines: Int = 1
-		
-		static let tapGesturemilliseconds: Int = 300
+		static let pwAnnouncementLabelNumberOfLines: Int = 1
 	}
 	
 	// MARK: FONT
 	private enum Font {
 		static let pwLabelFont: UIFont = AppTheme.Font.Bold_16
-		static let pwCautionLabelFont: UIFont = AppTheme.Font.Bold_10
-		static let pwRedCautionLabelFont: UIFont = AppTheme.Font.Bold_10
+		static let pwCautionLabelFont: UIFont = AppTheme.Font.Regular_12
+		static let pwAnnouncementLabelFont: UIFont = AppTheme.Font.Regular_12
+		static let pwCheckAnnouncementLabelFont: UIFont = AppTheme.Font.Regular_12
 	}
 	
 	// MARK: Image
 	private enum Image {
-		static let pwCautionImage: UIImage = AppTheme.Image.caution
+		static let pwCautionImage: UIImage = AppTheme.Image.success
 	}
 	
 	// MARK: COLORSET
@@ -65,8 +68,9 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwViewBackgroundColor: UIColor = AppTheme.Color.white
 		static let pwCheckViewBackgroundColor: UIColor = AppTheme.Color.white
 		static let pwLabelColor: UIColor = AppTheme.Color.black
-		static let pwCautionLabelColor: UIColor = AppTheme.Color.grey70
-		static let pwRedCautionLabelFont: UIColor = AppTheme.Color.warning
+		static let pwCautionLabelColor: UIColor = AppTheme.Color.primary
+		static let pwAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
+		static let pwCheckAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
 	}
 	
 	// MARK: TEXTSET
@@ -74,8 +78,9 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let navigationBarText: String = "회원가입"
 		static let pwLabelText: String = "비밀번호"
 		static let pwCheckLabelText: String = "비밀번호 확인"
-		static let pwCautionLabelText: String = "영문+숫자+특수문자 8~20자리"
-		static let pwRedCautionLabelText: String = "8자리 이상을 입력해주세요"
+		static let pwCautionLabelText: String = "사용가능한 비밀번호 입니다"
+		static let pwAnnouncementLabelText: String = "영문+숫자+특수문자 8~20자리"
+		static let pwCheckAnnouncementLabelText: String = "영문+숫자+특수문자 8~20자리"
 		static let nextButtonText: String = "다음"
 	}
 	
@@ -106,11 +111,11 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.image = Image.pwCautionImage
 	}
 	
-	private let pwRedCautionLabel: UILabel = UILabel().then {
-		$0.text = TextSet.pwRedCautionLabelText
-		$0.font = Font.pwRedCautionLabelFont
-		$0.textColor = ColorSet.pwRedCautionLabelFont
-		$0.numberOfLines = Metric.pwRedCautionLabelNumberOfLines
+	private let pwAnnouncementLabel: UILabel = UILabel().then {
+		$0.text = TextSet.pwAnnouncementLabelText
+		$0.font = Font.pwAnnouncementLabelFont
+		$0.textColor = ColorSet.pwAnnouncementLabelColor
+		$0.numberOfLines = Metric.pwAnnouncementLabelNumberOfLines
 	}
 	
 	private let pwCheckView: UIView = UIView().then {
@@ -127,15 +132,11 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.currentState = .normal
 	}
 	
-	private let pwCheckcautionImageView: UIImageView = UIImageView().then {
-		$0.image = Image.pwCautionImage
-	}
-	
-	private let pwCheckRedCautionLabel: UILabel = UILabel().then {
-		$0.text = TextSet.pwRedCautionLabelText
-		$0.font = Font.pwRedCautionLabelFont
-		$0.textColor = ColorSet.pwRedCautionLabelFont
-		$0.numberOfLines = Metric.pwRedCautionLabelNumberOfLines
+	private let pwCheckAnnouncementLabel: UILabel = UILabel().then {
+		$0.text = TextSet.pwCheckAnnouncementLabelText
+		$0.font = Font.pwCheckAnnouncementLabelFont
+		$0.textColor = ColorSet.pwCheckAnnouncementLabelColor
+		$0.numberOfLines = Metric.pwAnnouncementLabelNumberOfLines
 	}
 	
 	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText)
@@ -161,13 +162,14 @@ private extension EmailSignupPWViewController {
 		view.addSubview(pwView)
 		pwView.addSubview(pwLabel)
 		pwView.addSubview(pwTextField)
+		pwView.addSubview(pwCautionImageView)
 		pwView.addSubview(pwCautionLabel)
-		pwView.addSubview(pwRedCautionLabel)
+		pwView.addSubview(pwAnnouncementLabel)
 		
 		view.addSubview(pwCheckView)
 		pwCheckView.addSubview(pwCheckLabel)
 		pwCheckView.addSubview(pwCheckTextField)
-		pwCheckView.addSubview(pwCheckRedCautionLabel)
+		pwCheckView.addSubview(pwCheckAnnouncementLabel)
 		
 		view.addSubview(nextButton)
 		
@@ -196,14 +198,20 @@ private extension EmailSignupPWViewController {
 			make.horizontalEdges.equalToSuperview()
 		}
 		
-		pwCautionLabel.snp.makeConstraints { make in
-			make.top.equalTo(pwTextField.snp.bottom).offset(Metric.pwCautionLabelTopMargin)
-			make.leading.equalToSuperview().inset(Metric.pwCautionLabelLeftMargin)
+		pwCautionImageView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.pwCautionImageViewSize)
+			make.top.equalTo(pwTextField.snp.bottom).offset(Metric.pwCautionImageViewTopMargin)
+			make.leading.equalToSuperview().inset(Metric.pwCautionImageViewLeftMargin)
 		}
 		
-		pwRedCautionLabel.snp.makeConstraints { make in
+		pwCautionLabel.snp.makeConstraints { make in
+			make.top.equalTo(pwTextField.snp.bottom).offset(Metric.pwCautionLabelTopMargin)
+			make.leading.equalTo(pwCautionImageView.snp.trailing).offset(Metric.pwCautionLabelLeftMargin)
+		}
+		
+		pwAnnouncementLabel.snp.makeConstraints { make in
 			make.centerY.equalTo(pwCautionLabel)
-			make.trailing.equalToSuperview().inset(Metric.pwRedCautionLabelRightMargin)
+			make.trailing.equalToSuperview().inset(Metric.pwAnnouncementLabelRightMargin)
 		}
 		
 		pwCheckView.snp.makeConstraints { make in
@@ -222,9 +230,9 @@ private extension EmailSignupPWViewController {
 			make.horizontalEdges.equalToSuperview()
 		}
 		
-		pwCheckRedCautionLabel.snp.makeConstraints { make in
-			make.top.equalTo(pwCheckTextField.snp.bottom).offset(Metric.pwCheckRedCautionLabelTopMargin)
-			make.trailing.equalToSuperview().inset(Metric.pwCheckRedCautionLabelRightMargin)
+		pwCheckAnnouncementLabel.snp.makeConstraints { make in
+			make.top.equalTo(pwCheckTextField.snp.bottom).offset(Metric.pwCheckAnnouncementLabelTopMargin)
+			make.trailing.equalToSuperview().inset(Metric.pwCheckAnnouncementLabelRightMargin)
 		}
 		
 		nextButton.snp.makeConstraints { make in
