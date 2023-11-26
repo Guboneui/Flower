@@ -31,7 +31,10 @@ private let infoPlist: [String: InfoPlist.Value] = [
   "CFBundleVersion": "1",
   "UIMainStoryboardFile": "",
   "UILaunchStoryboardName": "LaunchScreen",
-  "CFBundleIconName": "AppIcon"
+  "CFBundleIconName": "AppIcon",
+  "NSAppTransportSecurity": [
+    "NSAllowsArbitraryLoads": "YES"
+  ]
 ]
 
 private let baseSettings: [String: SettingValue] = [
