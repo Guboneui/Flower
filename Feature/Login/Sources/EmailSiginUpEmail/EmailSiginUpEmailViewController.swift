@@ -15,16 +15,16 @@ import SnapKit
 import Then
 
 public final class EmailSiginUpEmailViewController: UIViewController {
-	private let emailSiginUpEmailView: EmailSiginUpEmailView = EmailSiginUpEmailView()
-	private var navigationBar: NavigationBar { emailSiginUpEmailView.navigationBar }
-	private var authCodeLabel: UILabel { emailSiginUpEmailView.authCodeLabel }
-	private var resendAuthCodeLabel: UILabel { emailSiginUpEmailView.resendAuthCodeLabel }
-	private var authCodeTextField: DefaultTextField { emailSiginUpEmailView.authCodeTextField }
-	private var authCodeNoticeLabel: UILabel { emailSiginUpEmailView.authCodeNoticeLabel }
-	private var nextButton: DefaultButton { emailSiginUpEmailView.nextButton }
+	private let rootView: EmailSiginUpEmailView = EmailSiginUpEmailView()
+	private var navigationBar: NavigationBar { rootView.navigationBar }
+	private var authCodeLabel: UILabel { rootView.authCodeLabel }
+	private var resendAuthCodeLabel: UILabel { rootView.resendAuthCodeLabel }
+	private var authCodeTextField: DefaultTextField { rootView.authCodeTextField }
+	private var authCodeNoticeLabel: UILabel { rootView.authCodeNoticeLabel }
+	private var nextButton: DefaultButton { rootView.nextButton }
 	
 	public override func loadView() {
-		view = emailSiginUpEmailView
+		view = rootView
 	}
 	
 	private let disposeBag = DisposeBag()
@@ -39,20 +39,26 @@ private extension EmailSiginUpEmailViewController {
 	
 	func setupGestures() {
 		var emailAuth: Bool = false
-			self.navigationController?.popViewController(animated: true)
-		}
 		
-		nextButton.addTarget(self, action: #selector(didTapNextButton(_:)), for: .touchUpInside)
-	}
-	
+		navigationBar.rx.tapLeftButton
+			.bind { [weak self] in
+				guard let self else { return }
+				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+					navigation.popViewController(animated: true)
+				}
+			}.disposed(by: disposeBag)
+		
 		nextButton.rx.touchHandler()
 			.bind { [weak self] in
-			authCodeLabel.isHidden = false
-			resendAuthCodeLabel.isHidden = false
-			authCodeTextField.isHidden = false
-			authCodeNoticeLabel.isHidden = false
+				guard let self else { return }
+				if !emailAuth {
+					self.authCodeLabel.isHidden = false
+					self.resendAuthCodeLabel.isHidden = false
 					self.authCodeTextField.isHidden = false
 					self.authCodeNoticeLabel.isHidden = false
+					self.nextButton.setTitle("다음", for: .normal)
+					emailAuth = true
+				} else {
 					if let navigation = self.navigationController as? EmailSiginUpNavigationController {
 						let EmailSiginUpPasswordViewController = EmailSiginUpPasswordViewController()
 						navigation.pushViewController(EmailSiginUpPasswordViewController, animated: true)

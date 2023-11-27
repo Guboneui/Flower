@@ -10,19 +10,22 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import RxSwift
 import SnapKit
 import Then
 
 public final class SiginUpTermsViewController: UIViewController, DimModalPresentable {
-	private let siginUpTermsView: SiginUpTermsView = SiginUpTermsView()
-	public var goSiginUpButton: DefaultButton { siginUpTermsView.goSiginUpButton }
+	private let rootView: SiginUpTermsView = SiginUpTermsView()
+	public var goSiginUpButton: DefaultButton { rootView.goSiginUpButton }
 	public var parentVC: UIViewController?
-	public var backgroundView: UIView { siginUpTermsView.backgroundView }
-	public var modalView: UIView { siginUpTermsView.modalView }
+	public var backgroundView: UIView { rootView.backgroundView }
+	public var modalView: UIView { rootView.modalView }
 	
 	public override func loadView() {
-		view = siginUpTermsView
+		view = rootView
 	}
+	
+	private let disposeBag = DisposeBag()
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -32,24 +35,21 @@ public final class SiginUpTermsViewController: UIViewController, DimModalPresent
 
 private extension SiginUpTermsViewController {
 	func setupGestures() {
-		backgroundView.addGestureRecognizer(UITapGestureRecognizer(
-			target: self,
-			action: #selector(didTapBackgroundView(_:)))
-		)
+		backgroundView.rx.tapGesture()
+			.when(.recognized)
+			.bind { [weak self] _ in
+				guard let self else { return }
+				self.hideModal()
+			}.disposed(by: disposeBag)
 		
-		goSiginUpButton.addTarget(
-			self,
-			action: #selector(didTapGoSiginUpButton(_:)),
-			for: .touchUpInside)
-	}
-	
-	@objc func didTapBackgroundView(_ sender: UITapGestureRecognizer) {
-		hideModal()
-	}
-	
-	@objc func didTapGoSiginUpButton(_ sender: UITapGestureRecognizer) {
-		let EmailSiginUpViewController = EmailSiginUpEmailViewController()
-		navigationController?.pushViewController(EmailSiginUpViewController, animated: true)
-		hideModal()
+		goSiginUpButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+					let EmailSiginUpViewController = EmailSiginUpEmailViewController()
+					navigation.pushViewController(EmailSiginUpViewController, animated: true)
+				}
+				self.hideModal()
+			}.disposed(by: disposeBag)
 	}
 }

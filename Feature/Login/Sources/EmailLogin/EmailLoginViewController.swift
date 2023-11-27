@@ -10,21 +10,24 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import RxSwift
 import SnapKit
 import Then
 
 public final class EmailLoginViewController: UIViewController {
-	private let emailLoginView: EmailLoginView = EmailLoginView()
-	private var headerSlideView: HeaderSlideView { emailLoginView.headerSlideView }
-	private var navigationBar: NavigationBar { emailLoginView.navigationBar }
-	private var loginButton: DefaultButton { emailLoginView.loginButton }
-	private var saveIdentifierCheckBox: UIButton { emailLoginView.saveIdentifierCheckBox }
-	private var saveIdentifierView: UIView { emailLoginView.saveIdentifierView }
-	private var emailSiginUpButton: UIButton { emailLoginView.emailSiginUpButton }
+	private let rootView: EmailLoginView = EmailLoginView()
+	private var headerSlideView: HeaderSlideView { rootView.headerSlideView }
+	private var navigationBar: NavigationBar { rootView.navigationBar }
+	private var loginButton: DefaultButton { rootView.loginButton }
+	private var saveIdentifierCheckBox: UIButton { rootView.saveIdentifierCheckBox }
+	private var saveIdentifierView: UIView { rootView.saveIdentifierView }
+	private var emailSiginUpButton: UIButton { rootView.emailSiginUpButton }
 	
 	public override func loadView() {
-		view = emailLoginView
+		view = rootView
 	}
+	
+	private let disposeBag = DisposeBag()
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -47,37 +50,34 @@ public final class EmailLoginViewController: UIViewController {
 
 private extension EmailLoginViewController {
 	func setupGestures() {
-		navigationBar.didTapLeftButton = { [weak self] in
-			guard let self else { return }
-			dismiss(animated: true)
-		}
-		
-		saveIdentifierView.addGestureRecognizer(UITapGestureRecognizer(
-			target: self,
-			action: #selector(didTapCheckBox(_:))))
-		
-		loginButton.addAction(.init(handler: { [weak self] _ in
+		navigationBar.rx.tapLeftButton
+			.bind { [weak self] in
 				guard let self else { return }
-				didTabLoginButton()
-			}), for: .touchUpInside)
+				self.dismiss(animated: true)
+			}.disposed(by: disposeBag)
 		
-		emailSiginUpButton.addAction(UIAction(handler: { [weak self] _ in
+		saveIdentifierView.rx.tapGesture()
+			.when(.recognized)
+			.throttle(.milliseconds(300),
+								latest: false,
+								scheduler: MainScheduler.instance)
+			.bind { [weak self] _ in
 				guard let self else { return }
-				didTapEmailSiginUp()
-			}), for: .touchUpInside)
-	}
-	
-	@objc func didTapCheckBox(_ sender: UITapGestureRecognizer) {
-		saveIdentifierCheckBox.isSelected.toggle()
-	}
-	
-	@objc func didTabLoginButton() {
-		headerSlideView.startAnimation(at: self)
-	}
-	
-	@objc func didTapEmailSiginUp() {
-		let SiginUpTermsViewController: SiginUpTermsViewController = SiginUpTermsViewController()
-		SiginUpTermsViewController.parentVC = self
-		SiginUpTermsViewController.showModal()
+				self.saveIdentifierCheckBox.isSelected.toggle()
+			}.disposed(by: disposeBag)
+
+		loginButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				self.headerSlideView.startAnimation(at: self)
+			}.disposed(by: disposeBag)
+		
+		emailSiginUpButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				let SiginUpTermsViewController: SiginUpTermsViewController = SiginUpTermsViewController()
+				SiginUpTermsViewController.parentVC = self
+				SiginUpTermsViewController.showModal()
+			}.disposed(by: disposeBag)
 	}
 }

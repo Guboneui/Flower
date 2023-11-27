@@ -10,16 +10,19 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import RxSwift
 import SnapKit
 import Then
 
 public final class LoginViewController: UIViewController {
-	private let loginView: LoginView = LoginView()
-	private var emailLoginButton: SocialLoginButton { loginView.emailLoginButton }
+	private let rootView: LoginView = LoginView()
+	private var emailLoginButton: SocialLoginButton { rootView.emailLoginButton }
 	
 	public override func loadView() {
-		 view = loginView
+		 view = rootView
 	}
+	
+	private let disposeBag = DisposeBag()
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -29,15 +32,17 @@ public final class LoginViewController: UIViewController {
 
 private extension LoginViewController {
 	func setupGestures() {
-		emailLoginButton.addTarget(self, action: #selector(didTapEmailLogin(_:)), for: .touchUpInside)
-	}
-	
-	@objc private func didTapEmailLogin(_ sender: UIButton) {
-		let EmailLoginViewController = EmailLoginViewController()
-		let emailSiginUpNavi = EmailSiginUpNavigationController(
-							rootViewController: EmailLoginViewController
-						)
-		emailSiginUpNavi.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-		present(emailSiginUpNavi, animated: true, completion: nil)
+		emailLoginButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				
+				let EmailLoginViewController = EmailLoginViewController()
+				let emailSiginUpNavi = EmailSiginUpNavigationController(
+					rootViewController: EmailLoginViewController
+				)
+				emailSiginUpNavi.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+				self.present(emailSiginUpNavi, animated: true, completion: nil)
+			}.disposed(by: disposeBag)
 	}
 }
+

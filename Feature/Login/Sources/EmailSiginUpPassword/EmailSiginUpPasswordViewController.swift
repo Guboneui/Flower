@@ -10,17 +10,20 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import RxSwift
 import SnapKit
 import Then
 
 public final class EmailSiginUpPasswordViewController: UIViewController {
-	private let emailSiginUpPasswordView: EmailSiginUpPasswordView = EmailSiginUpPasswordView()
-	private var navigationBar: NavigationBar {emailSiginUpPasswordView.navigationBar }
-	private var nextButton: DefaultButton {emailSiginUpPasswordView.nextButton }
+	private let rootView: EmailSiginUpPasswordView = EmailSiginUpPasswordView()
+	private var navigationBar: NavigationBar {rootView.navigationBar }
+	private var nextButton: DefaultButton {rootView.nextButton }
 	
 	public override func loadView() {
-		view = emailSiginUpPasswordView
+		view = rootView
 	}
+	
+	private let disposeBag = DisposeBag()
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,21 +33,23 @@ public final class EmailSiginUpPasswordViewController: UIViewController {
 
 private extension EmailSiginUpPasswordViewController {
 	func setupGestures() {
-		navigationBar.didTapLeftButton = {
-			if let navigation = self.navigationController as? EmailSiginUpNavigationController {
-				navigation.pageController.moveToPrevPage()
-			}
-			self.navigationController?.popViewController(animated: true)
-		}
+			navigationBar.rx.tapLeftButton
+				.bind { [weak self] in
+					guard let self else { return }
+					if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+						navigation.popViewController(animated: true)
+						navigation.pageController.moveToPrevPage()
+					}
+				}.disposed(by: disposeBag)
 		
-		nextButton.addTarget(self, action: #selector(didTapNextButton(_:)), for: .touchUpInside)
-	}
-	
-	@objc func didTapNextButton(_ sender: UIButton) {
-		if let navigation = self.navigationController as? EmailSiginUpNavigationController {
-			let EmailSiginUpNameViewController = EmailSiginUpNameViewController()
-			navigation.pushViewController(EmailSiginUpNameViewController, animated: true)
-			navigation.pageController.moveToNextPage()
-		}
+		nextButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+					let EmailSiginUpNameViewController = EmailSiginUpNameViewController()
+					navigation.pushViewController(EmailSiginUpNameViewController, animated: true)
+					navigation.pageController.moveToNextPage()
+				}
+			}.disposed(by: disposeBag)
 	}
 }

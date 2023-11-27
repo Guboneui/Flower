@@ -10,17 +10,20 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import RxSwift
 import SnapKit
 import Then
 
 public class EmailSiginUpPhoneViewController: UIViewController {
-	private let emailSiginUpPhoneView: EmailSiginUpPhoneView = EmailSiginUpPhoneView()
-	private var navigationBar: NavigationBar { emailSiginUpPhoneView.navigationBar }
-	private var nextButton: DefaultButton { emailSiginUpPhoneView.nextButton }
+	private let rootView: EmailSiginUpPhoneView = EmailSiginUpPhoneView()
+	private var navigationBar: NavigationBar { rootView.navigationBar }
+	private var nextButton: DefaultButton { rootView.nextButton }
 	
 	public override func loadView() {
-		view = emailSiginUpPhoneView
+		view = rootView
 	}
+	
+	private let disposeBag = DisposeBag()
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -30,17 +33,21 @@ public class EmailSiginUpPhoneViewController: UIViewController {
 
 private extension EmailSiginUpPhoneViewController {
 	func setupGestures() {
-		navigationBar.didTapLeftButton = {
-			self.navigationController?.popViewController(animated: true)
-			if let navigation = self.navigationController as? EmailSiginUpNavigationController {
-				navigation.pageController.moveToPrevPage()
-			}
-		}
+		navigationBar.rx.tapLeftButton
+			.bind { [weak self] in
+				guard let self else { return }
+				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+					navigation.popViewController(animated: true)
+					navigation.pageController.moveToPrevPage()
+				}
+			}.disposed(by: disposeBag)
 		
-		nextButton.addTarget(self, action: #selector(didTapNextButton(_:)), for: .touchUpInside)
-	}
-	
-	@objc func didTapNextButton(_ sender: UIButton) {
-		self.navigationController?.popToRootViewController(animated: true)
+		nextButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+					navigation.popToRootViewController(animated: true)
+				}
+			}.disposed(by: disposeBag)
 	}
 }
