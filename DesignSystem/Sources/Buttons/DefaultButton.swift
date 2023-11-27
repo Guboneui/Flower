@@ -24,17 +24,17 @@ public class DefaultButton: UIButton {
 	
 	// MARK: Font
 	private enum Font {
-		static let buttonFont: UIFont = .AppFont.Bold_14
+		static let buttonFont: UIFont = AppTheme.Font.Bold_14
 	}
   
   // MARK: COLORSET
   /// DefaultButton의 색상 요소를 정의합니다.
   private enum ColorSet {
-		static let enableTitleColor: UIColor = .AppColor.appWhite
-    static let enableBackgroundColor: UIColor = .AppColor.appPrimary
-		static let disableTitleColor: UIColor = .AppColor.appWhite
-    static let disableBackgroundColor: UIColor = .AppColor.appGrey70
-    static let pressedColor: UIColor = .AppColor.appPrimary.withAlphaComponent(0.75)
+		static let enableTitleColor: UIColor = AppTheme.Color.white
+		static let enableBackgroundColor: UIColor = AppTheme.Color.primary
+		static let disableTitleColor: UIColor = AppTheme.Color.white
+    static let disableBackgroundColor: UIColor = AppTheme.Color.grey70
+		static let pressedColor: UIColor = AppTheme.Color.primary.withAlphaComponent(0.75)
   }
   
   // MARK: INPUT PROPERTY
