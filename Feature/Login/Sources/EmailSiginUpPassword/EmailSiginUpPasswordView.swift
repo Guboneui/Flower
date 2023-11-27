@@ -36,10 +36,12 @@ public final class EmailSiginUpPasswordView: UIView {
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(
 		.back,
-		title: TextSet.navigationBarText)
+		title: TextSet.navigationBarText
+	)
 	private(set) var nextButton: DefaultButton = DefaultButton(
 		title: TextSet.nextButtonText,
-		initEnableState: true)
+		initEnableState: true
+	)
 	
 	private let passwordLabel: UILabel = UILabel().then {
 		$0.text = TextSet.passwordLabelText
@@ -143,6 +145,7 @@ public final class EmailSiginUpPasswordView: UIView {
 			make.bottom.equalTo(safeAreaLayoutGuide).offset(Metric.nextButtonBottomMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
+		
 		super.updateConstraints()
 	}
 }

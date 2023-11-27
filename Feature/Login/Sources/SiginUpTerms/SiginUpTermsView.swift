@@ -54,6 +54,7 @@ final class SiginUpTermsView: UIView {
 			make.bottom.equalTo(modalView.safeAreaLayoutGuide).offset(Metric.goSiginUpButtonBottomMargin)
 			make.topMargin.equalTo(Metric.goSiginUpButtonTopMargin)
 		}
+		
 		super.updateConstraints()
 	}
 }

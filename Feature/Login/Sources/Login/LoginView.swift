@@ -90,6 +90,7 @@ public final class LoginView: UIView {
 			make.horizontalEdges.equalToSuperview().inset(Metric.loginStackViewInset)
 			make.top.equalTo(loginLabel.snp.bottom).offset(Metric.loginStackViewTop)
 		}
+		
 		super.updateConstraints()
 	}
 }

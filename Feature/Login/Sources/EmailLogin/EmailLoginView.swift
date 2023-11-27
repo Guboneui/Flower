@@ -46,7 +46,8 @@ public final class EmailLoginView: UIView {
 	private(set) var navigationBar: NavigationBar = NavigationBar(.close)
 	private(set) var loginButton: DefaultButton = DefaultButton(
 		title: TextSet.loginButtonText,
-		initEnableState: true)
+		initEnableState: true
+	)
 	private(set) var saveIdentifierCheckBox: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.checkBoxOff, for: .normal)
 		$0.setImage(AppTheme.Image.checkBoxOn, for: .selected)
@@ -196,6 +197,7 @@ public final class EmailLoginView: UIView {
 			make.horizontalEdges.equalToSuperview().inset(Metric.loginStackViewInset)
 			make.bottom.equalTo(siginUpLabel.snp.top).offset(Metric.loginStackViewBottomMargin)
 		}
+		
 		super.updateConstraints()
 	}
 }

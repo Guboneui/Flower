@@ -71,7 +71,8 @@ public final class EmailSiginUpEmailView: UIView {
 	}
 	private(set) var nextButton: DefaultButton = DefaultButton(
 		title: TextSet.nextButtonText,
-		initEnableState: true)
+		initEnableState: true
+	)
 	
 	private let emailLabel: UILabel = UILabel().then {
 		$0.text = TextSet.emailLabelText
@@ -171,6 +172,7 @@ public final class EmailSiginUpEmailView: UIView {
 			make.bottom.equalTo(safeAreaLayoutGuide).offset(Metric.nextButtonBottomMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
+		
 		super.updateConstraints()
 	}
 }

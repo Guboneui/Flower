@@ -32,10 +32,12 @@ public final class EmailSiginUpPhoneView: UIView {
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(
 		.back,
-		title: TextSet.navigationBarText)
+		title: TextSet.navigationBarText
+	)
 	private(set) var nextButton: DefaultButton = DefaultButton(
 		title: TextSet.nextButtonText,
-		initEnableState: true)
+		initEnableState: true
+	)
 	
 	private let nameLabel: UILabel = UILabel().then {
 		$0.text = TextSet.nameLabelText
@@ -93,6 +95,7 @@ public final class EmailSiginUpPhoneView: UIView {
 			make.bottom.equalTo(safeAreaLayoutGuide).offset(Metric.nextButtonBottomMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
+		
 		super.updateConstraints()
 	}
 }

@@ -37,10 +37,12 @@ public final class EmailSiginUpNameView: UIView {
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(
 		.back,
-		title: TextSet.navigationBarText)
+		title: TextSet.navigationBarText
+	)
 	private(set) var nextButton: DefaultButton = DefaultButton(
 		title: TextSet.nextButtonText,
-		initEnableState: true)
+		initEnableState: true
+	)
 	
 	private let profileView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
@@ -143,6 +145,7 @@ public final class EmailSiginUpNameView: UIView {
 			make.bottom.equalTo(safeAreaLayoutGuide).offset(Metric.nextButtonBottomMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
+		
 		super.updateConstraints()
 	}
 }
