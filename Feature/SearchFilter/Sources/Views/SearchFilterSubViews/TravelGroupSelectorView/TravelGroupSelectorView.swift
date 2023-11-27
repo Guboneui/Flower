@@ -20,18 +20,19 @@ final class TravelGroupSelectorView: UIView {
 	// MARK: - METRIC
 	private enum Metric {
 		static let radius: CGFloat = 22
-		static let stackViewSpacing: CGFloat = 24
-		static let stackViewTopMargin: CGFloat = 24
-		static let stackViewHorizontalMargin: CGFloat = 24
+		static let stackViewSpacing: CGFloat = 8
+		static let stackViewTrailingMargin: CGFloat = -24
+
+		static let groupLabelTopMargin: CGFloat = 21.5
+		static let groupLabelLeadingMargin: CGFloat = 28
+		static let groupLabelBottomMargin: CGFloat = -33.5
 		
-		static let subViewHorizontalMargin: CGFloat = 24
-		static let locationContainerViewHeight: CGFloat = 50
-		static let searchImageSize: CGFloat = 18
-		static let searchLabelLeftMargin: CGFloat = 8
+		static let titleLabelTopMargin: CGFloat = 24
+		static let titleLabelHorizontalMargin: CGFloat = 22
 		
-		static let popularSpotCollectionViewTopMargin: CGFloat = 8
-		static let popularSpotCollectionViewBottomMargin: CGFloat = -30
-		static let popularSpotCollectionViewHeight: CGFloat = 56
+		static let buttonSize: CGSize = .init(width: 36, height: 36)
+		static let countLabelWidth: CGFloat = 12
+		static let resizedImageSize: CGSize = .init(width: 28, height: 28)
 	}
 	
 	// MARK: - UI PROPERTY
@@ -47,30 +48,32 @@ final class TravelGroupSelectorView: UIView {
 		$0.textColor = AppTheme.Color.black
 	}
 	
-	private let minusButton: UIButton = UIButton().then {
-		let resizedImage = AppTheme.Image.minusDiable.changeImageSize(
-			size: .init(
-				width: 28,
-				height: 28
-			)
-		)
-		$0.setImage(resizedImage, for: .normal)
+	fileprivate let minusButton: UIButton = UIButton().then {
+		let enableImage = AppTheme.Image.minusEnable
+		let resizedEnableImage = enableImage.changeImageSize(size: Metric.resizedImageSize)
+		let disableImage = AppTheme.Image.minusDiable
+		let resizedDisableImage = disableImage.changeImageSize(size: Metric.resizedImageSize)
+		
+		$0.setImage(resizedEnableImage, for: .normal)
+		$0.setImage(resizedDisableImage, for: .disabled)
+		$0.isEnabled = false
 	}
 	
-	private let selectingGroupCountLabel: UILabel = UILabel().then {
-		$0.text = "0"
+	fileprivate let selectingGroupCountLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_16
 		$0.textColor = AppTheme.Color.black
+		$0.textAlignment = .center
+
 	}
 	
-	private let plusButton: UIButton = UIButton().then {
-		let resizedImage = AppTheme.Image.plusEnable.changeImageSize(
-			size: .init(
-				width: 28,
-				height: 28
-			)
-		)
-		$0.setImage(resizedImage, for: .normal)
+	fileprivate let plusButton: UIButton = UIButton().then {
+		let enableImage = AppTheme.Image.plusEnable
+		let resizedEnableImage = enableImage.changeImageSize(size: Metric.resizedImageSize)
+		let disableImage = AppTheme.Image.plusDisable
+		let resizedDisableImage = disableImage.changeImageSize(size: Metric.resizedImageSize)
+		
+		$0.setImage(resizedEnableImage, for: .normal)
+		$0.setImage(resizedDisableImage, for: .disabled)
 	}
 	
 	private lazy var groupCountingStackView: UIStackView = UIStackView(
@@ -79,16 +82,16 @@ final class TravelGroupSelectorView: UIView {
 			selectingGroupCountLabel,
 			plusButton
 		]).then {
-			$0.spacing = 8
+			$0.spacing = Metric.stackViewSpacing
 			$0.axis = .horizontal
 		}
 	
 	private let disposeBag: DisposeBag = .init()
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupConfigure()
 		setupSubViews()
-		setupGestures()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -118,39 +121,62 @@ private extension TravelGroupSelectorView {
 	
 	func setupConstraints() {
 		titleLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(24)
-			make.horizontalEdges.equalToSuperview().inset(22)
+			make.top.equalToSuperview().offset(Metric.titleLabelTopMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.titleLabelHorizontalMargin)
 		}
 		
 		groupLabel.snp.makeConstraints { make in
-			make.top.equalTo(titleLabel.snp.bottom).offset(21.5)
-			make.leading.equalToSuperview().offset(28)
-			make.bottom.equalToSuperview().offset(-33.5)
+			make.top.equalTo(titleLabel.snp.bottom).offset(Metric.groupLabelTopMargin)
+			make.leading.equalToSuperview().offset(Metric.groupLabelLeadingMargin)
+			make.bottom.equalToSuperview().offset(Metric.groupLabelBottomMargin)
 		}
 		
 		minusButton.snp.makeConstraints { make in
-			make.size.equalTo(36)
+			make.size.equalTo(Metric.buttonSize)
 		}
 		
 		plusButton.snp.makeConstraints { make in
-			make.size.equalTo(36)
+			make.size.equalTo(Metric.buttonSize)
+		}
+		
+		selectingGroupCountLabel.snp.makeConstraints { make in
+			make.width.equalTo(Metric.countLabelWidth)
 		}
 		
 		groupCountingStackView.snp.makeConstraints { make in
 			make.centerY.equalTo(groupLabel.snp.centerY)
-			make.trailing.equalToSuperview().offset(-24)
+			make.trailing.equalToSuperview().offset(Metric.stackViewTrailingMargin)
+		}
+	}
+}
+
+// MARK: - Reactive Extension
+extension Reactive where Base: TravelGroupSelectorView {
+	var tapDecreaseButton: ControlEvent<Void> {
+		let source: Observable<Void> = base.minusButton.rx.tap.asObservable()
+		return ControlEvent(events: source)
+	}
+	
+	var decreaseButtonEnable: Binder<Bool> {
+		return Binder(base) { view, isEnable in
+			view.minusButton.isEnabled = isEnable
 		}
 	}
 	
-	func setupGestures() {
-		minusButton.rx.touchHandler()
-			.bind {
-				print("MINUS")
-			}.disposed(by: disposeBag)
-		
-		plusButton.rx.touchHandler()
-			.bind {
-				print("PLUS")
-			}.disposed(by: disposeBag)
+	var tapIncreaseButton: ControlEvent<Void> {
+		let source: Observable<Void> = base.plusButton.rx.tap.asObservable()
+		return ControlEvent(events: source)
+	}
+	
+	var increaseButtonEnable: Binder<Bool> {
+		return Binder(base) { view, isEnable in
+			view.plusButton.isEnabled = isEnable
+		}
+	}
+	
+	var counterValue: Binder<String> {
+		return Binder(base) { view, text in
+			view.selectingGroupCountLabel.text = text
+		}
 	}
 }

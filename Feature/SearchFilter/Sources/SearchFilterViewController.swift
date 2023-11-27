@@ -10,11 +10,12 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import ReactorKit
 import RxSwift
 import SnapKit
 import Then
 
-public final class SearchFilterViewController: UIViewController {
+public final class SearchFilterViewController: UIViewController, View {
 	
 	// MARK: METRIC
 	private enum Metric {
@@ -32,7 +33,9 @@ public final class SearchFilterViewController: UIViewController {
 		hasGuideLine: true
 	)
 	
-	private let containerView: UIView = UIView().then {
+	private let scrollView: UIScrollView = UIScrollView()
+	
+	private let scrollContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.grey90
 	}
 	
@@ -54,10 +57,8 @@ public final class SearchFilterViewController: UIViewController {
 		rightButtonTitle: "검색"
 	)
 	
-	
-	
 	// MARK: - PROPERTY
-	private let disposeBag: DisposeBag = DisposeBag()
+	public var disposeBag: DisposeBag = .init()
 	
 	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
@@ -65,6 +66,38 @@ public final class SearchFilterViewController: UIViewController {
 		setupViewConfigure()
 		setupViews()
 		setupGestures()
+	}
+	
+	public func bind(reactor: SearchFilterViewReactor) {
+		
+		travelGroupSelectorView.rx.tapDecreaseButton
+			.map { .didTapDecreaseButton }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
+		travelGroupSelectorView.rx.tapIncreaseButton
+			.map { .didTapIncreaseButton }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
+		let groupCount = reactor.state.map(\.groupCount)
+			.distinctUntilChanged()
+			.share()
+		
+		groupCount
+			.map { String($0) }
+			.bind(to: travelGroupSelectorView.rx.counterValue)
+			.disposed(by: disposeBag)
+		
+		groupCount
+			.map { $0 > 0 }
+			.bind(to: travelGroupSelectorView.rx.decreaseButtonEnable)
+			.disposed(by: disposeBag)
+		
+		groupCount
+			.map { $0 < 6 }
+			.bind(to: travelGroupSelectorView.rx.increaseButtonEnable)
+			.disposed(by: disposeBag)
 	}
 }
 
@@ -76,9 +109,10 @@ private extension SearchFilterViewController {
 	
 	func setupViews() {
 		view.addSubview(navigationBar)
-		view.addSubview(containerView)
-		containerView.addSubview(travelSpotSelectorView)
-		containerView.addSubview(travelGroupSelectorView)
+		view.addSubview(scrollView)
+		scrollView.addSubview(scrollContainerView)
+		scrollContainerView.addSubview(travelSpotSelectorView)
+		scrollContainerView.addSubview(travelGroupSelectorView)
 		view.addSubview(bottomContainerView)
 		bottomContainerView.addSubview(bottomContainerGuideLineView)
 		bottomContainerView.addSubview(bottomButton)
@@ -92,10 +126,17 @@ private extension SearchFilterViewController {
 			make.horizontalEdges.equalToSuperview()
 		}
 		
-		containerView.snp.makeConstraints { make in
+		scrollView.snp.makeConstraints { make in
 			make.top.equalTo(navigationBar.snp.bottom)
 			make.horizontalEdges.equalToSuperview()
 			make.bottom.equalTo(bottomContainerView.snp.top)
+		}
+		
+		scrollContainerView.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
+			make.width.equalToSuperview()
+			
+			make.height.equalTo(2000)
 		}
 		
 		travelSpotSelectorView.snp.makeConstraints { make in
@@ -107,8 +148,6 @@ private extension SearchFilterViewController {
 			make.top.equalTo(travelSpotSelectorView.snp.bottom).offset(20)
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
-		
-		
 		
 		
 		bottomContainerView.snp.makeConstraints { make in
