@@ -22,7 +22,6 @@ final class SiginUpTermsView: UIView {
 	
 	private enum TextSet {
 		static let goSiginUpButtonText: String = "동의하고 회원가입 계속하기"
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var backgroundView: UIView = UIView()
@@ -39,7 +38,7 @@ final class SiginUpTermsView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 
 	private func setupSubViews() {

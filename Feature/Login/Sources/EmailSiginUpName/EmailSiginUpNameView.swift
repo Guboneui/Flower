@@ -33,7 +33,6 @@ public final class EmailSiginUpNameView: UIView {
 		static let navigationBarText: String = "회원가입"
 		static let nextButtonText: String = "다음"
 		static let nameLabelText: String = "이름을 입력해 주세요"
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(
@@ -80,7 +79,7 @@ public final class EmailSiginUpNameView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	private func setupViews() {

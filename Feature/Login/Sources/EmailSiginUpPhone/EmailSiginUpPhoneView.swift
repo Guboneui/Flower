@@ -28,7 +28,6 @@ public final class EmailSiginUpPhoneView: UIView {
 		static let nextButtonText: String = "회원가입 완료"
 		static let nameLabelText: String = "핸드폰 번호를 입력해 주세요"
 		static let phoneNumberInputViewTextArray: [String] = ["010", "011", "017", "018", "019", "116"]
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(
@@ -57,7 +56,7 @@ public final class EmailSiginUpPhoneView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	private func setupViews() {

@@ -32,7 +32,6 @@ public final class EmailSiginUpPasswordView: UIView {
 		static let passwordConditionsLabelText: String = "영문+숫자+특수문자 8~20자리"
 		static let checkPasswordLabelText: String = "비밀번호 확인"
 		static let checkPasswordConditionsLabelText: String = "영문+숫자+특수문자 8~20자리"
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(
@@ -79,7 +78,7 @@ public final class EmailSiginUpPasswordView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	private func setupViews() {

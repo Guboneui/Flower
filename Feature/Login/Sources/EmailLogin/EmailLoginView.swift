@@ -40,7 +40,6 @@ public final class EmailLoginView: UIView {
 		static let saveIdentifierLabelText: String = "이메일 기억하기"
 		static let findPasswordLabelText: String = "비밀번호 찾기"
 		static let siginUpLabelText: String = "아직 게하 회원이 아니신가요?"
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var headerSlideView: HeaderSlideView = HeaderSlideView(.loginError)
@@ -109,7 +108,7 @@ public final class EmailLoginView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	private func setupViews() {

@@ -21,7 +21,6 @@ public final class LoginView: UIView {
 	
 	private enum TextSet {
 		static let loginLabelText: String = "로그인/회원가입"
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var naverLoginButton: SocialLoginButton = SocialLoginButton(.naver)
@@ -53,7 +52,7 @@ public final class LoginView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	private func setupViews() {

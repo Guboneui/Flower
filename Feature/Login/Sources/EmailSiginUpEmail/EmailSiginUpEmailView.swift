@@ -39,7 +39,6 @@ public final class EmailSiginUpEmailView: UIView {
 		static let emailLabelText: String = "이메일"
 		static let cautionLabelText: String = "회원 가입시 ID는 반드시 본인 소유의 연락 가능한 이메일 주소를 사용하여야 합니다."
 		static let timerLabelText: String = "9분 59초"
-		static let initErrorText: String = "init(coder:) has not been implemented"
 	}
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
@@ -104,7 +103,7 @@ public final class EmailSiginUpEmailView: UIView {
 	}
 	
 	required init?(coder: NSCoder) {
-		fatalError(TextSet.initErrorText)
+		fatalError("init(coder:) has not been implemented")
 	}
 	
 	private func setupViews() {
