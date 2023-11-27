@@ -8,6 +8,9 @@
 import Foundation
 import UIKit
 
+import LoginData
+import LoginDomain
+
 import DesignSystem
 import ResourceKit
 
@@ -91,7 +94,10 @@ private extension EmailLoginModalViewController {
 	
 	func didTapButton() {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
-			let signupVC = EmailSignupViewController()
+			let repository = EmailSignupIDRepository()
+			let usecase = EmailSignupIDUseCase(authSendRepository: repository)
+			let viewModel = EmailSignupIDViewModel(usecase: usecase)
+			let signupVC = EmailSignupIDViewController(emailSignupIDViewModel: viewModel)
 			navigation.pushViewController(signupVC, animated: true)
 		}
 		

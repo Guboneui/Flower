@@ -1,5 +1,5 @@
 //
-//  EmailSignupViewController.swift
+//  EmailSignupIDViewController.swift
 //  Login
 //
 //  Created by 김동겸 on 11/3/23.
@@ -15,7 +15,7 @@ import RxSwift
 import SnapKit
 import Then
 
-public final class EmailSignupViewController: UIViewController {
+public final class EmailSignupIDViewController: UIViewController {
 	
 	// MARK: METRIC
 	private enum Metric {
@@ -107,7 +107,7 @@ public final class EmailSignupViewController: UIViewController {
 		static let emailLabelText: String = "이메일"
 		static let navigationBarText: String = "회원가입"
 		static let cautionLabelText: String = "사용 가능한 이메일입니다"
-		static let announcementLabelText: String = 
+		static let announcementLabelText: String =
 		"회원 가입시 ID는 반드시 본인 소유의 연락 가능한 이메일 주소를\n사용하여야 합니다."
 		
 		static let authLabelText: String = "인증번호 6자리"
@@ -208,17 +208,29 @@ public final class EmailSignupViewController: UIViewController {
 	
 	private let authSendButton: DefaultButton = DefaultButton(title: TextSet.authSendButtonText)
 	
-	private let disposeBag = DisposeBag()
+	private let emailSignupIDViewModel: EmailSignupIDViewModel
+	private let disposeBag: DisposeBag = DisposeBag()
+	
+	public init(emailSignupIDViewModel: EmailSignupIDViewModel) {
+		self.emailSignupIDViewModel = emailSignupIDViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
 		setupViews()
 		setupGestures()
+		
+		setupBinding()
 	}
 }
 
-private extension EmailSignupViewController {
+private extension EmailSignupIDViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
 		
@@ -357,6 +369,10 @@ private extension EmailSignupViewController {
 						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 					})
 					count += 1
+					
+					let email: String = self.emailTextField.currentText.value
+					self.emailSignupIDViewModel.fetchEmailAuthCode(with: email)
+					
 				} else if count == 2 {
 					if let navigation = self.navigationController as? EmailLoginNavigationController {
 						navigation.pageController.moveToNextPage()
@@ -377,6 +393,25 @@ private extension EmailSignupViewController {
 				print("인증번호 재발송 버튼 클릭")
 			}
 			.disposed(by: disposeBag)
+	}
+	
+	func setupBinding() {
+		emailTextField.currentText
+			.bind(to: emailSignupIDViewModel.emailRelay)
+			.disposed(by: disposeBag)
+		
+		emailTextField.currentText
+			.subscribe(onNext: { [weak self] email in
+				guard let self else { return }
+				
+				self.authSendButton.isEnabled = self.emailSignupIDViewModel.isValid()
+			})
+			.disposed(by: disposeBag)
+		
+		emailSignupIDViewModel.message.subscribe { message in
+			print(message.element?.body)
+		}
+		.disposed(by: disposeBag)
 	}
 }
 
