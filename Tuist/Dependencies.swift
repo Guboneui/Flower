@@ -14,7 +14,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     .remote(url: "https://github.com/ReactiveX/RxSwift", requirement: .upToNextMajor(from: "6.0.0")),
     .remote(url: "https://github.com/RxSwiftCommunity/RxGesture", requirement: .upToNextMajor(from: "4.0.0")),
     .remote(url: "https://github.com/Moya/Moya.git", requirement: .upToNextMajor(from: "15.0.0")),
-    .remote(url: "https://github.com/Guboneui/NaverMap-SPM", requirement: .upToNextMajor(from: "3.17.0"))
+    .remote(url: "https://github.com/Guboneui/NaverMap-SPM", requirement: .upToNextMajor(from: "3.17.0")),
+    .package(url: "https://github.com/ReactorKit/ReactorKit.git", .upToNextMajor(from: "3.0.0"))
   ],
   productTypes: [
     "SnapKit": .framework,
@@ -23,7 +24,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "RxGesture": .framework,
     "Moya": .framework,
     "RxMoya": .framework,
-    "NMapsMap": .framework
+    "NMapsMap": .framework,
+    "ReactorKit": .framework
   ]
 )
 

@@ -9,6 +9,7 @@ import UIKit
 
 import ResourceKit
 
+import RxCocoa
 import RxGesture
 import RxSwift
 import SnapKit
@@ -43,6 +44,8 @@ public class NavigationBar: UIView {
 		
 		static let navigationTitleTopMargin: CGFloat = 14
 		static let navigationTitleBottomMargin: CGFloat = -15
+		
+		static let guideLineHeight: CGFloat = 1
 	}
 	
 	// MARK: Font
@@ -55,26 +58,33 @@ public class NavigationBar: UIView {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let navigationTitleColor: UIColor = AppTheme.Color.black
 		static let navigationLeftButtonColor: UIColor = AppTheme.Color.black
+		static let guideLineColor: UIColor = AppTheme.Color.grey70
 	}
 	
-	// MARK: - OUTPUT
-	public var didTapLeftButton: (() -> Void)?
+	// MARK: - TAP SUBJECT
+	fileprivate var didTapLeftButton: PublishSubject<Void> = .init()
 	
 	// MARK: - PROPERTY
 	private let navigationType: NavigationType
 	private let navigationTitle: String
+	private let hasGuideLine: Bool
 	private let disposeBag: DisposeBag
 	
 	private let navigationLeftButton: UIButton = UIButton(type: .system)
 	private let navigationTitleLabel: UILabel = UILabel()
+	private let guideLineView: UIView = UIView().then {
+		$0.backgroundColor = ColorSet.guideLineColor
+	}
 	
 	// MARK: - Initialize
 	public init(
 		_ navigationType: NavigationType = .none,
-		title: String = ""
+		title: String = "",
+		hasGuideLine: Bool = false
 	) {
 		self.navigationType = navigationType
 		self.navigationTitle = title
+		self.hasGuideLine = hasGuideLine
 		self.disposeBag = .init()
 		super.init(frame: .zero)
 		setupConfigure()
@@ -108,6 +118,10 @@ private extension NavigationBar {
 		addSubview(navigationLeftButton)
 		addSubview(navigationTitleLabel)
 		
+		if hasGuideLine {
+			addSubview(guideLineView)
+		}
+		
 		setupConstraints()
 	}
 	
@@ -127,19 +141,32 @@ private extension NavigationBar {
 			make.bottom.equalToSuperview().offset(Metric.navigationTitleBottomMargin)
 			make.centerX.equalToSuperview()
 		}
+		
+		if hasGuideLine {
+			guideLineView.snp.makeConstraints { make in
+				make.horizontalEdges.equalToSuperview()
+				make.bottom.equalToSuperview()
+				make.height.equalTo(Metric.guideLineHeight)
+			}
+		}
 	}
 	
 	func setupGestures() {
-		navigationLeftButton.rx.tap
-			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+		navigationLeftButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
 				switch navigationType {
 				case .back, .close:
-					didTapLeftButton?()
+					didTapLeftButton.onNext(())
 				case .none:
 					break
 				}
 			}.disposed(by: disposeBag)
+	}
+}
+
+extension Reactive where Base: NavigationBar {
+	public var tapLeftButton: ControlEvent<Void> {
+		ControlEvent(events: base.didTapLeftButton.asObservable())
 	}
 }

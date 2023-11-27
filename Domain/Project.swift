@@ -8,8 +8,8 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import EntityPlugin
 import DomainPlugin
+import EntityPlugin
 
 let projectName: String = "Domain"
 let iOSTargetVersion: String = "16.0"

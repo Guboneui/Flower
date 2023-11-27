@@ -27,6 +27,7 @@ Tag  | Description
 ### Build
 - make generate: tuist generate
 - make LoginDemoApp: tuist generate LoginDemoApp
+- make SearchFilterDemoApp: tuist generate SearchFilterDemoApp
 ---
 
 ### Branch

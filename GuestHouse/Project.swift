@@ -9,11 +9,11 @@ import Foundation
 import ProjectDescription
 import ProjectDescriptionHelpers
 
+import DataPlugin
+import DomainPlugin
 import FeaturePlugin
 import ResourceKitPlugin
 import ThirdPartyDependencyPlugin
-import DomainPlugin
-import DataPlugin
 
 private let projectName: String = "App"
 private let bundleId: String = "com.guesthouse.user.app"
@@ -31,7 +31,10 @@ private let infoPlist: [String: InfoPlist.Value] = [
   "CFBundleVersion": "1",
   "UIMainStoryboardFile": "",
   "UILaunchStoryboardName": "LaunchScreen",
-  "CFBundleIconName": "AppIcon"
+  "CFBundleIconName": "AppIcon",
+  "NSAppTransportSecurity": [
+    "NSAllowsArbitraryLoads": "YES"
+  ]
 ]
 
 private let baseSettings: [String: SettingValue] = [
@@ -63,8 +66,10 @@ private let appTarget: Target = Target(
   scripts: [.SwiftLintScript],
   dependencies: [
     .ThirdParty.Main,
-
-      .Feature.Login.Main,
+    
+    .Feature.Login.Main,
+    .Feature.SearchFilter.Main,
+    
     .Domain.Main,
     .Data.Main
   ],

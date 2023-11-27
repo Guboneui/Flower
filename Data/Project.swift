@@ -8,8 +8,8 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import DomainPlugin
 import DataPlugin
+import DomainPlugin
 import NetworkPlugin
 
 let projectName: String = "Data"
