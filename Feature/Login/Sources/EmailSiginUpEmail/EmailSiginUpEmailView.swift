@@ -44,11 +44,13 @@ public final class EmailSiginUpEmailView: UIView {
 	
 	private(set) var navigationBar: NavigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	private(set) var authCodeLabel: UILabel = UILabel().then {
+		$0.isHidden = true
 		$0.text = TextSet.authCodeLabelText
 		$0.font = AppTheme.Font.Bold_16
 		$0.textColor = AppTheme.Color.black
 	}
 	private(set) var resendAuthCodeLabel: UILabel = UILabel().then {
+		$0.isHidden = true
 		let attributedString = NSMutableAttributedString.init(string: TextSet.resendAuthCodeLabelText)
 		attributedString.addAttribute(NSAttributedString.Key.underlineStyle, value: 1, range: NSRange
 			.init(location: 0, length: attributedString.length))
@@ -60,8 +62,9 @@ public final class EmailSiginUpEmailView: UIView {
 		.custom,
 		customView: timerLabel,
 		customTypePlaceHolder: TextSet.authCodeTextFieldText
-	)
+	).then { $0.isHidden = true }
 	private(set) var authCodeNoticeLabel: UILabel = UILabel().then {
+		$0.isHidden = true
 		$0.text = TextSet.authCodeNoticeLabelText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.grey70

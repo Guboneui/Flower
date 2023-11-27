@@ -32,11 +32,6 @@ public final class EmailSiginUpEmailViewController: UIViewController {
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupGestures()
-		
-		authCodeLabel.isHidden = true
-		resendAuthCodeLabel.isHidden = true
-		authCodeTextField.isHidden = true
-		authCodeNoticeLabel.isHidden = true
 	}
 }
 
