@@ -16,8 +16,8 @@ import Then
 
 public final class EmailSiginUpPasswordViewController: UIViewController {
 	private let rootView: EmailSiginUpPasswordView = EmailSiginUpPasswordView()
-	private var navigationBar: NavigationBar {rootView.navigationBar }
-	private var nextButton: DefaultButton {rootView.nextButton }
+	private var navigationBar: NavigationBar { rootView.navigationBar }
+	private var nextButton: DefaultButton { rootView.nextButton }
 	
 	public override func loadView() {
 		view = rootView
