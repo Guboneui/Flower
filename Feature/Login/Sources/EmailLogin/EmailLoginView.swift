@@ -30,6 +30,7 @@ public final class EmailLoginView: UIView {
 		static let loginStackViewInset: CGFloat = 103
 		static let loginStackViewBottomMargin: CGFloat = -28
 		static let siginUpStackViewBottomMargin: CGFloat = -30
+		static let siginUpStackViewspacing: CGFloat = 7
 	}
 	
 	private enum TextSet {
@@ -90,7 +91,7 @@ public final class EmailLoginView: UIView {
 	
 	private let siginUpStackView: UIStackView = UIStackView().then {
 		$0.axis = .horizontal
-		$0.spacing = 7
+		$0.spacing = Metric.siginUpStackViewspacing
 	}
 	
 	private let siginUpLabel: UILabel = UILabel().then {
