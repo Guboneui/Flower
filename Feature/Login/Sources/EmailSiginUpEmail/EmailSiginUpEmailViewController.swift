@@ -38,26 +38,27 @@ public final class EmailSiginUpEmailViewController: UIViewController {
 private extension EmailSiginUpEmailViewController {
 	
 	func setupGestures() {
-		navigationBar.didTapLeftButton = {
+		var emailAuth: Bool = false
 			self.navigationController?.popViewController(animated: true)
 		}
 		
 		nextButton.addTarget(self, action: #selector(didTapNextButton(_:)), for: .touchUpInside)
 	}
 	
-	@objc func didTapNextButton(_ sender: UIButton) {
-		if nextButton.titleLabel?.text == "인증번호 전송" {
+		nextButton.rx.touchHandler()
+			.bind { [weak self] in
 			authCodeLabel.isHidden = false
 			resendAuthCodeLabel.isHidden = false
 			authCodeTextField.isHidden = false
 			authCodeNoticeLabel.isHidden = false
-			nextButton.setTitle("다음", for: .normal)
-		} else if nextButton.titleLabel?.text == "다음" {
-			if let navigation = self.navigationController as? EmailSiginUpNavigationController {
-				let EmailSiginUpPasswordViewController = EmailSiginUpPasswordViewController()
-				navigation.pushViewController(EmailSiginUpPasswordViewController, animated: true)
-				navigation.pageController.moveToNextPage()
-			}
-		}
+					self.authCodeTextField.isHidden = false
+					self.authCodeNoticeLabel.isHidden = false
+					if let navigation = self.navigationController as? EmailSiginUpNavigationController {
+						let EmailSiginUpPasswordViewController = EmailSiginUpPasswordViewController()
+						navigation.pushViewController(EmailSiginUpPasswordViewController, animated: true)
+						navigation.pageController.moveToNextPage()
+					}
+				}
+			}.disposed(by: disposeBag)
 	}
 }
