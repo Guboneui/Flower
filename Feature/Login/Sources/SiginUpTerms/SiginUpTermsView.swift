@@ -40,10 +40,6 @@ final class SiginUpTermsView: UIView {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-
-	private func setupSubViews() {
-		modalView.addSubview(goSiginUpButton)
-	}
 	
 	public override func updateConstraints() {
 		guard needUpdateConstrains else { return }
@@ -56,5 +52,11 @@ final class SiginUpTermsView: UIView {
 		}
 		
 		super.updateConstraints()
+	}
+}
+
+private extension SiginUpTermsView {
+	func setupSubViews() {
+		modalView.addSubview(goSiginUpButton)
 	}
 }

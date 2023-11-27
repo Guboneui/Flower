@@ -107,22 +107,6 @@ public final class EmailSiginUpEmailView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func setupViews() {
-		backgroundColor = AppTheme.Color.white
-	}
-	
-	private func setupSubViews() {
-		addSubview(navigationBar)
-		addSubview(emailLabel)
-		addSubview(emailTextField)
-		addSubview(cautionLabel)
-		addSubview(authCodeLabel)
-		addSubview(resendAuthCodeLabel)
-		addSubview(authCodeTextField)
-		addSubview(authCodeNoticeLabel)
-		addSubview(nextButton)
-	}
-	
 	public override func updateConstraints() {
 		guard needUpdateConstrains else { return }
 		needUpdateConstrains = false
@@ -174,5 +158,23 @@ public final class EmailSiginUpEmailView: UIView {
 		}
 		
 		super.updateConstraints()
+	}
+}
+
+private extension EmailSiginUpEmailView {
+	func setupViews() {
+		backgroundColor = AppTheme.Color.white
+	}
+	
+	func setupSubViews() {
+		addSubview(navigationBar)
+		addSubview(emailLabel)
+		addSubview(emailTextField)
+		addSubview(cautionLabel)
+		addSubview(authCodeLabel)
+		addSubview(resendAuthCodeLabel)
+		addSubview(authCodeTextField)
+		addSubview(authCodeNoticeLabel)
+		addSubview(nextButton)
 	}
 }

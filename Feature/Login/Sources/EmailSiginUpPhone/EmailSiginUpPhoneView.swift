@@ -61,17 +61,6 @@ public final class EmailSiginUpPhoneView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func setupViews() {
-		backgroundColor = AppTheme.Color.white
-	}
-	
-	private func setupSubViews() {
-		addSubview(navigationBar)
-		addSubview(nameLabel)
-		addSubview(phoneNumberInputView)
-		addSubview(nextButton)
-	}
-	
 	public override func updateConstraints() {
 		guard needUpdateConstrains else { return }
 		needUpdateConstrains = false
@@ -97,5 +86,18 @@ public final class EmailSiginUpPhoneView: UIView {
 		}
 		
 		super.updateConstraints()
+	}
+}
+
+private extension EmailSiginUpPhoneView {
+	func setupViews() {
+		backgroundColor = AppTheme.Color.white
+	}
+	
+	func setupSubViews() {
+		addSubview(navigationBar)
+		addSubview(nameLabel)
+		addSubview(phoneNumberInputView)
+		addSubview(nextButton)
 	}
 }

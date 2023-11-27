@@ -112,30 +112,6 @@ public final class EmailLoginView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func setupViews() {
-		backgroundColor = AppTheme.Color.white
-	}
-	
-	private func setupSubViews() {
-		addSubview(navigationBar)
-		addSubview(emailLoginLabel)
-		addSubview(emailTextField)
-		addSubview(passwordTextField)
-		addSubview(loginButton)
-		addSubview(saveIdentifierCheckBox)
-		addSubview(saveIdentifierLabel)
-		addSubview(saveIdentifierView)
-		addSubview(findPasswordLabel)
-		addSubview(loginStackView)
-		addSubview(siginUpStackView)
-		
-		loginStackView.addArrangedSubview(naverLoginButton)
-		loginStackView.addArrangedSubview(kakaoLoginButton)
-		loginStackView.addArrangedSubview(appleLoginButton)
-		siginUpStackView.addArrangedSubview(siginUpLabel)
-		siginUpStackView.addArrangedSubview(emailSiginUpButton)
-	}
-	
 	public override func updateConstraints() {
 		guard needUpdateConstrains else { return }
 		needUpdateConstrains = false
@@ -199,5 +175,31 @@ public final class EmailLoginView: UIView {
 		}
 		
 		super.updateConstraints()
+	}
+}
+
+private extension EmailLoginView {
+	func setupViews() {
+		backgroundColor = AppTheme.Color.white
+	}
+	
+	func setupSubViews() {
+		addSubview(navigationBar)
+		addSubview(emailLoginLabel)
+		addSubview(emailTextField)
+		addSubview(passwordTextField)
+		addSubview(loginButton)
+		addSubview(saveIdentifierCheckBox)
+		addSubview(saveIdentifierLabel)
+		addSubview(saveIdentifierView)
+		addSubview(findPasswordLabel)
+		addSubview(loginStackView)
+		addSubview(siginUpStackView)
+		
+		loginStackView.addArrangedSubview(naverLoginButton)
+		loginStackView.addArrangedSubview(kakaoLoginButton)
+		loginStackView.addArrangedSubview(appleLoginButton)
+		siginUpStackView.addArrangedSubview(siginUpLabel)
+		siginUpStackView.addArrangedSubview(emailSiginUpButton)
 	}
 }

@@ -83,21 +83,6 @@ public final class EmailSiginUpPasswordView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func setupViews() {
-		backgroundColor = AppTheme.Color.white
-	}
-	
-	private func setupSubViews() {
-		addSubview(navigationBar)
-		addSubview(passwordLabel)
-		addSubview(passwordTextField)
-		addSubview(passwordConditionsLabel)
-		addSubview(checkPasswordLabel)
-		addSubview(checkPasswordTextField)
-		addSubview(checkPasswordConditionsLabel)
-		addSubview(nextButton)
-	}
-	
 	public override func updateConstraints() {
 		guard needUpdateConstrains else { return }
 		needUpdateConstrains = false
@@ -147,5 +132,22 @@ public final class EmailSiginUpPasswordView: UIView {
 		}
 		
 		super.updateConstraints()
+	}
+}
+
+private extension EmailSiginUpPasswordView {
+	func setupViews() {
+		backgroundColor = AppTheme.Color.white
+	}
+	
+	func setupSubViews() {
+		addSubview(navigationBar)
+		addSubview(passwordLabel)
+		addSubview(passwordTextField)
+		addSubview(passwordConditionsLabel)
+		addSubview(checkPasswordLabel)
+		addSubview(checkPasswordTextField)
+		addSubview(checkPasswordConditionsLabel)
+		addSubview(nextButton)
 	}
 }

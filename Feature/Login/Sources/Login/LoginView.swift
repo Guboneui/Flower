@@ -55,21 +55,6 @@ public final class LoginView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private func setupViews() {
-		backgroundColor = AppTheme.Color.white
-	}
-
-	private func setupSubViews() {
-		addSubview(logoView)
-		addSubview(loginLabel)
-		addSubview(loginStackView)
-		
-		loginStackView.addArrangedSubview(naverLoginButton)
-		loginStackView.addArrangedSubview(kakaoLoginButton)
-		loginStackView.addArrangedSubview(appleLoginButton)
-		loginStackView.addArrangedSubview(emailLoginButton)
-	}
-	
 	public override func updateConstraints() {
 		guard needUpdateConstrains else { return }
 		needUpdateConstrains = false
@@ -92,5 +77,22 @@ public final class LoginView: UIView {
 		}
 		
 		super.updateConstraints()
+	}
+}
+
+private extension LoginView {
+	func setupViews() {
+		backgroundColor = AppTheme.Color.white
+	}
+
+	func setupSubViews() {
+		addSubview(logoView)
+		addSubview(loginLabel)
+		addSubview(loginStackView)
+		
+		loginStackView.addArrangedSubview(naverLoginButton)
+		loginStackView.addArrangedSubview(kakaoLoginButton)
+		loginStackView.addArrangedSubview(appleLoginButton)
+		loginStackView.addArrangedSubview(emailLoginButton)
 	}
 }
