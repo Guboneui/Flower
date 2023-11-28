@@ -1,5 +1,5 @@
 //
-//  TravelSpotExtendedView.swift
+//  TravelSpotSelectorView.swift
 //  SearchFilter
 //
 //  Created by 구본의 on 2023/11/19.
@@ -40,7 +40,7 @@ final class TravelSpotExtendedView: UIView {
 		$0.textColor = AppTheme.Color.black
 	}
 	
-	private let locationSearchContainerButton: UIButton = UIButton().then {
+	private let locationSearchContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.grey90
 		$0.makeCornerRadius(12)
 	}
@@ -69,7 +69,7 @@ final class TravelSpotExtendedView: UIView {
 	private lazy var stackView: UIStackView = UIStackView(
 		arrangedSubviews: [
 			titleLabel,
-			locationSearchContainerButton,
+			locationSearchContainerView,
 			popularSearchLabel
 		]).then {
 			$0.axis = .vertical
@@ -91,16 +91,11 @@ final class TravelSpotExtendedView: UIView {
 	
 	public var currentState: BehaviorRelay<Bool> = .init(value: true)
 	private let disposeBag: DisposeBag = .init()
-	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupConfigure()
 		setupBindings()
 		
-		locationSearchContainerButton.rx.tap
-			.bind { 
-				print("aaa")
-			}.disposed(by: disposeBag)
 	}
 	
 	required init?(coder: NSCoder) {
@@ -108,9 +103,15 @@ final class TravelSpotExtendedView: UIView {
 	}
 	
 	public func setExtendableState() {
+		
+		subviews.forEach {
+//			$0.alpha = 0.0
+			$0.removeFromSuperview()
+		}
+//		
 		addSubview(stackView)
-		locationSearchContainerButton.addSubview(searchImageView)
-		locationSearchContainerButton.addSubview(searchLabel)
+		locationSearchContainerView.addSubview(searchImageView)
+		locationSearchContainerView.addSubview(searchLabel)
 		addSubview(popularSpotCollectionView)
 		
 		stackView.snp.makeConstraints { make in
@@ -118,7 +119,7 @@ final class TravelSpotExtendedView: UIView {
 			make.horizontalEdges.equalToSuperview().inset(Metric.subViewHorizontalMargin)
 		}
 		
-		locationSearchContainerButton.snp.makeConstraints { make in
+		locationSearchContainerView.snp.makeConstraints { make in
 			make.height.equalTo(Metric.locationContainerViewHeight)
 		}
 		
@@ -140,6 +141,7 @@ final class TravelSpotExtendedView: UIView {
 			make.horizontalEdges.equalToSuperview()
 			make.height.equalTo(Metric.popularSpotCollectionViewHeight)
 		}
+		
 	}
 	
 	public func setTestState() {
@@ -151,6 +153,7 @@ final class TravelSpotExtendedView: UIView {
 		addSubview(locationLabel)
 		locationLabel.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 		addSubview(selectedLocationLabel)
+		
 		
 		self.locationLabel.snp.makeConstraints { make in
 			make.leading.equalToSuperview().offset(32)
