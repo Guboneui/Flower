@@ -1,5 +1,5 @@
 //
-//  TravelGroupSelectorView.swift
+//  TravelGroupExtendedView.swift
 //  SearchFilter
 //
 //  Created by 구본의 on 2023/11/19.
@@ -15,7 +15,7 @@ import RxSwift
 import SnapKit
 import Then
 
-final class TravelGroupSelectorView: UIView {
+final class TravelGroupExtendedView: UIView {
 	
 	// MARK: - METRIC
 	private enum Metric {
@@ -100,7 +100,7 @@ final class TravelGroupSelectorView: UIView {
 }
 
 // MARK: - PRIVATE METHOD
-private extension TravelGroupSelectorView {
+private extension TravelGroupExtendedView {
 	func setupConfigure() {
 		backgroundColor = AppTheme.Color.white
 		makeCornerRadiusWithBorder(Metric.radius)
@@ -151,7 +151,7 @@ private extension TravelGroupSelectorView {
 }
 
 // MARK: - Reactive Extension
-extension Reactive where Base: TravelGroupSelectorView {
+extension Reactive where Base: TravelGroupExtendedView {
 	var tapDecreaseButton: ControlEvent<Void> {
 		let source: Observable<Void> = base.minusButton.rx.tap.asObservable()
 		return ControlEvent(events: source)

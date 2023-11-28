@@ -48,7 +48,7 @@ final class SearchFilterView: UIView {
 	}
 	
 	fileprivate let travelSpotSelectorView: TravelSpotSelectorView = .init()
-	fileprivate let travelGroupSelectorView: TravelGroupSelectorView = .init()
+	fileprivate let travelGroupSelectorView: TravelGroupExtendedView = .init()
 	
 	private let bottomContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
