@@ -51,17 +51,30 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
+		rootView.rx.didTapTravelSpotStackView
+			.map { .didTapSpotView }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
 		rootView.rx.didTapTravelGroupStackView
 			.map { .didTapGroupView }
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
+		
+		reactor.state.map(\.isExtendedSpotView)
+			.distinctUntilChanged()
+			.observe(on: MainScheduler.instance)
+			.bind { [weak self] isExtended in
+				guard let self else { return }
+				self.rootView.updateTravelSpotViewState(isExtended: isExtended)
+			}.disposed(by: disposeBag)
 		
 		reactor.state.map(\.isExtendedGroupView)
 			.distinctUntilChanged()
 			.observe(on: MainScheduler.instance)
 			.bind { [weak self] isExtended in
 				guard let self else { return }
-				self.rootView.updateViewState(isExtended: isExtended)
+				self.rootView.updateTravelGroupViewState(isExtended: isExtended)
 			}.disposed(by: disposeBag)
 		
 		let groupCount = reactor.state.map(\.groupCount)

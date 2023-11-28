@@ -49,7 +49,18 @@ final class SearchFilterView: UIView {
 		$0.backgroundColor = AppTheme.Color.grey90
 	}
 	
+	fileprivate let travelSpotDefaultView: TravelSpotDefaultView = .init()
 	fileprivate let travelSpotExtendedView: TravelSpotExtendedView = .init()
+	fileprivate lazy var travelSpotStackView: UIStackView = UIStackView(
+		arrangedSubviews: [
+			travelSpotDefaultView,
+			travelSpotExtendedView
+		]).then {
+			$0.backgroundColor = AppTheme.Color.white
+			$0.axis = .vertical
+			$0.spacing = Metric.spacing
+			$0.makeCornerRadiusWithBorder(Metric.radius)
+		}
 	
 	fileprivate let travelGroupDefaultView: TravelGroupDefaultView = .init()
 	fileprivate let travelGroupExtendedView: TravelGroupExtendedView = .init()
@@ -93,7 +104,18 @@ final class SearchFilterView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	public func updateViewState(isExtended: Bool) {
+	public func updateTravelSpotViewState(isExtended: Bool) {
+		UIView.animate(
+			withDuration: 0.15,
+			animations: {
+				self.travelSpotDefaultView.isHidden = isExtended ? true : false
+				self.travelSpotDefaultView.alpha = isExtended ? 0 : 1.0
+				self.travelSpotExtendedView.isHidden = isExtended ? false : true
+				self.travelSpotExtendedView.alpha = isExtended ? 1.0 : 0
+		})
+	}
+	
+	public func updateTravelGroupViewState(isExtended: Bool) {
 		UIView.animate(
 			withDuration: 0.15,
 			animations: {
@@ -110,6 +132,9 @@ private extension SearchFilterView {
 	func setupViewConfigure() {
 		backgroundColor = AppTheme.Color.white
 		
+		travelSpotDefaultView.isHidden = true
+		travelSpotDefaultView.alpha = 0.0
+		
 		travelGroupExtendedView.isHidden = true
 		travelGroupExtendedView.alpha = 0.0
 	}
@@ -118,7 +143,7 @@ private extension SearchFilterView {
 		addSubview(navigationBar)
 		addSubview(scrollView)
 		scrollView.addSubview(scrollContainerView)
-		scrollContainerView.addSubview(travelSpotExtendedView)
+		scrollContainerView.addSubview(travelSpotStackView)
 		scrollContainerView.addSubview(travelGroupStackView)
 		addSubview(bottomContainerView)
 		bottomContainerView.addSubview(bottomContainerGuideLineView)
@@ -146,13 +171,13 @@ private extension SearchFilterView {
 			make.height.equalTo(2000)
 		}
 		
-		travelSpotExtendedView.snp.makeConstraints { make in
+		travelSpotStackView.snp.makeConstraints { make in
 			make.top.equalToSuperview().offset(20)
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
 		
 		travelGroupStackView.snp.makeConstraints { make in
-			make.top.equalTo(travelSpotExtendedView.snp.bottom).offset(20)
+			make.top.equalTo(travelSpotStackView.snp.bottom).offset(20)
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
 		
@@ -189,6 +214,11 @@ extension Reactive where Base: SearchFilterView {
 	
 	var didTapBottomRightButton: ControlEvent<Void> {
 		let source = base.bottomButton.rx.tapRightButton.asObservable()
+		return ControlEvent(events: source)
+	}
+	
+	var didTapTravelSpotStackView: ControlEvent<Void> {
+		let source = base.travelSpotStackView.rx.tapGesture().when(.recognized).map { _ in }
 		return ControlEvent(events: source)
 	}
 	

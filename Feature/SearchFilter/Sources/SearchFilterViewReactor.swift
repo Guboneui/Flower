@@ -13,19 +13,22 @@ import RxSwift
 public final class SearchFilterViewReactor: Reactor {
 	
 	public enum Action {
+		case didTapSpotView
 		case didTapGroupView
 		case didTapDecreaseButton
 		case didTapIncreaseButton
 	}
 	
 	public enum Mutation {
-		case setToExtend
+		case setTravelSpotViewToExtend
+		case setTravelGroupViewToExtend
 		case decreaseValue
 		case increaseValue
 	}
 	
 	public struct State {
-		var isExtendedGroupView: Bool = false
+		var isExtendedSpotView: Bool
+		var isExtendedGroupView: Bool
 		var groupCount: Int
 	}
 	
@@ -33,6 +36,7 @@ public final class SearchFilterViewReactor: Reactor {
 	
 	public init() {
 		self.initialState = State(
+			isExtendedSpotView: true,
 			isExtendedGroupView: false,
 			groupCount: 0
 		)
@@ -40,6 +44,8 @@ public final class SearchFilterViewReactor: Reactor {
 	
 	public func mutate(action: Action) -> Observable<Mutation> {
 		switch action {
+		case .didTapSpotView:
+			return performDidTapSpotView()
 		case .didTapGroupView:
 			return performDidTapGroupView()
 		case .didTapDecreaseButton:
@@ -53,7 +59,9 @@ public final class SearchFilterViewReactor: Reactor {
 		var state = state
 		
 		switch mutation {
-		case .setToExtend:
+		case .setTravelSpotViewToExtend:
+			state.isExtendedSpotView.toggle()
+		case .setTravelGroupViewToExtend:
 			state.isExtendedGroupView.toggle()
 		case .decreaseValue:
 			if state.groupCount > 0 {
@@ -71,8 +79,12 @@ public final class SearchFilterViewReactor: Reactor {
 
 // MARK: - PRIVATE METHOD
 private extension SearchFilterViewReactor {
+	func performDidTapSpotView() -> Observable<Mutation> {
+		return .just(.setTravelSpotViewToExtend)
+	}
+	
 	func performDidTapGroupView() -> Observable<Mutation> {
-		return .just(.setToExtend)
+		return .just(.setTravelGroupViewToExtend)
 	}
 	
 	func performDidTapDecreaseButton() -> Observable<Mutation> {
