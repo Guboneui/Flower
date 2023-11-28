@@ -19,7 +19,6 @@ final class TravelGroupExtendedView: UIView {
 	
 	// MARK: - METRIC
 	private enum Metric {
-		static let radius: CGFloat = 22
 		static let stackViewSpacing: CGFloat = 8
 		static let stackViewTrailingMargin: CGFloat = -24
 
@@ -103,13 +102,6 @@ final class TravelGroupExtendedView: UIView {
 private extension TravelGroupExtendedView {
 	func setupConfigure() {
 		backgroundColor = AppTheme.Color.white
-		makeCornerRadiusWithBorder(Metric.radius)
-		
-		self.layer.masksToBounds = false
-		self.layer.shadowColor = AppTheme.Color.black.withAlphaComponent(0.1).cgColor
-		self.layer.shadowOpacity = 1.0
-		self.layer.shadowRadius = 20
-		self.layer.shadowOffset = .init(width: 0, height: 2)
 	}
 	
 	func setupSubViews() {

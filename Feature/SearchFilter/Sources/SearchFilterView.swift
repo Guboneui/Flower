@@ -20,6 +20,8 @@ final class SearchFilterView: UIView {
 	
 	// MARK: - METRIC
 	private enum Metric {
+		static let radius: CGFloat = 16
+		static let spacing: CGFloat = 0
 		static let guideLineHeight: CGFloat = 1.0
 		
 		static let bottomButtonTopMargin: CGFloat = 12
@@ -48,7 +50,19 @@ final class SearchFilterView: UIView {
 	}
 	
 	fileprivate let travelSpotSelectorView: TravelSpotSelectorView = .init()
-	fileprivate let travelGroupSelectorView: TravelGroupExtendedView = .init()
+	
+	fileprivate let travelGroupDefaultView: TravelGroupDefaultView = .init()
+	fileprivate let travelGroupExtendedView: TravelGroupExtendedView = .init()
+	fileprivate lazy var travelGroupStackView: UIStackView = UIStackView(
+		arrangedSubviews: [
+			travelGroupDefaultView,
+			travelGroupExtendedView
+		]).then {
+			$0.backgroundColor = AppTheme.Color.white
+			$0.axis = .vertical
+			$0.spacing = Metric.spacing
+			$0.makeCornerRadiusWithBorder(Metric.radius)
+		}
 	
 	private let bottomContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
@@ -78,12 +92,26 @@ final class SearchFilterView: UIView {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+	
+	public func updateViewState(isExtended: Bool) {
+		UIView.animate(
+			withDuration: 0.15,
+			animations: {
+				self.travelGroupDefaultView.isHidden = isExtended ? true : false
+				self.travelGroupDefaultView.alpha = isExtended ? 0 : 1.0
+				self.travelGroupExtendedView.isHidden = isExtended ? false : true
+				self.travelGroupExtendedView.alpha = isExtended ? 1.0 : 0
+		})
+	}
 }
 
 // MARK: - PRIVATE METHOD
 private extension SearchFilterView {
 	func setupViewConfigure() {
 		backgroundColor = AppTheme.Color.white
+		
+		travelGroupExtendedView.isHidden = true
+		travelGroupExtendedView.alpha = 0.0
 	}
 	
 	func setupViews() {
@@ -91,7 +119,7 @@ private extension SearchFilterView {
 		addSubview(scrollView)
 		scrollView.addSubview(scrollContainerView)
 		scrollContainerView.addSubview(travelSpotSelectorView)
-		scrollContainerView.addSubview(travelGroupSelectorView)
+		scrollContainerView.addSubview(travelGroupStackView)
 		addSubview(bottomContainerView)
 		bottomContainerView.addSubview(bottomContainerGuideLineView)
 		bottomContainerView.addSubview(bottomButton)
@@ -123,7 +151,7 @@ private extension SearchFilterView {
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
 		
-		travelGroupSelectorView.snp.makeConstraints { make in
+		travelGroupStackView.snp.makeConstraints { make in
 			make.top.equalTo(travelSpotSelectorView.snp.bottom).offset(20)
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
@@ -164,25 +192,34 @@ extension Reactive where Base: SearchFilterView {
 		return ControlEvent(events: source)
 	}
 	
+	var didTapTravelGroupStackView: ControlEvent<Void> {
+		let source = base.travelGroupStackView.rx.tapGesture().when(.recognized).map { _ in }
+		return ControlEvent(events: source)
+	}
+	
 	var didTapDecreaseButton: ControlEvent<Void> {
-		let source = base.travelGroupSelectorView.rx.tapDecreaseButton.asObservable()
+		let source = base.travelGroupExtendedView.rx.tapDecreaseButton.asObservable()
 		return ControlEvent(events: source)
 	}
 	
 	var didTapIncreaseButton: ControlEvent<Void> {
-		let source = base.travelGroupSelectorView.rx.tapIncreaseButton.asObservable()
+		let source = base.travelGroupExtendedView.rx.tapIncreaseButton.asObservable()
 		return ControlEvent(events: source)
 	}
 	
 	var isEnableIncreaseButton: Binder<Bool> {
-		return base.travelGroupSelectorView.rx.increaseButtonEnable
+		return base.travelGroupExtendedView.rx.increaseButtonEnable
 	}
 	
 	var isEnableDecreaseButton: Binder<Bool> {
-		return base.travelGroupSelectorView.rx.decreaseButtonEnable
+		return base.travelGroupExtendedView.rx.decreaseButtonEnable
 	}
 	
-	var groupCounterValue: Binder<String> {
-		return base.travelGroupSelectorView.rx.counterValue
+	var groupCounterValueInDefaultView: Binder<String> {
+		return base.travelGroupDefaultView.rx.counterValue
+	}
+	
+	var groupCounterValueInExtendedView: Binder<String> {
+		return base.travelGroupExtendedView.rx.counterValue
 	}
 }

@@ -13,16 +13,19 @@ import RxSwift
 public final class SearchFilterViewReactor: Reactor {
 	
 	public enum Action {
+		case didTapGroupView
 		case didTapDecreaseButton
 		case didTapIncreaseButton
 	}
 	
 	public enum Mutation {
+		case setToExtend
 		case decreaseValue
 		case increaseValue
 	}
 	
 	public struct State {
+		var isExtendedGroupView: Bool = false
 		var groupCount: Int
 	}
 	
@@ -30,12 +33,15 @@ public final class SearchFilterViewReactor: Reactor {
 	
 	public init() {
 		self.initialState = State(
+			isExtendedGroupView: false,
 			groupCount: 0
 		)
 	}
 	
 	public func mutate(action: Action) -> Observable<Mutation> {
 		switch action {
+		case .didTapGroupView:
+			return performDidTapGroupView()
 		case .didTapDecreaseButton:
 			return performDidTapDecreaseButton()
 		case .didTapIncreaseButton:
@@ -47,6 +53,8 @@ public final class SearchFilterViewReactor: Reactor {
 		var state = state
 		
 		switch mutation {
+		case .setToExtend:
+			state.isExtendedGroupView.toggle()
 		case .decreaseValue:
 			if state.groupCount > 0 {
 				state.groupCount -= 1
@@ -63,6 +71,10 @@ public final class SearchFilterViewReactor: Reactor {
 
 // MARK: - PRIVATE METHOD
 private extension SearchFilterViewReactor {
+	func performDidTapGroupView() -> Observable<Mutation> {
+		return .just(.setToExtend)
+	}
+	
 	func performDidTapDecreaseButton() -> Observable<Mutation> {
 		return .just(.decreaseValue)
 	}
