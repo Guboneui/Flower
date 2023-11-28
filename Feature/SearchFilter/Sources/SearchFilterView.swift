@@ -49,7 +49,7 @@ final class SearchFilterView: UIView {
 		$0.backgroundColor = AppTheme.Color.grey90
 	}
 	
-	fileprivate let travelSpotSelectorView: TravelSpotSelectorView = .init()
+	fileprivate let travelSpotExtendedView: TravelSpotExtendedView = .init()
 	
 	fileprivate let travelGroupDefaultView: TravelGroupDefaultView = .init()
 	fileprivate let travelGroupExtendedView: TravelGroupExtendedView = .init()
@@ -118,7 +118,7 @@ private extension SearchFilterView {
 		addSubview(navigationBar)
 		addSubview(scrollView)
 		scrollView.addSubview(scrollContainerView)
-		scrollContainerView.addSubview(travelSpotSelectorView)
+		scrollContainerView.addSubview(travelSpotExtendedView)
 		scrollContainerView.addSubview(travelGroupStackView)
 		addSubview(bottomContainerView)
 		bottomContainerView.addSubview(bottomContainerGuideLineView)
@@ -146,13 +146,13 @@ private extension SearchFilterView {
 			make.height.equalTo(2000)
 		}
 		
-		travelSpotSelectorView.snp.makeConstraints { make in
+		travelSpotExtendedView.snp.makeConstraints { make in
 			make.top.equalToSuperview().offset(20)
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
 		
 		travelGroupStackView.snp.makeConstraints { make in
-			make.top.equalTo(travelSpotSelectorView.snp.bottom).offset(20)
+			make.top.equalTo(travelSpotExtendedView.snp.bottom).offset(20)
 			make.horizontalEdges.equalToSuperview().inset(20)
 		}
 		

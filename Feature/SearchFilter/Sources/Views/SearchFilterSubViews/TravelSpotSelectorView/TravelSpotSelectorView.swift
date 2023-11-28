@@ -15,11 +15,10 @@ import RxSwift
 import SnapKit
 import Then
 
-final class TravelSpotSelectorView: UIView {
+final class TravelSpotExtendedView: UIView {
 	
 	// MARK: - METRIC
 	private enum Metric {
-		static let radius: CGFloat = 22
 		static let stackViewSpacing: CGFloat = 24
 		static let stackViewTopMargin: CGFloat = 24
 		static let stackViewHorizontalMargin: CGFloat = 24
@@ -171,16 +170,9 @@ final class TravelSpotSelectorView: UIView {
 }
 
 // MARK: - PRIVATE METHOD
-private extension TravelSpotSelectorView {
+private extension TravelSpotExtendedView {
 	func setupConfigure() {
 		backgroundColor = AppTheme.Color.white
-		makeCornerRadiusWithBorder(Metric.radius)
-		
-		self.layer.masksToBounds = false
-		self.layer.shadowColor = AppTheme.Color.black.withAlphaComponent(0.1).cgColor
-		self.layer.shadowOpacity = 1.0
-		self.layer.shadowRadius = 20
-		self.layer.shadowOffset = .init(width: 0, height: 2)
 	}
 	
 	func setupBindings() {
