@@ -13,22 +13,19 @@ import RxSwift
 public final class SearchFilterViewReactor: Reactor {
 	
 	public enum Action {
-		case didTapSpotView
-		case didTapGroupView
+		case updateExtendedState(SearchFilterExtendedState)
 		case didTapDecreaseButton
 		case didTapIncreaseButton
 	}
 	
 	public enum Mutation {
-		case setTravelSpotViewToExtend
-		case setTravelGroupViewToExtend
 		case decreaseValue
 		case increaseValue
+		case setExtendedState(SearchFilterExtendedState)
 	}
 	
 	public struct State {
-		var isExtendedSpotView: Bool
-		var isExtendedGroupView: Bool
+		var extendedState: SearchFilterExtendedState
 		var groupCount: Int
 	}
 	
@@ -36,18 +33,15 @@ public final class SearchFilterViewReactor: Reactor {
 	
 	public init() {
 		self.initialState = State(
-			isExtendedSpotView: true,
-			isExtendedGroupView: false,
+			extendedState: .travelSpot,
 			groupCount: 0
 		)
 	}
 	
 	public func mutate(action: Action) -> Observable<Mutation> {
 		switch action {
-		case .didTapSpotView:
-			return performDidTapSpotView()
-		case .didTapGroupView:
-			return performDidTapGroupView()
+		case let .updateExtendedState(extenedState):
+			return performExtenedState(with: extenedState)
 		case .didTapDecreaseButton:
 			return performDidTapDecreaseButton()
 		case .didTapIncreaseButton:
@@ -59,11 +53,9 @@ public final class SearchFilterViewReactor: Reactor {
 		var state = state
 		
 		switch mutation {
-		case .setTravelSpotViewToExtend:
-			state.isExtendedSpotView.toggle()
-		case .setTravelGroupViewToExtend:
-			state.isExtendedGroupView.toggle()
 		case .decreaseValue:
+		case let .setExtendedState(extendedState):
+			state.extendedState = extendedState
 			if state.groupCount > 0 {
 				state.groupCount -= 1
 			}
@@ -79,12 +71,11 @@ public final class SearchFilterViewReactor: Reactor {
 
 // MARK: - PRIVATE METHOD
 private extension SearchFilterViewReactor {
-	func performDidTapSpotView() -> Observable<Mutation> {
-		return .just(.setTravelSpotViewToExtend)
+	
+	func performExtenedState(with extendedState: SearchFilterExtendedState) -> Observable<Mutation> {
+		return .just(.setExtendedState(extendedState))
 	}
 	
-	func performDidTapGroupView() -> Observable<Mutation> {
-		return .just(.setTravelGroupViewToExtend)
 	}
 	
 	func performDidTapDecreaseButton() -> Observable<Mutation> {

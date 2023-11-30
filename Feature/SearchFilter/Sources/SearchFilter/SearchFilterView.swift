@@ -51,7 +51,7 @@ final class SearchFilterView: UIView {
 	
 	fileprivate let travelSpotDefaultView: TravelSpotDefaultView = .init()
 	fileprivate let travelSpotExtendedView: TravelSpotExtendedView = .init()
-	fileprivate lazy var travelSpotStackView: UIStackView = UIStackView(
+	private lazy var travelSpotStackView: UIStackView = UIStackView(
 		arrangedSubviews: [
 			travelSpotDefaultView,
 			travelSpotExtendedView
@@ -64,7 +64,7 @@ final class SearchFilterView: UIView {
 	
 	fileprivate let travelGroupDefaultView: TravelGroupDefaultView = .init()
 	fileprivate let travelGroupExtendedView: TravelGroupExtendedView = .init()
-	fileprivate lazy var travelGroupStackView: UIStackView = UIStackView(
+	private lazy var travelGroupStackView: UIStackView = UIStackView(
 		arrangedSubviews: [
 			travelGroupDefaultView,
 			travelGroupExtendedView
@@ -89,9 +89,6 @@ final class SearchFilterView: UIView {
 		leftButtonTitle: TextSet.leftButtonTitle,
 		rightButtonTitle: TextSet.rightButtonTitle
 	)
-	
-	// MARK: - PROPERTY
-	private let disposeBag: DisposeBag = .init()
 	
 	// MARK: - INITIALIZE
 	public override init(frame: CGRect) {
@@ -217,13 +214,16 @@ extension Reactive where Base: SearchFilterView {
 		return ControlEvent(events: source)
 	}
 	
-	var didTapTravelSpotStackView: ControlEvent<Void> {
-		let source = base.travelSpotStackView.rx.tapGesture().when(.recognized).map { _ in }
+	// MARK: - Travel Spot
+	var didTapTravelSpotDefaultView: ControlEvent<Void> {
+		let source = base.travelSpotDefaultView.rx.tapGesture().when(.recognized).map { _ in }
+		return ControlEvent(events: source)
+	}
 		return ControlEvent(events: source)
 	}
 	
-	var didTapTravelGroupStackView: ControlEvent<Void> {
-		let source = base.travelGroupStackView.rx.tapGesture().when(.recognized).map { _ in }
+	var didTapTravelGroupDefaultView: ControlEvent<Void> {
+		let source = base.travelGroupDefaultView.rx.tapGesture().when(.recognized).map { _ in }
 		return ControlEvent(events: source)
 	}
 	

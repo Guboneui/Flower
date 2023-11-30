@@ -51,31 +51,30 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
-		rootView.rx.didTapTravelSpotStackView
-			.map { .didTapSpotView }
+		rootView.rx.didTapTravelSpotDefaultView
+			.map { .updateExtendedState(.travelSpot) }
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
-		rootView.rx.didTapTravelGroupStackView
-			.map { .didTapGroupView }
+		rootView.rx.didTapTravelGroupDefaultView
+			.map { .updateExtendedState(.travelGroup) }
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
-		reactor.state.map(\.isExtendedSpotView)
+		reactor.state.map(\.extendedState)
 			.distinctUntilChanged()
 			.observe(on: MainScheduler.instance)
-			.bind { [weak self] isExtended in
+			.bind { [weak self] state in
 				guard let self else { return }
-				self.rootView.updateTravelSpotViewState(isExtended: isExtended)
+				self.rootView.updateTravelSpotViewState(isExtended: state == .travelSpot)
+				self.rootView.updateTravelGroupViewState(isExtended: state == .travelGroup)
 			}.disposed(by: disposeBag)
 		
-		reactor.state.map(\.isExtendedGroupView)
+		reactor.state.map(\.popularSpots)
 			.distinctUntilChanged()
 			.observe(on: MainScheduler.instance)
-			.bind { [weak self] isExtended in
-				guard let self else { return }
-				self.rootView.updateTravelGroupViewState(isExtended: isExtended)
-			}.disposed(by: disposeBag)
+			.bind(to: rootView.rx.popularSpots)
+			.disposed(by: disposeBag)
 		
 		let groupCount = reactor.state.map(\.groupCount)
 			.distinctUntilChanged()
