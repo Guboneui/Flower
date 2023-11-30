@@ -219,6 +219,9 @@ extension Reactive where Base: SearchFilterView {
 		let source = base.travelSpotDefaultView.rx.tapGesture().when(.recognized).map { _ in }
 		return ControlEvent(events: source)
 	}
+	
+	var didTapLocationSearchContainer: ControlEvent<Void> {
+		let source = base.travelSpotExtendedView.rx.didTapLocationSearchContainer
 		return ControlEvent(events: source)
 	}
 	

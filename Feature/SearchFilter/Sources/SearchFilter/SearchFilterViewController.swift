@@ -110,5 +110,15 @@ private extension SearchFilterViewController {
 				guard let self else { return }
 				self.dismiss(animated: true)
 			}.disposed(by: disposeBag)
+		
+		rootView.rx.didTapLocationSearchContainer
+			.bind { [weak self] in
+				guard let self else { return }
+				let searchSpotListViewController = SearchSpotListViewController()
+				self.navigationController?.pushViewController(
+					searchSpotListViewController,
+					animated: true
+				)
+			}.disposed(by: disposeBag)
 	}
 }

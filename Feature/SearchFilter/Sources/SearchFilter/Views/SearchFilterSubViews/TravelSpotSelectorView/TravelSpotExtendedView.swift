@@ -10,6 +10,7 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import RxCocoa
 import RxRelay
 import RxSwift
 import SnapKit
@@ -48,7 +49,7 @@ final class TravelSpotExtendedView: UIView {
 		$0.textColor = AppTheme.Color.black
 	}
 	
-	private let locationSearchContainerButton: UIButton = UIButton().then {
+	fileprivate let locationSearchContainerButton: UIButton = UIButton().then {
 		$0.backgroundColor = AppTheme.Color.grey90
 		$0.makeCornerRadius(Metric.radius)
 	}
@@ -141,4 +142,12 @@ private extension TravelSpotExtendedView {
 			make.height.equalTo(Metric.popularSpotCollectionViewHeight)
 		}
 	}
+}
+// MARK: - REACTIVE EXTENSION
+extension Reactive where Base: TravelSpotExtendedView {
+	var didTapLocationSearchContainer: ControlEvent<Void> {
+		let source = base.locationSearchContainerButton.rx.touchHandler()
+		return ControlEvent(events: source)
+	}
+	
 }
