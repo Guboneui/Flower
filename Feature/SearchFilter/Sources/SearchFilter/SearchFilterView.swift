@@ -225,6 +225,13 @@ extension Reactive where Base: SearchFilterView {
 		return ControlEvent(events: source)
 	}
 	
+	var popularSpots: Binder<[String]> {
+		return Binder(base) { view, popularSpots in
+			view.travelSpotExtendedView.rx.popularSpotsRelay.onNext(popularSpots)
+		}
+	}
+	
+	// MARK: - Travel Group
 	var didTapTravelGroupDefaultView: ControlEvent<Void> {
 		let source = base.travelGroupDefaultView.rx.tapGesture().when(.recognized).map { _ in }
 		return ControlEvent(events: source)

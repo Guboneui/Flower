@@ -34,6 +34,10 @@ final class TravelSpotExtendedView: UIView {
 		static let popularSpotCollectionViewTopMargin: CGFloat = 8
 		static let popularSpotCollectionViewBottomMargin: CGFloat = -30
 		static let popularSpotCollectionViewHeight: CGFloat = 56
+		static let popularSpotCollectionViewCellSize: CGSize = .init(width: 56, height: 56)
+		static let popularSpotCollectionViewSpacing: CGFloat = 6
+		static let popularSpotCollectionViewVerticalInset: CGFloat = 0
+		static let popularSpotCollectionViewHorizontalInset: CGFloat = 20
 	}
 	
 	private enum TextSet {
@@ -71,8 +75,18 @@ final class TravelSpotExtendedView: UIView {
 		$0.textColor = AppTheme.Color.black
 	}
 	
-	private let popularSpotCollectionView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey40
+	private lazy var popularSpotCollectionView: UICollectionView = UICollectionView(
+		frame: .zero,
+		collectionViewLayout: .init()
+	).then {
+		$0.backgroundColor = AppTheme.Color.white
+		$0.register(
+			PopularTranvelSpotCollectionViewCell.self,
+			forCellWithReuseIdentifier: PopularTranvelSpotCollectionViewCell.identifier
+		)
+		$0.bounces = false
+		$0.showsHorizontalScrollIndicator = false
+		$0.collectionViewLayout = makeCollectionViewLayout()
 	}
 	
 	private lazy var stackView: UIStackView = UIStackView(
@@ -85,12 +99,15 @@ final class TravelSpotExtendedView: UIView {
 			$0.spacing = Metric.stackViewSpacing
 		}
 	
+	// MARK: - PROPERTY
+	fileprivate let popularSpots: BehaviorRelay<[String]> = .init(value: [])
 	private let disposeBag: DisposeBag = .init()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupConfigure()
 		setupSubViews()
+		setupCollectionView()
 	}
 	
 	required init?(coder: NSCoder) {
@@ -143,6 +160,65 @@ private extension TravelSpotExtendedView {
 		}
 	}
 }
+
+// MARK: - COLLECTIONVIEW {
+private extension TravelSpotExtendedView {
+	func setupCollectionView() {
+		popularSpots
+			.observe(on: MainScheduler.instance)
+			.bind(to: popularSpotCollectionView.rx.items(
+				cellIdentifier: PopularTranvelSpotCollectionViewCell.identifier,
+				cellType: PopularTranvelSpotCollectionViewCell.self)
+			) { indexPath, spotInfo, cell in
+				cell.updateValue(with: spotInfo)
+			}.disposed(by: disposeBag)
+		
+		Observable.zip(
+			popularSpotCollectionView.rx.itemSelected,
+			popularSpotCollectionView.rx.modelSelected(String.self)
+		)
+		.observe(on: MainScheduler.instance)
+		.bind { [weak self] indexPath, spotInfo in
+			guard let self else { return }
+			print(indexPath, spotInfo)
+		}.disposed(by: disposeBag)
+	}
+	
+	func makeCollectionViewLayout() -> UICollectionViewCompositionalLayout {
+		let configuration = UICollectionViewCompositionalLayoutConfiguration()
+		configuration.scrollDirection = .horizontal
+		configuration.interSectionSpacing = .zero
+		let size: CGSize = Metric.popularSpotCollectionViewCellSize
+		
+		let layout = UICollectionViewCompositionalLayout(
+			sectionProvider: { (_, _) -> NSCollectionLayoutSection? in
+				let itemSize = NSCollectionLayoutSize(
+					widthDimension: .absolute(size.width),
+					heightDimension: .absolute(size.height)
+				)
+				let item = NSCollectionLayoutItem(layoutSize: itemSize)
+				item.contentInsets = .zero
+				
+				let groupSize = NSCollectionLayoutSize(
+					widthDimension: .absolute(size.width),
+					heightDimension: .absolute(size.height)
+				)
+				let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+				let section = NSCollectionLayoutSection(group: group)
+				section.interGroupSpacing = Metric.popularSpotCollectionViewSpacing
+				section.contentInsets = NSDirectionalEdgeInsets(
+					top: Metric.popularSpotCollectionViewVerticalInset,
+					leading: Metric.popularSpotCollectionViewHorizontalInset,
+					bottom: Metric.popularSpotCollectionViewVerticalInset,
+					trailing: Metric.popularSpotCollectionViewHorizontalInset
+				)
+				return section
+			}, configuration: configuration)
+		
+		return layout
+	}
+}
+
 // MARK: - REACTIVE EXTENSION
 extension Reactive where Base: TravelSpotExtendedView {
 	var didTapLocationSearchContainer: ControlEvent<Void> {
@@ -150,4 +226,9 @@ extension Reactive where Base: TravelSpotExtendedView {
 		return ControlEvent(events: source)
 	}
 	
+	var popularSpotsRelay: Binder<[String]> {
+		return Binder(base) { view, popularSpots in
+			view.popularSpots.accept(popularSpots)
+		}
+	}
 }

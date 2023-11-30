@@ -99,6 +99,8 @@ public final class SearchFilterViewController: UIViewController, View {
 			.map { $0 < Constant.maximumGroupCount }
 			.bind(to: rootView.rx.isEnableIncreaseButton)
 			.disposed(by: disposeBag)
+		
+		reactor.action.onNext(.fetchPopularSpots)
 	}
 }
 
