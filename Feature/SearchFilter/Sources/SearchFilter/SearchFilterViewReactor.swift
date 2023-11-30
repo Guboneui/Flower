@@ -20,10 +20,10 @@ public final class SearchFilterViewReactor: Reactor {
 	}
 	
 	public enum Mutation {
-		case decreaseValue
-		case increaseValue
 		case setExtendedState(SearchFilterExtendedState)
 		case setPopularSpots([String])
+		case setDecreaseValue
+		case setIncreaseValue
 	}
 	
 	public struct State {
@@ -59,15 +59,15 @@ public final class SearchFilterViewReactor: Reactor {
 		var state = state
 		
 		switch mutation {
-		case .decreaseValue:
 		case let .setExtendedState(extendedState):
 			state.extendedState = extendedState
 		case let .setPopularSpots(popularSpots):
 			state.popularSpots = popularSpots
+		case .setDecreaseValue:
 			if state.groupCount > 0 {
 				state.groupCount -= 1
 			}
-		case .increaseValue:
+		case .setIncreaseValue:
 			if state.groupCount < 6 {
 				state.groupCount += 1
 			}
@@ -95,10 +95,10 @@ private extension SearchFilterViewReactor {
 	}
 	
 	func performDidTapDecreaseButton() -> Observable<Mutation> {
-		return .just(.decreaseValue)
+		return .just(.setDecreaseValue)
 	}
 	
 	func performDidTapIncreaseButton() -> Observable<Mutation> {
-		return .just(.increaseValue)
+		return .just(.setIncreaseValue)
 	}
 }
