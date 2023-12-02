@@ -170,7 +170,7 @@ private extension TravelSpotExtendedView {
 				cellIdentifier: PopularTranvelSpotCollectionViewCell.identifier,
 				cellType: PopularTranvelSpotCollectionViewCell.self)
 			) { indexPath, spotInfo, cell in
-				cell.updateValue(with: spotInfo)
+				cell.updateValue(with: spotInfo, isSelected: indexPath % 2 == 0)
 			}.disposed(by: disposeBag)
 		
 		Observable.zip(

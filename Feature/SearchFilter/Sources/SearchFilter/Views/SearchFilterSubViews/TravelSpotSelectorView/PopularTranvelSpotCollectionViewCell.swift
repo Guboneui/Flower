@@ -22,13 +22,12 @@ final class PopularTranvelSpotCollectionViewCell: UICollectionViewCell {
 	private enum Metric {
 		static let radius: CGFloat = 28
 		static let titleLabelHorizontalMargin: CGFloat = 8
+		static let selectedWidth: CGFloat = 2
 	}
 	
 	// MARK: - UI PROPERTY
 	private let titleLabel: UILabel = UILabel().then {
-		$0.text = "서울"
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.grey40
 		$0.textAlignment = .center
 	}
 	
@@ -49,8 +48,22 @@ final class PopularTranvelSpotCollectionViewCell: UICollectionViewCell {
 	}
 	
 	// MARK: - PUBLIC METHOD
-	func updateValue(with spotInfo: String) {
+	func updateValue(
+		with spotInfo: String,
+		isSelected: Bool
+	) {
 		titleLabel.text = spotInfo
+		if isSelected {
+			contentView.makeCornerRadiusWithBorder(
+				Metric.radius,
+				borderWidth: Metric.selectedWidth,
+				borderColor: AppTheme.Color.primary
+			)
+			titleLabel.textColor = AppTheme.Color.black
+		} else {
+			contentView.makeCornerRadiusWithBorder(Metric.radius)
+			titleLabel.textColor = AppTheme.Color.grey40
+		}
 	}
 }
 
