@@ -61,7 +61,10 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 
-		reactor.state.map(\.selectedSpot)
+		let selectedSpot = reactor.pulse(\.$selectedSpot)
+			.share()
+		
+		selectedSpot
 			.map { selectedSpot in
 				if let selectedSpot = selectedSpot {
 					return selectedSpot
@@ -72,7 +75,7 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: rootView.rx.selectedSpotValueInDefaultView)
 			.disposed(by: disposeBag)
 		
-		reactor.state.map(\.selectedSpot)
+		selectedSpot
 			.map { selectedSpot in
 				if let selectedSpot = selectedSpot {
 					return selectedSpot
