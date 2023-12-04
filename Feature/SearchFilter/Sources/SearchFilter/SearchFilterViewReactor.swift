@@ -15,6 +15,7 @@ public final class SearchFilterViewReactor: Reactor {
 	public enum Action {
 		case updateExtendedState(SearchFilterExtendedState)
 		case fetchPopularSpots
+		case didSelectSpot(String?)
 		case didTapDecreaseButton
 		case didTapIncreaseButton
 	}
@@ -22,6 +23,7 @@ public final class SearchFilterViewReactor: Reactor {
 	public enum Mutation {
 		case setExtendedState(SearchFilterExtendedState)
 		case setPopularSpots([String])
+		case setSelectedSpot(String?)
 		case setDecreaseValue
 		case setIncreaseValue
 	}
@@ -29,6 +31,7 @@ public final class SearchFilterViewReactor: Reactor {
 	public struct State {
 		var extendedState: SearchFilterExtendedState
 		var popularSpots: [String]
+		var selectedSpot: String?
 		var groupCount: Int
 	}
 	
@@ -48,6 +51,8 @@ public final class SearchFilterViewReactor: Reactor {
 			return performExtenedState(with: extenedState)
 		case .fetchPopularSpots:
 			return performPopularSpots()
+		case let .didSelectSpot(selectedSpot):
+			return performDidSelectedSpot(with: selectedSpot)
 		case .didTapDecreaseButton:
 			return performDidTapDecreaseButton()
 		case .didTapIncreaseButton:
@@ -63,6 +68,8 @@ public final class SearchFilterViewReactor: Reactor {
 			state.extendedState = extendedState
 		case let .setPopularSpots(popularSpots):
 			state.popularSpots = popularSpots
+		case let .setSelectedSpot(selectedSpot):
+			state.selectedSpot = selectedSpot
 		case .setDecreaseValue:
 			if state.groupCount > 0 {
 				state.groupCount -= 1
@@ -92,6 +99,10 @@ private extension SearchFilterViewReactor {
 		return popularSpots
 			.asObservable()
 			.map { .setPopularSpots($0) }
+	}
+	
+	func performDidSelectedSpot(with selectedSpot: String?) -> Observable<Mutation> {
+		return .just(.setSelectedSpot(selectedSpot))
 	}
 	
 	func performDidTapDecreaseButton() -> Observable<Mutation> {

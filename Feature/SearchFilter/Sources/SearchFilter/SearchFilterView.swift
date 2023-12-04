@@ -231,6 +231,18 @@ extension Reactive where Base: SearchFilterView {
 		}
 	}
 	
+	var selectedSpotValueInDefaultView: Binder<String> {
+		return base.travelSpotDefaultView.rx.selectedSpot
+	}
+	
+	var selectedSpotValueInExtendedView: Binder<String> {
+		return base.travelSpotExtendedView.rx.selectedSpot
+	}
+	
+	var selectedSpotRelay: Observable<String?> {
+		return base.travelSpotExtendedView.rx.selectedSpotRelay
+	}
+	
 	// MARK: - Travel Group
 	var didTapTravelGroupDefaultView: ControlEvent<Void> {
 		let source = base.travelGroupDefaultView.rx.tapGesture().when(.recognized).map { _ in }

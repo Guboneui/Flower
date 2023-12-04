@@ -56,6 +56,33 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
+		rootView.rx.selectedSpotRelay
+			.map { .didSelectSpot($0) }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+
+		reactor.state.map(\.selectedSpot)
+			.map { selectedSpot in
+				if let selectedSpot = selectedSpot {
+					return selectedSpot
+				} else {
+					return "-"
+				}
+			}
+			.bind(to: rootView.rx.selectedSpotValueInDefaultView)
+			.disposed(by: disposeBag)
+		
+		reactor.state.map(\.selectedSpot)
+			.map { selectedSpot in
+				if let selectedSpot = selectedSpot {
+					return selectedSpot
+				} else {
+					return "위치 검색"
+				}
+			}
+			.bind(to: rootView.rx.selectedSpotValueInExtendedView)
+			.disposed(by: disposeBag)
+		
 		rootView.rx.didTapTravelGroupDefaultView
 			.map { .updateExtendedState(.travelGroup) }
 			.bind(to: reactor.action)

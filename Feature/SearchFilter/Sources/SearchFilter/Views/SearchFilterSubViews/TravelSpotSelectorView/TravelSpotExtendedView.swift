@@ -63,7 +63,7 @@ final class TravelSpotExtendedView: UIView {
 		$0.tintColor = AppTheme.Color.black
 	}
 	
-	private let searchLabel: UILabel = UILabel().then {
+	fileprivate let searchLabel: UILabel = UILabel().then {
 		$0.text = TextSet.searchLabelText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
@@ -101,6 +101,8 @@ final class TravelSpotExtendedView: UIView {
 	
 	// MARK: - PROPERTY
 	fileprivate let popularSpots: BehaviorRelay<[String]> = .init(value: [])
+	fileprivate let selectedSpot: BehaviorRelay<String?> = .init(value: nil)
+	
 	private let disposeBag: DisposeBag = .init()
 	
 	override init(frame: CGRect) {
@@ -180,7 +182,7 @@ private extension TravelSpotExtendedView {
 		.observe(on: MainScheduler.instance)
 		.bind { [weak self] indexPath, spotInfo in
 			guard let self else { return }
-			print(indexPath, spotInfo)
+			self.selectedSpot.accept(spotInfo)
 		}.disposed(by: disposeBag)
 	}
 	
@@ -230,5 +232,15 @@ extension Reactive where Base: TravelSpotExtendedView {
 		return Binder(base) { view, popularSpots in
 			view.popularSpots.accept(popularSpots)
 		}
+	}
+	
+	var selectedSpot: Binder<String> {
+		return Binder(base) { view, selectedSpot in
+			view.searchLabel.text = selectedSpot
+		}
+	}
+	
+	var selectedSpotRelay: Observable<String?> {
+		return base.selectedSpot.asObservable()
 	}
 }

@@ -26,7 +26,7 @@ final class TravelSpotDefaultView: UIView {
 	}
 	
 	// MARK: - UI PROPERTY
-	private let locationLabel: UILabel = UILabel().then {
+	fileprivate let locationLabel: UILabel = UILabel().then {
 		$0.text = "위치"
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
@@ -81,6 +81,12 @@ extension Reactive where Base: TravelSpotDefaultView {
 	var locationValue: Binder<String> {
 		return Binder(base) { view, text in
 			view.selectedLocationLabel.text = text
+		}
+	}
+	
+	var selectedSpot: Binder<String> {
+		return Binder(base) { view, selectedSpot in
+			view.selectedLocationLabel.text = selectedSpot
 		}
 	}
 }
