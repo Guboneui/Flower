@@ -12,13 +12,17 @@ import LoginEntity
 import RxSwift
 
 public final class EmailSignupIDUseCase: EmailSignupIDUseCaseInterface {
-	private let authSendRepository: EmailSignupIDRepositoryInterface
+	private let emailSignupIDRepository: EmailSignupIDRepositoryInterface
 	
-	public init(authSendRepository: EmailSignupIDRepositoryInterface) {
-		self.authSendRepository = authSendRepository
+	public init(emailSignupIDRepository: EmailSignupIDRepositoryInterface) {
+		self.emailSignupIDRepository = emailSignupIDRepository
 	}
 	
-	public func fetchMessage(email: String) -> Single<AuthSendResponse> {
-		return authSendRepository.fetchTest(email: email)
+	public func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse> {
+		return emailSignupIDRepository.fetchEmailConfirmAPI(email: email)
+	}
+	
+	public func fetchAuthEmail(email: String) -> Single<AuthSendResponse> {
+		return emailSignupIDRepository.fetchAuthEmailAPI(email: email)
 	}
 }
