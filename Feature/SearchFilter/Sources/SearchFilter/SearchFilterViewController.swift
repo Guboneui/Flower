@@ -86,6 +86,13 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: rootView.rx.selectedSpotValueInExtendedView)
 			.disposed(by: disposeBag)
 		
+		selectedSpot
+			.observe(on: MainScheduler.asyncInstance)
+			.compactMap { _ in }
+			.map { .updateExtendedState(.travelGroup) }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
 		rootView.rx.didTapTravelGroupDefaultView
 			.map { .updateExtendedState(.travelGroup) }
 			.bind(to: reactor.action)
