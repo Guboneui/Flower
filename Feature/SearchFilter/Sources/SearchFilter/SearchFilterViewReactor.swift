@@ -31,7 +31,7 @@ public final class SearchFilterViewReactor: Reactor {
 	public struct State {
 		var extendedState: SearchFilterExtendedState
 		var popularSpots: [String]
-		var selectedSpot: String?
+		@Pulse var selectedSpot: String?
 		var groupCount: Int
 	}
 	
