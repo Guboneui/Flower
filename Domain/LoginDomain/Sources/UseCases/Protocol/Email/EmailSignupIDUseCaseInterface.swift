@@ -12,5 +12,6 @@ import LoginEntity
 import RxSwift
 
 public protocol EmailSignupIDUseCaseInterface {
-	func fetchMessage(email: String) -> Single<AuthSendResponse>
+	func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse>
+	func fetchAuthEmail(email: String) -> Single<AuthSendResponse>
 }
