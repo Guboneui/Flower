@@ -13,6 +13,7 @@ import RxSwift
 public final class SearchFilterViewReactor: Reactor {
 	
 	public enum Action {
+		case clearData
 		case updateExtendedState(SearchFilterExtendedState)
 		case fetchPopularSpots
 		case didSelectSpot(String?)
@@ -21,6 +22,7 @@ public final class SearchFilterViewReactor: Reactor {
 	}
 	
 	public enum Mutation {
+		case setClearData
 		case setExtendedState(SearchFilterExtendedState)
 		case setPopularSpots([String])
 		case setSelectedSpot(String?)
@@ -47,6 +49,8 @@ public final class SearchFilterViewReactor: Reactor {
 	
 	public func mutate(action: Action) -> Observable<Mutation> {
 		switch action {
+		case .clearData:
+			return performClearData()
 		case let .updateExtendedState(extenedState):
 			return performExtenedState(with: extenedState)
 		case .fetchPopularSpots:
@@ -64,6 +68,10 @@ public final class SearchFilterViewReactor: Reactor {
 		var state = state
 		
 		switch mutation {
+		case .setClearData:
+			state.groupCount = 0
+			state.extendedState = .travelSpot
+			state.selectedSpot = nil
 		case let .setExtendedState(extendedState):
 			state.extendedState = extendedState
 		case let .setPopularSpots(popularSpots):
@@ -86,6 +94,10 @@ public final class SearchFilterViewReactor: Reactor {
 
 // MARK: - PRIVATE METHOD
 private extension SearchFilterViewReactor {
+	
+	func performClearData() -> Observable<Mutation> {
+		return .just(.setClearData)
+	}
 	
 	func performExtenedState(with extendedState: SearchFilterExtendedState) -> Observable<Mutation> {
 		return .just(.setExtendedState(extendedState))

@@ -41,6 +41,11 @@ public final class SearchFilterViewController: UIViewController, View {
 	
 	// MARK: - BINDING
 	public func bind(reactor: SearchFilterViewReactor) {
+		rootView.rx.didTapBottomLeftButton
+			.map { .clearData }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
 		rootView.rx.didTapDecreaseButton
 			.map { .didTapDecreaseButton }
 			.bind(to: reactor.action)
