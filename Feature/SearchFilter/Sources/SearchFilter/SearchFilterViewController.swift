@@ -88,8 +88,8 @@ public final class SearchFilterViewController: UIViewController, View {
 		
 		selectedSpot
 			.observe(on: MainScheduler.asyncInstance)
-			.compactMap { _ in }
-			.map { .updateExtendedState(.travelGroup) }
+			.filter { $0 != nil }
+			.map { _ in .updateExtendedState(.travelGroup) }
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
