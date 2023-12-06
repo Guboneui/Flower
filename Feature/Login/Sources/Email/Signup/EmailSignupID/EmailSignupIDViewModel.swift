@@ -13,13 +13,27 @@ import LoginEntity
 import RxRelay
 import RxSwift
 
+enum PageState {
+	case Email
+	case Auth
+}
+
+struct PageSet {
+	var state: PageState
+	var enabled: Bool?
+}
+
 public final class EmailSignupIDViewModel {
 	var emailRelay: BehaviorRelay<String> = .init(value: "")
 	var authRelay: BehaviorRelay<String> = .init(value: "")
 	var emailRegexBool: PublishSubject<Bool> = .init()
+	var emailAuthBool: PublishSubject<Bool> = .init()
 	
-	let message: PublishSubject<AuthSendResponse> = .init()
-	let confirmMessage: PublishSubject<EmailConfirmResponse> = .init()
+	var pageState: BehaviorRelay<PageSet> = .init(value: PageSet(state: .Email))
+	
+	let emailAuthAPIResponse: PublishSubject<EmailAuthResponse> = .init()
+	let emailConfirmAPIResponse: PublishSubject<EmailConfirmResponse> = .init()
+	let emailCodeAPIResponse: PublishSubject<EmailCodeResponse> = .init()
 	
 	private let signUpUseCase: EmailSignupIDUseCaseInterface
 	
@@ -32,31 +46,62 @@ public final class EmailSignupIDViewModel {
 		self.disposeBag = .init()
 	}
 	
-	func isValid(email: String) {
-		if NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email) {
-					fetchEmailConfirm(with: email)
-				}
-		emailRegexBool.onNext(false)
+	func isValidEmail() {
+		if pageState.value.state == .Email {
+			if NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: emailRelay.value) {
+				fetchEmailConfirm(email: emailRelay.value)
+			} else {
+				pageState.accept(.init(state: .Email, enabled: false))
+			}
+		}
 	}
 	
-	func fetchEmailConfirm(with email: String) {
+	func isValiedAuthNumber() {
+		if pageState.value.state == .Auth {
+			if authRelay.value.count == 6 {
+				fetchEmailCode(email: emailRelay.value, code: authRelay.value)
+			} else {
+				pageState.accept(.init(state: .Auth, enabled: false))
+			}
+		}
+	}
+	
+	func fetchEmailConfirm(email: String) {
 		print("이메일 중복확인")
 		signUpUseCase.fetchEmailConfirm(email: email)
-			.subscribe(onSuccess: { [weak self] respose in
-				guard let self else { return }
-				self.emailRegexBool.onNext(respose.success)
-			})
-			.disposed(by: disposeBag)
-	}
-	
-	func fetchEmailAuthCode(with email: String) {
-		print("usecase로 해당 이메일을 보낸다: \(email)")
-		signUpUseCase.fetchAuthEmail(email: email)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
-
-				self.message.onNext(response)
-			})
-			.disposed(by: disposeBag)
+				
+				self.emailConfirmAPIResponse.onNext(response)
+				pageState.accept(.init(state: .Email, enabled: response.success))
+				
+			}).disposed(by: disposeBag)
+	}
+	
+	func fetchEmailAuth(email: String) {
+		print("usecase로 해당 이메일을 보낸다: \(email)")
+		signUpUseCase.fetchEmailAuth(email: email)
+			.subscribe(onSuccess: { [weak self] response in
+				guard let self else { return }
+				
+				self.emailAuthAPIResponse.onNext(response)
+				
+				if response.success == true {
+					pageState.accept(.init(state: .Auth))
+				}
+				
+			}).disposed(by: disposeBag)
+	}
+	
+	func fetchEmailCode(email: String, code: String) {
+		print("이메일 코드 검증")
+		signUpUseCase.fetchEmailCode(email: email, code: code)
+			.subscribe(onSuccess: { [weak self] response in
+				guard let self else { return }
+				
+				self.emailCodeAPIResponse.onNext(response)
+				pageState.accept(.init(state: .Auth, enabled: response.success))
+				
+			}).disposed(by: disposeBag)
 	}
 }

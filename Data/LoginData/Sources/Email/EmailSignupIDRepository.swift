@@ -19,8 +19,12 @@ public final class EmailSignupIDRepository: NetworkRepository<EmailSignupAPI>, E
 		request(endPoint: .MailConfirm(email: email))
 	}
 	
-	public func fetchAuthEmailAPI(email: String) -> Single<AuthSendResponse> {
-		request(endPoint: .AuthSend(email: email))
+	public func fetchEmailAuthAPI(email: String) -> Single<EmailAuthResponse> {
+		request(endPoint: .MailAuth(email: email))
+	}
+	
+	public func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse> {
+		request(endPoint: .MailCode(email: email, code: code))
 	}
 	
 	public init() {

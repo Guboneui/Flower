@@ -22,7 +22,11 @@ public final class EmailSignupIDUseCase: EmailSignupIDUseCaseInterface {
 		return emailSignupIDRepository.fetchEmailConfirmAPI(email: email)
 	}
 	
-	public func fetchAuthEmail(email: String) -> Single<AuthSendResponse> {
-		return emailSignupIDRepository.fetchAuthEmailAPI(email: email)
+	public func fetchEmailAuth(email: String) -> Single<EmailAuthResponse> {
+		return emailSignupIDRepository.fetchEmailAuthAPI(email: email)
+	}
+	
+	public func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse> {
+		return emailSignupIDRepository.fetchEmailCodeAPI(email: email, code: code)
 	}
 }
