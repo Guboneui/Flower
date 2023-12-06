@@ -24,11 +24,12 @@ public final class EmailSignupPWViewController: UIViewController {
 		
 		static let pwTextFieldTopMargin: CGFloat = 8
 		
+		static let pwCautionViewHeightMargin: CGFloat = 14
+		static let pwCautionViewTopMargin: CGFloat = 8
+		
 		static let pwCautionImageViewSize: CGFloat = 14
-		static let pwCautionImageViewTopMargin: CGFloat = 8
 		static let pwCautionImageViewLeftMargin: CGFloat = 8
 		
-		static let pwCautionLabelTopMargin: CGFloat = 8
 		static let pwCautionLabelLeftMargin: CGFloat = 4
 		
 		static let pwAnnouncementLabelRightMargin: CGFloat = 9
@@ -39,6 +40,14 @@ public final class EmailSignupPWViewController: UIViewController {
 		
 		static let pwCheckTextFieldTopMargin: CGFloat = 8
 		
+		static let pwCheckCautionViewHeightMargin: CGFloat = 14
+		static let pwCheckCautionViewTopMargin: CGFloat = 8
+		
+		static let pwCheckCautionImageViewSize: CGFloat = 14
+		static let pwCheckCautionImageViewLeftMargin: CGFloat = 8
+		
+		static let pwCheckCautionLabelLeftMargin: CGFloat = 4
+		
 		static let pwCheckAnnouncementLabelTopMargin: CGFloat = 8
 		static let pwCheckAnnouncementLabelRightMargin: CGFloat = 9
 		
@@ -46,6 +55,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let nextButttonBothsides: CGFloat = 24
 		
 		static let pwCautionLabelNumberOfLines: Int = 1
+		static let pwCheckCautionLabelNumberOfLines: Int = 1
 		static let pwAnnouncementLabelNumberOfLines: Int = 1
 	}
 	
@@ -53,13 +63,18 @@ public final class EmailSignupPWViewController: UIViewController {
 	private enum Font {
 		static let pwLabelFont: UIFont = AppTheme.Font.Bold_16
 		static let pwCautionLabelFont: UIFont = AppTheme.Font.Regular_12
+		static let pwCheckCautionLabelFont: UIFont = AppTheme.Font.Regular_12
 		static let pwAnnouncementLabelFont: UIFont = AppTheme.Font.Regular_12
 		static let pwCheckAnnouncementLabelFont: UIFont = AppTheme.Font.Regular_12
 	}
 	
 	// MARK: Image
 	private enum Image {
-		static let pwCautionImage: UIImage = AppTheme.Image.success
+		static let pwCautionSuccessImage: UIImage = AppTheme.Image.success
+		static let pwCautionFailureImage: UIImage = AppTheme.Image.caution
+		
+		static let pwCheckCautionSuccessImage: UIImage = AppTheme.Image.success
+		static let pwCheckCautionFailureImage: UIImage = AppTheme.Image.caution
 	}
 	
 	// MARK: COLORSET
@@ -68,7 +83,15 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwViewBackgroundColor: UIColor = AppTheme.Color.white
 		static let pwCheckViewBackgroundColor: UIColor = AppTheme.Color.white
 		static let pwLabelColor: UIColor = AppTheme.Color.black
-		static let pwCautionLabelColor: UIColor = AppTheme.Color.primary
+		
+		static let pwCautionViewColor: UIColor = AppTheme.Color.white
+		static let pwCautionLabelSuccessColor: UIColor = AppTheme.Color.primary
+		static let pwCautionLabelFailureColor: UIColor = AppTheme.Color.warning
+		
+		static let pwCheckCautionViewColor: UIColor = AppTheme.Color.white
+		static let pwCheckCautionLabelSuccessColor: UIColor = AppTheme.Color.primary
+		static let pwCheckCautionLabelFailureColor: UIColor = AppTheme.Color.warning
+
 		static let pwAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
 		static let pwCheckAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
 	}
@@ -78,7 +101,13 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let navigationBarText: String = "회원가입"
 		static let pwLabelText: String = "비밀번호"
 		static let pwCheckLabelText: String = "비밀번호 확인"
-		static let pwCautionLabelText: String = "사용가능한 비밀번호 입니다"
+		
+		static let pwCautionLabelSuccessText: String = "사용가능한 비밀번호 입니다"
+		static let pwCautionLabelFailureText: String = "특수문자를 포함해 주세요"
+		
+		static let pwCheckCautionLabelSuccessText: String = "사용가능한 비밀번호 입니다"
+		static let pwCheckCautionLabelFailureText: String = "비밀번호가 일치하지 않습니다"
+		
 		static let pwAnnouncementLabelText: String = "영문+숫자+특수문자 8~20자리"
 		static let pwCheckAnnouncementLabelText: String = "영문+숫자+특수문자 8~20자리"
 		static let nextButtonText: String = "다음"
@@ -100,15 +129,20 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.currentState = .normal
 	}
 	
-	private let pwCautionLabel: UILabel = UILabel().then {
-		$0.text = TextSet.pwCautionLabelText
-		$0.font = Font.pwCautionLabelFont
-		$0.textColor = ColorSet.pwCautionLabelColor
-		$0.numberOfLines = Metric.pwCautionLabelNumberOfLines
+	private let pwCautionView: UIView = UIView().then {
+		$0.backgroundColor = ColorSet.pwCautionViewColor
+		$0.alpha = 0
 	}
 	
 	private let pwCautionImageView: UIImageView = UIImageView().then {
-		$0.image = Image.pwCautionImage
+		$0.image = Image.pwCautionFailureImage
+	}
+	
+	private let pwCautionLabel: UILabel = UILabel().then {
+		$0.text = TextSet.pwCautionLabelFailureText
+		$0.font = Font.pwCautionLabelFont
+		$0.textColor = ColorSet.pwCautionLabelFailureColor
+		$0.numberOfLines = Metric.pwCautionLabelNumberOfLines
 	}
 	
 	private let pwAnnouncementLabel: UILabel = UILabel().then {
@@ -132,6 +166,22 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.currentState = .normal
 	}
 	
+	private let pwCheckCautionView: UIView = UIView().then {
+		$0.backgroundColor = ColorSet.pwCheckCautionViewColor
+		$0.alpha = 0
+	}
+	
+	private let pwCheckCautionImageView: UIImageView = UIImageView().then {
+		$0.image = Image.pwCheckCautionFailureImage
+	}
+	
+	private let pwCheckCautionLabel: UILabel = UILabel().then {
+		$0.text = TextSet.pwCheckCautionLabelFailureText
+		$0.font = Font.pwCheckCautionLabelFont
+		$0.textColor = ColorSet.pwCheckCautionLabelFailureColor
+		$0.numberOfLines = Metric.pwCheckCautionLabelNumberOfLines
+	}
+	
 	private let pwCheckAnnouncementLabel: UILabel = UILabel().then {
 		$0.text = TextSet.pwCheckAnnouncementLabelText
 		$0.font = Font.pwCheckAnnouncementLabelFont
@@ -139,15 +189,29 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.numberOfLines = Metric.pwAnnouncementLabelNumberOfLines
 	}
 	
-	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText)
+	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText).then {
+		$0.isEnabled = false
+	}
 	
-	private let disposeBag = DisposeBag()
+	private let disposeBag: DisposeBag = DisposeBag()
+	
+	private let emailSignupPWViewModel: EmailSignupPWViewModel
+
+	public init(emailSignupPWViewModel: EmailSignupPWViewModel) {
+		self.emailSignupPWViewModel = emailSignupPWViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
 		setupViews()
 		setupGestures()
+		setupBinding()
 	}
 }
 
@@ -162,13 +226,21 @@ private extension EmailSignupPWViewController {
 		view.addSubview(pwView)
 		pwView.addSubview(pwLabel)
 		pwView.addSubview(pwTextField)
-		pwView.addSubview(pwCautionImageView)
-		pwView.addSubview(pwCautionLabel)
+		
+		pwView.addSubview(pwCautionView)
+		pwCautionView.addSubview(pwCautionImageView)
+		pwCautionView.addSubview(pwCautionLabel)
+		
 		pwView.addSubview(pwAnnouncementLabel)
 		
 		view.addSubview(pwCheckView)
 		pwCheckView.addSubview(pwCheckLabel)
 		pwCheckView.addSubview(pwCheckTextField)
+		
+		pwCheckView.addSubview(pwCheckCautionView)
+		pwCheckCautionView.addSubview(pwCheckCautionImageView)
+		pwCheckCautionView.addSubview(pwCheckCautionLabel)
+		
 		pwCheckView.addSubview(pwCheckAnnouncementLabel)
 		
 		view.addSubview(nextButton)
@@ -198,14 +270,20 @@ private extension EmailSignupPWViewController {
 			make.horizontalEdges.equalToSuperview()
 		}
 		
+		pwCautionView.snp.makeConstraints { make in
+			make.height.equalTo(Metric.pwCautionViewHeightMargin)
+			make.top.equalTo(pwTextField.snp.bottom).offset(Metric.pwCautionViewTopMargin)
+			make.leading.equalToSuperview()
+		}
+		
 		pwCautionImageView.snp.makeConstraints { make in
 			make.size.equalTo(Metric.pwCautionImageViewSize)
-			make.top.equalTo(pwTextField.snp.bottom).offset(Metric.pwCautionImageViewTopMargin)
+			make.top.equalToSuperview()
 			make.leading.equalToSuperview().inset(Metric.pwCautionImageViewLeftMargin)
 		}
 		
 		pwCautionLabel.snp.makeConstraints { make in
-			make.top.equalTo(pwTextField.snp.bottom).offset(Metric.pwCautionLabelTopMargin)
+			make.top.equalToSuperview()
 			make.leading.equalTo(pwCautionImageView.snp.trailing).offset(Metric.pwCautionLabelLeftMargin)
 		}
 		
@@ -228,6 +306,25 @@ private extension EmailSignupPWViewController {
 		pwCheckTextField.snp.makeConstraints { make in
 			make.top.equalTo(pwCheckLabel.snp.bottom).offset(Metric.pwCheckTextFieldTopMargin)
 			make.horizontalEdges.equalToSuperview()
+		}
+		
+		pwCheckCautionView.snp.makeConstraints { make in
+			make.height.equalTo(Metric.pwCheckCautionViewHeightMargin)
+			make.top.equalTo(pwCheckTextField.snp.bottom)
+				.offset(Metric.pwCheckCautionViewTopMargin)
+			make.leading.equalToSuperview()
+		}
+		
+		pwCheckCautionImageView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.pwCheckCautionImageViewSize)
+			make.top.equalToSuperview()
+			make.leading.equalToSuperview().inset(Metric.pwCheckCautionImageViewLeftMargin)
+		}
+		
+		pwCheckCautionLabel.snp.makeConstraints { make in
+			make.top.equalToSuperview()
+			make.leading.equalTo(pwCheckCautionImageView.snp.trailing)
+				.offset(Metric.pwCheckCautionLabelLeftMargin)
 		}
 		
 		pwCheckAnnouncementLabel.snp.makeConstraints { make in
@@ -266,5 +363,93 @@ private extension EmailSignupPWViewController {
 				}
 			}
 			.disposed(by: disposeBag)
+	}
+	
+	func setupBinding() {
+		pwTextField.currentText
+			.bind(onNext: { [weak self] pwText in
+				guard let self else { return }
+				
+				self.emailSignupPWViewModel.pwRelay.accept(pwText)
+				
+				if pwText.isEmpty {
+					self.emailSignupPWViewModel.pwBool.accept(nil)
+				} else {
+						self.emailSignupPWViewModel.isValiedPW()
+				}
+			}).disposed(by: disposeBag)
+		
+		pwCheckTextField.currentText
+			.bind(onNext: { [weak self] pwCheckText in
+				guard let self else { return }
+				
+				self.emailSignupPWViewModel.pwCheckRelay.accept(pwCheckText)
+				
+				if pwCheckText.isEmpty {
+					self.emailSignupPWViewModel.pwCheckBool.accept(nil)
+				} else {
+						self.emailSignupPWViewModel.isValiedPWCheck()
+				}
+			}).disposed(by: disposeBag)
+		
+		emailSignupPWViewModel.pwBool
+			.subscribe(onNext: { [weak self] bool in
+				guard let self else { return }
+							
+				setPWTextFieldState(bool: bool)
+				
+			}).disposed(by: disposeBag)
+		
+		emailSignupPWViewModel.pwCheckBool
+			.subscribe(onNext: { [weak self] bool in
+				guard let self else { return }
+							
+				setPWCheckTextFieldState(bool: bool)
+				nextButton.isEnabled = bool ?? false
+
+			}).disposed(by: disposeBag)
+	}
+	
+	func setPWTextFieldState(bool: Bool?) {
+		if bool == true {
+			pwCautionView.alpha = 1
+			
+			pwTextField.currentState = .success
+			pwCautionLabel.text = TextSet.pwCautionLabelSuccessText
+			pwCautionLabel.textColor = ColorSet.pwCautionLabelSuccessColor
+			pwCautionImageView.image = Image.pwCautionSuccessImage
+		} else if bool == false {
+			pwCautionView.alpha = 1
+			
+			pwTextField.currentState = .failure
+			pwCautionLabel.text = TextSet.pwCautionLabelFailureText
+			pwCautionLabel.textColor = ColorSet.pwCautionLabelFailureColor
+			pwCautionImageView.image = Image.pwCautionFailureImage
+		} else {
+			pwCautionView.alpha = 0
+			pwTextField.currentState = .normal
+		}
+	}
+	
+	func setPWCheckTextFieldState(bool: Bool?) {
+		if bool == true {
+			pwCheckCautionView.alpha = 1
+			
+			pwCheckTextField.currentState = .success
+			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelSuccessText
+			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelSuccessColor
+			pwCheckCautionImageView.image = Image.pwCheckCautionSuccessImage
+			
+		} else if bool == false {
+			pwCheckCautionView.alpha = 1
+			
+			pwCheckTextField.currentState = .failure
+			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelFailureText
+			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelFailureColor
+			pwCheckCautionImageView.image = Image.pwCheckCautionFailureImage
+		} else {
+			pwCheckCautionView.alpha = 0
+			pwCheckTextField.currentState = .normal
+		}
 	}
 }
