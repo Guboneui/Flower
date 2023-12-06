@@ -26,8 +26,6 @@ struct PageSet {
 public final class EmailSignupIDViewModel {
 	var emailRelay: BehaviorRelay<String> = .init(value: "")
 	var authRelay: BehaviorRelay<String> = .init(value: "")
-	var emailRegexBool: PublishSubject<Bool> = .init()
-	var emailAuthBool: PublishSubject<Bool> = .init()
 	
 	var pageState: BehaviorRelay<PageSet> = .init(value: PageSet(state: .Email))
 	
@@ -39,7 +37,7 @@ public final class EmailSignupIDViewModel {
 	
 	let disposeBag: DisposeBag
 	
-	let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+	let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 	
 	public init(usecase: EmailSignupIDUseCaseInterface) {
 		self.signUpUseCase = usecase
