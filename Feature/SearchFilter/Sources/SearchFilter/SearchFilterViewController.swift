@@ -30,7 +30,6 @@ public final class SearchFilterViewController: UIViewController, View {
 	
 	// MARK: - LIFE CYCLE
 	public override func loadView() {
-		super.loadView()
 		self.view = rootView
 	}
 	

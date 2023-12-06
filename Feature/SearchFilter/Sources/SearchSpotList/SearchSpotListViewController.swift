@@ -16,7 +16,6 @@ public final class SearchSpotListViewController: UIViewController {
 	
 	// MARK: - LIFE CYCLE
 	public override func loadView() {
-		super.loadView()
 		self.view = rootView
 	}
 	
