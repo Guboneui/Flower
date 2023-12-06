@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct AuthSendRequest {
+struct EmailAuthRequest {
 	public let email: String
 }

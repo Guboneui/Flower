@@ -13,5 +13,6 @@ import RxSwift
 
 public protocol EmailSignupIDUseCaseInterface {
 	func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse>
-	func fetchAuthEmail(email: String) -> Single<AuthSendResponse>
+	func fetchEmailAuth(email: String) -> Single<EmailAuthResponse>
+	func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse>
 }
