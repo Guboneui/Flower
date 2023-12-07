@@ -227,9 +227,9 @@ public final class EmailSignupIDViewController: UIViewController {
 		$0.isEnabled = false
 	}
 	
-	private let emailSignupIDViewModel: EmailSignupIDViewModel
+	private let emailSignupIDViewModel: EmailSignupIDViewModelInterface
 	
-	public init(emailSignupIDViewModel: EmailSignupIDViewModel) {
+	public init(emailSignupIDViewModel: EmailSignupIDViewModelInterface) {
 		self.emailSignupIDViewModel = emailSignupIDViewModel
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -239,7 +239,7 @@ public final class EmailSignupIDViewController: UIViewController {
 	}
 	
 	private let disposeBag: DisposeBag = DisposeBag()
-
+	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -390,8 +390,8 @@ private extension EmailSignupIDViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				switch emailSignupIDViewModel.pageState.value.state {
-				case .Email:
+				switch emailSignupIDViewModel.currentViewState.value.state {
+				case .email:
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
 						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
@@ -402,8 +402,8 @@ private extension EmailSignupIDViewController {
 					
 					self.emailTextField.isUserInteractionEnabled = false
 					
-				case .Auth:
-					if self.emailSignupIDViewModel.pageState.value.enabled == true {
+				case .auth:
+					if self.emailSignupIDViewModel.currentViewState.value.enabled == true {
 						if let navigation = self.navigationController as? EmailLoginNavigationController {
 							navigation.pageController.moveToNextPage()
 							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel()
@@ -431,9 +431,9 @@ private extension EmailSignupIDViewController {
 				self.emailSignupIDViewModel.emailRelay.accept(email)
 				
 				if email.isEmpty {
-					self.emailSignupIDViewModel.pageState.accept(.init(state: .Email, enabled: nil))
+					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 				} else {
-					if self.emailSignupIDViewModel.pageState.value.enabled != true {
+					if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
 						self.emailSignupIDViewModel.isValidEmail()
 					}
 				}
@@ -444,44 +444,34 @@ private extension EmailSignupIDViewController {
 				guard let self else { return }
 				
 				self.emailSignupIDViewModel.authRelay.accept(authNum)
-
+				
 				if authNum.isEmpty {
-					self.emailSignupIDViewModel.pageState.accept(.init(state: .Auth, enabled: nil))
+					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .auth, enabled: nil))
 				} else {
-					if self.emailSignupIDViewModel.pageState.value.enabled != true {
+					if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
 						self.emailSignupIDViewModel.isValiedAuthNumber()
 					}
 				}
 			}).disposed(by: disposeBag)
 		
-		emailSignupIDViewModel.pageState
+		emailSignupIDViewModel.currentViewState
 			.subscribe(onNext: { [weak self] pageSet in
 				guard let self else { return }
 				
 				self.authSendButton.isEnabled = pageSet.enabled ?? false
 				
 				switch pageSet.state {
-				case .Email:
+				case .email:
 					setEmailState(bool: pageSet.enabled)
-				
-				case .Auth:
+					
+				case .auth:
 					setAuthState(bool: pageSet.enabled)
 				}
 			}).disposed(by: disposeBag)
-		
-		emailSignupIDViewModel.emailAuthAPIResponse
-			.subscribe { response in
-				print(response.element?.body ?? "")
-			}.disposed(by: disposeBag)
-		
-		emailSignupIDViewModel.emailCodeAPIResponse
-			.subscribe { response in
-				print(response.element?.success ?? "")
-			}.disposed(by: disposeBag)
 	}
 	
 	func setEmailState(bool: Bool?) {
-
+		
 		if bool == true {
 			cautionView.alpha = 1
 			
@@ -510,7 +500,7 @@ private extension EmailSignupIDViewController {
 			authCautionLabel.text = TextSet.authCautionLabelSuccessText
 			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
 			authCautionImageView.image = Image.authCautionSuccessImage
-
+			
 		} else if bool == false {
 			authCautionView.alpha = 1
 			

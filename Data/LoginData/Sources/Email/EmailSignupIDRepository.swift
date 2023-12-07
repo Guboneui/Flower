@@ -16,15 +16,15 @@ import RxSwift
 
 public final class EmailSignupIDRepository: NetworkRepository<EmailSignupAPI>, EmailSignupIDRepositoryInterface {
 	public func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse> {
-		request(endPoint: .MailConfirm(email: email))
+		request(endPoint: .emailConfirm(email: email))
 	}
 	
 	public func fetchEmailAuthAPI(email: String) -> Single<EmailAuthResponse> {
-		request(endPoint: .MailAuth(email: email))
+		request(endPoint: .emailAuth(email: email))
 	}
 	
 	public func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse> {
-		request(endPoint: .MailCode(email: email, code: code))
+		request(endPoint: .emailCode(email: email, code: code))
 	}
 	
 	public init() {
