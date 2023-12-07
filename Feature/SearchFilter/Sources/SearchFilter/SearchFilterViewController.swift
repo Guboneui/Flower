@@ -60,6 +60,11 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
+		rootView.rx.didTapTravelDateDefaultView
+			.map { .updateExtendedState(.travelDate) }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
 		rootView.rx.selectedSpotRelay
 			.map { .didSelectSpot($0) }
 			.bind(to: reactor.action)
@@ -105,10 +110,10 @@ public final class SearchFilterViewController: UIViewController, View {
 		reactor.state.map(\.extendedState)
 			.distinctUntilChanged()
 			.observe(on: MainScheduler.instance)
+			.debug()
 			.bind { [weak self] state in
 				guard let self else { return }
-				self.rootView.updateTravelSpotViewState(isExtended: state == .travelSpot)
-				self.rootView.updateTravelGroupViewState(isExtended: state == .travelGroup)
+				self.rootView.updateExtendedState(with: state)
 			}.disposed(by: disposeBag)
 		
 		reactor.state.map(\.popularSpots)

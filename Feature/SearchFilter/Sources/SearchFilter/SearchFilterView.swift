@@ -21,8 +21,12 @@ final class SearchFilterView: UIView {
 	// MARK: - METRIC
 	private enum Metric {
 		static let radius: CGFloat = 16
-		static let spacing: CGFloat = 0
+		static let animationStackViewSpcing: CGFloat = 0
 		static let guideLineHeight: CGFloat = 1.0
+		
+		static let travelViewVerticalMargin: CGFloat = 22
+		static let verticalMargin: CGFloat = 16
+		static let horizontalMargin: CGFloat = 14
 		
 		static let bottomButtonTopMargin: CGFloat = 12
 		static let bottomButtonHorizontalMargin: CGFloat = 20
@@ -43,7 +47,9 @@ final class SearchFilterView: UIView {
 		hasGuideLine: true
 	)
 	
-	private let scrollView: UIScrollView = UIScrollView()
+	private let scrollView: UIScrollView = UIScrollView().then {
+		$0.backgroundColor = AppTheme.Color.grey90
+	}
 	
 	private let scrollContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.grey90
@@ -58,8 +64,23 @@ final class SearchFilterView: UIView {
 		]).then {
 			$0.backgroundColor = AppTheme.Color.white
 			$0.axis = .vertical
-			$0.spacing = Metric.spacing
+			$0.spacing = Metric.animationStackViewSpcing
 			$0.makeCornerRadiusWithBorder(Metric.radius)
+			$0.clipsToBounds = true
+		}
+	
+	fileprivate let travelDateDefaultView: TravelDateDefaultView = .init()
+	fileprivate let travelDateExtendedView: TravelDateExtendedView = .init()
+	private lazy var travelDateStackView: UIStackView = UIStackView(
+		arrangedSubviews: [
+			travelDateDefaultView,
+			travelDateExtendedView
+		]).then {
+			$0.backgroundColor = AppTheme.Color.white
+			$0.axis = .vertical
+			$0.spacing = Metric.animationStackViewSpcing
+			$0.makeCornerRadiusWithBorder(Metric.radius)
+			$0.clipsToBounds = true
 		}
 	
 	fileprivate let travelGroupDefaultView: TravelGroupDefaultView = .init()
@@ -71,8 +92,9 @@ final class SearchFilterView: UIView {
 		]).then {
 			$0.backgroundColor = AppTheme.Color.white
 			$0.axis = .vertical
-			$0.spacing = Metric.spacing
+			$0.spacing = Metric.animationStackViewSpcing
 			$0.makeCornerRadiusWithBorder(Metric.radius)
+			$0.clipsToBounds = true
 		}
 	
 	private let bottomContainerView: UIView = UIView().then {
@@ -101,26 +123,22 @@ final class SearchFilterView: UIView {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	public func updateTravelSpotViewState(isExtended: Bool) {
-		UIView.animate(
-			withDuration: 0.15,
-			animations: {
-				self.travelSpotDefaultView.isHidden = isExtended ? true : false
-				self.travelSpotDefaultView.alpha = isExtended ? 0 : 1.0
-				self.travelSpotExtendedView.isHidden = isExtended ? false : true
-				self.travelSpotExtendedView.alpha = isExtended ? 1.0 : 0
-		})
-	}
-	
-	public func updateTravelGroupViewState(isExtended: Bool) {
-		UIView.animate(
-			withDuration: 0.15,
-			animations: {
-				self.travelGroupDefaultView.isHidden = isExtended ? true : false
-				self.travelGroupDefaultView.alpha = isExtended ? 0 : 1.0
-				self.travelGroupExtendedView.isHidden = isExtended ? false : true
-				self.travelGroupExtendedView.alpha = isExtended ? 1.0 : 0
-		})
+	public func updateExtendedState(with state: SearchFilterExtendedState) {
+		self.layoutIfNeeded()
+		switch state {
+		case .travelSpot:
+			updateView(travelSpotDefaultView, travelSpotExtendedView, isExtended: true)
+			updateView(travelDateDefaultView, travelDateExtendedView, isExtended: false)
+			updateView(travelGroupDefaultView, travelGroupExtendedView, isExtended: false)
+		case .travelDate:
+			updateView(travelSpotDefaultView, travelSpotExtendedView, isExtended: false)
+			updateView(travelDateDefaultView, travelDateExtendedView, isExtended: true)
+			updateView(travelGroupDefaultView, travelGroupExtendedView, isExtended: false)
+		case .travelGroup:
+			updateView(travelSpotDefaultView, travelSpotExtendedView, isExtended: false)
+			updateView(travelDateDefaultView, travelDateExtendedView, isExtended: false)
+			updateView(travelGroupDefaultView, travelGroupExtendedView, isExtended: true)
+		}
 	}
 }
 
@@ -128,12 +146,6 @@ final class SearchFilterView: UIView {
 private extension SearchFilterView {
 	func setupViewConfigure() {
 		backgroundColor = AppTheme.Color.white
-		
-		travelSpotDefaultView.isHidden = true
-		travelSpotDefaultView.alpha = 0.0
-		
-		travelGroupExtendedView.isHidden = true
-		travelGroupExtendedView.alpha = 0.0
 	}
 	
 	func setupViews() {
@@ -141,6 +153,7 @@ private extension SearchFilterView {
 		addSubview(scrollView)
 		scrollView.addSubview(scrollContainerView)
 		scrollContainerView.addSubview(travelSpotStackView)
+		scrollContainerView.addSubview(travelDateStackView)
 		scrollContainerView.addSubview(travelGroupStackView)
 		addSubview(bottomContainerView)
 		bottomContainerView.addSubview(bottomContainerGuideLineView)
@@ -164,18 +177,22 @@ private extension SearchFilterView {
 		scrollContainerView.snp.makeConstraints { make in
 			make.edges.equalToSuperview()
 			make.width.equalToSuperview()
-			
-			make.height.equalTo(2000)
 		}
 		
 		travelSpotStackView.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(20)
-			make.horizontalEdges.equalToSuperview().inset(20)
+			make.top.equalToSuperview().offset(Metric.travelViewVerticalMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+		}
+		
+		travelDateStackView.snp.makeConstraints { make in
+			make.top.equalTo(travelSpotStackView.snp.bottom).offset(Metric.verticalMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
 		
 		travelGroupStackView.snp.makeConstraints { make in
-			make.top.equalTo(travelSpotStackView.snp.bottom).offset(20)
-			make.horizontalEdges.equalToSuperview().inset(20)
+			make.top.equalTo(travelDateStackView.snp.bottom).offset(Metric.verticalMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+			make.bottom.equalToSuperview().inset(Metric.travelViewVerticalMargin)
 		}
 		
 		bottomContainerView.snp.makeConstraints { make in
@@ -194,6 +211,18 @@ private extension SearchFilterView {
 			make.horizontalEdges.equalToSuperview().inset(Metric.bottomButtonHorizontalMargin)
 			make.bottom.equalToSuperview().offset(Metric.bottomButtonBottomMargin)
 		}
+	}
+	
+	func updateView(_ defaultView: UIView, _ extendedView: UIView, isExtended: Bool) {
+		let animation = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
+			defaultView.alpha = isExtended ? 0 : 1.0
+			defaultView.isHidden = isExtended
+			extendedView.alpha = isExtended ? 1.0 : 0
+			extendedView.isHidden = !isExtended
+			self.layoutIfNeeded()
+		}
+		
+		animation.startAnimation()
 	}
 }
 
@@ -241,6 +270,12 @@ extension Reactive where Base: SearchFilterView {
 	
 	var selectedSpotRelay: Observable<String?> {
 		return base.travelSpotExtendedView.rx.selectedSpotRelay
+	}
+	
+	// MARK: - Travel Date
+	var didTapTravelDateDefaultView: ControlEvent<Void> {
+		let source = base.travelDateDefaultView.rx.tapGesture().when(.recognized).map { _ in }
+		return ControlEvent(events: source)
 	}
 	
 	// MARK: - Travel Group
