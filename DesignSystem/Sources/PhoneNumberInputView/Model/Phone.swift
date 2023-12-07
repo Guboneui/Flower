@@ -8,9 +8,9 @@
 import Foundation
 
 public struct PhoneNumber {
-	let first: String
-	let middle: String
-	let last: String
+	public let first: String
+	public let middle: String
+	public let last: String
 	
 	public init(
 		first: String,
