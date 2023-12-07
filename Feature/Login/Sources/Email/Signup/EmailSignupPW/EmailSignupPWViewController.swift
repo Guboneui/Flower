@@ -192,9 +192,7 @@ public final class EmailSignupPWViewController: UIViewController {
 	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText).then {
 		$0.isEnabled = false
 	}
-	
-	private let disposeBag: DisposeBag = DisposeBag()
-	
+		
 	private let emailSignupPWViewModel: EmailSignupPWViewModel
 
 	public init(emailSignupPWViewModel: EmailSignupPWViewModel) {
@@ -206,6 +204,8 @@ public final class EmailSignupPWViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	private let disposeBag: DisposeBag = DisposeBag()
+
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -348,8 +348,7 @@ private extension EmailSignupPWViewController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
 				}
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		nextButton.rx.touchHandler()
 			.bind { [weak self] in
@@ -357,12 +356,12 @@ private extension EmailSignupPWViewController {
 				
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
-					
-					let signupNameVC = EmailSignupNameViewController()
+				
+					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel()
+					let signupNameVC = EmailSignupNameViewController(emailSignupNameViewModel: viewModel)
 					navigation.pushViewController(signupNameVC, animated: true)
 				}
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 	}
 	
 	func setupBinding() {
