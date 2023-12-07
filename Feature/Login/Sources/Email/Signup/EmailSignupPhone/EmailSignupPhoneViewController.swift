@@ -45,7 +45,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	private enum TextSet {
 		static let navigationBarText: String = "회원가입"
 		static let phoneNumberLabelText: String = "핸드폰 번호를 입력해 주세요"
-		static let nextButtonText: String = "다음"
+		static let completionButtonText: String = "회원가입 완료"
 	}
 	
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
@@ -60,16 +60,30 @@ public final class EmailSignupPhoneViewController: UIViewController {
 		with: ["010", "011", "116", "017", "018", "019"]
 	)
 	
-	private let completionButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText)
+	private let completionButton: DefaultButton = DefaultButton(title: TextSet.completionButtonText).then {
+		$0.isEnabled = false
+	}
+		
+	private let emailSignupPhoneViewModel: EmailSignupPhoneViewModel
+
+	public init(emailSignupPhoneViewModel: EmailSignupPhoneViewModel) {
+		self.emailSignupPhoneViewModel = emailSignupPhoneViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
 	private let disposeBag = DisposeBag()
-	
+
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		setupUI()
 		setupViews()
 		setupGestures()
+		setupBinding()
 	}
 }
 
@@ -118,8 +132,7 @@ private extension EmailSignupPhoneViewController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
 				}
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		completionButton.rx.touchHandler()
 			.bind { [weak self] in
@@ -131,7 +144,30 @@ private extension EmailSignupPhoneViewController {
 						self.navigationController?.popToViewController(emailLoginView, animated: true)
 					}
 				}
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
+	}
+	
+	func setupBinding() {
+		phoneNumberInputView.isPhoneNumberComplete
+			.subscribe(onNext: { [weak self] bool in
+				guard let self else { return }
+				print(emailSignupPhoneViewModel.phoneNumberRelay.value)
+
+				self.completionButton.isEnabled = bool
+				if bool == true {
+					if let tue = phoneNumberInputView.getUserPhoneNumber() {
+						print(tue)
+					}
+				}
+				
+			}).disposed(by: disposeBag)
+
+		emailSignupPhoneViewModel.phoneNumberRelay
+			.subscribe(onNext: { [weak self] text in
+				guard let self else { return }
+				print(text)
+				
+			})
+		
 	}
 }
