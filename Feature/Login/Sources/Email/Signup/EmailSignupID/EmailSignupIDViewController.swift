@@ -228,7 +228,6 @@ public final class EmailSignupIDViewController: UIViewController {
 	}
 	
 	private let emailSignupIDViewModel: EmailSignupIDViewModel
-	private let disposeBag: DisposeBag = DisposeBag()
 	
 	public init(emailSignupIDViewModel: EmailSignupIDViewModel) {
 		self.emailSignupIDViewModel = emailSignupIDViewModel
@@ -239,6 +238,8 @@ public final class EmailSignupIDViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
+	private let disposeBag: DisposeBag = DisposeBag()
+
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -394,10 +395,9 @@ private extension EmailSignupIDViewController {
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
 						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
-						self.authSendButton.isEnabled = false
 					})
 					
-					let email: String = self.emailTextField.currentText.value
+					let email: String = self.emailSignupIDViewModel.emailRelay.value
 					self.emailSignupIDViewModel.fetchEmailAuth(email: email)
 					
 					self.emailTextField.isUserInteractionEnabled = false
@@ -406,7 +406,8 @@ private extension EmailSignupIDViewController {
 					if self.emailSignupIDViewModel.pageState.value.enabled == true {
 						if let navigation = self.navigationController as? EmailLoginNavigationController {
 							navigation.pageController.moveToNextPage()
-							let secondVC = EmailSignupPWViewController()
+							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel()
+							let secondVC = EmailSignupPWViewController(emailSignupPWViewModel: viewModel)
 							navigation.pushViewController(secondVC, animated: true)
 						}
 					}
@@ -417,8 +418,7 @@ private extension EmailSignupIDViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				print("인증번호 재발송 버튼 클릭")
-				let email: String = self.emailTextField.currentText.value
+				let email: String = self.emailSignupIDViewModel.emailRelay.value
 				self.emailSignupIDViewModel.fetchEmailAuth(email: email)
 			}.disposed(by: disposeBag)
 	}
@@ -431,10 +431,10 @@ private extension EmailSignupIDViewController {
 				self.emailSignupIDViewModel.emailRelay.accept(email)
 				
 				if email.isEmpty {
-					emailSignupIDViewModel.pageState.accept(.init(state: .Email, enabled: nil))
+					self.emailSignupIDViewModel.pageState.accept(.init(state: .Email, enabled: nil))
 				} else {
-					if emailSignupIDViewModel.pageState.value.enabled != true {
-						emailSignupIDViewModel.isValidEmail()
+					if self.emailSignupIDViewModel.pageState.value.enabled != true {
+						self.emailSignupIDViewModel.isValidEmail()
 					}
 				}
 			}).disposed(by: disposeBag)
@@ -446,10 +446,10 @@ private extension EmailSignupIDViewController {
 				self.emailSignupIDViewModel.authRelay.accept(authNum)
 
 				if authNum.isEmpty {
-					emailSignupIDViewModel.pageState.accept(.init(state: .Auth, enabled: nil))
+					self.emailSignupIDViewModel.pageState.accept(.init(state: .Auth, enabled: nil))
 				} else {
-					if emailSignupIDViewModel.pageState.value.enabled != true {
-						emailSignupIDViewModel.isValiedAuthNumber()
+					if self.emailSignupIDViewModel.pageState.value.enabled != true {
+						self.emailSignupIDViewModel.isValiedAuthNumber()
 					}
 				}
 			}).disposed(by: disposeBag)
