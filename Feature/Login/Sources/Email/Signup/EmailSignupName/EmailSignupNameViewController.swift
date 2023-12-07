@@ -107,16 +107,30 @@ public final class EmailSignupNameViewController: UIViewController {
 		$0.currentState = .normal
 	}
 	
-	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText)
+	private let nextButton: DefaultButton = DefaultButton(title: TextSet.nextButtonText).then {
+		$0.isEnabled = false
+	}
+	
+	private let emailSignupNameViewModel: EmailSignupNameViewModel
+
+	public init(emailSignupNameViewModel: EmailSignupNameViewModel) {
+		self.emailSignupNameViewModel = emailSignupNameViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
 	private let disposeBag = DisposeBag()
-	
+
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		setupUI()
 		setupViews()
 		setupGestures()
+		setupBinding()
 	}
 }
 
@@ -202,8 +216,7 @@ private extension EmailSignupNameViewController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
 				}
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 
 		nextButton.rx.touchHandler()
 			.bind { [weak self] in
@@ -212,10 +225,25 @@ private extension EmailSignupNameViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					
-					let signupPhoneVC = EmailSignupPhoneViewController()
+					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel()
+					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 					navigation.pushViewController(signupPhoneVC, animated: true)
 				}
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
+	}
+	
+	func setupBinding() {
+		nameTextField.currentText
+			.bind(onNext: { [weak self] nameText in
+				guard let self else { return }
+				
+				self.emailSignupNameViewModel.nameRelay.accept(nameText)
+				
+				if nameText.isEmpty {
+					self.nextButton.isEnabled = false
+				} else {
+					self.nextButton.isEnabled = true
+				}
+			}).disposed(by: disposeBag)
 	}
 }
