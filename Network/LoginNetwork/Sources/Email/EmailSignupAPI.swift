@@ -10,9 +10,9 @@ import Foundation
 import Moya
 
 public enum EmailSignupAPI {
-	case MailAuth(email: String)
-	case MailConfirm(email: String)
-	case MailCode(email: String, code: String)
+	case emailAuth(email: String)
+	case emailConfirm(email: String)
+	case emailCode(email: String, code: String)
 }
 
 extension EmailSignupAPI: TargetType {
@@ -25,39 +25,39 @@ extension EmailSignupAPI: TargetType {
 	
 	public var path: String {
 		switch self {
-		case .MailAuth:
+		case .emailAuth:
 			return "/send"
 			
-		case .MailConfirm:
+		case .emailConfirm:
 			return "/confirm"
 			
-		case .MailCode:
+		case .emailCode:
 			return "/code"
 		}
 	}
 	
 	public var method: Moya.Method {
 		switch self {
-		case .MailAuth:
+		case .emailAuth:
 			return .post
 			
-		case .MailConfirm:
+		case .emailConfirm:
 			return .post
 			
-		case .MailCode:
+		case .emailCode:
 			return .post
 		}
 	}
 	
 	public var task: Moya.Task {
 		switch self {
-		case .MailAuth(let email):
+		case .emailAuth(let email):
 			return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
 			
-		case .MailConfirm(email: let email):
+		case .emailConfirm(email: let email):
 			return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
 			
-		case .MailCode(email: let email, code: let code):
+		case .emailCode(email: let email, code: let code):
 			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
 		}
 	}
