@@ -8,7 +8,6 @@
 import Foundation
 
 import RxRelay
-import RxSwift
 
 public final class EmailSignupPWViewModel {
 	var pwRelay: BehaviorRelay<String> = .init(value: "")
