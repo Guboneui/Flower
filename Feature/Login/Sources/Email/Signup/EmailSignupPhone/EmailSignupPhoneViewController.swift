@@ -149,25 +149,20 @@ private extension EmailSignupPhoneViewController {
 	
 	func setupBinding() {
 		phoneNumberInputView.isPhoneNumberComplete
-			.subscribe(onNext: { [weak self] bool in
+			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
-				print(emailSignupPhoneViewModel.phoneNumberRelay.value)
 
-				self.completionButton.isEnabled = bool
-				if bool == true {
-					if let tue = phoneNumberInputView.getUserPhoneNumber() {
-						print(tue)
+				self.completionButton.isEnabled = isCompleted
+				if isCompleted {
+					if let userPhoneNumber = phoneNumberInputView.getUserPhoneNumber() {
+						var phoneNumberString = ""
+						phoneNumberString += userPhoneNumber.first
+						phoneNumberString += userPhoneNumber.middle
+						phoneNumberString += userPhoneNumber.last
+						
+						emailSignupPhoneViewModel.phoneNumberRelay.accept(phoneNumberString)
 					}
 				}
-				
 			}).disposed(by: disposeBag)
-
-		emailSignupPhoneViewModel.phoneNumberRelay
-			.subscribe(onNext: { [weak self] text in
-				guard let self else { return }
-				print(text)
-				
-			})
-		
 	}
 }
