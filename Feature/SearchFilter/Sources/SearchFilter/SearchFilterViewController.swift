@@ -110,10 +110,9 @@ public final class SearchFilterViewController: UIViewController, View {
 		reactor.state.map(\.extendedState)
 			.distinctUntilChanged()
 			.observe(on: MainScheduler.instance)
-			.debug()
 			.bind { [weak self] state in
 				guard let self else { return }
-				self.rootView.updateExtendedState(with: state)
+					self.rootView.updateExtendedState(with: state)
 			}.disposed(by: disposeBag)
 		
 		reactor.state.map(\.popularSpots)

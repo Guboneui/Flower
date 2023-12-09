@@ -214,15 +214,10 @@ private extension SearchFilterView {
 	}
 	
 	func updateView(_ defaultView: UIView, _ extendedView: UIView, isExtended: Bool) {
-		let animation = UIViewPropertyAnimator(duration: 0.3, curve: .easeInOut) {
-			defaultView.alpha = isExtended ? 0 : 1.0
-			defaultView.isHidden = isExtended
-			extendedView.alpha = isExtended ? 1.0 : 0
-			extendedView.isHidden = !isExtended
-			self.layoutIfNeeded()
-		}
-		
-		animation.startAnimation()
+		defaultView.alpha = isExtended ? 0 : 1.0
+		defaultView.isHidden = isExtended
+		extendedView.alpha = isExtended ? 1.0 : 0
+		extendedView.isHidden = !isExtended
 	}
 }
 
