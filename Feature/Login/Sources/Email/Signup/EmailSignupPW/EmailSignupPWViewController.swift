@@ -357,7 +357,11 @@ private extension EmailSignupPWViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 				
-					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel()
+					let password: String = emailSignupPWViewModel.pwCheckRelay.value
+					emailSignupPWViewModel.userData.password = password
+					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel(
+						userData: emailSignupPWViewModel.userData)
+					
 					let signupNameVC = EmailSignupNameViewController(emailSignupNameViewModel: viewModel)
 					navigation.pushViewController(signupNameVC, animated: true)
 				}

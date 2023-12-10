@@ -66,8 +66,6 @@ public final class EmailSignupIDViewController: UIViewController {
 		
 		static let authSendButtonBottomMargin: CGFloat = 34
 		static let authSendButtonBothSidesMargin: CGFloat = 24
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
 	// MARK: FONT
@@ -227,7 +225,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		$0.isEnabled = false
 	}
 	
-	private let emailSignupIDViewModel: EmailSignupIDViewModelInterface
+	private var emailSignupIDViewModel: EmailSignupIDViewModelInterface
 	
 	public init(emailSignupIDViewModel: EmailSignupIDViewModelInterface) {
 		self.emailSignupIDViewModel = emailSignupIDViewModel
@@ -245,7 +243,6 @@ public final class EmailSignupIDViewController: UIViewController {
 		setupUI()
 		setupViews()
 		setupGestures()
-		
 		setupBinding()
 	}
 }
@@ -406,7 +403,12 @@ private extension EmailSignupIDViewController {
 					if self.emailSignupIDViewModel.currentViewState.value.enabled == true {
 						if let navigation = self.navigationController as? EmailLoginNavigationController {
 							navigation.pageController.moveToNextPage()
-							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel()
+							
+							let email: String = emailSignupIDViewModel.emailRelay.value
+							emailSignupIDViewModel.userData.email = email
+							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel(
+								userData: emailSignupIDViewModel.userData)
+							
 							let secondVC = EmailSignupPWViewController(emailSignupPWViewModel: viewModel)
 							navigation.pushViewController(secondVC, animated: true)
 						}

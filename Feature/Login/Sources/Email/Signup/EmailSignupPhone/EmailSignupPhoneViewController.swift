@@ -26,8 +26,6 @@ public final class EmailSignupPhoneViewController: UIViewController {
 		
 		static let completionButtonBottomMargin: CGFloat = 34
 		static let completionButtonBothsides: CGFloat = 24
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
 	// MARK: FONT
@@ -60,12 +58,13 @@ public final class EmailSignupPhoneViewController: UIViewController {
 		with: ["010", "011", "116", "017", "018", "019"]
 	)
 	
-	private let completionButton: DefaultButton = DefaultButton(title: TextSet.completionButtonText).then {
-		$0.isEnabled = false
-	}
-		
+	private let completionButton: DefaultButton = DefaultButton(
+		title: TextSet.completionButtonText).then {
+			$0.isEnabled = false
+		}
+	
 	private let emailSignupPhoneViewModel: EmailSignupPhoneViewModel
-
+	
 	public init(emailSignupPhoneViewModel: EmailSignupPhoneViewModel) {
 		self.emailSignupPhoneViewModel = emailSignupPhoneViewModel
 		super.init(nibName: nil, bundle: nil)
@@ -77,6 +76,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	
 	private let disposeBag = DisposeBag()
 
+	// MARK: - Life Cycle
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -84,6 +84,14 @@ public final class EmailSignupPhoneViewController: UIViewController {
 		setupViews()
 		setupGestures()
 		setupBinding()
+	}
+	
+	public override func viewWillAppear(_ animated: Bool) {
+		self.addKeyboardNotifications()
+	}
+	
+	public override func viewWillDisappear(_ animated: Bool) {
+		self.removeKeyboardNotifications()
 	}
 }
 
@@ -148,10 +156,19 @@ private extension EmailSignupPhoneViewController {
 	}
 	
 	func setupBinding() {
+		self.view.rx.tapGesture()
+			.when(.recognized)
+			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+			.bind { [weak self] _ in
+				guard let self else { return }
+				
+				self.view.endEditing(true)
+			}.disposed(by: disposeBag)
+		
 		phoneNumberInputView.isPhoneNumberComplete
 			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
-
+				
 				self.completionButton.isEnabled = isCompleted
 				if isCompleted {
 					if let userPhoneNumber = phoneNumberInputView.getUserPhoneNumber() {
@@ -161,8 +178,51 @@ private extension EmailSignupPhoneViewController {
 						phoneNumberString += userPhoneNumber.last
 						
 						emailSignupPhoneViewModel.phoneNumberRelay.accept(phoneNumberString)
+						
+						emailSignupPhoneViewModel.userData.phoneNum = phoneNumberString
+						print(emailSignupPhoneViewModel.userData)
 					}
 				}
 			}).disposed(by: disposeBag)
 	}
+	
+	// MARK: - Notification Function
+	func addKeyboardNotifications() {
+		NotificationCenter.default.addObserver(
+			self, selector: #selector(self.keyboardWillShow(_:)),
+			name: UIResponder.keyboardWillShowNotification, object: nil)
+		
+		NotificationCenter.default.addObserver(
+			self, selector: #selector(self.keyboardWillHide(_:)),
+			name: UIResponder.keyboardWillHideNotification, object: nil)
+	}
+	
+	func removeKeyboardNotifications() {
+		NotificationCenter.default.removeObserver(
+			self, name: UIResponder.keyboardWillShowNotification,
+			object: nil)
+		
+		NotificationCenter.default.removeObserver(
+			self, name: UIResponder.keyboardWillHideNotification,
+			object: nil)
+	}
+	
+	@objc func keyboardWillShow(_ noti: NSNotification) {
+		if let keyboardFrame: NSValue =
+				noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+			let keyboardRectangle = keyboardFrame.cgRectValue
+			let keyboardHeight = keyboardRectangle.height
+
+				completionButton.snp.updateConstraints { make in
+					make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+						.inset(Metric.completionButtonBottomMargin + keyboardHeight)
+				}
+		}
+	}
+	
+	@objc func keyboardWillHide(_ noti: NSNotification) {
+			completionButton.snp.updateConstraints { make in
+				make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Metric.completionButtonBottomMargin)
+			}
+		}
 }

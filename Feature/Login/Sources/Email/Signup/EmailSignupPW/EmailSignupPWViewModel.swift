@@ -10,6 +10,12 @@ import Foundation
 import RxRelay
 
 public final class EmailSignupPWViewModel {
+	
+	var userData: UserData
+	init(userData: UserData) {
+		self.userData = userData
+	}
+		
 	var pwRelay: BehaviorRelay<String> = .init(value: "")
 	var pwCheckRelay: BehaviorRelay<String> = .init(value: "")
 	

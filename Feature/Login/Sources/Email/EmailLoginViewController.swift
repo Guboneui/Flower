@@ -41,8 +41,6 @@ public final class EmailLoginViewController: UIViewController {
 		
 		static let signupStackViewSpacing: CGFloat = 7
 		static let signupStackViewBottomMargin: CGFloat = 30
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
 	// MARK: FONT

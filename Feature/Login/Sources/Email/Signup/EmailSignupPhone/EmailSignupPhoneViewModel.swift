@@ -10,6 +10,10 @@ import Foundation
 import RxRelay
 
 public final class EmailSignupPhoneViewModel {
+	var userData: UserData
+	init(userData: UserData) {
+		self.userData = userData
+	}
+	
 	var phoneNumberRelay: BehaviorRelay<String> = .init(value: "")
-
 }

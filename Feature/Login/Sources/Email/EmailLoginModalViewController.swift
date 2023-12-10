@@ -95,8 +95,8 @@ private extension EmailLoginModalViewController {
 	func didTapButton() {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
 			let repository = EmailSignupIDRepository()
-			let usecase = EmailSignupIDUseCase(emailSignupIDRepository: repository)
-			let viewModel = EmailSignupIDViewModel(usecase: usecase)
+			let useCase = EmailSignupIDUseCase(emailSignupIDRepository: repository)
+			let viewModel = EmailSignupIDViewModel(useCase: useCase)
 			let signupVC = EmailSignupIDViewController(emailSignupIDViewModel: viewModel)
 			navigation.pushViewController(signupVC, animated: true)
 		}

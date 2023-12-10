@@ -39,8 +39,6 @@ public final class EmailSignupNameViewController: UIViewController {
 		
 		static let nextButtonBottomMargin: CGFloat = 34
 		static let nextButttonBothsides: CGFloat = 24
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
 	// MARK: FONT
@@ -225,7 +223,10 @@ private extension EmailSignupNameViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					
-					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel()
+					let name: String = emailSignupNameViewModel.nameRelay.value
+					emailSignupNameViewModel.userData.userName = name
+					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
+						userData: emailSignupNameViewModel.userData)
 					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 					navigation.pushViewController(signupPhoneVC, animated: true)
 				}
