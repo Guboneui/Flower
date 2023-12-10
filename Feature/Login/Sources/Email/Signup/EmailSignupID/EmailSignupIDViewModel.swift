@@ -17,7 +17,8 @@ public protocol EmailSignupIDViewModelInterface {
 	var emailRelay: BehaviorRelay<String> { get }
 	var authRelay: BehaviorRelay<String> { get }
 	var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> { get }
-	
+	var userData: UserData { get set }
+
 	func isValidEmail()
 	func isValiedAuthNumber()
 	func fetchEmailAuth(email: String)
@@ -29,7 +30,9 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> =
 		.init(value: EmailSignupIDViewStateModel(state: .email))
 	
-	//MARK: - Private Property
+	public var userData: UserData = .init()
+
+	// MARK: - Private Property
 	private let signUpUseCase: EmailSignupIDUseCaseInterface
 	private let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 	private let disposeBag: DisposeBag
@@ -63,7 +66,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 		signUpUseCase.fetchEmailAuth(email: email)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
-				
+				print(response.body)
 				if response.success {
 					currentViewState.accept(.init(state: .auth))
 				}
