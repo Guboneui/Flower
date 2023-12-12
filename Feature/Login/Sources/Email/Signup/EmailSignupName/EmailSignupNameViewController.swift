@@ -215,6 +215,7 @@ private extension EmailSignupNameViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
+					navigation.interactivePopGestureRecognizer?.isEnabled = false
 				}
 			}.disposed(by: disposeBag)
 
