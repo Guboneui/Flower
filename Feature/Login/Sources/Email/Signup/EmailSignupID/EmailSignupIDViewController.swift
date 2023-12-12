@@ -435,9 +435,7 @@ private extension EmailSignupIDViewController {
 				if email.isEmpty {
 					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 				} else {
-					if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
 						self.emailSignupIDViewModel.isValidEmail()
-					}
 				}
 			}).disposed(by: disposeBag)
 		
@@ -476,14 +474,13 @@ private extension EmailSignupIDViewController {
 		
 		if bool == true {
 			cautionView.alpha = 1
-			
 			emailTextField.currentState = .success
 			cautionLabel.text = TextSet.cautionLabelSuccessText
 			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor
 			cautionImageView.image = Image.cautionSuccessImage
 		} else if bool == false {
 			cautionView.alpha = 1
-			
+
 			emailTextField.currentState = .failure
 			cautionLabel.text = TextSet.cautionLabelFailureText
 			cautionLabel.textColor = ColorSet.cautionLabelFailureColor
@@ -502,6 +499,8 @@ private extension EmailSignupIDViewController {
 			authCautionLabel.text = TextSet.authCautionLabelSuccessText
 			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
 			authCautionImageView.image = Image.authCautionSuccessImage
+			
+			authTextField.isUserInteractionEnabled = false
 			
 		} else if bool == false {
 			authCautionView.alpha = 1
