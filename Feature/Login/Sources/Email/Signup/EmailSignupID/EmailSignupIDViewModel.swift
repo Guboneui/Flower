@@ -33,11 +33,11 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public var userData: UserData = .init()
 
 	// MARK: - Private Property
-	private let signUpUseCase: EmailSignupIDUseCaseInterface
+	private let signUpUseCase: EmailSignupUseCaseInterface
 	private let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 	private let disposeBag: DisposeBag
 	
-	public init(useCase: EmailSignupIDUseCaseInterface) {
+	public init(useCase: EmailSignupUseCaseInterface) {
 		self.signUpUseCase = useCase
 		self.disposeBag = .init()
 	}

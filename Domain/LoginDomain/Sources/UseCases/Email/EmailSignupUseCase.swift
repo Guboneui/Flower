@@ -11,10 +11,10 @@ import LoginEntity
 
 import RxSwift
 
-public final class EmailSignupIDUseCase: EmailSignupIDUseCaseInterface {
-	private let emailSignupIDRepository: EmailSignupIDRepositoryInterface
+public final class EmailSignupUseCase: EmailSignupUseCaseInterface {
+	private let emailSignupIDRepository: EmailSignupRepositoryInterface
 	
-	public init(emailSignupIDRepository: EmailSignupIDRepositoryInterface) {
+	public init(emailSignupIDRepository: EmailSignupRepositoryInterface) {
 		self.emailSignupIDRepository = emailSignupIDRepository
 	}
 	
@@ -28,5 +28,15 @@ public final class EmailSignupIDUseCase: EmailSignupIDUseCaseInterface {
 	
 	public func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse> {
 		return emailSignupIDRepository.fetchEmailCodeAPI(email: email, code: code)
+	}
+	
+	public func fetchEmailSignup(
+		email: String, password: String, userName: String,
+		userNickName: String?, birth: String?,
+		profileImg: Data?, phoneNum: String) -> RxSwift.Single<LoginEntity.EmailSignupResponse> {
+		return emailSignupIDRepository.fetchEmailSignupAPI(
+			email: email, password: password, userName: userName,
+			userNickName: userNickName, birth: birth,
+			profileImg: profileImg, phoneNum: phoneNum)
 	}
 }

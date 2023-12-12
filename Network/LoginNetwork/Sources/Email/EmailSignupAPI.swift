@@ -13,11 +13,19 @@ public enum EmailSignupAPI {
 	case emailAuth(email: String)
 	case emailConfirm(email: String)
 	case emailCode(email: String, code: String)
+	case emailSignup(
+		email: String,
+		password: String,
+		userName: String,
+		userNickName: String?,
+		birth: String?,
+		profileImg: Data?,
+		phoneNum: String)
 }
 
 extension EmailSignupAPI: TargetType {
 	public var baseURL: URL {
-		guard let url = URL(string: "http://43.202.77.12:8080/api/users/mail") else {
+		guard let url = URL(string: "http://43.202.77.12:8080/api/users") else {
 			fatalError("Invalid base URL")
 		}
 		return url
@@ -26,13 +34,16 @@ extension EmailSignupAPI: TargetType {
 	public var path: String {
 		switch self {
 		case .emailAuth:
-			return "/send"
+			return "/mail/send"
 			
 		case .emailConfirm:
-			return "/confirm"
+			return "/mail/confirm"
 			
 		case .emailCode:
-			return "/code"
+			return "/mail/code"
+			
+		case .emailSignup:
+			return "/signup"
 		}
 	}
 	
@@ -46,6 +57,9 @@ extension EmailSignupAPI: TargetType {
 			
 		case .emailCode:
 			return .post
+			
+		case .emailSignup:
+			return .post
 		}
 	}
 	
@@ -58,11 +72,54 @@ extension EmailSignupAPI: TargetType {
 			return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
 			
 		case .emailCode(email: let email, code: let code):
-			return .requestParameters(parameters: ["email": email, "code": code], encoding: JSONEncoding.default)
+			return .requestParameters(
+				parameters: ["email": email, "code": code],
+				encoding: JSONEncoding.default)
+			
+		case .emailSignup(
+			email: let email,
+			password: let password,
+			userName: let userName,
+			userNickName: let userNickName,
+			birth: let birth,
+			profileImg: let profileImg,
+			phoneNum: let phoneNum):
+			
+			var multipartFormData: [MultipartFormData] = []
+			
+			let email = email
+			let password = password
+			let userName = userName
+			let userNickName = userNickName ?? ""
+			let birth = birth ?? ""
+			let phoneNum = phoneNum
+			let profileImg = profileImg ?? Data()
+			
+			let parameters: [String: Any] = [
+									"email": email,
+									"password": password,
+									"userName": userName,
+									"userNickName": userNickName,
+									"birth": birth,
+									"phoneNum": phoneNum,
+									"profileImg": profileImg
+							]
+			for (key, value) in parameters {
+				multipartFormData.append(
+					MultipartFormData(provider: .data("\(value)".data(using: .utf8) ?? Data()), name: key)
+				)
+			}
+			return .uploadMultipart(multipartFormData)
 		}
 	}
 	
 	public var headers: [String: String]? {
-		nil
+		switch self {
+		case .emailAuth, .emailCode, .emailConfirm:
+			return nil
+			
+		case .emailSignup:
+			return ["Content-Type": "multipart/form-data"]
+		}
 	}
 }
