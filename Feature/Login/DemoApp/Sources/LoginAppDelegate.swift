@@ -11,8 +11,6 @@ import Login
 import LoginData
 import LoginDomain
 
-
-
 @main
 class LoginAppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
@@ -20,14 +18,16 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    let window = UIWindow(frame: UIScreen.main.bounds)
-		let testRepository: TestRepositoryInterface = TestRepository()
-		let testUseCase: TestUseCaseInterface = TestUseCase(testRepository: testRepository)
-		let testViewModel = TestViewModel(testUseCase: testUseCase)
-    window.rootViewController = TestViewController(testViewModel: testViewModel)
-    window.makeKeyAndVisible()
-    self.window = window
+		makeWindow()
+
     return true
   }
 }
 
+private extension LoginAppDelegate {
+	func makeWindow() {
+		window = UIWindow(frame: UIScreen.main.bounds)
+		window?.rootViewController = LoginViewController()
+		window?.makeKeyAndVisible()
+	}
+}
