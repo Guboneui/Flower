@@ -254,6 +254,7 @@ private extension EmailSignupIDViewController {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
 			navigation.pageController.alpha = 1
 			navigation.pageController.moveToFirstPage()
+			navigation.interactivePopGestureRecognizer?.isEnabled = false
 		}
 	}
 	
