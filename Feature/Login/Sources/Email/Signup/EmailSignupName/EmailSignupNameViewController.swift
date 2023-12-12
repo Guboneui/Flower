@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 import DesignSystem
+import LoginData
+import LoginDomain
 import ResourceKit
 
 import RxSwift
@@ -223,10 +225,14 @@ private extension EmailSignupNameViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					
+					let repository = EmailSignupRepository()
+					let useCase = EmailSignupUseCase(emailSignupIDRepository: repository)
 					let name: String = emailSignupNameViewModel.nameRelay.value
 					emailSignupNameViewModel.userData.userName = name
 					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
-						userData: emailSignupNameViewModel.userData)
+						userData: emailSignupNameViewModel.userData,
+						signupUseCase: useCase)
+					
 					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 					navigation.pushViewController(signupPhoneVC, animated: true)
 				}

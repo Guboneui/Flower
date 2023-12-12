@@ -63,7 +63,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 			$0.isEnabled = false
 		}
 	
-	private let emailSignupPhoneViewModel: EmailSignupPhoneViewModel
+	private var emailSignupPhoneViewModel: EmailSignupPhoneViewModel
 	
 	public init(emailSignupPhoneViewModel: EmailSignupPhoneViewModel) {
 		self.emailSignupPhoneViewModel = emailSignupPhoneViewModel
@@ -75,7 +75,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	}
 	
 	private let disposeBag = DisposeBag()
-
+	
 	// MARK: - Life Cycle
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -146,12 +146,8 @@ private extension EmailSignupPhoneViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				guard let viewControllerStack = self.navigationController?.viewControllers else { return }
-				for viewController in viewControllerStack {
-					if let emailLoginView = viewController as? EmailLoginViewController {
-						self.navigationController?.popToViewController(emailLoginView, animated: true)
-					}
-				}
+				let userData = emailSignupPhoneViewModel.userData
+				emailSignupPhoneViewModel.fetchEmailSignup(userData: userData)
 			}.disposed(by: disposeBag)
 	}
 	
@@ -184,6 +180,36 @@ private extension EmailSignupPhoneViewController {
 					}
 				}
 			}).disposed(by: disposeBag)
+		
+		emailSignupPhoneViewModel.isSignupCompletionRelay
+			.subscribe(onNext: { [weak self] isCompleted in
+				guard let self else { return }
+				
+				if isCompleted == true {
+					let alert = UIAlertController(
+						title: "회원가입 완료", message: "이메일 로그인 화면으로 이동합니다", preferredStyle: .alert)
+					let success = UIAlertAction(title: "확인", style: .default) { _ in
+						guard let viewControllerStack = self.navigationController?.viewControllers else { return }
+						for viewController in viewControllerStack {
+							if let emailLoginView = viewController as? EmailLoginViewController {
+								self.navigationController?.popToViewController(emailLoginView, animated: true)
+							}
+						}
+					}
+					alert.addAction(success)
+					present(alert, animated: true)
+					
+				} else if isCompleted == false {
+					let alert = UIAlertController(
+						title: "회원가입 실패", message: "실패여 다시혀", preferredStyle: .alert)
+					let failure = UIAlertAction(title: "닫기", style: .default) { _ in
+						self.emailSignupPhoneViewModel.isSignupCompletionRelay.accept(nil)
+					}
+					alert.addAction(failure)
+					present(alert, animated: true)
+				}
+				
+			}).disposed(by: disposeBag)
 	}
 	
 	// MARK: - Notification Function
@@ -212,17 +238,17 @@ private extension EmailSignupPhoneViewController {
 				noti.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
 			let keyboardRectangle = keyboardFrame.cgRectValue
 			let keyboardHeight = keyboardRectangle.height
-
-				completionButton.snp.updateConstraints { make in
-					make.bottom.equalTo(self.view.safeAreaLayoutGuide)
-						.inset(Metric.completionButtonBottomMargin + keyboardHeight)
-				}
+			
+			completionButton.snp.updateConstraints { make in
+				make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+					.inset(Metric.completionButtonBottomMargin + keyboardHeight)
+			}
 		}
 	}
 	
 	@objc func keyboardWillHide(_ noti: NSNotification) {
-			completionButton.snp.updateConstraints { make in
-				make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Metric.completionButtonBottomMargin)
-			}
+		completionButton.snp.updateConstraints { make in
+			make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Metric.completionButtonBottomMargin)
 		}
+	}
 }
