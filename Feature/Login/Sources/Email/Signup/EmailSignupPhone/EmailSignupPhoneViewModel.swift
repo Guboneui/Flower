@@ -38,7 +38,6 @@ public final class EmailSignupPhoneViewModel {
 		.subscribe(onSuccess: { [weak self] response in
 			guard let self else { return }
 
-			print(userData)
 			self.isSignupCompletionRelay.accept(response.success)
 		}).disposed(by: disposeBag)
 	}

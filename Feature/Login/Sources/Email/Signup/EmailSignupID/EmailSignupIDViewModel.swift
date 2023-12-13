@@ -71,7 +71,6 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 				if response.success {
 					currentViewState.accept(.init(state: .auth))
 				}
-				
 			}).disposed(by: disposeBag)
 	}
 }
@@ -83,7 +82,6 @@ private extension EmailSignupIDViewModel {
 				guard let self else { return }
 				
 				currentViewState.accept(.init(state: .email, enabled: response.success))
-				
 			}).disposed(by: disposeBag)
 	}
 	
@@ -93,7 +91,6 @@ private extension EmailSignupIDViewModel {
 				guard let self else { return }
 				
 				currentViewState.accept(.init(state: .auth, enabled: response.success))
-				
 			}).disposed(by: disposeBag)
 	}
 }
