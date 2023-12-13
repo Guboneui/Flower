@@ -361,7 +361,8 @@ private extension EmailSignupPWViewController {
 					let password: String = emailSignupPWViewModel.pwCheckRelay.value
 					emailSignupPWViewModel.userData.password = password
 					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel(
-						userData: emailSignupPWViewModel.userData)
+						userData: emailSignupPWViewModel.userData
+					)
 					
 					let signupNameVC = EmailSignupNameViewController(emailSignupNameViewModel: viewModel)
 					navigation.pushViewController(signupNameVC, animated: true)
@@ -401,7 +402,6 @@ private extension EmailSignupPWViewController {
 				guard let self else { return }
 							
 				setPWTextFieldState(bool: bool)
-				
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwCheckBool
@@ -410,7 +410,6 @@ private extension EmailSignupPWViewController {
 							
 				setPWCheckTextFieldState(bool: bool)
 				nextButton.isEnabled = bool ?? false
-
 			}).disposed(by: disposeBag)
 	}
 	
@@ -443,7 +442,6 @@ private extension EmailSignupPWViewController {
 			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelSuccessText
 			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelSuccessColor
 			pwCheckCautionImageView.image = Image.pwCheckCautionSuccessImage
-			
 		} else if bool == false {
 			pwCheckCautionView.alpha = 1
 			

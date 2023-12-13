@@ -12,10 +12,9 @@ import RxRelay
 public final class EmailSignupNameViewModel {
 	
 	var userData: UserData
+	var nameRelay: BehaviorRelay<String> = .init(value: "")
+
 	init(userData: UserData) {
 		self.userData = userData
 	}
-	
-	var nameRelay: BehaviorRelay<String> = .init(value: "")
-
 }

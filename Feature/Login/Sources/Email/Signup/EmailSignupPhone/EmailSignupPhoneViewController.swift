@@ -147,8 +147,8 @@ private extension EmailSignupPhoneViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				let userData = emailSignupPhoneViewModel.userData
-				emailSignupPhoneViewModel.fetchEmailSignup(userData: userData)
+				let userData = self.emailSignupPhoneViewModel.userData
+				self.emailSignupPhoneViewModel.fetchEmailSignup(userData: userData)
 			}.disposed(by: disposeBag)
 	}
 	
@@ -177,7 +177,6 @@ private extension EmailSignupPhoneViewController {
 						emailSignupPhoneViewModel.phoneNumberRelay.accept(phoneNumberString)
 						
 						emailSignupPhoneViewModel.userData.phoneNum = phoneNumberString
-						print(emailSignupPhoneViewModel.userData)
 					}
 				}
 			}).disposed(by: disposeBag)
@@ -199,7 +198,6 @@ private extension EmailSignupPhoneViewController {
 					}
 					alert.addAction(success)
 					present(alert, animated: true)
-					
 				} else if isCompleted == false {
 					let alert = UIAlertController(
 						title: "회원가입 실패", message: "실패여 다시혀", preferredStyle: .alert)
@@ -209,7 +207,6 @@ private extension EmailSignupPhoneViewController {
 					alert.addAction(failure)
 					present(alert, animated: true)
 				}
-				
 			}).disposed(by: disposeBag)
 	}
 	
@@ -217,21 +214,25 @@ private extension EmailSignupPhoneViewController {
 	func addKeyboardNotifications() {
 		NotificationCenter.default.addObserver(
 			self, selector: #selector(self.keyboardWillShow(_:)),
-			name: UIResponder.keyboardWillShowNotification, object: nil)
+			name: UIResponder.keyboardWillShowNotification, object: nil
+		)
 		
 		NotificationCenter.default.addObserver(
 			self, selector: #selector(self.keyboardWillHide(_:)),
-			name: UIResponder.keyboardWillHideNotification, object: nil)
+			name: UIResponder.keyboardWillHideNotification, object: nil
+		)
 	}
 	
 	func removeKeyboardNotifications() {
 		NotificationCenter.default.removeObserver(
 			self, name: UIResponder.keyboardWillShowNotification,
-			object: nil)
+			object: nil
+		)
 		
 		NotificationCenter.default.removeObserver(
 			self, name: UIResponder.keyboardWillHideNotification,
-			object: nil)
+			object: nil
+		)
 	}
 	
 	@objc func keyboardWillShow(_ noti: NSNotification) {
@@ -249,7 +250,8 @@ private extension EmailSignupPhoneViewController {
 	
 	@objc func keyboardWillHide(_ noti: NSNotification) {
 		completionButton.snp.updateConstraints { make in
-			make.bottom.equalTo(view.safeAreaLayoutGuide).inset(Metric.completionButtonBottomMargin)
+			make.bottom.equalTo(view.safeAreaLayoutGuide)
+				.inset(Metric.completionButtonBottomMargin)
 		}
 	}
 }

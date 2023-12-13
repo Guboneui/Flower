@@ -12,17 +12,17 @@ import RxRelay
 public final class EmailSignupPWViewModel {
 	
 	var userData: UserData
-	init(userData: UserData) {
-		self.userData = userData
-	}
 		
 	var pwRelay: BehaviorRelay<String> = .init(value: "")
 	var pwCheckRelay: BehaviorRelay<String> = .init(value: "")
-	
 	var pwBool: BehaviorRelay<Bool?> = .init(value: nil)
 	var pwCheckBool: BehaviorRelay<Bool?> = .init(value: nil)
 	
 	let pwRegex: String = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,20}"
+	
+	init(userData: UserData) {
+		self.userData = userData
+	}
 	
 	func isValiedPW() {
 		if NSPredicate(format: "SELF MATCHES %@", pwRegex).evaluate(with: pwRelay.value) {

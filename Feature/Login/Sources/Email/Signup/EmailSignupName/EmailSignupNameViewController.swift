@@ -232,7 +232,8 @@ private extension EmailSignupNameViewController {
 					emailSignupNameViewModel.userData.userName = name
 					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
 						userData: emailSignupNameViewModel.userData,
-						signupUseCase: useCase)
+						signupUseCase: useCase
+					)
 					
 					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 					navigation.pushViewController(signupPhoneVC, animated: true)

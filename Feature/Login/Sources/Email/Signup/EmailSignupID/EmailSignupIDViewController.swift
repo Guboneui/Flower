@@ -408,7 +408,8 @@ private extension EmailSignupIDViewController {
 							let email: String = emailSignupIDViewModel.emailRelay.value
 							emailSignupIDViewModel.userData.email = email
 							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel(
-								userData: emailSignupIDViewModel.userData)
+								userData: emailSignupIDViewModel.userData
+							)
 							
 							let secondVC = EmailSignupPWViewController(emailSignupPWViewModel: viewModel)
 							navigation.pushViewController(secondVC, animated: true)
@@ -502,7 +503,6 @@ private extension EmailSignupIDViewController {
 			authCautionImageView.image = Image.authCautionSuccessImage
 			
 			authTextField.isUserInteractionEnabled = false
-			
 		} else if bool == false {
 			authCautionView.alpha = 1
 			
@@ -521,9 +521,9 @@ private extension UIButton {
 	func setUnderline() {
 		guard let title = title(for: .normal) else { return }
 		let attributedString = NSMutableAttributedString(string: title)
-		attributedString.addAttribute(.underlineStyle,
-																	value: NSUnderlineStyle.single.rawValue,
-																	range: NSRange(location: 0, length: title.count)
+		attributedString.addAttribute(
+			.underlineStyle, value: NSUnderlineStyle.single.rawValue,
+			range: NSRange(location: 0, length: title.count)
 		)
 		setAttributedTitle(attributedString, for: .normal)
 	}
