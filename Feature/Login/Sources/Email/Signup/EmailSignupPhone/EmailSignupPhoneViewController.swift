@@ -182,9 +182,10 @@ private extension EmailSignupPhoneViewController {
 			}).disposed(by: disposeBag)
 		
 		emailSignupPhoneViewModel.isSignupCompletionRelay
+			.compactMap { $0 }
 			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
-				
+								
 				if isCompleted == true {
 					let alert = UIAlertController(
 						title: "회원가입 완료", message: "이메일 로그인 화면으로 이동합니다", preferredStyle: .alert)

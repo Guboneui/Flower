@@ -378,6 +378,7 @@ private extension EmailSignupIDViewController {
 		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
+				
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
@@ -399,9 +400,12 @@ private extension EmailSignupIDViewController {
 					self.emailSignupIDViewModel.fetchEmailAuth(email: email)
 					
 					self.emailTextField.isUserInteractionEnabled = false
+					self.emailSignupIDViewModel.startTimer(sec: 600)
 					
 				case .auth:
 					if self.emailSignupIDViewModel.currentViewState.value.enabled == true {
+						emailSignupIDViewModel.stopTimer()
+						
 						if let navigation = self.navigationController as? EmailLoginNavigationController {
 							navigation.pageController.moveToNextPage()
 							
@@ -422,8 +426,13 @@ private extension EmailSignupIDViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
+				self.authTextField.updateText(text: "")
+				
 				let email: String = self.emailSignupIDViewModel.emailRelay.value
 				self.emailSignupIDViewModel.fetchEmailAuth(email: email)
+				
+				emailSignupIDViewModel.stopTimer()
+				emailSignupIDViewModel.startTimer(sec: 600)
 			}.disposed(by: disposeBag)
 	}
 	
@@ -446,12 +455,13 @@ private extension EmailSignupIDViewController {
 				guard let self else { return }
 				
 				self.emailSignupIDViewModel.authRelay.accept(authNum)
-				
-				if authNum.isEmpty {
-					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .auth, enabled: nil))
-				} else {
-					if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
-						self.emailSignupIDViewModel.isValiedAuthNumber()
+				if emailSignupIDViewModel.currentViewState.value.state == .auth {
+					if authNum.isEmpty {
+						self.emailSignupIDViewModel.currentViewState.accept(.init(state: .auth, enabled: nil))
+					} else {
+						if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
+							self.emailSignupIDViewModel.isValiedAuthNumber()
+						}
 					}
 				}
 			}).disposed(by: disposeBag)
@@ -459,7 +469,7 @@ private extension EmailSignupIDViewController {
 		emailSignupIDViewModel.currentViewState
 			.subscribe(onNext: { [weak self] pageSet in
 				guard let self else { return }
-				
+
 				self.authSendButton.isEnabled = pageSet.enabled ?? false
 				
 				switch pageSet.state {
@@ -470,12 +480,20 @@ private extension EmailSignupIDViewController {
 					setAuthState(bool: pageSet.enabled)
 				}
 			}).disposed(by: disposeBag)
+		
+		emailSignupIDViewModel.timerRelay
+			.subscribe(onNext: { [weak self] timeText in
+				guard let self else { return }
+				
+				self.timerLabel.text = timeText
+			}).disposed(by: disposeBag)
 	}
 	
 	func setEmailState(bool: Bool?) {
 		
 		if bool == true {
 			cautionView.alpha = 1
+			
 			emailTextField.currentState = .success
 			cautionLabel.text = TextSet.cautionLabelSuccessText
 			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor

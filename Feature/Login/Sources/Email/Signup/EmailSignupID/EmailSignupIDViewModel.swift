@@ -16,33 +16,41 @@ import RxSwift
 public protocol EmailSignupIDViewModelInterface {
 	var emailRelay: BehaviorRelay<String> { get }
 	var authRelay: BehaviorRelay<String> { get }
+	var timerRelay: BehaviorRelay<String> { get }
 	var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> { get }
 	var userData: UserData { get set }
 	
 	func isValidEmail()
 	func isValiedAuthNumber()
 	func fetchEmailAuth(email: String)
+	func startTimer(sec: Int)
+	func stopTimer()
+	func resetTimer()
 }
 
 public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
+	// MARK: - PUBLIC PROPERTY
 	public var emailRelay: BehaviorRelay<String> = .init(value: "")
 	public var authRelay: BehaviorRelay<String> = .init(value: "")
-
+	public var timerRelay: BehaviorRelay<String> = .init(value: "10분 00초")
+	
 	public var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> =
 		.init(value: EmailSignupIDViewStateModel(state: .email))
 	
 	public var userData: UserData = .init()
 	
-	// MARK: - Private Property
+	// MARK: - PRIVATE PROPERTY
 	private let signUpUseCase: EmailSignupUseCaseInterface
 	private let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-	private let disposeBag: DisposeBag
-	
+	private var disposeBag: DisposeBag
+
+	// MARK: - INITIALIZE
 	public init(useCase: EmailSignupUseCaseInterface) {
 		self.signUpUseCase = useCase
 		self.disposeBag = .init()
 	}
 	
+	// MARK: - PUBLIC METHOD
 	public func isValidEmail() {
 		if currentViewState.value.state == .email {
 			if NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: emailRelay.value) {
@@ -69,12 +77,48 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 				guard let self else { return }
 				print(response.body)
 				if response.success {
-					currentViewState.accept(.init(state: .auth))
+					self.currentViewState.accept(.init(state: .auth))
 				}
 			}).disposed(by: disposeBag)
 	}
+	
+	public func startTimer(sec: Int) {
+		let timer = Observable<Int>
+			 .interval(
+				 .seconds(1),
+				 scheduler: MainScheduler.instance
+			 )
+		
+		let subscription = timer
+			.subscribe(onNext: { [weak self] time in
+				guard let self else { return }
+
+					let minute = ((sec - time) % 3600) / 60
+					let second = ((sec - time) % 3600) % 60
+					
+					if second < 10 {
+						self.timerRelay.accept(
+							String(minute) + "분 " + "0" + String(second) + "초"
+						)
+					} else {
+						self.timerRelay.accept(
+							String(minute) + "분 " + String(second) + "초"
+						)
+					}
+			}).disposed(by: disposeBag)
+	}
+	
+	public func stopTimer() {
+		disposeBag = DisposeBag()
+	}
+	
+	public func resetTimer() {
+		stopTimer()
+		startTimer(sec: 600)
+	}
 }
 
+// MARK: - EXTENSION PRIVATE METHOD
 private extension EmailSignupIDViewModel {
 	func fetchEmailConfirm(email: String) {
 		signUpUseCase.fetchEmailConfirm(email: email)
