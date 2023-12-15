@@ -435,7 +435,6 @@ private extension EmailSignupIDViewController {
 				let email: String = self.emailSignupIDViewModel.emailRelay.value
 				self.emailSignupIDViewModel.fetchEmailAuth(email: email)
 				
-				emailSignupIDViewModel.stopTimer()
 				emailSignupIDViewModel.startTimer(sec: 600)
 			}.disposed(by: disposeBag)
 	}
