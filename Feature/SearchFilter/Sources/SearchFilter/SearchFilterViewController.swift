@@ -65,6 +65,11 @@ public final class SearchFilterViewController: UIViewController, View {
 			.bind(to: reactor.action)
 			.disposed(by: disposeBag)
 		
+		rootView.rx.didTapSearchDateButton
+			.map { .updateExtendedState(.travelGroup) }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+		
 		rootView.rx.selectedSpotRelay
 			.map { .didSelectSpot($0) }
 			.bind(to: reactor.action)

@@ -21,28 +21,14 @@ final class TravelDateExtendedView: UIView {
 	private enum Metric {
 		static let radius: CGFloat = 12
 		
-		static let stackViewSpacing: CGFloat = 24
-		static let stackViewTopMargin: CGFloat = 24
-		static let stackViewHorizontalMargin: CGFloat = 24
-		
-		static let subViewHorizontalMargin: CGFloat = 24
-		static let locationContainerViewHeight: CGFloat = 50
-		static let searchImageSize: CGFloat = 18
-		static let searchLabelLeftMargin: CGFloat = 8
-		
-		static let popularSpotCollectionViewTopMargin: CGFloat = 8
-		static let popularSpotCollectionViewBottomMargin: CGFloat = -30
-		static let popularSpotCollectionViewHeight: CGFloat = 56
-		static let popularSpotCollectionViewCellSize: CGSize = .init(width: 56, height: 56)
-		static let popularSpotCollectionViewSpacing: CGFloat = 6
-		static let popularSpotCollectionViewVerticalInset: CGFloat = 0
-		static let popularSpotCollectionViewHorizontalInset: CGFloat = 20
+		static let topMargin: CGFloat = 24
+		static let horizontalMargin: CGFloat = 22
+		static let searchButtonBottomMargin: CGFloat = -44
 	}
 	
 	private enum TextSet {
 		static let titleLabelText: String = "일정을 알려주세요"
-		static let searchLabelText: String = "위치 검색"
-		static let popularSearchLabelText: String = "인기 검색어"
+		static let searchText: String = "검색하기"
 	}
 	
 	// MARK: - UI PROPERTY
@@ -55,6 +41,8 @@ final class TravelDateExtendedView: UIView {
 	private let containerView: UIView = UIView().then {
 		$0.backgroundColor = .blue
 	}
+	
+	fileprivate let searchButton: DefaultButton = DefaultButton(title: TextSet.searchText)
 	
 	// MARK: - PROPERTY
 	fileprivate let popularSpots: BehaviorRelay<[String]> = .init(value: [])
@@ -82,20 +70,26 @@ private extension TravelDateExtendedView {
 	func setupSubViews() {
 		addSubview(titleLabel)
 		addSubview(containerView)
+		addSubview(searchButton)
 		
 		setupConstraints()
 	}
 	
 	func setupConstraints() {
 		titleLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(24)
-			make.horizontalEdges.equalToSuperview().inset(22)
+			make.top.equalToSuperview().offset(Metric.topMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
 		
 		containerView.snp.makeConstraints { make in
-			make.top.equalTo(titleLabel.snp.bottom).offset(22)
+			make.top.equalTo(titleLabel.snp.bottom).offset(Metric.topMargin)
 			make.horizontalEdges.equalToSuperview().inset(20)
-			make.bottom.equalToSuperview().inset(20)
+			make.bottom.equalTo(searchButton.snp.top).offset(-20)
+		}
+		
+		searchButton.snp.makeConstraints { make in
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+			make.bottom.equalToSuperview().offset(Metric.searchButtonBottomMargin)
 		}
 	}
 }
@@ -104,6 +98,8 @@ private extension TravelDateExtendedView {
 
 // MARK: - REACTIVE EXTENSION
 extension Reactive where Base: TravelDateExtendedView {
-	
+	var didTapSearchDateButton: ControlEvent<Void> {
+		let source: Observable<Void> = base.searchButton.rx.tap.asObservable()
+		return ControlEvent(events: source)
+	}
 }
-

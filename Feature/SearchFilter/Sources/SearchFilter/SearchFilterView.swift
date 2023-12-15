@@ -299,6 +299,10 @@ extension Reactive where Base: SearchFilterView {
 		return ControlEvent(events: source)
 	}
 	
+	var didTapSearchDateButton: ControlEvent<Void> {
+		return base.travelDateExtendedView.rx.didTapSearchDateButton
+	}
+	
 	// MARK: - Travel Group
 	var didTapTravelGroupDefaultView: ControlEvent<Void> {
 		let source = base.travelGroupDefaultView.rx.tapGesture().when(.recognized).map { _ in }
