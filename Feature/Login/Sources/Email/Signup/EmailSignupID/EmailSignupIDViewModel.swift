@@ -112,6 +112,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	
 	public func stopTimer() {
 		timer?.dispose()
+		timer = nil
 	}
 }
 

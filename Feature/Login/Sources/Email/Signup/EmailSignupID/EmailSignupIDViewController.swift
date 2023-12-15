@@ -408,7 +408,7 @@ private extension EmailSignupIDViewController {
 					
 				case .auth:
 					if self.emailSignupIDViewModel.currentViewState.value.enabled == true {
-						emailSignupIDViewModel.stopTimer()
+						self.emailSignupIDViewModel.stopTimer()
 						
 						if let navigation = self.navigationController as? EmailLoginNavigationController {
 							navigation.pageController.moveToNextPage()
@@ -435,7 +435,7 @@ private extension EmailSignupIDViewController {
 				let email: String = self.emailSignupIDViewModel.emailRelay.value
 				self.emailSignupIDViewModel.fetchEmailAuth(email: email)
 				
-				emailSignupIDViewModel.startTimer(sec: 600)
+				self.emailSignupIDViewModel.startTimer(sec: 600)
 			}.disposed(by: disposeBag)
 	}
 	
