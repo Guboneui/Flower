@@ -95,7 +95,6 @@ private extension TravelDateExtendedView {
 		containerView.snp.makeConstraints { make in
 			make.top.equalTo(titleLabel.snp.bottom).offset(22)
 			make.horizontalEdges.equalToSuperview().inset(20)
-			make.height.equalTo(120)
 			make.bottom.equalToSuperview().inset(20)
 		}
 	}

@@ -27,6 +27,7 @@ final class SearchFilterView: UIView {
 		static let travelViewVerticalMargin: CGFloat = 22
 		static let verticalMargin: CGFloat = 16
 		static let horizontalMargin: CGFloat = 14
+		static let extendedDateViewBottomMargin: CGFloat = -24
 		
 		static let bottomButtonTopMargin: CGFloat = 12
 		static let bottomButtonHorizontalMargin: CGFloat = 20
@@ -47,11 +48,7 @@ final class SearchFilterView: UIView {
 		hasGuideLine: true
 	)
 	
-	private let scrollView: UIScrollView = UIScrollView().then {
-		$0.backgroundColor = AppTheme.Color.grey90
-	}
-	
-	private let scrollContainerView: UIView = UIView().then {
+	private let containerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.grey90
 	}
 	
@@ -145,15 +142,31 @@ final class SearchFilterView: UIView {
 		UIView.animate(withDuration: 0.3, animations: {
 			switch state {
 			case .travelDate:
+				self.travelDateStackView.snp.remakeConstraints { make in
+					make.top.equalTo(self.travelSpotStackView.snp.bottom).offset(Metric.verticalMargin)
+					make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+					make.bottom.equalToSuperview().offset(Metric.extendedDateViewBottomMargin)
+				}
+				
 				self.bottomContainerView.snp.remakeConstraints { make in
 					make.horizontalEdges.equalToSuperview()
 					make.top.equalTo(self.snp.bottom)
 				}
+				
+				self.travelGroupStackView.isHidden = true
+				
 			default:
+				self.travelDateStackView.snp.remakeConstraints { make in
+					make.top.equalTo(self.travelSpotStackView.snp.bottom).offset(Metric.verticalMargin)
+					make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+				}
+				
 				self.bottomContainerView.snp.remakeConstraints { make in
 					make.horizontalEdges.equalToSuperview()
 					make.bottom.equalToSuperview()
 				}
+				
+				self.travelGroupStackView.isHidden = false
 			}
 			self.layoutIfNeeded()
 		})
@@ -168,12 +181,11 @@ private extension SearchFilterView {
 	
 	func setupViews() {
 		addSubview(navigationBar)
-		addSubview(scrollView)
-		scrollView.addSubview(scrollContainerView)
-		scrollContainerView.addSubview(travelSpotStackView)
-		scrollContainerView.addSubview(travelDateStackView)
-		scrollContainerView.addSubview(travelGroupStackView)
-		addSubview(bottomContainerView)
+		addSubview(containerView)
+		containerView.addSubview(travelSpotStackView)
+		containerView.addSubview(travelDateStackView)
+		containerView.addSubview(travelGroupStackView)
+		containerView.addSubview(bottomContainerView)
 		bottomContainerView.addSubview(bottomContainerGuideLineView)
 		bottomContainerView.addSubview(bottomButton)
 		
@@ -186,15 +198,10 @@ private extension SearchFilterView {
 			make.horizontalEdges.equalToSuperview()
 		}
 		
-		scrollView.snp.makeConstraints { make in
+		containerView.snp.makeConstraints { make in
 			make.top.equalTo(navigationBar.snp.bottom)
 			make.horizontalEdges.equalToSuperview()
-			make.bottom.equalTo(bottomContainerView.snp.top)
-		}
-		
-		scrollContainerView.snp.makeConstraints { make in
-			make.edges.equalToSuperview()
-			make.width.equalToSuperview()
+			make.bottom.equalToSuperview()
 		}
 		
 		travelSpotStackView.snp.makeConstraints { make in
@@ -210,7 +217,6 @@ private extension SearchFilterView {
 		travelGroupStackView.snp.makeConstraints { make in
 			make.top.equalTo(travelDateStackView.snp.bottom).offset(Metric.verticalMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
-			make.bottom.equalToSuperview().inset(Metric.travelViewVerticalMargin)
 		}
 		
 		bottomContainerView.snp.makeConstraints { make in
@@ -229,6 +235,8 @@ private extension SearchFilterView {
 			make.horizontalEdges.equalToSuperview().inset(Metric.bottomButtonHorizontalMargin)
 			make.bottom.equalToSuperview().offset(Metric.bottomButtonBottomMargin)
 		}
+		
+		layoutIfNeeded()
 	}
 	
 	func updateView(_ defaultView: UIView, _ extendedView: UIView, isExtended: Bool) {
