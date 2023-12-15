@@ -21,7 +21,6 @@ public extension TargetDependency.ThirdParty {
     Then,
     RxSwift,
     RxGesture,
-    Moya,
     NMapsMap,
     ReactorKit
   ]
