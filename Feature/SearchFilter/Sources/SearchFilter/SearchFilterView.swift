@@ -138,6 +138,25 @@ final class SearchFilterView: UIView {
 			updateView(travelDateDefaultView, travelDateExtendedView, isExtended: false)
 			updateView(travelGroupDefaultView, travelGroupExtendedView, isExtended: true)
 		}
+		updateBottomView(with: state)
+	}
+	
+	private func updateBottomView(with state: SearchFilterExtendedState) {
+		UIView.animate(withDuration: 0.3, animations: {
+			switch state {
+			case .travelDate:
+				self.bottomContainerView.snp.remakeConstraints { make in
+					make.horizontalEdges.equalToSuperview()
+					make.top.equalTo(self.snp.bottom)
+				}
+			default:
+				self.bottomContainerView.snp.remakeConstraints { make in
+					make.horizontalEdges.equalToSuperview()
+					make.bottom.equalToSuperview()
+				}
+			}
+			self.layoutIfNeeded()
+		})
 	}
 }
 
