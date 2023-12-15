@@ -17,7 +17,7 @@ import Then
 
 public final class EmailSignupIDViewController: UIViewController {
 	
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let emailLabelTopMargin: CGFloat = 38
 		static let emailLabelLeftMargin: CGFloat = 24
@@ -68,7 +68,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let authSendButtonBothSidesMargin: CGFloat = 24
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let emailLabelFont: UIFont = AppTheme.Font.Bold_16
 		static let cautionLabelFont: UIFont = AppTheme.Font.Regular_12
@@ -80,7 +80,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let timerLabelFont: UIFont = AppTheme.Font.Bold_10
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let cautionSuccessImage: UIImage = AppTheme.Image.success
 		static let cautionFailureImage: UIImage = AppTheme.Image.caution
@@ -89,7 +89,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let authCautionFailureImage: UIImage = AppTheme.Image.caution
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let cautionViewColor: UIColor = AppTheme.Color.white
@@ -108,7 +108,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let timerLabelColor: UIColor = AppTheme.Color.primary
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let emailLabelText: String = "이메일"
 		static let navigationBarText: String = "회원가입"
@@ -131,6 +131,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let authSendButtonDidSandText: String = "다음"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let emailLabel: UILabel = UILabel().then {
@@ -227,6 +228,9 @@ public final class EmailSignupIDViewController: UIViewController {
 	
 	private var emailSignupIDViewModel: EmailSignupIDViewModelInterface
 	
+	private let disposeBag: DisposeBag = DisposeBag()
+
+	// MARK: - INITIALIZE
 	public init(emailSignupIDViewModel: EmailSignupIDViewModelInterface) {
 		self.emailSignupIDViewModel = emailSignupIDViewModel
 		super.init(nibName: nil, bundle: nil)
@@ -236,8 +240,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private let disposeBag: DisposeBag = DisposeBag()
-	
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -247,6 +250,7 @@ public final class EmailSignupIDViewController: UIViewController {
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailSignupIDViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
@@ -535,6 +539,7 @@ private extension EmailSignupIDViewController {
 	}
 }
 
+// MARK: - UIBUTTON EXTENSION
 private extension UIButton {
 	func setUnderline() {
 		guard let title = title(for: .normal) else { return }

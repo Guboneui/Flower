@@ -16,7 +16,7 @@ import SnapKit
 import Then
 
 public final class EmailSignupPhoneViewController: UIViewController {
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let phoneNumberLabelTopMargin: CGFloat = 54
 		static let phoneNumberLabelLeftMargin: CGFloat = 24
@@ -28,24 +28,25 @@ public final class EmailSignupPhoneViewController: UIViewController {
 		static let completionButtonBothsides: CGFloat = 24
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let phoneNumberLabelFont: UIFont = AppTheme.Font.Bold_20
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let phoneNumberLabelColor: UIColor = AppTheme.Color.black
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let navigationBarText: String = "회원가입"
 		static let phoneNumberLabelText: String = "핸드폰 번호를 입력해 주세요"
 		static let completionButtonText: String = "회원가입 완료"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let phoneNumberLabel: UILabel = UILabel().then {
@@ -63,9 +64,12 @@ public final class EmailSignupPhoneViewController: UIViewController {
 			$0.isEnabled = false
 		}
 	
-	private var emailSignupPhoneViewModel: EmailSignupPhoneViewModel
+	private var emailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	
-	public init(emailSignupPhoneViewModel: EmailSignupPhoneViewModel) {
+	private let disposeBag = DisposeBag()
+	
+	// MARK: - INITIALIZE
+	public init(emailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface) {
 		self.emailSignupPhoneViewModel = emailSignupPhoneViewModel
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -73,10 +77,8 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
-	private let disposeBag = DisposeBag()
-	
-	// MARK: - Life Cycle
+		
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -95,6 +97,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailSignupPhoneViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
@@ -153,15 +156,6 @@ private extension EmailSignupPhoneViewController {
 	}
 	
 	func setupBinding() {
-		self.view.rx.tapGesture()
-			.when(.recognized)
-			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
-			.bind { [weak self] _ in
-				guard let self else { return }
-				
-				self.view.endEditing(true)
-			}.disposed(by: disposeBag)
-		
 		phoneNumberInputView.isPhoneNumberComplete
 			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
@@ -211,7 +205,7 @@ private extension EmailSignupPhoneViewController {
 			}).disposed(by: disposeBag)
 	}
 	
-	// MARK: - Notification Function
+	// MARK: - Notification METHOD
 	func addKeyboardNotifications() {
 		NotificationCenter.default.addObserver(
 			self, selector: #selector(self.keyboardWillShow(_:)),

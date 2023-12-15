@@ -16,8 +16,12 @@ public protocol EmailSignupUseCaseInterface {
 	func fetchEmailAuth(email: String) -> Single<EmailAuthResponse>
 	func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse>
 	func fetchEmailSignup(
-		email: String, password: String,
-		userName: String, userNickName: String?,
-		birth: String?, profileImg: Data?,
-		phoneNum: String) -> Single<EmailSignupResponse>
+		email: String, 
+		password: String,
+		userName: String, 
+		userNickName: String?,
+		birth: String?, 
+		profileImg: Data?,
+		phoneNum: String
+	) -> Single<EmailSignupResponse>
 }

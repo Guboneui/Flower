@@ -16,7 +16,7 @@ import Then
 
 public final class EmailLoginViewController: UIViewController {
 	
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let emailLoginLabelTopMargin: CGFloat = 32
 		
@@ -43,7 +43,7 @@ public final class EmailLoginViewController: UIViewController {
 		static let signupStackViewBottomMargin: CGFloat = 30
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let emailLoginLabelFont: UIFont = AppTheme.Font.Bold_20
 		static let idSaveCheckLabelFont: UIFont = AppTheme.Font.Regular_12
@@ -52,13 +52,13 @@ public final class EmailLoginViewController: UIViewController {
 		static let emailSignupButtonFont: UIFont = AppTheme.Font.Bold_14
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let idSaveCheckButtonOffImage: UIImage = AppTheme.Image.checkBoxOff
 		static let idSaveCheckButtonOnImage: UIImage = AppTheme.Image.checkBoxOn
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let idSaveCheckViewColor: UIColor = AppTheme.Color.white
@@ -69,7 +69,7 @@ public final class EmailLoginViewController: UIViewController {
 		static let emailSignupButtonColor: UIColor = AppTheme.Color.black
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let emailLoginLabelText: String = "이메일 로그인"
 		static let loginButtonText: String = "로그인"
@@ -79,6 +79,7 @@ public final class EmailLoginViewController: UIViewController {
 		static let emailSignupButtonText: String = "이메일로 가입하기"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.close)
 	
 	private let emailLoginLabel: UILabel = UILabel().then {
@@ -173,6 +174,7 @@ public final class EmailLoginViewController: UIViewController {
 	
 	private let disposeBag = DisposeBag()
 	
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -188,6 +190,7 @@ public final class EmailLoginViewController: UIViewController {
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailLoginViewController {
 	
 	func setupUI() {
@@ -276,8 +279,7 @@ private extension EmailLoginViewController {
 				guard let self else { return }
 				
 				self.dismiss(animated: true)
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		emailSignupButton.rx.touchHandler()
 			.bind { [weak self] in
@@ -286,15 +288,13 @@ private extension EmailLoginViewController {
 				let parentViewController = EmailLoginModalViewController()
 				parentViewController.parentVC = self
 				parentViewController.showModal()
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		idSaveCheckButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
 				
 				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 	}
 }
