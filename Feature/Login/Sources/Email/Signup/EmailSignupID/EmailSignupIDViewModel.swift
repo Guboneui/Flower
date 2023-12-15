@@ -26,7 +26,6 @@ public protocol EmailSignupIDViewModelInterface {
 	func fetchEmailAuth(email: String)
 	func startTimer(sec: Int)
 	func stopTimer()
-	func resetTimer()
 }
 
 public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
@@ -44,7 +43,8 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	private let signUpUseCase: EmailSignupUseCaseInterface
 	private let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 	private var disposeBag: DisposeBag
-
+	private var timer: Disposable?
+	
 	// MARK: - INITIALIZE
 	public init(useCase: EmailSignupUseCaseInterface) {
 		self.signUpUseCase = useCase
@@ -76,7 +76,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 		signUpUseCase.fetchEmailAuth(email: email)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
-
+				
 				if response.success {
 					self.currentViewState.accept(.init(state: .auth))
 				}
@@ -84,38 +84,34 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	}
 	
 	public func startTimer(sec: Int) {
-		let timer = Observable<Int>
-			 .interval(
-				 .seconds(1),
-				 scheduler: MainScheduler.instance
-			 )
+		stopTimer()
 		
-		let subscription = timer
+		timer = Observable<Int>
+			.interval(
+				.seconds(1),
+				scheduler: MainScheduler.instance
+			)
+			.take(600)
 			.subscribe(onNext: { [weak self] time in
 				guard let self else { return }
-
-					let minute = ((sec - time) % 3600) / 60
-					let second = ((sec - time) % 3600) % 60
-					
-					if second < 10 {
-						self.timerRelay.accept(
-							String(minute) + "분 " + "0" + String(second) + "초"
-						)
-					} else {
-						self.timerRelay.accept(
-							String(minute) + "분 " + String(second) + "초"
-						)
-					}
-			}).disposed(by: disposeBag)
+				
+				let minute = ((sec - time) % 3600) / 60
+				let second = ((sec - time) % 3600) % 60
+				
+				if second < 10 {
+					self.timerRelay.accept(
+						String(minute) + "분 " + "0" + String(second) + "초"
+					)
+				} else {
+					self.timerRelay.accept(
+						String(minute) + "분 " + String(second) + "초"
+					)
+				}
+			})
 	}
 	
 	public func stopTimer() {
-		disposeBag = DisposeBag()
-	}
-	
-	public func resetTimer() {
-		stopTimer()
-		startTimer(sec: 600)
+		timer?.dispose()
 	}
 }
 
