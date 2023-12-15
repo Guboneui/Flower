@@ -124,7 +124,6 @@ final class SearchFilterView: UIView {
 	}
 	
 	public func updateExtendedState(with state: SearchFilterExtendedState) {
-		self.layoutIfNeeded()
 		switch state {
 		case .travelSpot:
 			updateView(travelSpotDefaultView, travelSpotExtendedView, isExtended: true)
