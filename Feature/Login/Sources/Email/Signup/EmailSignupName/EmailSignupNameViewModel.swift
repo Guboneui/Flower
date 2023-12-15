@@ -9,11 +9,18 @@ import Foundation
 
 import RxRelay
 
-public final class EmailSignupNameViewModel {
-	
-	var userData: UserData
-	var nameRelay: BehaviorRelay<String> = .init(value: "")
+// MARK: - VIEWMODEL INTERFACE
+public protocol EmailSignupNameViewModelInterface {
+	var nameRelay: BehaviorRelay<String> { get }
+	var userData: UserData { get set }
+}
 
+public final class EmailSignupNameViewModel: EmailSignupNameViewModelInterface {
+	// MARK: - PUBLIC PROPERTY
+	public var userData: UserData
+	public var nameRelay: BehaviorRelay<String> = .init(value: "")
+	
+	// MARK: - INITIALIZE
 	init(userData: UserData) {
 		self.userData = userData
 	}

@@ -16,8 +16,11 @@ public protocol EmailSignupRepositoryInterface {
 	func fetchEmailAuthAPI(email: String) -> Single<EmailAuthResponse>
 	func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse>
 	func fetchEmailSignupAPI(
-		email: String, password: String,
-		userName: String, userNickName: String?,
-		birth: String?, profileImg: Data?,
+		email: String, 
+		password: String,
+		userName: String, 
+		userNickName: String?,
+		birth: String?, 
+		profileImg: Data?,
 		phoneNum: String) -> Single<EmailSignupResponse>
 }

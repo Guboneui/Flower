@@ -31,12 +31,21 @@ public final class EmailSignupUseCase: EmailSignupUseCaseInterface {
 	}
 	
 	public func fetchEmailSignup(
-		email: String, password: String, userName: String,
-		userNickName: String?, birth: String?,
-		profileImg: Data?, phoneNum: String) -> RxSwift.Single<LoginEntity.EmailSignupResponse> {
+		email: String, 
+		password: String,
+		userName: String,
+		userNickName: String?, 
+		birth: String?,
+		profileImg: Data?, 
+		phoneNum: String) -> RxSwift.Single<LoginEntity.EmailSignupResponse> {
 		return emailSignupIDRepository.fetchEmailSignupAPI(
-			email: email, password: password, userName: userName,
-			userNickName: userNickName, birth: birth,
-			profileImg: profileImg, phoneNum: phoneNum)
+			email: email, 
+			password: password,
+			userName: userName,
+			userNickName: userNickName, 
+			birth: birth,
+			profileImg: profileImg, 
+			phoneNum: phoneNum
+		)
 	}
 }

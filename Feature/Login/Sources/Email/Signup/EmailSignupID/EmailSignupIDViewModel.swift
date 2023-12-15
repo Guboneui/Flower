@@ -13,6 +13,7 @@ import LoginEntity
 import RxRelay
 import RxSwift
 
+// MARK: - VIEWMODEL INTERFACE
 public protocol EmailSignupIDViewModelInterface {
 	var emailRelay: BehaviorRelay<String> { get }
 	var authRelay: BehaviorRelay<String> { get }
@@ -75,7 +76,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 		signUpUseCase.fetchEmailAuth(email: email)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
-				print(response.body)
+
 				if response.success {
 					self.currentViewState.accept(.init(state: .auth))
 				}
@@ -118,7 +119,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	}
 }
 
-// MARK: - EXTENSION PRIVATE METHOD
+// MARK: - PRIVATE METHOD
 private extension EmailSignupIDViewModel {
 	func fetchEmailConfirm(email: String) {
 		signUpUseCase.fetchEmailConfirm(email: email)

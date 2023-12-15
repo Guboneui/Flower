@@ -16,7 +16,7 @@ import SnapKit
 import Then
 
 public final class EmailSignupPWViewController: UIViewController {
-	// MARK: METRIC
+	// MARK:  - METRIC
 	private enum Metric {
 		static let pwViewHeightMargin: CGFloat = 93
 		static let pwViewTopMargin: CGFloat = 38
@@ -59,7 +59,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwAnnouncementLabelNumberOfLines: Int = 1
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let pwLabelFont: UIFont = AppTheme.Font.Bold_16
 		static let pwCautionLabelFont: UIFont = AppTheme.Font.Regular_12
@@ -68,7 +68,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwCheckAnnouncementLabelFont: UIFont = AppTheme.Font.Regular_12
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let pwCautionSuccessImage: UIImage = AppTheme.Image.success
 		static let pwCautionFailureImage: UIImage = AppTheme.Image.caution
@@ -77,7 +77,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwCheckCautionFailureImage: UIImage = AppTheme.Image.caution
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let pwViewBackgroundColor: UIColor = AppTheme.Color.white
@@ -96,7 +96,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwCheckAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let navigationBarText: String = "회원가입"
 		static let pwLabelText: String = "비밀번호"
@@ -113,6 +113,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let nextButtonText: String = "다음"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let pwView: UIView = UIView().then {
@@ -193,9 +194,12 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.isEnabled = false
 	}
 		
-	private let emailSignupPWViewModel: EmailSignupPWViewModel
+	private var emailSignupPWViewModel: EmailSignupPWViewModelInterface
+	
+	private let disposeBag: DisposeBag = DisposeBag()
 
-	public init(emailSignupPWViewModel: EmailSignupPWViewModel) {
+	// MARK: - INITIALIZE
+	public init(emailSignupPWViewModel: EmailSignupPWViewModelInterface) {
 		self.emailSignupPWViewModel = emailSignupPWViewModel
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -204,8 +208,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private let disposeBag: DisposeBag = DisposeBag()
-
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupUI()
@@ -215,6 +218,7 @@ public final class EmailSignupPWViewController: UIViewController {
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailSignupPWViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
@@ -339,7 +343,6 @@ private extension EmailSignupPWViewController {
 	}
 	
 	func setupGestures() {
-		
 		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
