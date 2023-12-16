@@ -78,7 +78,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 				guard let self else { return }
 				
 				if response.success {
-					self.currentViewState.accept(.init(state: .auth))
+					self.currentViewState.accept(.init(state: .auth, enabled: nil))
 				}
 			}).disposed(by: disposeBag)
 	}

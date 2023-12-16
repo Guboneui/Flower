@@ -397,7 +397,6 @@ private extension EmailSignupIDViewController {
 				case .email:
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
-						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 					})
 					
 					let email: String = self.emailSignupIDViewModel.emailRelay.value
@@ -472,9 +471,9 @@ private extension EmailSignupIDViewController {
 		emailSignupIDViewModel.currentViewState
 			.subscribe(onNext: { [weak self] pageSet in
 				guard let self else { return }
-
-				self.authSendButton.isEnabled = pageSet.enabled ?? false
 				
+				self.authSendButton.isEnabled = pageSet.enabled ?? false
+
 				switch pageSet.state {
 				case .email:
 					setEmailState(bool: pageSet.enabled)
@@ -493,7 +492,6 @@ private extension EmailSignupIDViewController {
 	}
 	
 	func setEmailState(bool: Bool?) {
-		
 		if bool == true {
 			cautionView.alpha = 1
 			
@@ -515,6 +513,8 @@ private extension EmailSignupIDViewController {
 	}
 	
 	func setAuthState(bool: Bool?) {
+		self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
+
 		if bool == true {
 			authCautionView.alpha = 1
 			
