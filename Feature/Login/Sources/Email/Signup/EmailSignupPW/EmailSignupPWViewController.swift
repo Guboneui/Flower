@@ -211,6 +211,7 @@ public final class EmailSignupPWViewController: UIViewController {
 	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		setupUI()
 		setupViews()
 		setupGestures()
@@ -350,7 +351,6 @@ private extension EmailSignupPWViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
-					navigation.interactivePopGestureRecognizer?.isEnabled = false
 				}
 			}.disposed(by: disposeBag)
 		
