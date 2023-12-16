@@ -112,7 +112,6 @@ public final class EmailSignupIDViewController: UIViewController {
 	private enum TextSet {
 		static let emailLabelText: String = "이메일"
 		static let navigationBarText: String = "회원가입"
-		static let cautionLabelNomalText: String = ""
 		static let cautionLabelSuccessText: String = "사용 가능한 이메일입니다"
 		static let cautionLabelFailureText: String = "잘못된 이메일 형식입니다"
 		static let announcementLabelText: String =
@@ -243,6 +242,7 @@ public final class EmailSignupIDViewController: UIViewController {
 	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		setupUI()
 		setupViews()
 		setupGestures()

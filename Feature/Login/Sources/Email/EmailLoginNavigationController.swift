@@ -34,6 +34,8 @@ public class EmailLoginNavigationController: UINavigationController {
 		super.viewDidLoad()
 		self.view.addSubview(pageController)
 		
+		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+		
 		pageController.snp.makeConstraints { make in
 			make.top.equalTo(view.safeAreaLayoutGuide).offset(
 				Metric.pageControllerTopMargin)
