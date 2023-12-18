@@ -413,9 +413,9 @@ private extension EmailSignupIDViewController {
 							navigation.pageController.moveToNextPage()
 							
 							let email: String = emailSignupIDViewModel.emailRelay.value
-							emailSignupIDViewModel.userData.email = email
+							emailSignupIDViewModel.userSignupDTO.email = email
 							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel(
-								userData: emailSignupIDViewModel.userData
+								userSignupDTO: emailSignupIDViewModel.userSignupDTO
 							)
 							
 							let secondVC = EmailSignupPWViewController(emailSignupPWViewModel: viewModel)

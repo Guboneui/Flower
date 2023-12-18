@@ -362,9 +362,9 @@ private extension EmailSignupPWViewController {
 					navigation.pageController.moveToNextPage()
 				
 					let password: String = emailSignupPWViewModel.pwCheckRelay.value
-					emailSignupPWViewModel.userData.password = password
+					emailSignupPWViewModel.userSignupDTO.password = password
 					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel(
-						userData: emailSignupPWViewModel.userData
+						userSignupDTO: emailSignupPWViewModel.userSignupDTO
 					)
 					
 					let signupNameVC = EmailSignupNameViewController(emailSignupNameViewModel: viewModel)

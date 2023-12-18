@@ -149,8 +149,8 @@ private extension EmailSignupPhoneViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				let userData = self.emailSignupPhoneViewModel.userData
-				self.emailSignupPhoneViewModel.fetchEmailSignup(userData: userData)
+				let userSignupDTO = self.emailSignupPhoneViewModel.userSignupDTO
+				self.emailSignupPhoneViewModel.fetchEmailSignup(userSignupDTO: userSignupDTO)
 			}.disposed(by: disposeBag)
 	}
 	
@@ -169,7 +169,7 @@ private extension EmailSignupPhoneViewController {
 						
 						emailSignupPhoneViewModel.phoneNumberRelay.accept(phoneNumberString)
 						
-						emailSignupPhoneViewModel.userData.phoneNum = phoneNumberString
+						emailSignupPhoneViewModel.userSignupDTO.phoneNum = phoneNumberString
 					}
 				}
 			}).disposed(by: disposeBag)
