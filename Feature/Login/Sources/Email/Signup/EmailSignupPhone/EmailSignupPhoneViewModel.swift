@@ -42,15 +42,7 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	// MARK: - PUBLIC METHOD
 	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) {
 
-		signupUseCase.fetchEmailSignup(
-			email: userSignupDTO.email ?? "",
-			password: userSignupDTO.password ?? "",
-			userName: userSignupDTO.userName ?? "",
-			userNickName: userSignupDTO.userNickName ?? "",
-			birth: userSignupDTO.birth ?? "",
-			profileImg: userSignupDTO.profileImg ?? Data(),
-			phoneNum: userSignupDTO.phoneNum ?? ""
-		)
+		signupUseCase.fetchEmailSignup(userSignupDTO: userSignupDTO)
 		.subscribe(onSuccess: { [weak self] response in
 			guard let self else { return }
 

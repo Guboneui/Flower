@@ -27,24 +27,16 @@ public final class EmailSignupRepository: NetworkRepository<EmailSignupAPI>, Ema
 		request(endPoint: .emailCode(email: email, code: code))
 	}
 	
-	public func fetchEmailSignupAPI(
-		email: String, 
-		password: String,
-		userName: String,
-		userNickName: String?, 
-		birth: String?,
-		profileImg: Data?, 
-		phoneNum: String
-	) -> RxSwift.Single<LoginEntity.EmailSignupResponse> {
+	public func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
 		request(
 			endPoint: .emailSignup(
-			email: email, 
-			password: password,
-			userName: userName,
-			userNickName: userNickName, 
-			birth: birth,
-			profileImg: profileImg, 
-			phoneNum: phoneNum
+				email: userSignupDTO.email,
+				password: userSignupDTO.password,
+				userName: userSignupDTO.userName,
+				userNickName: userSignupDTO.userNickName,
+				birth: userSignupDTO.birth,
+				profileImg: userSignupDTO.profileImg,
+				phoneNum: userSignupDTO.phoneNum
 			)
 		)
 	}
