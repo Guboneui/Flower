@@ -23,7 +23,7 @@ public final class EmailSignupNameViewModel: EmailSignupNameViewModelInterface {
 	public var nameRelay: BehaviorRelay<String> = .init(value: "")
 	
 	// MARK: - INITIALIZE
-	init(userSignupDTO: UserSignupDTO) {
+	public init(userSignupDTO: UserSignupDTO) {
 		self.userSignupDTO = userSignupDTO
 	}
 }

@@ -26,12 +26,10 @@ public final class EmailSignupNameViewController: UIViewController {
 		
 		static let profileImageViewSize: CGFloat = 48
 
-		static let cameraViewBorderRadius: CGFloat = 18
-		static let cameraViewSize: CGFloat = 36
-		static let cameraViewTopMargin: CGFloat = 76
-		static let cameraViewLeftMargin: CGFloat = 76
+		static let editProfileImageButtonRadius: CGFloat = 18
+		static let editProfileImageButtonSize: CGFloat = 36
 
-		static let cameraImageViewSize: CGFloat = 18
+		static let cameraImageViewSize: CGSize = .init(width: 18, height: 18)
 
 		static let nameViewHeightMargin: CGFloat = 73
 		static let nameViewTopMargin: CGFloat = 60
@@ -84,14 +82,12 @@ public final class EmailSignupNameViewController: UIViewController {
 		$0.tintColor = ColorSet.profileImageViewColor
 	}
 	
-	private let cameraView: UIView = UIView().then {
+	private let editProfileImageButton: UIButton = UIButton(type: .system).then {
+		let resizedImage: UIImage? = Image.cameraImage.changeImageSize(size: Metric.cameraImageViewSize)
+		$0.tintColor = AppTheme.Color.white
+		$0.setImage(resizedImage, for: .normal)
 		$0.backgroundColor = ColorSet.cameraViewBackgroundColor
-		$0.makeCornerRadiusWithBorder(Metric.cameraViewBorderRadius)
-	}
-	
-	private let cameraImageView: UIImageView = UIImageView().then {
-		$0.image = Image.cameraImage
-		$0.tintColor = ColorSet.cameraImageViewColor
+		$0.makeCornerRadius(Metric.editProfileImageButtonRadius)
 	}
 	
 	private let nameView: UIView = UIView().then {
@@ -148,9 +144,7 @@ private extension EmailSignupNameViewController {
 		
 		view.addSubview(profileView)
 		profileView.addSubview(profileImageView)
-		
-		view.addSubview(cameraView)
-		cameraView.addSubview(cameraImageView)
+		view.addSubview(editProfileImageButton)
 		
 		view.addSubview(nameView)
 		nameView.addSubview(nameLabel)
@@ -178,15 +172,10 @@ private extension EmailSignupNameViewController {
 			make.centerX.centerY.equalToSuperview()
 		}
 		
-		cameraView.snp.makeConstraints { make in
-			make.size.equalTo(Metric.cameraViewSize)
-			make.top.equalTo(profileView.snp.top).inset(Metric.cameraViewTopMargin)
-			make.leading.equalTo(profileView.snp.leading).inset(Metric.cameraViewLeftMargin)
-		}
-		
-		cameraImageView.snp.makeConstraints { make in
-			make.size.equalTo(Metric.cameraImageViewSize)
-			make.centerX.centerY.equalToSuperview()
+		editProfileImageButton.snp.makeConstraints { make in
+			make.size.equalTo(Metric.editProfileImageButtonSize)
+			make.trailing.equalTo(profileView.snp.trailing)
+			make.bottom.equalTo(profileView.snp.bottom)
 		}
 		
 		nameView.snp.makeConstraints { make in
@@ -241,6 +230,11 @@ private extension EmailSignupNameViewController {
 					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 					navigation.pushViewController(signupPhoneVC, animated: true)
 				}
+			}.disposed(by: disposeBag)
+		
+		editProfileImageButton.rx.touchHandler()
+			.bind {
+				print("프로필 수정")
 			}.disposed(by: disposeBag)
 	}
 	
