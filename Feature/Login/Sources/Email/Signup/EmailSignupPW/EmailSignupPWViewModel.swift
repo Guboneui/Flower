@@ -7,6 +7,8 @@
 
 import Foundation
 
+import LoginEntity
+
 import RxRelay
 
 // MARK: - VIEWMODEL INTERFACE
@@ -15,7 +17,7 @@ public protocol EmailSignupPWViewModelInterface {
 	var pwCheckRelay: BehaviorRelay<String> { get }
 	var pwBool: BehaviorRelay<Bool?> { get }
 	var pwCheckBool: BehaviorRelay<Bool?> { get }
-	var userData: UserData { get set }
+	var userSignupDTO: UserSignupDTO { get set }
 	
 	func isValiedPW()
 	func isValiedPWCheck()
@@ -27,14 +29,14 @@ public final class EmailSignupPWViewModel: EmailSignupPWViewModelInterface {
 	public var pwCheckRelay: BehaviorRelay<String> = .init(value: "")
 	public var pwBool: BehaviorRelay<Bool?> = .init(value: nil)
 	public var pwCheckBool: BehaviorRelay<Bool?> = .init(value: nil)
-	public var userData: UserData
+	public var userSignupDTO: UserSignupDTO
 
 	// MARK: - PRIVATE PROPERTY
 	let pwRegex: String = "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[!@#$%^&*()_+=-]).{8,20}"
 	
 	// MARK: - INITIALIZE
-	init(userData: UserData) {
-		self.userData = userData
+	init(userSignupDTO: UserSignupDTO) {
+		self.userSignupDTO = userSignupDTO
 	}
 	
 	// MARK: - PUBLIC METHOD

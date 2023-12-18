@@ -19,7 +19,7 @@ public protocol EmailSignupIDViewModelInterface {
 	var authRelay: BehaviorRelay<String> { get }
 	var timerRelay: BehaviorRelay<String> { get }
 	var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> { get }
-	var userData: UserData { get set }
+	var userSignupDTO: UserSignupDTO { get set }
 	
 	func isValidEmail()
 	func isValiedAuthNumber()
@@ -37,7 +37,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> =
 		.init(value: EmailSignupIDViewStateModel(state: .email))
 	
-	public var userData: UserData = .init()
+	public var userSignupDTO: UserSignupDTO
 	
 	// MARK: - PRIVATE PROPERTY
 	private let signUpUseCase: EmailSignupUseCaseInterface
@@ -46,9 +46,10 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	private var timer: Disposable?
 	
 	// MARK: - INITIALIZE
-	public init(useCase: EmailSignupUseCaseInterface) {
+	public init(useCase: EmailSignupUseCaseInterface, userSignupDTO: UserSignupDTO) {
 		self.signUpUseCase = useCase
 		self.disposeBag = .init()
+		self.userSignupDTO = userSignupDTO
 	}
 	
 	// MARK: - PUBLIC METHOD

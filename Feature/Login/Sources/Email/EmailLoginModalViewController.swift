@@ -10,6 +10,7 @@ import UIKit
 
 import LoginData
 import LoginDomain
+import LoginEntity
 
 import DesignSystem
 import ResourceKit
@@ -97,7 +98,16 @@ private extension EmailLoginModalViewController {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
 			let repository = EmailSignupRepository()
 			let useCase = EmailSignupUseCase(emailSignupIDRepository: repository)
-			let viewModel = EmailSignupIDViewModel(useCase: useCase)
+			let userSignupDTO = UserSignupDTO(
+				email: "",
+				password: "",
+				userName: "",
+				userNickName: "",
+				birth: "",
+				profileImg: Data(),
+				phoneNum: ""
+			)
+			let viewModel = EmailSignupIDViewModel(useCase: useCase, userSignupDTO: userSignupDTO)
 			let signupVC = EmailSignupIDViewController(emailSignupIDViewModel: viewModel)
 			navigation.pushViewController(signupVC, animated: true)
 		}

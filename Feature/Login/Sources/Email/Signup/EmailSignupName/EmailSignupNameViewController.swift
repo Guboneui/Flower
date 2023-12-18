@@ -232,9 +232,9 @@ private extension EmailSignupNameViewController {
 					let repository = EmailSignupRepository()
 					let useCase = EmailSignupUseCase(emailSignupIDRepository: repository)
 					let name: String = emailSignupNameViewModel.nameRelay.value
-					emailSignupNameViewModel.userData.userName = name
+					emailSignupNameViewModel.userSignupDTO.userName = name
 					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
-						userData: emailSignupNameViewModel.userData,
+						userSignupDTO: emailSignupNameViewModel.userSignupDTO,
 						signupUseCase: useCase
 					)
 					

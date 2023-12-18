@@ -7,21 +7,23 @@
 
 import Foundation
 
+import LoginEntity
+
 import RxRelay
 
 // MARK: - VIEWMODEL INTERFACE
 public protocol EmailSignupNameViewModelInterface {
 	var nameRelay: BehaviorRelay<String> { get }
-	var userData: UserData { get set }
+	var userSignupDTO: UserSignupDTO { get set }
 }
 
 public final class EmailSignupNameViewModel: EmailSignupNameViewModelInterface {
 	// MARK: - PUBLIC PROPERTY
-	public var userData: UserData
+	public var userSignupDTO: UserSignupDTO
 	public var nameRelay: BehaviorRelay<String> = .init(value: "")
 	
 	// MARK: - INITIALIZE
-	init(userData: UserData) {
-		self.userData = userData
+	init(userSignupDTO: UserSignupDTO) {
+		self.userSignupDTO = userSignupDTO
 	}
 }
