@@ -14,13 +14,13 @@ public enum EmailSignupAPI {
 	case emailConfirm(email: String)
 	case emailCode(email: String, code: String)
 	case emailSignup(
-		email: String,
-		password: String,
-		userName: String,
+		email: String?,
+		password: String?,
+		userName: String?,
 		userNickName: String?,
 		birth: String?,
 		profileImg: Data?,
-		phoneNum: String)
+		phoneNum: String?)
 }
 
 extension EmailSignupAPI: TargetType {
@@ -87,12 +87,12 @@ extension EmailSignupAPI: TargetType {
 			
 			var multipartFormData: [MultipartFormData] = []
 			
-			let email = email
-			let password = password
-			let userName = userName
+			let email = email ?? ""
+			let password = password ?? ""
+			let userName = userName ?? ""
 			let userNickName = userNickName ?? ""
 			let birth = birth ?? ""
-			let phoneNum = phoneNum
+			let phoneNum = phoneNum ?? ""
 			let profileImg = profileImg ?? Data()
 			
 			let parameters: [String: Any] = [
