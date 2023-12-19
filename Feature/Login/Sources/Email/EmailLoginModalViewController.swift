@@ -112,7 +112,8 @@ private extension EmailLoginModalViewController {
 			navigation.pushViewController(signupVC, animated: true)
 		}
 		
-		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
+			guard let self else { return }
 			self.hideModal()
 		}
 	}
