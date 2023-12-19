@@ -22,6 +22,4 @@ public final class EmailLoginUseCase: EmailLoginUseCaseInterface {
 	public func fetchEmailLogin(email: String, password: String) -> Single<EmailLoginResponse> {
 		return emailLoginRepository.fetchEmailLoginAPI(email: email, password: password)
 	}
-	
-	
 }
