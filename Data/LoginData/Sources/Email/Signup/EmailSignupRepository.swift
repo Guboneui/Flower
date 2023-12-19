@@ -14,7 +14,7 @@ import NetworkHelper
 
 import RxSwift
 
-public final class EmailSignupRepository: NetworkRepository<EmailSignupAPI>, EmailSignupRepositoryInterface {
+public final class EmailSignupRepository: NetworkRepository<UsersAPI>, EmailSignupRepositoryInterface {
 	public func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse> {
 		request(endPoint: .emailConfirm(email: email))
 	}
