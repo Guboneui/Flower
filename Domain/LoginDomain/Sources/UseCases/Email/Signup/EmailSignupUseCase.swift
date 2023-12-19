@@ -13,25 +13,25 @@ import RxSwift
 
 public final class EmailSignupUseCase: EmailSignupUseCaseInterface {
 	
-	private let emailSignupIDRepository: EmailSignupRepositoryInterface
+	private let emailSignupRepository: EmailSignupRepositoryInterface
 	
-	public init(emailSignupIDRepository: EmailSignupRepositoryInterface) {
-		self.emailSignupIDRepository = emailSignupIDRepository
+	public init(emailSignupRepository: EmailSignupRepositoryInterface) {
+		self.emailSignupRepository = emailSignupRepository
 	}
 	
 	public func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse> {
-		return emailSignupIDRepository.fetchEmailConfirmAPI(email: email)
+		return emailSignupRepository.fetchEmailConfirmAPI(email: email)
 	}
 	
 	public func fetchEmailAuth(email: String) -> Single<EmailAuthResponse> {
-		return emailSignupIDRepository.fetchEmailAuthAPI(email: email)
+		return emailSignupRepository.fetchEmailAuthAPI(email: email)
 	}
 	
 	public func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse> {
-		return emailSignupIDRepository.fetchEmailCodeAPI(email: email, code: code)
+		return emailSignupRepository.fetchEmailCodeAPI(email: email, code: code)
 	}
 	
-	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<LoginEntity.EmailSignupResponse> {
-		return emailSignupIDRepository.fetchEmailSignupAPI(userSignupDTO: userSignupDTO)
+	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
+		return emailSignupRepository.fetchEmailSignupAPI(userSignupDTO: userSignupDTO)
 	}
 }
