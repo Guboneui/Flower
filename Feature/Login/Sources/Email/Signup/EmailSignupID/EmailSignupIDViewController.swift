@@ -248,6 +248,12 @@ public final class EmailSignupIDViewController: UIViewController {
 		setupGestures()
 		setupBinding()
 	}
+	
+	public override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		setupReturnView()
+	}
 }
 
 // MARK: - PRIVATE METHOD
@@ -492,16 +498,17 @@ private extension EmailSignupIDViewController {
 	}
 	
 	func setEmailState(bool: Bool?) {
+		self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
+		self.authView.alpha = 0
+		
 		if bool == true {
 			cautionView.alpha = 1
-			
 			emailTextField.currentState = .success
 			cautionLabel.text = TextSet.cautionLabelSuccessText
 			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor
 			cautionImageView.image = Image.cautionSuccessImage
 		} else if bool == false {
 			cautionView.alpha = 1
-
 			emailTextField.currentState = .failure
 			cautionLabel.text = TextSet.cautionLabelFailureText
 			cautionLabel.textColor = ColorSet.cautionLabelFailureColor
@@ -517,24 +524,31 @@ private extension EmailSignupIDViewController {
 
 		if bool == true {
 			authCautionView.alpha = 1
-			
 			authTextField.currentState = .success
 			authCautionLabel.text = TextSet.authCautionLabelSuccessText
 			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
 			authCautionImageView.image = Image.authCautionSuccessImage
-			
 			authTextField.isUserInteractionEnabled = false
 		} else if bool == false {
 			authCautionView.alpha = 1
-			
 			authTextField.currentState = .failure
 			authCautionLabel.text = TextSet.authCautionLabelFailureText
 			authCautionLabel.textColor = ColorSet.authCautionLabelFailureColor
 			authCautionImageView.image = Image.authCautionFailureImage
+			authTextField.isUserInteractionEnabled = true
 		} else {
 			authCautionView.alpha = 0
 			authTextField.currentState = .normal
+			authTextField.isUserInteractionEnabled = true
 		}
+	}
+	
+	func setupReturnView() {
+		authTextField.updateText(text: "")
+		emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
+		emailSignupIDViewModel.isValidEmail()
+		setEmailState(bool: emailSignupIDViewModel.currentViewState.value.enabled)
+		self.emailTextField.isUserInteractionEnabled = true
 	}
 }
 
