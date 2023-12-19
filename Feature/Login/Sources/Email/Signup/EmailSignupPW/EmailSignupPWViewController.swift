@@ -217,6 +217,12 @@ public final class EmailSignupPWViewController: UIViewController {
 		setupGestures()
 		setupBinding()
 	}
+	
+	public override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		setupReturnView()
+	}
 }
 
 // MARK: - PRIVATE METHOD
@@ -380,11 +386,18 @@ private extension EmailSignupPWViewController {
 				
 				self.emailSignupPWViewModel.pwRelay.accept(pwText)
 				
-				if pwText.isEmpty {
-					self.emailSignupPWViewModel.pwBool.accept(nil)
+				if pwCheckTextField.currentText.value.isEmpty {
+					
+					if pwText.isEmpty {
+						self.emailSignupPWViewModel.pwBool.accept(nil)
+					} else {
+							self.emailSignupPWViewModel.isValiedPW()
+					}
 				} else {
-						self.emailSignupPWViewModel.isValiedPW()
+					pwCheckTextField.updateText(text: "")
+					emailSignupPWViewModel.pwCheckBool.accept(nil)
 				}
+
 			}).disposed(by: disposeBag)
 		
 		pwCheckTextField.currentText
@@ -455,6 +468,15 @@ private extension EmailSignupPWViewController {
 		} else {
 			pwCheckCautionView.alpha = 0
 			pwCheckTextField.currentState = .normal
+		}
+	}
+	
+	func setupReturnView() {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
+			guard let self else { return }
+			
+			self.pwCheckTextField.updateText(text: "")
+			self.emailSignupPWViewModel.pwCheckBool.accept(nil)
 		}
 	}
 }
