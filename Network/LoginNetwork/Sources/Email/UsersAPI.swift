@@ -9,7 +9,8 @@ import Foundation
 
 import Moya
 
-public enum EmailSignupAPI {
+public enum UsersAPI {
+	case emailLogin(email: String, password: String)
 	case emailAuth(email: String)
 	case emailConfirm(email: String)
 	case emailCode(email: String, code: String)
@@ -23,7 +24,7 @@ public enum EmailSignupAPI {
 		phoneNum: String?)
 }
 
-extension EmailSignupAPI: TargetType {
+extension UsersAPI: TargetType {
 	public var baseURL: URL {
 		guard let url = URL(string: "http://43.202.77.12:8080/api/users") else {
 			fatalError("Invalid base URL")
@@ -33,6 +34,9 @@ extension EmailSignupAPI: TargetType {
 	
 	public var path: String {
 		switch self {
+		case .emailLogin:
+			return "/login"
+			
 		case .emailAuth:
 			return "/mail/send"
 			
@@ -49,6 +53,9 @@ extension EmailSignupAPI: TargetType {
 	
 	public var method: Moya.Method {
 		switch self {
+		case .emailLogin:
+			return .post
+			
 		case .emailAuth:
 			return .post
 			
@@ -65,6 +72,12 @@ extension EmailSignupAPI: TargetType {
 	
 	public var task: Moya.Task {
 		switch self {
+		case .emailLogin(email: let email, password: let password):
+			return .requestParameters(
+				parameters: ["email": email, "password": password], 
+				encoding: JSONEncoding.default
+			)
+			
 		case .emailAuth(let email):
 			return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
 			
@@ -74,7 +87,8 @@ extension EmailSignupAPI: TargetType {
 		case .emailCode(email: let email, code: let code):
 			return .requestParameters(
 				parameters: ["email": email, "code": code],
-				encoding: JSONEncoding.default)
+				encoding: JSONEncoding.default
+			)
 			
 		case .emailSignup(
 			email: let email,
@@ -115,7 +129,7 @@ extension EmailSignupAPI: TargetType {
 	
 	public var headers: [String: String]? {
 		switch self {
-		case .emailAuth, .emailCode, .emailConfirm:
+		case .emailLogin, .emailAuth, .emailCode, .emailConfirm:
 			return nil
 			
 		case .emailSignup:
