@@ -230,7 +230,7 @@ private extension EmailSignupNameViewController {
 					navigation.pageController.moveToNextPage()
 					
 					let repository = EmailSignupRepository()
-					let useCase = EmailSignupUseCase(emailSignupIDRepository: repository)
+					let useCase = EmailSignupUseCase(emailSignupRepository: repository)
 					let name: String = emailSignupNameViewModel.nameRelay.value
 					emailSignupNameViewModel.userSignupDTO.userName = name
 					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(

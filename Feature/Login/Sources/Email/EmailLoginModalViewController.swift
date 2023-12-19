@@ -97,7 +97,7 @@ private extension EmailLoginModalViewController {
 	func didTapButton() {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
 			let repository = EmailSignupRepository()
-			let useCase = EmailSignupUseCase(emailSignupIDRepository: repository)
+			let useCase = EmailSignupUseCase(emailSignupRepository: repository)
 			let userSignupDTO = UserSignupDTO(
 				email: "",
 				password: "",
