@@ -544,11 +544,16 @@ private extension EmailSignupIDViewController {
 	}
 	
 	func setupReturnView() {
-		authTextField.updateText(text: "")
-		emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
-		emailSignupIDViewModel.isValidEmail()
-		setEmailState(bool: emailSignupIDViewModel.currentViewState.value.enabled)
-		self.emailTextField.isUserInteractionEnabled = true
+		
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
+			guard let self else { return }
+			
+			authTextField.updateText(text: "")
+			emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
+			emailSignupIDViewModel.isValidEmail()
+			setEmailState(bool: emailSignupIDViewModel.currentViewState.value.enabled)
+			self.emailTextField.isUserInteractionEnabled = true
+		}
 	}
 }
 
