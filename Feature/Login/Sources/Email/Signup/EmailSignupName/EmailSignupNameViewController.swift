@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PhotosUI
 import UIKit
 
 import DesignSystem
@@ -25,12 +26,12 @@ public final class EmailSignupNameViewController: UIViewController {
 		static let profileViewTopMargin: CGFloat = 52
 		
 		static let profileImageViewSize: CGFloat = 48
-
+		
 		static let editProfileImageButtonRadius: CGFloat = 18
 		static let editProfileImageButtonSize: CGFloat = 36
-
+		
 		static let cameraImageViewSize: CGSize = .init(width: 18, height: 18)
-
+		
 		static let nameViewHeightMargin: CGFloat = 73
 		static let nameViewTopMargin: CGFloat = 60
 		static let nameViewBothSidesMargin: CGFloat = 24
@@ -109,9 +110,9 @@ public final class EmailSignupNameViewController: UIViewController {
 	}
 	
 	private var emailSignupNameViewModel: EmailSignupNameViewModelInterface
-
+	
 	private let disposeBag = DisposeBag()
-
+	
 	// MARK: - INITIALIZE
 	public init(emailSignupNameViewModel: EmailSignupNameViewModelInterface) {
 		self.emailSignupNameViewModel = emailSignupNameViewModel
@@ -121,7 +122,7 @@ public final class EmailSignupNameViewController: UIViewController {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-
+	
 	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -210,7 +211,7 @@ private extension EmailSignupNameViewController {
 					navigation.popViewController(animated: true)
 				}
 			}.disposed(by: disposeBag)
-
+		
 		nextButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
@@ -233,8 +234,9 @@ private extension EmailSignupNameViewController {
 			}.disposed(by: disposeBag)
 		
 		editProfileImageButton.rx.touchHandler()
-			.bind {
-				print("프로필 수정")
+			.bind { [weak self] in
+				guard let self else { return }
+				self.presentPhotoAlbum()
 			}.disposed(by: disposeBag)
 	}
 	
@@ -246,5 +248,42 @@ private extension EmailSignupNameViewController {
 				self.emailSignupNameViewModel.nameRelay.accept(nameText)
 				self.nextButton.isEnabled = !nameText.isEmpty
 			}).disposed(by: disposeBag)
+	}
+	
+	/// 사용자 엘범 띄우는 메소드
+	func presentPhotoAlbum() {
+		var configuration = PHPickerConfiguration()
+		configuration.selectionLimit = 1
+		configuration.filter = .any(of: [.images])
+		let phpickerViewController: PHPickerViewController = PHPickerViewController(
+			configuration: configuration
+		)
+		phpickerViewController.delegate = self
+		let phpickerNavigationController: UINavigationController = UINavigationController(
+			rootViewController: phpickerViewController
+		)
+		self.present(phpickerNavigationController, animated: true, completion: nil)
+	}
+}
+
+// MARK: - PHPickerViewController Delegate
+extension EmailSignupNameViewController: PHPickerViewControllerDelegate {
+	public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+		picker.dismiss(animated: true) { [weak self] in
+			guard let self else { return }
+			if let itemProvider = results.first?.itemProvider,
+				 itemProvider.canLoadObject(ofClass: UIImage.self) {
+				itemProvider.loadObject(ofClass: UIImage.self) { image, _ in
+					DispatchQueue.main.async {
+						guard let selectedImage: UIImage = image as? UIImage else { return }
+						let editProfileImageViewController: UIViewController = EditProfileImageAtSignupViewController(
+							selectedImage: selectedImage
+						)
+						editProfileImageViewController.modalPresentationStyle = .overFullScreen
+						self.present(editProfileImageViewController, animated: true)
+					}
+				}
+			}
+		}
 	}
 }
