@@ -29,12 +29,12 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	public var userSignupDTO: UserSignupDTO
 
 	// MARK: - PRIVATE PROPERTY
-	private let signupUseCase: EmailSignupUseCase
+	private let useCase: UsersUseCaseInterface
 	private let disposeBag: DisposeBag
 
 	// MARK: - INITIALIZE
-	public init(userSignupDTO: UserSignupDTO, signupUseCase: EmailSignupUseCase) {
-		self.signupUseCase = signupUseCase
+	public init(userSignupDTO: UserSignupDTO, useCase: UsersUseCaseInterface) {
+		self.useCase = useCase
 		self.userSignupDTO = userSignupDTO
 		self.disposeBag = .init()
 	}
@@ -42,7 +42,7 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	// MARK: - PUBLIC METHOD
 	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) {
 
-		signupUseCase.fetchEmailSignup(userSignupDTO: userSignupDTO)
+		useCase.fetchEmailSignup(userSignupDTO: userSignupDTO)
 		.subscribe(onSuccess: { [weak self] response in
 			guard let self else { return }
 
