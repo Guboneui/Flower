@@ -75,7 +75,6 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 				print("DEBUG: 이미지 스냅샷 영역 터치 테스트")
 			}
 			.disposed(by: disposeBag)
-		
 	}
 	
 	override func viewDidLayoutSubviews() {
