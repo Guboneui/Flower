@@ -44,6 +44,9 @@ public final class EmailSignupPhoneViewController: UIViewController {
 		static let navigationBarText: String = "회원가입"
 		static let phoneNumberLabelText: String = "핸드폰 번호를 입력해 주세요"
 		static let completionButtonText: String = "회원가입 완료"
+		static let failureAlertTitleText: String = "회원가입 실패"
+		static let failureAlertMessageText: String = "서버 오류"
+		static let failureAlertBtnTitleText: String = "닫기"
 	}
 	
 	// MARK: - PRIVATE PROPERTY
@@ -176,10 +179,11 @@ private extension EmailSignupPhoneViewController {
 		
 		emailSignupPhoneViewModel.isSignupCompletionRelay
 			.compactMap { $0 }
-			.subscribe(onNext: { [weak self] isCompleted in
+			.subscribe(onNext: { [weak self] isComplete in
 				guard let self else { return }
 								
-				if isCompleted == true {
+				if isComplete == true {
+					// MARK: - TODO 홈화면으로 바로 이동하는 로직으로 변경
 					let alert = UIAlertController(
 						title: "회원가입 완료", message: "이메일 로그인 화면으로 이동합니다", preferredStyle: .alert)
 					let success = UIAlertAction(title: "확인", style: .default) { _ in
@@ -192,10 +196,15 @@ private extension EmailSignupPhoneViewController {
 					}
 					alert.addAction(success)
 					present(alert, animated: true)
-				} else if isCompleted == false {
+				} else if isComplete == false {
 					let alert = UIAlertController(
-						title: "회원가입 실패", message: "실패여 다시혀", preferredStyle: .alert)
-					let failure = UIAlertAction(title: "닫기", style: .default) { _ in
+						title: TextSet.failureAlertTitleText,
+						message: TextSet.failureAlertMessageText,
+						preferredStyle: .alert
+					)
+					let failure = UIAlertAction(
+						title: TextSet.failureAlertBtnTitleText,
+						style: .default) { _ in
 						self.emailSignupPhoneViewModel.isSignupCompletionRelay.accept(nil)
 					}
 					alert.addAction(failure)
