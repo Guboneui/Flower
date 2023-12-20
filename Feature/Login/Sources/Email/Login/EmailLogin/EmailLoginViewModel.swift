@@ -19,7 +19,7 @@ public protocol EmailLoginViewModelInterface {
 	var passwordRelay: BehaviorRelay<String> { get }
 	var isEmailEntered: BehaviorRelay<Bool> { get }
 	var isPasswordEntered: BehaviorRelay<Bool> { get }
-	var isSuccessLogin: BehaviorRelay<Bool?> { get }
+	var isLoginCompleted: BehaviorRelay<Bool?> { get }
 	
 	func fetchEmailLogin()
 }
@@ -31,7 +31,7 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 	public var passwordRelay: BehaviorRelay<String> = .init(value: "")
 	public var isEmailEntered: BehaviorRelay<Bool> = .init(value: false)
 	public var isPasswordEntered: BehaviorRelay<Bool> = .init(value: false)
-	public var isSuccessLogin: BehaviorRelay<Bool?> = .init(value: nil)
+	public var isLoginCompleted: BehaviorRelay<Bool?> = .init(value: nil)
 
 	// MARK: - PRIVATE PROPERTY
 	private let loginUseCase: UsersUseCaseInterface
@@ -52,7 +52,7 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
-				self.isSuccessLogin.accept(responseData.success)
+				self.isLoginCompleted.accept(responseData.success)
 			}).disposed(by: disposeBag)
 	}
 }

@@ -355,8 +355,8 @@ private extension EmailLoginViewController {
 			.bind(to: loginButton.rx.isEnabled)
 			.disposed(by: disposeBag)
 		
-		emailLoginViewModel.isSuccessLogin
-			.subscribe(onNext: { [weak self] isSuccess in
+		emailLoginViewModel.isLoginCompleted
+			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
 				
 				//TODO 성공시: 홈화면 연결 로직, 실패시: 알림창 로직
