@@ -10,6 +10,10 @@ import UIKit
 import DesignSystem
 import ResourceKit
 
+import LoginData
+import LoginDomain
+import LoginEntity
+
 import RxSwift
 import SnapKit
 import Then
@@ -97,8 +101,12 @@ private extension LoginViewController {
 			)
 			.bind {[weak self] in 
 				guard let self else { return }
+				
+				let repository: UsersRepositoryInterface = UsersRepository()
+				let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
+				let viewModel: EmailLoginViewModel = EmailLoginViewModel(useCase: useCase)
 				let emailLoginNavi = EmailLoginNavigationController(
-					rootViewController: EmailLoginViewController()
+					rootViewController: EmailLoginViewController(emailLoginViewModel: viewModel)
 				)
 				
 				emailLoginNavi.modalPresentationStyle = .fullScreen

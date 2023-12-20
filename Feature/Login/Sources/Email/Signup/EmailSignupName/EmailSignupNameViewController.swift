@@ -229,13 +229,13 @@ private extension EmailSignupNameViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					
-					let repository = EmailSignupRepository()
-					let useCase = EmailSignupUseCase(emailSignupRepository: repository)
+					let repository: UsersRepositoryInterface = UsersRepository()
+					let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
 					let name: String = emailSignupNameViewModel.nameRelay.value
 					emailSignupNameViewModel.userSignupDTO.userName = name
 					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
 						userSignupDTO: emailSignupNameViewModel.userSignupDTO,
-						signupUseCase: useCase
+						useCase: useCase
 					)
 					
 					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)

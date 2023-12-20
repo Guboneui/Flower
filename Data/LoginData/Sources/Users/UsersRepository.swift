@@ -14,7 +14,11 @@ import NetworkHelper
 
 import RxSwift
 
-public final class EmailSignupRepository: NetworkRepository<UsersAPI>, EmailSignupRepositoryInterface {
+public final class UsersRepository: NetworkRepository<UsersAPI>, UsersRepositoryInterface {
+	public func fetchEmailLoginAPI(email: String, password: String) -> Single<EmailLoginResponse> {
+		request(endPoint: .emailLogin(email: email, password: password))
+	}
+	
 	public func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse> {
 		request(endPoint: .emailConfirm(email: email))
 	}

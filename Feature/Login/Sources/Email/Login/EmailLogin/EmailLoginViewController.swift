@@ -105,7 +105,9 @@ public final class EmailLoginViewController: UIViewController {
 	private let emailTextField: IconBorderTextField = IconBorderTextField(.email)
 	private let passwordTextField: IconBorderTextField = IconBorderTextField(.password)
 	
-	private let loginButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText)
+	private let loginButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText).then {
+		$0.isEnabled = false
+	}
 	
 	private let idSaveCheckView: UIView = UIView().then {
 		$0.backgroundColor = ColorSet.idSaveCheckViewColor
@@ -172,14 +174,28 @@ public final class EmailLoginViewController: UIViewController {
 		$0.setTitleColor(ColorSet.emailSignupButtonColor, for: .normal)
 	}
 	
+	private var emailLoginViewModel: EmailLoginViewModelInterface
+
 	private let disposeBag = DisposeBag()
+	
+	// MARK: - INITIALIZE
+	public init(emailLoginViewModel: EmailLoginViewModelInterface) {
+		self.emailLoginViewModel = emailLoginViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
 	
 	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		setupUI()
 		setupViews()
 		setupGestures()
+		setupBinding()
 	}
 	
 	public override func viewWillAppear(_ animated: Bool) {
@@ -296,5 +312,54 @@ private extension EmailLoginViewController {
 				
 				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
 			}.disposed(by: disposeBag)
+		
+		loginButton.rx.touchHandler()
+			.bind(onNext: { [weak self] in
+				guard let self else { return }
+				
+				self.emailLoginViewModel.fetchEmailLogin()
+			}).disposed(by: disposeBag)
+	}
+	
+	func setupBinding() {
+		emailTextField.currentText
+			.bind(onNext: { [weak self] email in
+				guard let self else { return }
+				
+				self.emailLoginViewModel.emailRelay.accept(email)
+				
+				if email.isEmpty {
+					self.emailLoginViewModel.isEmailEntered.accept(false)
+				} else {
+					self.emailLoginViewModel.isEmailEntered.accept(true)
+				}
+			}).disposed(by: disposeBag)
+		
+		passwordTextField.currentText
+			.bind(onNext: { [weak self] password in
+				guard let self else { return }
+				
+				self.emailLoginViewModel.passwordRelay.accept(password)
+				
+				if password.isEmpty {
+					self.emailLoginViewModel.isPasswordEntered.accept(false)
+				} else {
+					self.emailLoginViewModel.isPasswordEntered.accept(true)
+				}
+			}).disposed(by: disposeBag)
+		
+		Observable.combineLatest(
+			emailLoginViewModel.isEmailEntered,
+			emailLoginViewModel.isPasswordEntered
+		) { $0 && $1 }
+			.bind(to: loginButton.rx.isEnabled)
+			.disposed(by: disposeBag)
+		
+		emailLoginViewModel.isSuccessLogin
+			.subscribe(onNext: { [weak self] isSuccess in
+				guard let self else { return }
+				
+				//TODO 성공시: 홈화면 연결 로직, 실패시: 알림창 로직
+			}).disposed(by: disposeBag)
 	}
 }

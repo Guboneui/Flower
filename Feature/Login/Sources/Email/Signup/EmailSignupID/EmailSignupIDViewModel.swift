@@ -40,14 +40,14 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public var userSignupDTO: UserSignupDTO
 	
 	// MARK: - PRIVATE PROPERTY
-	private let signUpUseCase: EmailSignupUseCaseInterface
+	private let useCase: UsersUseCaseInterface
 	private let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
 	private var disposeBag: DisposeBag
 	private var timer: Disposable?
 	
 	// MARK: - INITIALIZE
-	public init(useCase: EmailSignupUseCaseInterface, userSignupDTO: UserSignupDTO) {
-		self.signUpUseCase = useCase
+	public init(useCase: UsersUseCaseInterface, userSignupDTO: UserSignupDTO) {
+		self.useCase = useCase
 		self.disposeBag = .init()
 		self.userSignupDTO = userSignupDTO
 	}
@@ -74,7 +74,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	}
 	
 	public func fetchEmailAuth(email: String) {
-		signUpUseCase.fetchEmailAuth(email: email)
+		useCase.fetchEmailAuth(email: email)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
 				
@@ -120,7 +120,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 // MARK: - PRIVATE METHOD
 private extension EmailSignupIDViewModel {
 	func fetchEmailConfirm(email: String) {
-		signUpUseCase.fetchEmailConfirm(email: email)
+		useCase.fetchEmailConfirm(email: email)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
 				
@@ -129,7 +129,7 @@ private extension EmailSignupIDViewModel {
 	}
 	
 	func fetchEmailCode(email: String, code: String) {
-		signUpUseCase.fetchEmailCode(email: email, code: code)
+		useCase.fetchEmailCode(email: email, code: code)
 			.subscribe(onSuccess: { [weak self] response in
 				guard let self else { return }
 				
