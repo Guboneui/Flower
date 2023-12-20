@@ -250,12 +250,7 @@ private extension EmailSignupNameViewController {
 				guard let self else { return }
 				
 				self.emailSignupNameViewModel.nameRelay.accept(nameText)
-				
-				if nameText.isEmpty {
-					self.nextButton.isEnabled = false
-				} else {
-					self.nextButton.isEnabled = true
-				}
+				self.nextButton.isEnabled = !nameText.isEmpty
 			}).disposed(by: disposeBag)
 	}
 }

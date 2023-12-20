@@ -430,45 +430,45 @@ private extension EmailSignupPWViewController {
 	}
 	
 	func setPWTextFieldState(isPWValid: Bool?) {
-		if isPWValid == true {
-			pwCautionView.alpha = 1
-			
-			pwTextField.currentState = .success
-			pwCautionLabel.text = TextSet.pwCautionLabelSuccessText
-			pwCautionLabel.textColor = ColorSet.pwCautionLabelSuccessColor
-			pwCautionImageView.image = Image.pwCautionSuccessImage
-		} else if isPWValid == false {
-			pwCautionView.alpha = 1
-			
-			pwTextField.currentState = .failure
-			pwCautionLabel.text = TextSet.pwCautionLabelFailureText
-			pwCautionLabel.textColor = ColorSet.pwCautionLabelFailureColor
-			pwCautionImageView.image = Image.pwCautionFailureImage
-		} else {
+		guard let isPWValid else {
 			pwCautionView.alpha = 0
 			pwTextField.currentState = .normal
+			return
 		}
+		
+		pwCautionView.alpha = 1
+		
+		pwTextField.currentState = isPWValid ? .success : .failure
+		
+		pwCautionLabel.text = isPWValid ?
+		TextSet.pwCautionLabelSuccessText : TextSet.pwCautionLabelFailureText
+		
+		pwCautionLabel.textColor = isPWValid ?
+		ColorSet.pwCautionLabelSuccessColor : ColorSet.pwCautionLabelFailureColor
+		
+		pwCautionImageView.image = isPWValid ?
+		Image.pwCautionSuccessImage : Image.pwCautionFailureImage
 	}
 	
 	func setPWCheckTextFieldState(isPWCheckValid: Bool?) {
-		if isPWCheckValid == true {
-			pwCheckCautionView.alpha = 1
-			
-			pwCheckTextField.currentState = .success
-			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelSuccessText
-			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelSuccessColor
-			pwCheckCautionImageView.image = Image.pwCheckCautionSuccessImage
-		} else if isPWCheckValid == false {
-			pwCheckCautionView.alpha = 1
-			
-			pwCheckTextField.currentState = .failure
-			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelFailureText
-			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelFailureColor
-			pwCheckCautionImageView.image = Image.pwCheckCautionFailureImage
-		} else {
+		guard let isPWCheckValid else {
 			pwCheckCautionView.alpha = 0
 			pwCheckTextField.currentState = .normal
+			return
 		}
+		
+		pwCheckCautionView.alpha = 1
+		
+		pwCheckTextField.currentState = isPWCheckValid ? .success : .failure
+		
+		pwCheckCautionLabel.text = isPWCheckValid ?
+		TextSet.pwCheckCautionLabelSuccessText : TextSet.pwCheckCautionLabelFailureText
+		
+		pwCheckCautionLabel.textColor = isPWCheckValid ?
+		ColorSet.pwCheckCautionLabelSuccessColor : ColorSet.pwCheckCautionLabelFailureColor
+		
+		pwCheckCautionImageView.image = isPWCheckValid ?
+		Image.pwCheckCautionSuccessImage : Image.pwCheckCautionFailureImage
 	}
 	
 	func setupReturnView() {

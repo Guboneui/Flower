@@ -327,12 +327,7 @@ private extension EmailLoginViewController {
 				guard let self else { return }
 				
 				self.emailLoginViewModel.emailRelay.accept(emailText)
-				
-				if emailText.isEmpty {
-					self.emailLoginViewModel.isEmailEntered.accept(false)
-				} else {
-					self.emailLoginViewModel.isEmailEntered.accept(true)
-				}
+				self.emailLoginViewModel.isEmailEntered.accept(!emailText.isEmpty)
 			}).disposed(by: disposeBag)
 		
 		passwordTextField.currentText
@@ -340,12 +335,7 @@ private extension EmailLoginViewController {
 				guard let self else { return }
 				
 				self.emailLoginViewModel.passwordRelay.accept(passwordText)
-				
-				if passwordText.isEmpty {
-					self.emailLoginViewModel.isPasswordEntered.accept(false)
-				} else {
-					self.emailLoginViewModel.isPasswordEntered.accept(true)
-				}
+				self.emailLoginViewModel.isPasswordEntered.accept(!passwordText.isEmpty)
 			}).disposed(by: disposeBag)
 		
 		Observable.combineLatest(

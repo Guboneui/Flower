@@ -41,18 +41,12 @@ public final class EmailSignupPWViewModel: EmailSignupPWViewModelInterface {
 	
 	// MARK: - PUBLIC METHOD
 	public func isValiedPW() {
-		if NSPredicate(format: "SELF MATCHES %@", pwRegex).evaluate(with: pwRelay.value) {
-			pwBool.accept(true)
-		} else {
-			pwBool.accept(false)
-		}
+		NSPredicate(format: "SELF MATCHES %@", pwRegex).evaluate(with: pwRelay.value) ?
+		pwBool.accept(true) : pwBool.accept(false)
 	}
 	
 	public func isValiedPWCheck() {
-		if pwCheckRelay.value == pwRelay.value {
-			pwCheckBool.accept(true)
-		} else {
-			pwCheckBool.accept(false)
-		}
+		pwCheckRelay.value == pwRelay.value ?
+		pwCheckBool.accept(true) : pwCheckBool.accept(false)
 	}
 }
