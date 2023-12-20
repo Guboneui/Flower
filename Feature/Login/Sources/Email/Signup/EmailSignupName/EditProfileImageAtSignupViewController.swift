@@ -40,8 +40,6 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		$0.backgroundColor = .green
 	}
 	
-	private let blurView: UIVisualEffectView = .init()
-	
 	private let navigationBarView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
 	}
@@ -70,87 +68,11 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		super.viewDidLoad()
 		setupConfigures()
 		setupViews()
-		view.addSubview(blurView)
-	}
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		let maskView = UIView(frame: blurView.bounds)
-//		maskView.clipsToBounds = true
-//		maskView.backgroundColor = UIColor.clear
-//		
-//		let outerbezierPath = UIBezierPath.init(roundedRect: blurView.bounds, cornerRadius: 0)
-//		let rect = CGRect(x: 150, y: 150, width: 100, height: 100)
-//		let innerCirclepath = UIBezierPath.init(roundedRect: rect, cornerRadius: rect.height * 0.5)
-//		outerbezierPath.append(innerCirclepath)
-//		outerbezierPath.usesEvenOddFillRule = true
-//		
-//		let fillLayer = CAShapeLayer()
-//		fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
-//		fillLayer.fillColor = UIColor.green.cgColor
-//		fillLayer.path = outerbezierPath.cgPath
-//		maskView.layer.addSublayer(fillLayer)
-//		
-//		blurView.mask = maskView
 	}
 	
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
-//		setupSnapShotGuideLineLayer()
-		
-		blurView.frame = view.frame
-		blurView.effect = UIBlurEffect(style: .dark)
-		let maskView = UIView(frame: blurView.bounds)
-		maskView.clipsToBounds = true
-		maskView.backgroundColor = UIColor.clear
-		
-		let outerbezierPath = UIBezierPath.init(roundedRect: blurView.bounds, cornerRadius: 0)
-		let snapShotFrame: CGRect = snapShotAreaView.frame
-		let snapShotSize: CGSize = snapShotFrame.size
-		let rect = CGRect(
-			x: snapShotFrame.minX,
-			y: snapShotFrame.minY,
-			width: snapShotSize.width,
-			height: snapShotSize.height
-		)
-		let innerCirclepath = UIBezierPath.init(roundedRect: rect, cornerRadius: rect.height * 0.5)
-		outerbezierPath.append(innerCirclepath)
-		outerbezierPath.usesEvenOddFillRule = true
-		
-		let fillLayer = CAShapeLayer()
-		fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
-		fillLayer.fillColor = UIColor.green.cgColor
-		fillLayer.path = outerbezierPath.cgPath
-		maskView.layer.addSublayer(fillLayer)
-		
-		blurView.mask = maskView
-		
-		
-		
-		
-//		let maskLayer = CAShapeLayer()
-//		maskLayer.frame = self.view.bounds
-//		maskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
-//		let path = UIBezierPath(
-//			roundedRect: rect,
-//			cornerRadius: snapShotSize.width / 2.0
-//		)
-//		path.append(UIBezierPath(rect: view.bounds))
-//		maskLayer.path = path.cgPath
-//		maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-//		view.layer.addSublayer(maskLayer)
-//		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
+		setupSnapShotGuideLineLayer()
 		view.bringSubviewToFront(navigationBarView)
 		view.bringSubviewToFront(bottomContainerView)
 	}
