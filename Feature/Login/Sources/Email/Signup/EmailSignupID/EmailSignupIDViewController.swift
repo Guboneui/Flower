@@ -454,7 +454,7 @@ private extension EmailSignupIDViewController {
 				if emailText.isEmpty {
 					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 				} else {
-						self.emailSignupIDViewModel.isValidEmail()
+					self.emailSignupIDViewModel.isValidEmail()
 				}
 			}).disposed(by: disposeBag)
 		
@@ -463,7 +463,8 @@ private extension EmailSignupIDViewController {
 				guard let self else { return }
 				
 				self.emailSignupIDViewModel.authRelay.accept(authText)
-				if emailSignupIDViewModel.currentViewState.value.state == .auth {
+		
+				if self.emailSignupIDViewModel.currentViewState.value.state == .auth {
 					if authText.isEmpty {
 						self.emailSignupIDViewModel.currentViewState.accept(.init(state: .auth, enabled: nil))
 					} else {
@@ -479,13 +480,13 @@ private extension EmailSignupIDViewController {
 				guard let self else { return }
 				
 				self.authSendButton.isEnabled = viewState.enabled ?? false
-
+				
 				switch viewState.state {
 				case .email:
-					setEmailState(isEmailValid: viewState.enabled)
+					self.setEmailState(isEmailValid: viewState.enabled)
 					
 				case .auth:
-					setAuthState(isAuthVaild: viewState.enabled)
+					self.setAuthState(isAuthVaild: viewState.enabled)
 				}
 			}).disposed(by: disposeBag)
 		
@@ -498,60 +499,60 @@ private extension EmailSignupIDViewController {
 	}
 	
 	func setEmailState(isEmailValid: Bool?) {
-		self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
-		self.authView.alpha = 0
-		
-		if isEmailValid == true {
-			cautionView.alpha = 1
-			emailTextField.currentState = .success
-			cautionLabel.text = TextSet.cautionLabelSuccessText
-			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor
-			cautionImageView.image = Image.cautionSuccessImage
-		} else if isEmailValid == false {
-			cautionView.alpha = 1
-			emailTextField.currentState = .failure
-			cautionLabel.text = TextSet.cautionLabelFailureText
-			cautionLabel.textColor = ColorSet.cautionLabelFailureColor
-			cautionImageView.image = Image.cautionFailureImage
-		} else {
+		guard let isEmailValid else {
 			cautionView.alpha = 0
 			emailTextField.currentState = .normal
+			return
 		}
+		
+		authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
+		authView.alpha = 0
+		cautionView.alpha = 1
+		
+		emailTextField.currentState = isEmailValid ? .success : .failure
+		
+		cautionLabel.text = isEmailValid ?
+		TextSet.cautionLabelSuccessText : TextSet.cautionLabelFailureText
+		
+		cautionLabel.textColor = isEmailValid ?
+		ColorSet.cautionLabelSuccessColor : ColorSet.cautionLabelFailureColor
+		
+		cautionImageView.image  = isEmailValid ?
+		Image.cautionSuccessImage : Image.cautionFailureImage
 	}
 	
 	func setAuthState(isAuthVaild: Bool?) {
-		self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
-
-		if isAuthVaild == true {
-			authCautionView.alpha = 1
-			authTextField.currentState = .success
-			authCautionLabel.text = TextSet.authCautionLabelSuccessText
-			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
-			authCautionImageView.image = Image.authCautionSuccessImage
-			authTextField.isUserInteractionEnabled = false
-		} else if isAuthVaild == false {
-			authCautionView.alpha = 1
-			authTextField.currentState = .failure
-			authCautionLabel.text = TextSet.authCautionLabelFailureText
-			authCautionLabel.textColor = ColorSet.authCautionLabelFailureColor
-			authCautionImageView.image = Image.authCautionFailureImage
-			authTextField.isUserInteractionEnabled = true
-		} else {
+		guard let isAuthVaild else {
 			authCautionView.alpha = 0
 			authTextField.currentState = .normal
 			authTextField.isUserInteractionEnabled = true
+			return
 		}
+		
+		authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
+		authCautionView.alpha = 1
+		authTextField.isUserInteractionEnabled = !isAuthVaild
+		
+		authTextField.currentState = isAuthVaild ? .success : .failure
+		
+		authCautionLabel.text = isAuthVaild ?
+		TextSet.authCautionLabelSuccessText : TextSet.authCautionLabelFailureText
+		
+		authCautionLabel.textColor = isAuthVaild ?
+		ColorSet.authCautionLabelSuccessColor : ColorSet.authCautionLabelFailureColor
+		
+		authCautionImageView.image  = isAuthVaild ?
+		Image.authCautionSuccessImage : Image.authCautionFailureImage
 	}
 	
 	func setupReturnView() {
-		
 		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
 			guard let self else { return }
 			
-			authTextField.updateText(text: "")
-			emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
-			emailSignupIDViewModel.isValidEmail()
-			setEmailState(isEmailValid: emailSignupIDViewModel.currentViewState.value.enabled)
+			self.authTextField.updateText(text: "")
+			self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
+			self.emailSignupIDViewModel.isValidEmail()
+			self.setEmailState(isEmailValid: self.emailSignupIDViewModel.currentViewState.value.enabled)
 			self.emailTextField.isUserInteractionEnabled = true
 		}
 	}

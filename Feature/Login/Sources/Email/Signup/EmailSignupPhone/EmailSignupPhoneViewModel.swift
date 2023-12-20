@@ -16,7 +16,7 @@ import RxSwift
 // MARK: - VIEWMODEL INTERFACE
 public protocol EmailSignupPhoneViewModelInterface {
 	var phoneNumberRelay: BehaviorRelay<String> { get }
-	var isSignupCompletionRelay: BehaviorRelay<Bool?> { get }
+	var isSignupCompletedRelay: BehaviorRelay<Bool?> { get }
 	var userSignupDTO: UserSignupDTO { get set }
 	
 	func fetchEmailSignup(userSignupDTO: UserSignupDTO)
@@ -25,7 +25,7 @@ public protocol EmailSignupPhoneViewModelInterface {
 public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface {
 	// MARK: - PUBLIC PROPERTY
 	public var phoneNumberRelay: BehaviorRelay<String> = .init(value: "")
-	public var isSignupCompletionRelay: BehaviorRelay<Bool?> = .init(value: nil)
+	public var isSignupCompletedRelay: BehaviorRelay<Bool?> = .init(value: nil)
 	public var userSignupDTO: UserSignupDTO
 
 	// MARK: - PRIVATE PROPERTY
@@ -46,7 +46,7 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 		.subscribe(onSuccess: { [weak self] responseData in
 			guard let self else { return }
 
-			self.isSignupCompletionRelay.accept(responseData.success)
+			self.isSignupCompletedRelay.accept(responseData.success)
 		}).disposed(by: disposeBag)
 	}
 }
