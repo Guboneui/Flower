@@ -414,30 +414,30 @@ private extension EmailSignupPWViewController {
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwBool
-			.subscribe(onNext: { [weak self] bool in
+			.subscribe(onNext: { [weak self] isComplete in
 				guard let self else { return }
 							
-				setPWTextFieldState(bool: bool)
+				setPWTextFieldState(isPWState: isComplete)
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwCheckBool
-			.subscribe(onNext: { [weak self] bool in
+			.subscribe(onNext: { [weak self] isComplete in
 				guard let self else { return }
 							
-				setPWCheckTextFieldState(bool: bool)
-				nextButton.isEnabled = bool ?? false
+				setPWCheckTextFieldState(isPWCheckState: isComplete)
+				nextButton.isEnabled = isComplete ?? false
 			}).disposed(by: disposeBag)
 	}
 	
-	func setPWTextFieldState(bool: Bool?) {
-		if bool == true {
+	func setPWTextFieldState(isPWState: Bool?) {
+		if isPWState == true {
 			pwCautionView.alpha = 1
 			
 			pwTextField.currentState = .success
 			pwCautionLabel.text = TextSet.pwCautionLabelSuccessText
 			pwCautionLabel.textColor = ColorSet.pwCautionLabelSuccessColor
 			pwCautionImageView.image = Image.pwCautionSuccessImage
-		} else if bool == false {
+		} else if isPWState == false {
 			pwCautionView.alpha = 1
 			
 			pwTextField.currentState = .failure
@@ -450,15 +450,15 @@ private extension EmailSignupPWViewController {
 		}
 	}
 	
-	func setPWCheckTextFieldState(bool: Bool?) {
-		if bool == true {
+	func setPWCheckTextFieldState(isPWCheckState: Bool?) {
+		if isPWCheckState == true {
 			pwCheckCautionView.alpha = 1
 			
 			pwCheckTextField.currentState = .success
 			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelSuccessText
 			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelSuccessColor
 			pwCheckCautionImageView.image = Image.pwCheckCautionSuccessImage
-		} else if bool == false {
+		} else if isPWCheckState == false {
 			pwCheckCautionView.alpha = 1
 			
 			pwCheckTextField.currentState = .failure

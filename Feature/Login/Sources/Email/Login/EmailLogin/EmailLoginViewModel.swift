@@ -49,10 +49,10 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 			email: emailRelay.value,
 			password: passwordRelay.value
 		)
-			.subscribe(onSuccess: { [weak self] response in
+			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
-				self.isSuccessLogin.accept(response.success)
+				self.isSuccessLogin.accept(responseData.success)
 			}).disposed(by: disposeBag)
 	}
 }

@@ -446,12 +446,12 @@ private extension EmailSignupIDViewController {
 	
 	func setupBinding() {
 		emailTextField.currentText
-			.bind(onNext: { [weak self] email in
+			.bind(onNext: { [weak self] emailText in
 				guard let self else { return }
 				
-				self.emailSignupIDViewModel.emailRelay.accept(email)
+				self.emailSignupIDViewModel.emailRelay.accept(emailText)
 				
-				if email.isEmpty {
+				if emailText.isEmpty {
 					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 				} else {
 						self.emailSignupIDViewModel.isValidEmail()
@@ -459,12 +459,12 @@ private extension EmailSignupIDViewController {
 			}).disposed(by: disposeBag)
 		
 		authTextField.currentText
-			.bind(onNext: { [weak self] authNum in
+			.bind(onNext: { [weak self] authText in
 				guard let self else { return }
 				
-				self.emailSignupIDViewModel.authRelay.accept(authNum)
+				self.emailSignupIDViewModel.authRelay.accept(authText)
 				if emailSignupIDViewModel.currentViewState.value.state == .auth {
-					if authNum.isEmpty {
+					if authText.isEmpty {
 						self.emailSignupIDViewModel.currentViewState.accept(.init(state: .auth, enabled: nil))
 					} else {
 						if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
@@ -475,17 +475,17 @@ private extension EmailSignupIDViewController {
 			}).disposed(by: disposeBag)
 		
 		emailSignupIDViewModel.currentViewState
-			.subscribe(onNext: { [weak self] pageSet in
+			.subscribe(onNext: { [weak self] viewState in
 				guard let self else { return }
 				
-				self.authSendButton.isEnabled = pageSet.enabled ?? false
+				self.authSendButton.isEnabled = viewState.enabled ?? false
 
-				switch pageSet.state {
+				switch viewState.state {
 				case .email:
-					setEmailState(bool: pageSet.enabled)
+					setEmailState(isEmailState: viewState.enabled)
 					
 				case .auth:
-					setAuthState(bool: pageSet.enabled)
+					setAuthState(isAuthState: viewState.enabled)
 				}
 			}).disposed(by: disposeBag)
 		
@@ -497,17 +497,17 @@ private extension EmailSignupIDViewController {
 			}).disposed(by: disposeBag)
 	}
 	
-	func setEmailState(bool: Bool?) {
+	func setEmailState(isEmailState: Bool?) {
 		self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
 		self.authView.alpha = 0
 		
-		if bool == true {
+		if isEmailState == true {
 			cautionView.alpha = 1
 			emailTextField.currentState = .success
 			cautionLabel.text = TextSet.cautionLabelSuccessText
 			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor
 			cautionImageView.image = Image.cautionSuccessImage
-		} else if bool == false {
+		} else if isEmailState == false {
 			cautionView.alpha = 1
 			emailTextField.currentState = .failure
 			cautionLabel.text = TextSet.cautionLabelFailureText
@@ -519,17 +519,17 @@ private extension EmailSignupIDViewController {
 		}
 	}
 	
-	func setAuthState(bool: Bool?) {
+	func setAuthState(isAuthState: Bool?) {
 		self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 
-		if bool == true {
+		if isAuthState == true {
 			authCautionView.alpha = 1
 			authTextField.currentState = .success
 			authCautionLabel.text = TextSet.authCautionLabelSuccessText
 			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
 			authCautionImageView.image = Image.authCautionSuccessImage
 			authTextField.isUserInteractionEnabled = false
-		} else if bool == false {
+		} else if isAuthState == false {
 			authCautionView.alpha = 1
 			authTextField.currentState = .failure
 			authCautionLabel.text = TextSet.authCautionLabelFailureText
@@ -551,7 +551,7 @@ private extension EmailSignupIDViewController {
 			authTextField.updateText(text: "")
 			emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 			emailSignupIDViewModel.isValidEmail()
-			setEmailState(bool: emailSignupIDViewModel.currentViewState.value.enabled)
+			setEmailState(isEmailState: emailSignupIDViewModel.currentViewState.value.enabled)
 			self.emailTextField.isUserInteractionEnabled = true
 		}
 	}
