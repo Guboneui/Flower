@@ -310,7 +310,7 @@ private extension EmailLoginViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
+				self.idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
 			}.disposed(by: disposeBag)
 		
 		loginButton.rx.touchHandler()
@@ -323,12 +323,12 @@ private extension EmailLoginViewController {
 	
 	func setupBinding() {
 		emailTextField.currentText
-			.bind(onNext: { [weak self] email in
+			.bind(onNext: { [weak self] emailText in
 				guard let self else { return }
 				
-				self.emailLoginViewModel.emailRelay.accept(email)
+				self.emailLoginViewModel.emailRelay.accept(emailText)
 				
-				if email.isEmpty {
+				if emailText.isEmpty {
 					self.emailLoginViewModel.isEmailEntered.accept(false)
 				} else {
 					self.emailLoginViewModel.isEmailEntered.accept(true)
@@ -336,12 +336,12 @@ private extension EmailLoginViewController {
 			}).disposed(by: disposeBag)
 		
 		passwordTextField.currentText
-			.bind(onNext: { [weak self] password in
+			.bind(onNext: { [weak self] passwordText in
 				guard let self else { return }
 				
-				self.emailLoginViewModel.passwordRelay.accept(password)
+				self.emailLoginViewModel.passwordRelay.accept(passwordText)
 				
-				if password.isEmpty {
+				if passwordText.isEmpty {
 					self.emailLoginViewModel.isPasswordEntered.accept(false)
 				} else {
 					self.emailLoginViewModel.isPasswordEntered.accept(true)

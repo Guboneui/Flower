@@ -75,10 +75,10 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	
 	public func fetchEmailAuth(email: String) {
 		useCase.fetchEmailAuth(email: email)
-			.subscribe(onSuccess: { [weak self] response in
+			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
-				if response.success {
+				if responseData.success {
 					self.currentViewState.accept(.init(state: .auth, enabled: nil))
 				}
 			}).disposed(by: disposeBag)
@@ -121,19 +121,23 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 private extension EmailSignupIDViewModel {
 	func fetchEmailConfirm(email: String) {
 		useCase.fetchEmailConfirm(email: email)
-			.subscribe(onSuccess: { [weak self] response in
+			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
-				currentViewState.accept(.init(state: .email, enabled: response.success))
+				self.currentViewState.accept(
+					.init(state: .email, enabled: responseData.success)
+				)
 			}).disposed(by: disposeBag)
 	}
 	
 	func fetchEmailCode(email: String, code: String) {
 		useCase.fetchEmailCode(email: email, code: code)
-			.subscribe(onSuccess: { [weak self] response in
+			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
-				currentViewState.accept(.init(state: .auth, enabled: response.success))
+				self.currentViewState.accept(
+					.init(state: .auth, enabled: responseData.success)
+				)
 			}).disposed(by: disposeBag)
 	}
 }

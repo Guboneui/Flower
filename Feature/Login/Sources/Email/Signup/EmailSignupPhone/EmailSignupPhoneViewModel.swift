@@ -43,10 +43,10 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) {
 
 		useCase.fetchEmailSignup(userSignupDTO: userSignupDTO)
-		.subscribe(onSuccess: { [weak self] response in
+		.subscribe(onSuccess: { [weak self] responseData in
 			guard let self else { return }
 
-			self.isSignupCompletionRelay.accept(response.success)
+			self.isSignupCompletionRelay.accept(responseData.success)
 		}).disposed(by: disposeBag)
 	}
 }
