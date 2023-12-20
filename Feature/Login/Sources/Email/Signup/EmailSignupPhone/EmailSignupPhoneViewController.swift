@@ -179,10 +179,10 @@ private extension EmailSignupPhoneViewController {
 		
 		emailSignupPhoneViewModel.isSignupCompletionRelay
 			.compactMap { $0 }
-			.subscribe(onNext: { [weak self] isComplete in
+			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
 								
-				if isComplete == true {
+				if isCompleted == true {
 					// MARK: - TODO 홈화면으로 바로 이동하는 로직으로 변경
 					let alert = UIAlertController(
 						title: "회원가입 완료", message: "이메일 로그인 화면으로 이동합니다", preferredStyle: .alert)
@@ -196,7 +196,7 @@ private extension EmailSignupPhoneViewController {
 					}
 					alert.addAction(success)
 					present(alert, animated: true)
-				} else if isComplete == false {
+				} else if isCompleted == false {
 					let alert = UIAlertController(
 						title: TextSet.failureAlertTitleText,
 						message: TextSet.failureAlertMessageText,
