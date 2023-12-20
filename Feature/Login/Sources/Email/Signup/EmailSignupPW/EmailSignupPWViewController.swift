@@ -414,30 +414,30 @@ private extension EmailSignupPWViewController {
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwBool
-			.subscribe(onNext: { [weak self] isComplete in
+			.subscribe(onNext: { [weak self] isValid in
 				guard let self else { return }
 							
-				setPWTextFieldState(isPWState: isComplete)
+				setPWTextFieldState(isPWValid: isValid)
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwCheckBool
-			.subscribe(onNext: { [weak self] isComplete in
+			.subscribe(onNext: { [weak self] isValid in
 				guard let self else { return }
 							
-				setPWCheckTextFieldState(isPWCheckState: isComplete)
-				nextButton.isEnabled = isComplete ?? false
+				setPWCheckTextFieldState(isPWCheckValid: isValid)
+				nextButton.isEnabled = isValid ?? false
 			}).disposed(by: disposeBag)
 	}
 	
-	func setPWTextFieldState(isPWState: Bool?) {
-		if isPWState == true {
+	func setPWTextFieldState(isPWValid: Bool?) {
+		if isPWValid == true {
 			pwCautionView.alpha = 1
 			
 			pwTextField.currentState = .success
 			pwCautionLabel.text = TextSet.pwCautionLabelSuccessText
 			pwCautionLabel.textColor = ColorSet.pwCautionLabelSuccessColor
 			pwCautionImageView.image = Image.pwCautionSuccessImage
-		} else if isPWState == false {
+		} else if isPWValid == false {
 			pwCautionView.alpha = 1
 			
 			pwTextField.currentState = .failure
@@ -450,15 +450,15 @@ private extension EmailSignupPWViewController {
 		}
 	}
 	
-	func setPWCheckTextFieldState(isPWCheckState: Bool?) {
-		if isPWCheckState == true {
+	func setPWCheckTextFieldState(isPWCheckValid: Bool?) {
+		if isPWCheckValid == true {
 			pwCheckCautionView.alpha = 1
 			
 			pwCheckTextField.currentState = .success
 			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelSuccessText
 			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelSuccessColor
 			pwCheckCautionImageView.image = Image.pwCheckCautionSuccessImage
-		} else if isPWCheckState == false {
+		} else if isPWCheckValid == false {
 			pwCheckCautionView.alpha = 1
 			
 			pwCheckTextField.currentState = .failure

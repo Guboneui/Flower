@@ -482,10 +482,10 @@ private extension EmailSignupIDViewController {
 
 				switch viewState.state {
 				case .email:
-					setEmailState(isEmailState: viewState.enabled)
+					setEmailState(isEmailValid: viewState.enabled)
 					
 				case .auth:
-					setAuthState(isAuthState: viewState.enabled)
+					setAuthState(isAuthVaild: viewState.enabled)
 				}
 			}).disposed(by: disposeBag)
 		
@@ -497,17 +497,17 @@ private extension EmailSignupIDViewController {
 			}).disposed(by: disposeBag)
 	}
 	
-	func setEmailState(isEmailState: Bool?) {
+	func setEmailState(isEmailValid: Bool?) {
 		self.authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
 		self.authView.alpha = 0
 		
-		if isEmailState == true {
+		if isEmailValid == true {
 			cautionView.alpha = 1
 			emailTextField.currentState = .success
 			cautionLabel.text = TextSet.cautionLabelSuccessText
 			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor
 			cautionImageView.image = Image.cautionSuccessImage
-		} else if isEmailState == false {
+		} else if isEmailValid == false {
 			cautionView.alpha = 1
 			emailTextField.currentState = .failure
 			cautionLabel.text = TextSet.cautionLabelFailureText
@@ -519,17 +519,17 @@ private extension EmailSignupIDViewController {
 		}
 	}
 	
-	func setAuthState(isAuthState: Bool?) {
+	func setAuthState(isAuthVaild: Bool?) {
 		self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 
-		if isAuthState == true {
+		if isAuthVaild == true {
 			authCautionView.alpha = 1
 			authTextField.currentState = .success
 			authCautionLabel.text = TextSet.authCautionLabelSuccessText
 			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
 			authCautionImageView.image = Image.authCautionSuccessImage
 			authTextField.isUserInteractionEnabled = false
-		} else if isAuthState == false {
+		} else if isAuthVaild == false {
 			authCautionView.alpha = 1
 			authTextField.currentState = .failure
 			authCautionLabel.text = TextSet.authCautionLabelFailureText
@@ -551,7 +551,7 @@ private extension EmailSignupIDViewController {
 			authTextField.updateText(text: "")
 			emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 			emailSignupIDViewModel.isValidEmail()
-			setEmailState(isEmailState: emailSignupIDViewModel.currentViewState.value.enabled)
+			setEmailState(isEmailValid: emailSignupIDViewModel.currentViewState.value.enabled)
 			self.emailTextField.isUserInteractionEnabled = true
 		}
 	}
