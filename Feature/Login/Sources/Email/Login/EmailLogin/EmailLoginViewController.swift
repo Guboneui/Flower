@@ -82,6 +82,8 @@ public final class EmailLoginViewController: UIViewController {
 	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.close)
 	
+	private let headerSlideView = HeaderSlideView(.loginError)
+	
 	private let emailLoginLabel: UILabel = UILabel().then {
 		$0.text = TextSet.emailLoginLabelText
 		$0.font = Font.emailLoginLabelFont
@@ -349,7 +351,13 @@ private extension EmailLoginViewController {
 			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
 				
-				//TODO 성공시: 홈화면 연결 로직, 실패시: 알림창 로직
+				guard let isCompleted else { return }
+				
+				if isCompleted {
+					//TODO 성공시: 홈화면 연결 로직
+				} else {
+					headerSlideView.startAnimation(at: self)
+				}
 			}).disposed(by: disposeBag)
 	}
 }
