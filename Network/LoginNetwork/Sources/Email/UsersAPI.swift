@@ -21,7 +21,8 @@ public enum UsersAPI {
 		userNickName: String?,
 		birth: String?,
 		profileImg: Data?,
-		phoneNum: String?)
+		phoneNum: String?
+	)
 }
 
 extension UsersAPI: TargetType {
