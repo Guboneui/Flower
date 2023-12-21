@@ -68,38 +68,38 @@ extension UsersAPI: TargetType {
 	
 	public var task: Moya.Task {
 		switch self {
-		case let .emailLogin(email: email, password: password):
+		case let .emailLogin(email, password):
 			return .requestParameters(
 				parameters: ["email": email, "password": password], 
 				encoding: JSONEncoding.default
 			)
 			
-		case let .emailAuth(email: email):
+		case let .emailAuth(email):
 			return .requestParameters(
 				parameters: ["email": email], 
 				encoding: JSONEncoding.default
 			)
 			
-		case let .emailConfirm(email: email):
+		case let .emailConfirm(email):
 			return .requestParameters(
 				parameters: ["email": email], 
 				encoding: JSONEncoding.default
 			)
 			
-		case let .emailCode(email: email, code: code):
+		case let .emailCode(email, code):
 			return .requestParameters(
 				parameters: ["email": email, "code": code],
 				encoding: JSONEncoding.default
 			)
 			
 		case let .emailSignup(
-			email: email,
-			password: password,
-			userName: userName,
-			userNickName: userNickName,
-			birth: birth,
-			profileImg: profileImg,
-			phoneNum: phoneNum):
+			email,
+			password,
+			userName,
+			userNickName,
+			birth,
+			profileImg,
+			phoneNum):
 			
 			var multipartFormData: [MultipartFormData] = []
 			
