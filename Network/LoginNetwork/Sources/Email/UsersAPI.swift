@@ -25,12 +25,7 @@ public enum UsersAPI {
 }
 
 extension UsersAPI: TargetType {
-	public var baseURL: URL {
-		guard let url = URL(string: "http://43.202.77.12:8080/api/users") else {
-			fatalError("Invalid base URL")
-		}
-		return url
-	}
+	public var baseURL: URL { return GuestHouseAPIInfo.usersURL }
 	
 	public var path: String {
 		switch self {
@@ -79,10 +74,16 @@ extension UsersAPI: TargetType {
 			)
 			
 		case .emailAuth(let email):
-			return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
+			return .requestParameters(
+				parameters: ["email": email], 
+				encoding: JSONEncoding.default
+			)
 			
 		case .emailConfirm(email: let email):
-			return .requestParameters(parameters: ["email": email], encoding: JSONEncoding.default)
+			return .requestParameters(
+				parameters: ["email": email], 
+				encoding: JSONEncoding.default
+			)
 			
 		case .emailCode(email: let email, code: let code):
 			return .requestParameters(
