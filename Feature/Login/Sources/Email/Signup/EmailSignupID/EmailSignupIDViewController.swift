@@ -475,6 +475,13 @@ private extension EmailSignupIDViewController {
 				}
 			}).disposed(by: disposeBag)
 		
+		emailSignupIDViewModel.emailCautionRelay
+			.subscribe(onNext: { [weak self] cautionText in
+				guard let self else { return }
+				
+				self.cautionLabel.text = cautionText
+			}).disposed(by: disposeBag)
+		
 		emailSignupIDViewModel.currentViewState
 			.subscribe(onNext: { [weak self] viewState in
 				guard let self else { return }
