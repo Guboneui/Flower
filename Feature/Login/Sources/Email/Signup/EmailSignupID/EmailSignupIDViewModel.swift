@@ -16,6 +16,7 @@ import RxSwift
 // MARK: - VIEWMODEL INTERFACE
 public protocol EmailSignupIDViewModelInterface {
 	var emailRelay: BehaviorRelay<String> { get }
+	var emailCautionRelay: BehaviorRelay<String> { get }
 	var authRelay: BehaviorRelay<String> { get }
 	var timerRelay: BehaviorRelay<String> { get }
 	var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> { get }
@@ -31,6 +32,7 @@ public protocol EmailSignupIDViewModelInterface {
 public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	// MARK: - PUBLIC PROPERTY
 	public var emailRelay: BehaviorRelay<String> = .init(value: "")
+	public var emailCautionRelay: BehaviorRelay<String> = .init(value: "")
 	public var authRelay: BehaviorRelay<String> = .init(value: "")
 	public var timerRelay: BehaviorRelay<String> = .init(value: "10분 00초")
 	
@@ -127,6 +129,8 @@ private extension EmailSignupIDViewModel {
 				self.currentViewState.accept(
 					.init(state: .email, enabled: responseData.success)
 				)
+				
+				self.emailCautionRelay.accept(responseData.message)
 			}).disposed(by: disposeBag)
 	}
 	
