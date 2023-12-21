@@ -68,58 +68,51 @@ extension UsersAPI: TargetType {
 	
 	public var task: Moya.Task {
 		switch self {
-		case .emailLogin(email: let email, password: let password):
+		case let .emailLogin(email: email, password: password):
 			return .requestParameters(
 				parameters: ["email": email, "password": password], 
 				encoding: JSONEncoding.default
 			)
 			
-		case .emailAuth(let email):
+		case let .emailAuth(email: email):
 			return .requestParameters(
 				parameters: ["email": email], 
 				encoding: JSONEncoding.default
 			)
 			
-		case .emailConfirm(email: let email):
+		case let .emailConfirm(email: email):
 			return .requestParameters(
 				parameters: ["email": email], 
 				encoding: JSONEncoding.default
 			)
 			
-		case .emailCode(email: let email, code: let code):
+		case let .emailCode(email: email, code: code):
 			return .requestParameters(
 				parameters: ["email": email, "code": code],
 				encoding: JSONEncoding.default
 			)
 			
-		case .emailSignup(
-			email: let email,
-			password: let password,
-			userName: let userName,
-			userNickName: let userNickName,
-			birth: let birth,
-			profileImg: let profileImg,
-			phoneNum: let phoneNum):
+		case let .emailSignup(
+			email: email,
+			password: password,
+			userName: userName,
+			userNickName: userNickName,
+			birth: birth,
+			profileImg: profileImg,
+			phoneNum: phoneNum):
 			
 			var multipartFormData: [MultipartFormData] = []
 			
-			let email = email ?? ""
-			let password = password ?? ""
-			let userName = userName ?? ""
-			let userNickName = userNickName ?? ""
-			let birth = birth ?? ""
-			let phoneNum = phoneNum ?? ""
-			let profileImg = profileImg ?? Data()
-			
 			let parameters: [String: Any] = [
-									"email": email,
-									"password": password,
-									"userName": userName,
-									"userNickName": userNickName,
-									"birth": birth,
-									"phoneNum": phoneNum,
-									"profileImg": profileImg
+									"email": email ?? "",
+									"password": password ?? "",
+									"userName": userName ?? "",
+									"userNickName": userNickName ?? "",
+									"birth": birth ?? "",
+									"phoneNum": phoneNum ?? "",
+									"profileImg": profileImg ?? Data()
 							]
+			
 			for (key, value) in parameters {
 				multipartFormData.append(
 					MultipartFormData(provider: .data("\(value)".data(using: .utf8) ?? Data()), name: key)
