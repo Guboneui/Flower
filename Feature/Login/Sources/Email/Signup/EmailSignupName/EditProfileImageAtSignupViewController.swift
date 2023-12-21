@@ -68,6 +68,14 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		super.viewDidLoad()
 		setupConfigures()
 		setupViews()
+		
+		profileImageView.rx.tapGesture()
+			.when(.recognized)
+			.bind { _ in
+				print("DEBUG: 이미지 스냅샷 영역 터치 테스트")
+			}
+			.disposed(by: disposeBag)
+		
 	}
 	
 	override func viewDidLayoutSubviews() {
