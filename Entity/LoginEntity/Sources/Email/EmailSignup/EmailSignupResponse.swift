@@ -16,5 +16,9 @@ public struct EmailSignupResponse: Codable {
 public struct SignupBody: Codable {
 	public let email: String
 	public let password: String
-	public let imageUrl: String
+	public let imageURL: String
+}
+
+enum CodingKeys: String, CodingKey {
+	case imageURL = "imageUrl"
 }
