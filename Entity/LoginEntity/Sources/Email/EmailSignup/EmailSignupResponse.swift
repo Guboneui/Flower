@@ -9,6 +9,12 @@ import Foundation
 
 public struct EmailSignupResponse: Codable {
 	public let message: String
-	public let body: String
+	public let body: SignupBody
 	public let success: Bool
+}
+
+public struct SignupBody: Codable {
+	public let email: String
+	public let password: String
+	public let imageUrl: String
 }
