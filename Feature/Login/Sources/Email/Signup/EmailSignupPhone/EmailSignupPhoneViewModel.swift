@@ -19,7 +19,7 @@ public protocol EmailSignupPhoneViewModelInterface {
 	var isSignupCompletedRelay: BehaviorRelay<Bool?> { get }
 	var userSignupDTO: UserSignupDTO { get set }
 	
-	func fetchEmailSignup(userSignupDTO: UserSignupDTO)
+	func fetchEmailSignup()
 }
 
 public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface {
@@ -40,8 +40,7 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	}
 	
 	// MARK: - PUBLIC METHOD
-	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) {
-
+	public func fetchEmailSignup() {
 		useCase.fetchEmailSignup(userSignupDTO: userSignupDTO)
 		.subscribe(onSuccess: { [weak self] responseData in
 			guard let self else { return }

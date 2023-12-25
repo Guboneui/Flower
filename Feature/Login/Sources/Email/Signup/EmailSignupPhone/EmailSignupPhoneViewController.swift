@@ -152,8 +152,7 @@ private extension EmailSignupPhoneViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				let userSignupDTO = self.emailSignupPhoneViewModel.userSignupDTO
-				self.emailSignupPhoneViewModel.fetchEmailSignup(userSignupDTO: userSignupDTO)
+				self.emailSignupPhoneViewModel.fetchEmailSignup()
 			}.disposed(by: disposeBag)
 	}
 	

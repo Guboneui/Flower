@@ -405,8 +405,7 @@ private extension EmailSignupIDViewController {
 						self.authView.alpha = 1
 					})
 					
-					let email: String = self.emailSignupIDViewModel.emailRelay.value
-					self.emailSignupIDViewModel.fetchEmailAuth(email: email)
+					self.emailSignupIDViewModel.fetchEmailAuth()
 					
 					self.emailTextField.isUserInteractionEnabled = false
 					self.emailSignupIDViewModel.startTimer(sec: 600)
@@ -437,8 +436,7 @@ private extension EmailSignupIDViewController {
 				
 				self.authTextField.updateText(text: "")
 				
-				let email: String = self.emailSignupIDViewModel.emailRelay.value
-				self.emailSignupIDViewModel.fetchEmailAuth(email: email)
+				self.emailSignupIDViewModel.fetchEmailAuth()
 				
 				self.emailSignupIDViewModel.startTimer(sec: 600)
 			}.disposed(by: disposeBag)
