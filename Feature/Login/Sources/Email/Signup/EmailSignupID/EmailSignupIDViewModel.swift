@@ -24,7 +24,7 @@ public protocol EmailSignupIDViewModelInterface {
 	
 	func isValidEmail()
 	func isValiedAuthNumber()
-	func fetchEmailAuth(email: String)
+	func fetchEmailAuth()
 	func startTimer(sec: Int)
 	func stopTimer()
 }
@@ -58,7 +58,7 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public func isValidEmail() {
 		if currentViewState.value.state == .email {
 			if NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: emailRelay.value) {
-				fetchEmailConfirm(email: emailRelay.value)
+				fetchEmailConfirm()
 			} else {
 				currentViewState.accept(.init(state: .email, enabled: false))
 			}
@@ -68,15 +68,15 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public func isValiedAuthNumber() {
 		if currentViewState.value.state == .auth {
 			if authRelay.value.count == 6 {
-				fetchEmailCode(email: emailRelay.value, code: authRelay.value)
+				fetchEmailCode()
 			} else {
 				currentViewState.accept(.init(state: .auth, enabled: false))
 			}
 		}
 	}
 	
-	public func fetchEmailAuth(email: String) {
-		useCase.fetchEmailAuth(email: email)
+	public func fetchEmailAuth() {
+		useCase.fetchEmailAuth(email: emailRelay.value)
 			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
@@ -121,8 +121,8 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 
 // MARK: - PRIVATE METHOD
 private extension EmailSignupIDViewModel {
-	func fetchEmailConfirm(email: String) {
-		useCase.fetchEmailConfirm(email: email)
+	func fetchEmailConfirm() {
+		useCase.fetchEmailConfirm(email: emailRelay.value)
 			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
@@ -134,8 +134,8 @@ private extension EmailSignupIDViewModel {
 			}).disposed(by: disposeBag)
 	}
 	
-	func fetchEmailCode(email: String, code: String) {
-		useCase.fetchEmailCode(email: email, code: code)
+	func fetchEmailCode() {
+		useCase.fetchEmailCode(email: emailRelay.value, code: authRelay.value)
 			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
