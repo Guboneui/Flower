@@ -17,8 +17,10 @@ public struct SignupBody: Codable {
 	public let email: String
 	public let password: String
 	public let imageURL: String
-}
-
-enum CodingKeys: String, CodingKey {
-	case imageURL = "imageUrl"
+	
+	enum CodingKeys: String, CodingKey {
+		case email = "email"
+		case password = "password"
+		case imageURL = "imageUrl"
+	}
 }
