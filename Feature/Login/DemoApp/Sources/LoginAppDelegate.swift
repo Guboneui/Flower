@@ -11,8 +11,6 @@ import Login
 import LoginData
 import LoginDomain
 
-
-
 @main
 class LoginAppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
