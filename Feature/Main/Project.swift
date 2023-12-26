@@ -19,6 +19,7 @@ let project = Project.makeFrameworkProject(
   dependencies: [
     .Feature.Chatting.Main,
     .Feature.Map.Main
+
   ],
   isDynamic: false,
   needTestTarget: false,
