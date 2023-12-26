@@ -10,6 +10,7 @@ import UIKit
 
 import LoginData
 import LoginDomain
+import LoginEntity
 
 import DesignSystem
 import ResourceKit
@@ -20,7 +21,7 @@ import Then
 
 final class EmailLoginModalViewController: UIViewController, DimModalPresentable {
 	
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let signupButtonTopMargin: CGFloat = 330
 		static let signupButtonBothSidesMargin: CGFloat = 24
@@ -29,19 +30,21 @@ final class EmailLoginModalViewController: UIViewController, DimModalPresentable
 		static let tapGesturemilliseconds: Int = 300
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let loginButtonText: String = "동의하고 회원가입 계속하기"
 	}
 	
-	var parentVC: UIViewController?
-	var backgroundView: UIView = UIView()
-	var modalView: UIView = UIView()
+	// MARK: - PUBLIC PROPERTY
+	public var parentVC: UIViewController?
+	public var backgroundView: UIView = UIView()
+	public var modalView: UIView = UIView()
 	
+	// MARK: - PRIVATE PROPERTY
+	private let signupButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText)
 	private let disposeBag = DisposeBag()
 	
-	private let signupButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText)
-	
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupViews()
@@ -49,7 +52,7 @@ final class EmailLoginModalViewController: UIViewController, DimModalPresentable
 	}
 }
 
-// MARK: EXTENSION SETUP FUNC 
+// MARK: - PRIVATE METHOD
 private extension EmailLoginModalViewController {
 	func setupViews() {
 		modalView.addSubview(signupButton)
@@ -71,21 +74,20 @@ private extension EmailLoginModalViewController {
 				guard let self else { return }
 				
 				self.didTapButton()
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		backgroundView.rx.tapGesture()
 			.when(.recognized)
-			.throttle(.milliseconds(Metric.tapGesturemilliseconds),
-								latest: false,
-								scheduler: MainScheduler.instance
+			.throttle(
+				.milliseconds(Metric.tapGesturemilliseconds),
+				latest: false,
+				scheduler: MainScheduler.instance
 			)
 			.bind { [weak self] _ in
 				guard let self else { return }
 				
 				self.didTapBackgroundView()
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 	}
 	
 	func didTapBackgroundView() {
@@ -94,14 +96,24 @@ private extension EmailLoginModalViewController {
 	
 	func didTapButton() {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
-			let repository = EmailSignupIDRepository()
-			let usecase = EmailSignupIDUseCase(emailSignupIDRepository: repository)
-			let viewModel = EmailSignupIDViewModel(usecase: usecase)
+			let repository = UsersRepository()
+			let useCase = UsersUseCase(usersRepository: repository)
+			let userSignupDTO = UserSignupDTO(
+				email: "",
+				password: "",
+				userName: "",
+				userNickName: "",
+				birth: "",
+				profileImg: Data(),
+				phoneNum: ""
+			)
+			let viewModel = EmailSignupIDViewModel(useCase: useCase, userSignupDTO: userSignupDTO)
 			let signupVC = EmailSignupIDViewController(emailSignupIDViewModel: viewModel)
 			navigation.pushViewController(signupVC, animated: true)
 		}
 		
-		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
+			guard let self else { return }
 			self.hideModal()
 		}
 	}

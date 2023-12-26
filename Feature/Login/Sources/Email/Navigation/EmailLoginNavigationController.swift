@@ -12,7 +12,7 @@ import DesignSystem
 import SnapKit
 
 public class EmailLoginNavigationController: UINavigationController {
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let pageControllerPageCount: Int = 4
 		static let pageControllerDefaulSize: CGFloat = 8
@@ -20,6 +20,7 @@ public class EmailLoginNavigationController: UINavigationController {
 		static let pageControllerTopMargin: CGFloat = 70
 	}
 	
+	// MARK: - PUBLIC PROPERTY
 	public let pageController = PageController(
 		pageCount: Metric.pageControllerPageCount,
 		defaultControllerSize: .init(
@@ -28,9 +29,13 @@ public class EmailLoginNavigationController: UINavigationController {
 		selectedControllerHeight: Metric.pageControllerSelectedHeight
 	)
 	
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		self.view.addSubview(pageController)
+		
+		self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+		
 		pageController.snp.makeConstraints { make in
 			make.top.equalTo(view.safeAreaLayoutGuide).offset(
 				Metric.pageControllerTopMargin)

@@ -17,7 +17,7 @@ import Then
 
 public final class EmailSignupIDViewController: UIViewController {
 	
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let emailLabelTopMargin: CGFloat = 38
 		static let emailLabelLeftMargin: CGFloat = 24
@@ -66,11 +66,9 @@ public final class EmailSignupIDViewController: UIViewController {
 		
 		static let authSendButtonBottomMargin: CGFloat = 34
 		static let authSendButtonBothSidesMargin: CGFloat = 24
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let emailLabelFont: UIFont = AppTheme.Font.Bold_16
 		static let cautionLabelFont: UIFont = AppTheme.Font.Regular_12
@@ -82,7 +80,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let timerLabelFont: UIFont = AppTheme.Font.Bold_10
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let cautionSuccessImage: UIImage = AppTheme.Image.success
 		static let cautionFailureImage: UIImage = AppTheme.Image.caution
@@ -91,7 +89,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let authCautionFailureImage: UIImage = AppTheme.Image.caution
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let cautionViewColor: UIColor = AppTheme.Color.white
@@ -110,11 +108,10 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let timerLabelColor: UIColor = AppTheme.Color.primary
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let emailLabelText: String = "이메일"
 		static let navigationBarText: String = "회원가입"
-		static let cautionLabelNomalText: String = ""
 		static let cautionLabelSuccessText: String = "사용 가능한 이메일입니다"
 		static let cautionLabelFailureText: String = "잘못된 이메일 형식입니다"
 		static let announcementLabelText: String =
@@ -133,6 +130,7 @@ public final class EmailSignupIDViewController: UIViewController {
 		static let authSendButtonDidSandText: String = "다음"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let emailLabel: UILabel = UILabel().then {
@@ -227,9 +225,12 @@ public final class EmailSignupIDViewController: UIViewController {
 		$0.isEnabled = false
 	}
 	
-	private let emailSignupIDViewModel: EmailSignupIDViewModel
+	private var emailSignupIDViewModel: EmailSignupIDViewModelInterface
 	
-	public init(emailSignupIDViewModel: EmailSignupIDViewModel) {
+	private let disposeBag: DisposeBag = DisposeBag()
+
+	// MARK: - INITIALIZE
+	public init(emailSignupIDViewModel: EmailSignupIDViewModelInterface) {
 		self.emailSignupIDViewModel = emailSignupIDViewModel
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -238,18 +239,24 @@ public final class EmailSignupIDViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private let disposeBag: DisposeBag = DisposeBag()
-
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		setupUI()
 		setupViews()
 		setupGestures()
-		
 		setupBinding()
+	}
+	
+	public override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		setupReturnView()
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailSignupIDViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
@@ -257,6 +264,7 @@ private extension EmailSignupIDViewController {
 		if let navigation = self.navigationController as? EmailLoginNavigationController {
 			navigation.pageController.alpha = 1
 			navigation.pageController.moveToFirstPage()
+			navigation.interactivePopGestureRecognizer?.isEnabled = false
 		}
 	}
 	
@@ -380,6 +388,7 @@ private extension EmailSignupIDViewController {
 		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
+				
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToPrevPage()
 					navigation.popViewController(animated: true)
@@ -390,23 +399,30 @@ private extension EmailSignupIDViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				switch emailSignupIDViewModel.pageState.value.state {
-				case .Email:
+				switch emailSignupIDViewModel.currentViewState.value.state {
+				case .email:
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
-						self.authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 					})
 					
-					let email: String = self.emailSignupIDViewModel.emailRelay.value
-					self.emailSignupIDViewModel.fetchEmailAuth(email: email)
+					self.emailSignupIDViewModel.fetchEmailAuth()
 					
 					self.emailTextField.isUserInteractionEnabled = false
+					self.emailSignupIDViewModel.startTimer(sec: 600)
 					
-				case .Auth:
-					if self.emailSignupIDViewModel.pageState.value.enabled == true {
+				case .auth:
+					if self.emailSignupIDViewModel.currentViewState.value.enabled == true {
+						self.emailSignupIDViewModel.stopTimer()
+						
 						if let navigation = self.navigationController as? EmailLoginNavigationController {
 							navigation.pageController.moveToNextPage()
-							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel()
+							
+							let email: String = emailSignupIDViewModel.emailRelay.value
+							emailSignupIDViewModel.userSignupDTO.email = email
+							let viewModel: EmailSignupPWViewModel = EmailSignupPWViewModel(
+								userSignupDTO: emailSignupIDViewModel.userSignupDTO
+							)
+							
 							let secondVC = EmailSignupPWViewController(emailSignupPWViewModel: viewModel)
 							navigation.pushViewController(secondVC, animated: true)
 						}
@@ -418,120 +434,143 @@ private extension EmailSignupIDViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				let email: String = self.emailSignupIDViewModel.emailRelay.value
-				self.emailSignupIDViewModel.fetchEmailAuth(email: email)
+				self.authTextField.updateText(text: "")
+				
+				self.emailSignupIDViewModel.fetchEmailAuth()
+				
+				self.emailSignupIDViewModel.startTimer(sec: 600)
 			}.disposed(by: disposeBag)
 	}
 	
 	func setupBinding() {
 		emailTextField.currentText
-			.bind(onNext: { [weak self] email in
+			.bind(onNext: { [weak self] emailText in
 				guard let self else { return }
 				
-				self.emailSignupIDViewModel.emailRelay.accept(email)
+				self.emailSignupIDViewModel.emailRelay.accept(emailText)
 				
-				if email.isEmpty {
-					self.emailSignupIDViewModel.pageState.accept(.init(state: .Email, enabled: nil))
+				if emailText.isEmpty {
+					self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
 				} else {
-					if self.emailSignupIDViewModel.pageState.value.enabled != true {
-						self.emailSignupIDViewModel.isValidEmail()
-					}
+					self.emailSignupIDViewModel.isValidEmail()
 				}
 			}).disposed(by: disposeBag)
 		
 		authTextField.currentText
-			.bind(onNext: { [weak self] authNum in
+			.bind(onNext: { [weak self] authText in
 				guard let self else { return }
 				
-				self.emailSignupIDViewModel.authRelay.accept(authNum)
-
-				if authNum.isEmpty {
-					self.emailSignupIDViewModel.pageState.accept(.init(state: .Auth, enabled: nil))
-				} else {
-					if self.emailSignupIDViewModel.pageState.value.enabled != true {
-						self.emailSignupIDViewModel.isValiedAuthNumber()
+				self.emailSignupIDViewModel.authRelay.accept(authText)
+		
+				if self.emailSignupIDViewModel.currentViewState.value.state == .auth {
+					if authText.isEmpty {
+						self.emailSignupIDViewModel.currentViewState.accept(.init(state: .auth, enabled: nil))
+					} else {
+						if self.emailSignupIDViewModel.currentViewState.value.enabled != true {
+							self.emailSignupIDViewModel.isValiedAuthNumber()
+						}
 					}
 				}
 			}).disposed(by: disposeBag)
 		
-		emailSignupIDViewModel.pageState
-			.subscribe(onNext: { [weak self] pageSet in
+		emailSignupIDViewModel.emailCautionRelay
+			.subscribe(onNext: { [weak self] cautionText in
 				guard let self else { return }
 				
-				self.authSendButton.isEnabled = pageSet.enabled ?? false
+				self.cautionLabel.text = cautionText
+			}).disposed(by: disposeBag)
+		
+		emailSignupIDViewModel.currentViewState
+			.subscribe(onNext: { [weak self] viewState in
+				guard let self else { return }
 				
-				switch pageSet.state {
-				case .Email:
-					setEmailState(bool: pageSet.enabled)
+				self.authSendButton.isEnabled = viewState.enabled ?? false
 				
-				case .Auth:
-					setAuthState(bool: pageSet.enabled)
+				switch viewState.state {
+				case .email:
+					self.setEmailState(isEmailValid: viewState.enabled)
+					
+				case .auth:
+					self.setAuthState(isAuthVaild: viewState.enabled)
 				}
 			}).disposed(by: disposeBag)
 		
-		emailSignupIDViewModel.emailAuthAPIResponse
-			.subscribe { response in
-				print(response.element?.body ?? "")
-			}.disposed(by: disposeBag)
-		
-		emailSignupIDViewModel.emailCodeAPIResponse
-			.subscribe { response in
-				print(response.element?.success ?? "")
-			}.disposed(by: disposeBag)
+		emailSignupIDViewModel.timerRelay
+			.subscribe(onNext: { [weak self] timeText in
+				guard let self else { return }
+				
+				self.timerLabel.text = timeText
+			}).disposed(by: disposeBag)
 	}
 	
-	func setEmailState(bool: Bool?) {
-
-		if bool == true {
-			cautionView.alpha = 1
-			
-			emailTextField.currentState = .success
-			cautionLabel.text = TextSet.cautionLabelSuccessText
-			cautionLabel.textColor = ColorSet.cautionLabelSuccessColor
-			cautionImageView.image = Image.cautionSuccessImage
-		} else if bool == false {
-			cautionView.alpha = 1
-			
-			emailTextField.currentState = .failure
-			cautionLabel.text = TextSet.cautionLabelFailureText
-			cautionLabel.textColor = ColorSet.cautionLabelFailureColor
-			cautionImageView.image = Image.cautionFailureImage
-		} else {
+	func setEmailState(isEmailValid: Bool?) {
+		guard let isEmailValid else {
 			cautionView.alpha = 0
 			emailTextField.currentState = .normal
+			return
 		}
+		
+		authSendButton.setTitle(TextSet.authSendButtonText, for: .normal)
+		authView.alpha = 0
+		cautionView.alpha = 1
+		
+		emailTextField.currentState = isEmailValid ? .success : .failure
+		
+		cautionLabel.text = isEmailValid ?
+		TextSet.cautionLabelSuccessText : TextSet.cautionLabelFailureText
+		
+		cautionLabel.textColor = isEmailValid ?
+		ColorSet.cautionLabelSuccessColor : ColorSet.cautionLabelFailureColor
+		
+		cautionImageView.image  = isEmailValid ?
+		Image.cautionSuccessImage : Image.cautionFailureImage
 	}
 	
-	func setAuthState(bool: Bool?) {
-		if bool == true {
-			authCautionView.alpha = 1
-			
-			authTextField.currentState = .success
-			authCautionLabel.text = TextSet.authCautionLabelSuccessText
-			authCautionLabel.textColor = ColorSet.authCautionLabelSuccessColor
-			authCautionImageView.image = Image.authCautionSuccessImage
-
-		} else if bool == false {
-			authCautionView.alpha = 1
-			
-			authTextField.currentState = .failure
-			authCautionLabel.text = TextSet.authCautionLabelFailureText
-			authCautionLabel.textColor = ColorSet.authCautionLabelFailureColor
-			authCautionImageView.image = Image.authCautionFailureImage
-		} else {
+	func setAuthState(isAuthVaild: Bool?) {
+		guard let isAuthVaild else {
 			authCautionView.alpha = 0
 			authTextField.currentState = .normal
+			authTextField.isUserInteractionEnabled = true
+			return
+		}
+		
+		authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
+		authCautionView.alpha = 1
+		authTextField.isUserInteractionEnabled = !isAuthVaild
+		
+		authTextField.currentState = isAuthVaild ? .success : .failure
+		
+		authCautionLabel.text = isAuthVaild ?
+		TextSet.authCautionLabelSuccessText : TextSet.authCautionLabelFailureText
+		
+		authCautionLabel.textColor = isAuthVaild ?
+		ColorSet.authCautionLabelSuccessColor : ColorSet.authCautionLabelFailureColor
+		
+		authCautionImageView.image  = isAuthVaild ?
+		Image.authCautionSuccessImage : Image.authCautionFailureImage
+	}
+	
+	func setupReturnView() {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
+			guard let self else { return }
+			
+			self.authTextField.updateText(text: "")
+			self.emailSignupIDViewModel.currentViewState.accept(.init(state: .email, enabled: nil))
+			self.emailSignupIDViewModel.isValidEmail()
+			self.setEmailState(isEmailValid: self.emailSignupIDViewModel.currentViewState.value.enabled)
+			self.emailTextField.isUserInteractionEnabled = true
 		}
 	}
 }
 
+// MARK: - UIBUTTON EXTENSION
 private extension UIButton {
 	func setUnderline() {
 		guard let title = title(for: .normal) else { return }
 		let attributedString = NSMutableAttributedString(string: title)
-		attributedString.addAttribute(.underlineStyle,
-																	value: NSUnderlineStyle.single.rawValue,
-																	range: NSRange(location: 0, length: title.count)
+		attributedString.addAttribute(
+			.underlineStyle, value: NSUnderlineStyle.single.rawValue,
+			range: NSRange(location: 0, length: title.count)
 		)
 		setAttributedTitle(attributedString, for: .normal)
 	}

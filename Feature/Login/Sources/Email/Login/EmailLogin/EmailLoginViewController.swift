@@ -16,7 +16,7 @@ import Then
 
 public final class EmailLoginViewController: UIViewController {
 	
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let emailLoginLabelTopMargin: CGFloat = 32
 		
@@ -41,11 +41,9 @@ public final class EmailLoginViewController: UIViewController {
 		
 		static let signupStackViewSpacing: CGFloat = 7
 		static let signupStackViewBottomMargin: CGFloat = 30
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let emailLoginLabelFont: UIFont = AppTheme.Font.Bold_20
 		static let idSaveCheckLabelFont: UIFont = AppTheme.Font.Regular_12
@@ -54,13 +52,13 @@ public final class EmailLoginViewController: UIViewController {
 		static let emailSignupButtonFont: UIFont = AppTheme.Font.Bold_14
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let idSaveCheckButtonOffImage: UIImage = AppTheme.Image.checkBoxOff
 		static let idSaveCheckButtonOnImage: UIImage = AppTheme.Image.checkBoxOn
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let idSaveCheckViewColor: UIColor = AppTheme.Color.white
@@ -71,7 +69,7 @@ public final class EmailLoginViewController: UIViewController {
 		static let emailSignupButtonColor: UIColor = AppTheme.Color.black
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let emailLoginLabelText: String = "이메일 로그인"
 		static let loginButtonText: String = "로그인"
@@ -81,7 +79,10 @@ public final class EmailLoginViewController: UIViewController {
 		static let emailSignupButtonText: String = "이메일로 가입하기"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.close)
+	
+	private let headerSlideView = HeaderSlideView(.loginError)
 	
 	private let emailLoginLabel: UILabel = UILabel().then {
 		$0.text = TextSet.emailLoginLabelText
@@ -106,7 +107,9 @@ public final class EmailLoginViewController: UIViewController {
 	private let emailTextField: IconBorderTextField = IconBorderTextField(.email)
 	private let passwordTextField: IconBorderTextField = IconBorderTextField(.password)
 	
-	private let loginButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText)
+	private let loginButton: DefaultButton = DefaultButton(title: TextSet.loginButtonText).then {
+		$0.isEnabled = false
+	}
 	
 	private let idSaveCheckView: UIView = UIView().then {
 		$0.backgroundColor = ColorSet.idSaveCheckViewColor
@@ -173,13 +176,28 @@ public final class EmailLoginViewController: UIViewController {
 		$0.setTitleColor(ColorSet.emailSignupButtonColor, for: .normal)
 	}
 	
+	private var emailLoginViewModel: EmailLoginViewModelInterface
+
 	private let disposeBag = DisposeBag()
 	
+	// MARK: - INITIALIZE
+	public init(emailLoginViewModel: EmailLoginViewModelInterface) {
+		self.emailLoginViewModel = emailLoginViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		setupUI()
 		setupViews()
 		setupGestures()
+		setupBinding()
 	}
 	
 	public override func viewWillAppear(_ animated: Bool) {
@@ -190,6 +208,7 @@ public final class EmailLoginViewController: UIViewController {
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailLoginViewController {
 	
 	func setupUI() {
@@ -278,8 +297,7 @@ private extension EmailLoginViewController {
 				guard let self else { return }
 				
 				self.dismiss(animated: true)
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		emailSignupButton.rx.touchHandler()
 			.bind { [weak self] in
@@ -288,15 +306,58 @@ private extension EmailLoginViewController {
 				let parentViewController = EmailLoginModalViewController()
 				parentViewController.parentVC = self
 				parentViewController.showModal()
-			}
-			.disposed(by: disposeBag)
+			}.disposed(by: disposeBag)
 		
 		idSaveCheckButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
-			}
+				self.idSaveCheckButton.setImage(Image.idSaveCheckButtonOnImage, for: .normal)
+			}.disposed(by: disposeBag)
+		
+		loginButton.rx.touchHandler()
+			.bind(onNext: { [weak self] in
+				guard let self else { return }
+				
+				self.emailLoginViewModel.fetchEmailLogin()
+			}).disposed(by: disposeBag)
+	}
+	
+	func setupBinding() {
+		emailTextField.currentText
+			.bind(onNext: { [weak self] emailText in
+				guard let self else { return }
+				
+				self.emailLoginViewModel.emailRelay.accept(emailText)
+				self.emailLoginViewModel.isEmailEntered.accept(!emailText.isEmpty)
+			}).disposed(by: disposeBag)
+		
+		passwordTextField.currentText
+			.bind(onNext: { [weak self] passwordText in
+				guard let self else { return }
+				
+				self.emailLoginViewModel.passwordRelay.accept(passwordText)
+				self.emailLoginViewModel.isPasswordEntered.accept(!passwordText.isEmpty)
+			}).disposed(by: disposeBag)
+		
+		Observable.combineLatest(
+			emailLoginViewModel.isEmailEntered,
+			emailLoginViewModel.isPasswordEntered
+		) { $0 && $1 }
+			.bind(to: loginButton.rx.isEnabled)
 			.disposed(by: disposeBag)
+		
+		emailLoginViewModel.isLoginCompleted
+			.subscribe(onNext: { [weak self] isCompleted in
+				guard let self else { return }
+				
+				guard let isCompleted else { return }
+				
+				if isCompleted {
+					//TODO 성공시: 홈화면 연결 로직
+				} else {
+					headerSlideView.startAnimation(at: self)
+				}
+			}).disposed(by: disposeBag)
 	}
 }

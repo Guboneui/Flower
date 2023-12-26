@@ -13,93 +13,135 @@ import LoginEntity
 import RxRelay
 import RxSwift
 
-enum PageState {
-	case Email
-	case Auth
+// MARK: - VIEWMODEL INTERFACE
+public protocol EmailSignupIDViewModelInterface {
+	var emailRelay: BehaviorRelay<String> { get }
+	var emailCautionRelay: BehaviorRelay<String> { get }
+	var authRelay: BehaviorRelay<String> { get }
+	var timerRelay: BehaviorRelay<String> { get }
+	var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> { get }
+	var userSignupDTO: UserSignupDTO { get set }
+	
+	func isValidEmail()
+	func isValiedAuthNumber()
+	func fetchEmailAuth()
+	func startTimer(sec: Int)
+	func stopTimer()
 }
 
-struct PageSet {
-	var state: PageState
-	var enabled: Bool?
-}
-
-public final class EmailSignupIDViewModel {
-	var emailRelay: BehaviorRelay<String> = .init(value: "")
-	var authRelay: BehaviorRelay<String> = .init(value: "")
+public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
+	// MARK: - PUBLIC PROPERTY
+	public var emailRelay: BehaviorRelay<String> = .init(value: "")
+	public var emailCautionRelay: BehaviorRelay<String> = .init(value: "")
+	public var authRelay: BehaviorRelay<String> = .init(value: "")
+	public var timerRelay: BehaviorRelay<String> = .init(value: "10분 00초")
 	
-	var pageState: BehaviorRelay<PageSet> = .init(value: PageSet(state: .Email))
+	public var currentViewState: BehaviorRelay<EmailSignupIDViewStateModel> =
+		.init(value: EmailSignupIDViewStateModel(state: .email))
 	
-	let emailAuthAPIResponse: PublishSubject<EmailAuthResponse> = .init()
-	let emailConfirmAPIResponse: PublishSubject<EmailConfirmResponse> = .init()
-	let emailCodeAPIResponse: PublishSubject<EmailCodeResponse> = .init()
+	public var userSignupDTO: UserSignupDTO
 	
-	private let signUpUseCase: EmailSignupIDUseCaseInterface
+	// MARK: - PRIVATE PROPERTY
+	private let useCase: UsersUseCaseInterface
+	private let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
+	private var disposeBag: DisposeBag
+	private var timer: Disposable?
 	
-	let disposeBag: DisposeBag
-	
-	let emailRegex: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}"
-	
-	public init(usecase: EmailSignupIDUseCaseInterface) {
-		self.signUpUseCase = usecase
+	// MARK: - INITIALIZE
+	public init(useCase: UsersUseCaseInterface, userSignupDTO: UserSignupDTO) {
+		self.useCase = useCase
 		self.disposeBag = .init()
+		self.userSignupDTO = userSignupDTO
 	}
 	
-	func isValidEmail() {
-		if pageState.value.state == .Email {
+	// MARK: - PUBLIC METHOD
+	public func isValidEmail() {
+		if currentViewState.value.state == .email {
 			if NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: emailRelay.value) {
-				fetchEmailConfirm(email: emailRelay.value)
+				fetchEmailConfirm()
 			} else {
-				pageState.accept(.init(state: .Email, enabled: false))
+				currentViewState.accept(.init(state: .email, enabled: false))
 			}
 		}
 	}
 	
-	func isValiedAuthNumber() {
-		if pageState.value.state == .Auth {
+	public func isValiedAuthNumber() {
+		if currentViewState.value.state == .auth {
 			if authRelay.value.count == 6 {
-				fetchEmailCode(email: emailRelay.value, code: authRelay.value)
+				fetchEmailCode()
 			} else {
-				pageState.accept(.init(state: .Auth, enabled: false))
+				currentViewState.accept(.init(state: .auth, enabled: false))
 			}
 		}
 	}
 	
-	func fetchEmailConfirm(email: String) {
-		print("이메일 중복확인")
-		signUpUseCase.fetchEmailConfirm(email: email)
-			.subscribe(onSuccess: { [weak self] response in
+	public func fetchEmailAuth() {
+		useCase.fetchEmailAuth(email: emailRelay.value)
+			.subscribe(onSuccess: { [weak self] responseData in
 				guard let self else { return }
 				
-				self.emailConfirmAPIResponse.onNext(response)
-				pageState.accept(.init(state: .Email, enabled: response.success))
-				
-			}).disposed(by: disposeBag)
-	}
-	
-	func fetchEmailAuth(email: String) {
-		print("usecase로 해당 이메일을 보낸다: \(email)")
-		signUpUseCase.fetchEmailAuth(email: email)
-			.subscribe(onSuccess: { [weak self] response in
-				guard let self else { return }
-				
-				self.emailAuthAPIResponse.onNext(response)
-				
-				if response.success == true {
-					pageState.accept(.init(state: .Auth))
+				if responseData.success {
+					self.currentViewState.accept(.init(state: .auth, enabled: nil))
 				}
-				
 			}).disposed(by: disposeBag)
 	}
 	
-	func fetchEmailCode(email: String, code: String) {
-		print("이메일 코드 검증")
-		signUpUseCase.fetchEmailCode(email: email, code: code)
-			.subscribe(onSuccess: { [weak self] response in
+	public func startTimer(sec: Int) {
+		stopTimer()
+		
+		timer = Observable<Int>
+			.interval(
+				.seconds(1),
+				scheduler: MainScheduler.instance
+			)
+			.take(600)
+			.subscribe(onNext: { [weak self] time in
 				guard let self else { return }
 				
-				self.emailCodeAPIResponse.onNext(response)
-				pageState.accept(.init(state: .Auth, enabled: response.success))
+				let minute = ((sec - time) % 3600) / 60
+				let second = ((sec - time) % 3600) % 60
 				
+				if second < 10 {
+					self.timerRelay.accept(
+						String(minute) + "분 " + "0" + String(second) + "초"
+					)
+				} else {
+					self.timerRelay.accept(
+						String(minute) + "분 " + String(second) + "초"
+					)
+				}
+			})
+	}
+	
+	public func stopTimer() {
+		timer?.dispose()
+		timer = nil
+	}
+}
+
+// MARK: - PRIVATE METHOD
+private extension EmailSignupIDViewModel {
+	func fetchEmailConfirm() {
+		useCase.fetchEmailConfirm(email: emailRelay.value)
+			.subscribe(onSuccess: { [weak self] responseData in
+				guard let self else { return }
+				
+				self.currentViewState.accept(
+					.init(state: .email, enabled: responseData.success)
+				)
+				
+				self.emailCautionRelay.accept(responseData.message)
+			}).disposed(by: disposeBag)
+	}
+	
+	func fetchEmailCode() {
+		useCase.fetchEmailCode(email: emailRelay.value, code: authRelay.value)
+			.subscribe(onSuccess: { [weak self] responseData in
+				guard let self else { return }
+				
+				self.currentViewState.accept(
+					.init(state: .auth, enabled: responseData.success)
+				)
 			}).disposed(by: disposeBag)
 	}
 }

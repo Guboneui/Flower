@@ -9,6 +9,8 @@ import Foundation
 import UIKit
 
 import DesignSystem
+import LoginData
+import LoginDomain
 import ResourceKit
 
 import RxSwift
@@ -16,7 +18,7 @@ import SnapKit
 import Then
 
 public final class EmailSignupNameViewController: UIViewController {
-	// MARK: METRIC
+	// MARK: - METRIC
 	private enum Metric {
 		static let profileViewBorderRadius: CGFloat = 54
 		static let profileViewSize: CGFloat = 108
@@ -39,22 +41,20 @@ public final class EmailSignupNameViewController: UIViewController {
 		
 		static let nextButtonBottomMargin: CGFloat = 34
 		static let nextButttonBothsides: CGFloat = 24
-		
-		static let tapGesturemilliseconds: Int = 300
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let nameLabelFont: UIFont = AppTheme.Font.Bold_16
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let profileImage: UIImage = AppTheme.Image.profile
 		static let cameraImage: UIImage = AppTheme.Image.camera
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let nameLabelColor: UIColor = AppTheme.Color.black
@@ -64,13 +64,14 @@ public final class EmailSignupNameViewController: UIViewController {
 		static let cameraImageViewColor: UIColor = AppTheme.Color.white
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let navigationBarText: String = "회원가입"
 		static let nameLabelText: String = "이름을 입력해 주세요"
 		static let nextButtonText: String = "다음"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let profileView: UIView = UIView().then {
@@ -111,9 +112,12 @@ public final class EmailSignupNameViewController: UIViewController {
 		$0.isEnabled = false
 	}
 	
-	private let emailSignupNameViewModel: EmailSignupNameViewModel
+	private var emailSignupNameViewModel: EmailSignupNameViewModelInterface
 
-	public init(emailSignupNameViewModel: EmailSignupNameViewModel) {
+	private let disposeBag = DisposeBag()
+
+	// MARK: - INITIALIZE
+	public init(emailSignupNameViewModel: EmailSignupNameViewModelInterface) {
 		self.emailSignupNameViewModel = emailSignupNameViewModel
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -121,9 +125,8 @@ public final class EmailSignupNameViewController: UIViewController {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
-	
-	private let disposeBag = DisposeBag()
 
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -134,6 +137,7 @@ public final class EmailSignupNameViewController: UIViewController {
 	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailSignupNameViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
@@ -225,7 +229,15 @@ private extension EmailSignupNameViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 					
-					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel()
+					let repository: UsersRepositoryInterface = UsersRepository()
+					let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
+					let name: String = emailSignupNameViewModel.nameRelay.value
+					emailSignupNameViewModel.userSignupDTO.userName = name
+					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
+						userSignupDTO: emailSignupNameViewModel.userSignupDTO,
+						useCase: useCase
+					)
+					
 					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 					navigation.pushViewController(signupPhoneVC, animated: true)
 				}
@@ -238,12 +250,7 @@ private extension EmailSignupNameViewController {
 				guard let self else { return }
 				
 				self.emailSignupNameViewModel.nameRelay.accept(nameText)
-				
-				if nameText.isEmpty {
-					self.nextButton.isEnabled = false
-				} else {
-					self.nextButton.isEnabled = true
-				}
+				self.nextButton.isEnabled = !nameText.isEmpty
 			}).disposed(by: disposeBag)
 	}
 }

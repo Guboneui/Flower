@@ -11,8 +11,10 @@ import LoginEntity
 
 import RxSwift
 
-public protocol EmailSignupIDRepositoryInterface {
+public protocol UsersRepositoryInterface {
+	func fetchEmailLoginAPI(email: String, password: String) -> Single<EmailLoginResponse>
 	func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse>
 	func fetchEmailAuthAPI(email: String) -> Single<EmailAuthResponse>
-	func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse> 
+	func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse>
+	func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse>
 }

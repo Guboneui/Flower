@@ -16,7 +16,7 @@ import SnapKit
 import Then
 
 public final class EmailSignupPWViewController: UIViewController {
-	// MARK: METRIC
+	// MARK:  - METRIC
 	private enum Metric {
 		static let pwViewHeightMargin: CGFloat = 93
 		static let pwViewTopMargin: CGFloat = 38
@@ -59,7 +59,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwAnnouncementLabelNumberOfLines: Int = 1
 	}
 	
-	// MARK: FONT
+	// MARK: - FONT
 	private enum Font {
 		static let pwLabelFont: UIFont = AppTheme.Font.Bold_16
 		static let pwCautionLabelFont: UIFont = AppTheme.Font.Regular_12
@@ -68,7 +68,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwCheckAnnouncementLabelFont: UIFont = AppTheme.Font.Regular_12
 	}
 	
-	// MARK: Image
+	// MARK: - Image
 	private enum Image {
 		static let pwCautionSuccessImage: UIImage = AppTheme.Image.success
 		static let pwCautionFailureImage: UIImage = AppTheme.Image.caution
@@ -77,7 +77,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwCheckCautionFailureImage: UIImage = AppTheme.Image.caution
 	}
 	
-	// MARK: COLORSET
+	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let pwViewBackgroundColor: UIColor = AppTheme.Color.white
@@ -96,7 +96,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwCheckAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
 	}
 	
-	// MARK: TEXTSET
+	// MARK: - TEXTSET
 	private enum TextSet {
 		static let navigationBarText: String = "회원가입"
 		static let pwLabelText: String = "비밀번호"
@@ -113,6 +113,7 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let nextButtonText: String = "다음"
 	}
 	
+	// MARK: - PRIVATE PROPERTY
 	private let navigationBar = NavigationBar(.back, title: TextSet.navigationBarText)
 	
 	private let pwView: UIView = UIView().then {
@@ -193,9 +194,12 @@ public final class EmailSignupPWViewController: UIViewController {
 		$0.isEnabled = false
 	}
 		
-	private let emailSignupPWViewModel: EmailSignupPWViewModel
+	private var emailSignupPWViewModel: EmailSignupPWViewModelInterface
+	
+	private let disposeBag: DisposeBag = DisposeBag()
 
-	public init(emailSignupPWViewModel: EmailSignupPWViewModel) {
+	// MARK: - INITIALIZE
+	public init(emailSignupPWViewModel: EmailSignupPWViewModelInterface) {
 		self.emailSignupPWViewModel = emailSignupPWViewModel
 		super.init(nibName: nil, bundle: nil)
 	}
@@ -204,17 +208,24 @@ public final class EmailSignupPWViewController: UIViewController {
 		fatalError("init(coder:) has not been implemented")
 	}
 	
-	private let disposeBag: DisposeBag = DisposeBag()
-
+	// MARK: - LIFE CYCLE
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		
 		setupUI()
 		setupViews()
 		setupGestures()
 		setupBinding()
 	}
+	
+	public override func viewWillDisappear(_ animated: Bool) {
+		super.viewWillDisappear(animated)
+
+		setupReturnView()
+	}
 }
 
+// MARK: - PRIVATE METHOD
 private extension EmailSignupPWViewController {
 	func setupUI() {
 		view.backgroundColor = ColorSet.backgroundColor
@@ -339,7 +350,6 @@ private extension EmailSignupPWViewController {
 	}
 	
 	func setupGestures() {
-		
 		navigationBar.rx.tapLeftButton
 			.bind { [weak self] in
 				guard let self else { return }
@@ -357,7 +367,12 @@ private extension EmailSignupPWViewController {
 				if let navigation = self.navigationController as? EmailLoginNavigationController {
 					navigation.pageController.moveToNextPage()
 				
-					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel()
+					let password: String = emailSignupPWViewModel.pwCheckRelay.value
+					emailSignupPWViewModel.userSignupDTO.password = password
+					let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel(
+						userSignupDTO: emailSignupPWViewModel.userSignupDTO
+					)
+					
 					let signupNameVC = EmailSignupNameViewController(emailSignupNameViewModel: viewModel)
 					navigation.pushViewController(signupNameVC, animated: true)
 				}
@@ -371,11 +386,18 @@ private extension EmailSignupPWViewController {
 				
 				self.emailSignupPWViewModel.pwRelay.accept(pwText)
 				
-				if pwText.isEmpty {
-					self.emailSignupPWViewModel.pwBool.accept(nil)
+				if pwCheckTextField.currentText.value.isEmpty {
+					
+					if pwText.isEmpty {
+						self.emailSignupPWViewModel.pwBool.accept(nil)
+					} else {
+							self.emailSignupPWViewModel.isValiedPW()
+					}
 				} else {
-						self.emailSignupPWViewModel.isValiedPW()
+					pwCheckTextField.updateText(text: "")
+					emailSignupPWViewModel.pwCheckBool.accept(nil)
 				}
+
 			}).disposed(by: disposeBag)
 		
 		pwCheckTextField.currentText
@@ -392,63 +414,69 @@ private extension EmailSignupPWViewController {
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwBool
-			.subscribe(onNext: { [weak self] bool in
+			.subscribe(onNext: { [weak self] isValid in
 				guard let self else { return }
 							
-				setPWTextFieldState(bool: bool)
-				
+				setPWTextFieldState(isPWValid: isValid)
 			}).disposed(by: disposeBag)
 		
 		emailSignupPWViewModel.pwCheckBool
-			.subscribe(onNext: { [weak self] bool in
+			.subscribe(onNext: { [weak self] isValid in
 				guard let self else { return }
 							
-				setPWCheckTextFieldState(bool: bool)
-				nextButton.isEnabled = bool ?? false
-
+				setPWCheckTextFieldState(isPWCheckValid: isValid)
+				nextButton.isEnabled = isValid ?? false
 			}).disposed(by: disposeBag)
 	}
 	
-	func setPWTextFieldState(bool: Bool?) {
-		if bool == true {
-			pwCautionView.alpha = 1
-			
-			pwTextField.currentState = .success
-			pwCautionLabel.text = TextSet.pwCautionLabelSuccessText
-			pwCautionLabel.textColor = ColorSet.pwCautionLabelSuccessColor
-			pwCautionImageView.image = Image.pwCautionSuccessImage
-		} else if bool == false {
-			pwCautionView.alpha = 1
-			
-			pwTextField.currentState = .failure
-			pwCautionLabel.text = TextSet.pwCautionLabelFailureText
-			pwCautionLabel.textColor = ColorSet.pwCautionLabelFailureColor
-			pwCautionImageView.image = Image.pwCautionFailureImage
-		} else {
+	func setPWTextFieldState(isPWValid: Bool?) {
+		guard let isPWValid else {
 			pwCautionView.alpha = 0
 			pwTextField.currentState = .normal
+			return
 		}
+		
+		pwCautionView.alpha = 1
+		
+		pwTextField.currentState = isPWValid ? .success : .failure
+		
+		pwCautionLabel.text = isPWValid ?
+		TextSet.pwCautionLabelSuccessText : TextSet.pwCautionLabelFailureText
+		
+		pwCautionLabel.textColor = isPWValid ?
+		ColorSet.pwCautionLabelSuccessColor : ColorSet.pwCautionLabelFailureColor
+		
+		pwCautionImageView.image = isPWValid ?
+		Image.pwCautionSuccessImage : Image.pwCautionFailureImage
 	}
 	
-	func setPWCheckTextFieldState(bool: Bool?) {
-		if bool == true {
-			pwCheckCautionView.alpha = 1
-			
-			pwCheckTextField.currentState = .success
-			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelSuccessText
-			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelSuccessColor
-			pwCheckCautionImageView.image = Image.pwCheckCautionSuccessImage
-			
-		} else if bool == false {
-			pwCheckCautionView.alpha = 1
-			
-			pwCheckTextField.currentState = .failure
-			pwCheckCautionLabel.text = TextSet.pwCheckCautionLabelFailureText
-			pwCheckCautionLabel.textColor = ColorSet.pwCheckCautionLabelFailureColor
-			pwCheckCautionImageView.image = Image.pwCheckCautionFailureImage
-		} else {
+	func setPWCheckTextFieldState(isPWCheckValid: Bool?) {
+		guard let isPWCheckValid else {
 			pwCheckCautionView.alpha = 0
 			pwCheckTextField.currentState = .normal
+			return
+		}
+		
+		pwCheckCautionView.alpha = 1
+		
+		pwCheckTextField.currentState = isPWCheckValid ? .success : .failure
+		
+		pwCheckCautionLabel.text = isPWCheckValid ?
+		TextSet.pwCheckCautionLabelSuccessText : TextSet.pwCheckCautionLabelFailureText
+		
+		pwCheckCautionLabel.textColor = isPWCheckValid ?
+		ColorSet.pwCheckCautionLabelSuccessColor : ColorSet.pwCheckCautionLabelFailureColor
+		
+		pwCheckCautionImageView.image = isPWCheckValid ?
+		Image.pwCheckCautionSuccessImage : Image.pwCheckCautionFailureImage
+	}
+	
+	func setupReturnView() {
+		DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.0) { [weak self] in
+			guard let self else { return }
+			
+			self.pwCheckTextField.updateText(text: "")
+			self.emailSignupPWViewModel.pwCheckBool.accept(nil)
 		}
 	}
 }
