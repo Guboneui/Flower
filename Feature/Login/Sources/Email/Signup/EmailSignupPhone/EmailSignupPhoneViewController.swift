@@ -184,8 +184,8 @@ private extension EmailSignupPhoneViewController {
 				guard let self else { return }
 												
 				if isCompleted {
-					let vc = MainTabBarController()
-					self.changeRootViewController(vc)
+					let mainTabBarController: MainTabBarController = MainTabBarController()
+					self.changeRootViewController(mainTabBarController)
 				} else {
 					let alert = UIAlertController(
 						title: TextSet.failureAlertTitleText,

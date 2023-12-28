@@ -356,8 +356,8 @@ private extension EmailLoginViewController {
 				guard let isCompleted else { return }
 				
 				if isCompleted {
-					let vc = MainTabBarController()
-					self.changeRootViewController(vc)
+					let mainTabBarController: MainTabBarController = MainTabBarController()
+					self.changeRootViewController(mainTabBarController)
 				} else {
 					headerSlideView.startAnimation(at: self)
 				}
