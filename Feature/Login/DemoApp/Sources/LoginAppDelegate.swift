@@ -24,6 +24,11 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
 //		let testRepository: TestRepositoryInterface = TestRepository()
 //		let testUseCase: TestUseCaseInterface = TestUseCase(testRepository: testRepository)
 //		let testViewModel = TestViewModel(testUseCase: testUseCase)
+		
+//		let siginUpRepository: SiginUpRepository = SiginUpRepository()
+//		let siginUpUseCase: SiginUpUseCaseInterface = SiginUpUseCase(SiginUpRepository: siginUpRepository)
+//		let testViewModel = TestViewModel(siginUpUseCase: siginUpUseCase as! SiginUpUseCase)
+//		
 //    window.rootViewController = TestViewController(testViewModel: testViewModel)
 
 		window.rootViewController = LoginViewController()

@@ -20,6 +20,7 @@ public final class TestUseCase: TestUseCaseInterface {
 	}
 	
 	public func testUseCaseMethod() -> Single<String> {
-		return testRepository.fetchTest().map { $0.results[0].gender }
+		return testRepository.fetchTest()
+			.map { $0.results[0].gender + " " + $0.results[0].nat + " " + $0.results[0].name.first }
 	}
 }

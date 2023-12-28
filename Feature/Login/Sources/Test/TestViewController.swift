@@ -7,7 +7,7 @@
 
 import UIKit
 
-import Moya
+//import Moya
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -15,7 +15,9 @@ import Then
 
 public class TestViewController: UIViewController {
 
-	private let titleButton: UIButton = UIButton()
+//	private let titleButton: UIButton = UIButton()
+	
+	private let titleLabel: UILabel = UILabel()
 
 	private let testViewModel: TestViewModel
 	private let disposeBag: DisposeBag
@@ -36,8 +38,8 @@ public class TestViewController: UIViewController {
 		setupSubViews()
 		
 		// MARK: - 뷰모델 메소드 호출
-		testViewModel.testViewModelMethod()
-		
+//		testViewModel.testViewModelMethod()
+//		
 //		testViewModel.userGender
 //			.bind(to: titleLabel.rx.text)
 //			.disposed(by: disposeBag)
@@ -48,26 +50,22 @@ public class TestViewController: UIViewController {
 	}
 
 	private func setupSubViews() {
-		view.addSubview(titleButton)
+		view.addSubview(titleLabel)
 
 		setupLayouts()
-		
-		
-		titleButton.rx.tap
-			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
-			.bind { [weak self] in
-				print("BUTTON")
-				
-			}.disposed(by: disposeBag)
-		
-		
-		
+	
+//		titleButton.rx.tap
+//			.throttle(.milliseconds(300), latest: false, scheduler: MainScheduler.instance)
+//			.bind { [weak self] in
+//				print("BUTTON")
+//				
+//			}.disposed(by: disposeBag)
 	}
 
 	private func setupLayouts() {
-		titleButton.snp.makeConstraints { make in
+		titleLabel.snp.makeConstraints { make in
 			make.center.equalToSuperview()
-			make.size.equalTo(100)
+			make.size.equalTo(300)
 		}
 	}
 }

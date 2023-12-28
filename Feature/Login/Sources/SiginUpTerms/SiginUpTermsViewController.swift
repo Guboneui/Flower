@@ -46,8 +46,8 @@ private extension SiginUpTermsViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
-					let EmailSiginUpViewController = EmailSiginUpEmailViewController()
-					navigation.pushViewController(EmailSiginUpViewController, animated: true)
+					let emailSiginUpViewController = EmailSiginUpEmailViewController()
+					navigation.pushViewController(emailSiginUpViewController, animated: true)
 				}
 				self.hideModal()
 			}.disposed(by: disposeBag)

@@ -36,9 +36,9 @@ private extension LoginViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				
-				let EmailLoginViewController = EmailLoginViewController()
+				let emailLoginViewController = EmailLoginViewController()
 				let emailSiginUpNavi = EmailSiginUpNavigationController(
-					rootViewController: EmailLoginViewController
+					rootViewController: emailLoginViewController
 				)
 				emailSiginUpNavi.modalPresentationStyle = UIModalPresentationStyle.fullScreen
 				self.present(emailSiginUpNavi, animated: true, completion: nil)

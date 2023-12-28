@@ -46,8 +46,8 @@ private extension EmailSiginUpNameViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				if let navigation = self.navigationController as? EmailSiginUpNavigationController {
-					let EmailSiginUpPhoneViewController = EmailSiginUpPhoneViewController()
-					navigation.pushViewController(EmailSiginUpPhoneViewController, animated: true)
+					let emailSiginUpPhoneViewController = EmailSiginUpPhoneViewController()
+					navigation.pushViewController(emailSiginUpPhoneViewController, animated: true)
 					navigation.pageController.moveToNextPage()
 				}
 			}.disposed(by: disposeBag)

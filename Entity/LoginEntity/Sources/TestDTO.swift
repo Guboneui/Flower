@@ -17,8 +17,18 @@ public struct TestDTO: Codable {
 
 public struct Test: Codable {
 	public let gender: String
+	public let nat: String
+	public let name: Name
 	
-	public init(gender: String) {
+	public init(gender: String, nat: String, name: Name) {
 		self.gender = gender
+		self.nat = nat
+		self.name = name
 	}
+}
+
+public struct Name: Codable {
+	public let title: String
+	public let first: String
+	public let last: String
 }
