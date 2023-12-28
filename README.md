@@ -28,6 +28,8 @@ Tag  | Description
 - make generate: tuist generate
 - make LoginDemoApp: tuist generate LoginDemoApp
 - make SearchFilterDemoApp: tuist generate SearchFilterDemoApp
+- make ChattingDemoApp: tuist generate ChattingDemoApp
+- make MapDemoApp: tuist generate MapDemoApp
 ---
 
 ### Branch
