@@ -46,7 +46,7 @@ final class ChattingDemoAppRootViewController: UIViewController {
 			.bind { [weak self] in
 				guard let self else { return }
 				let chattingViewController: ChattingViewController = ChattingViewController()
-				chattingViewController.modalPresentationStyle = .overFullScreen
+				chattingViewController.modalPresentationStyle = .overFullScreen 
 				self.present(chattingViewController, animated: true)
 			}.disposed(by: disposeBag)
 	}
