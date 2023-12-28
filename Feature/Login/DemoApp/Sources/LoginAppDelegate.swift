@@ -28,4 +28,3 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
 }
-
