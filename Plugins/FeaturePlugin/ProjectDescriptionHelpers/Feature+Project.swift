@@ -14,6 +14,7 @@ extension TargetDependency {
     public struct SearchFilter { }
     public struct Main { }
     public struct Chatting { }
+    public struct Map { }
   }
 }
 
@@ -67,4 +68,17 @@ public extension TargetDependency.Feature.Chatting {
   }
   
   static let Main = project(name: "Chatting")
+}
+
+public extension TargetDependency.Feature.Map {
+  static let folderName: String = "Map"
+  
+  static func project(name: String) -> TargetDependency {
+    return .project(
+      target: "\(name)",
+      path: .relativeToRoot("Feature/\(folderName)")
+    )
+  }
+  
+  static let Main = project(name: "Map")
 }
