@@ -9,7 +9,9 @@ import Foundation
 import UIKit
 
 import DesignSystem
+import Main
 import ResourceKit
+import UtilityKit
 
 import RxSwift
 import SnapKit
@@ -180,21 +182,10 @@ private extension EmailSignupPhoneViewController {
 			.compactMap { $0 }
 			.subscribe(onNext: { [weak self] isCompleted in
 				guard let self else { return }
-								
+												
 				if isCompleted {
-					// MARK: - TODO 홈화면으로 바로 이동하는 로직으로 변경
-					let alert = UIAlertController(
-						title: "회원가입 완료", message: "이메일 로그인 화면으로 이동합니다", preferredStyle: .alert)
-					let success = UIAlertAction(title: "확인", style: .default) { _ in
-						guard let viewControllerStack = self.navigationController?.viewControllers else { return }
-						for viewController in viewControllerStack {
-							if let emailLoginView = viewController as? EmailLoginViewController {
-								self.navigationController?.popToViewController(emailLoginView, animated: true)
-							}
-						}
-					}
-					alert.addAction(success)
-					present(alert, animated: true)
+					let mainTabBarController: MainTabBarController = MainTabBarController()
+					self.changeRootViewController(mainTabBarController)
 				} else {
 					let alert = UIAlertController(
 						title: TextSet.failureAlertTitleText,

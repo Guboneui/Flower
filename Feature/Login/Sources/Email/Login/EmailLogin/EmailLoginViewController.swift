@@ -8,7 +8,9 @@
 import UIKit
 
 import DesignSystem
+import Main
 import ResourceKit
+import UtilityKit
 
 import RxSwift
 import SnapKit
@@ -354,7 +356,8 @@ private extension EmailLoginViewController {
 				guard let isCompleted else { return }
 				
 				if isCompleted {
-					//TODO 성공시: 홈화면 연결 로직
+					let mainTabBarController: MainTabBarController = MainTabBarController()
+					self.changeRootViewController(mainTabBarController)
 				} else {
 					headerSlideView.startAnimation(at: self)
 				}
