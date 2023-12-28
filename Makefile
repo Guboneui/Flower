@@ -24,3 +24,8 @@ ChattingDemoApp:
 	TUIST_ROOT_DIR=${PWD} tuist clean
 	TUIST_ROOT_DIR=${PWD} tuist fetch
 	TUIST_ROOT_DIR=${PWD} tuist generate ChattingDemoApp
+
+MapDemoApp:
+	TUIST_ROOT_DIR=${PWD} tuist clean
+	TUIST_ROOT_DIR=${PWD} tuist fetch
+	TUIST_ROOT_DIR=${PWD} tuist generate MapDemoApp
