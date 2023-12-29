@@ -2,30 +2,29 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 구본의 on 2023/12/28.
+//  Created by 구본의 on 2023/12/30.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
 import DataPlugin
-import DesignSystemPlugin
 import DomainPlugin
-import ThirdPartyDependencyPlugin
+import NetworkPlugin
 
-let projectName: String = "Map"
+let projectName: String = "MapData"
 let iOSTargetVersion: String = "16.0"
 
-let project = Project.makeFrameworkProject(
+let project = Project.makeLibraryProject(
   name: projectName,
-  iOSTargetVersion: iOSTargetVersion,
+  iOSTargetVersion: "16.0",
+  baseSetting: .init(),
   dependencies: [
-    .Data.MapData.Main,
     .Domain.MapDomain.Main,
-    .ThirdParty.Main,
-    .DesignSystem.Main
+    .Network.MapNetwork.Main
   ],
   isDynamic: false,
   needTestTarget: false,
-  needDemoAppTarget: true
+  needDemoAppTarget: false
 )
+

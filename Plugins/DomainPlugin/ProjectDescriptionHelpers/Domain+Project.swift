@@ -12,6 +12,7 @@ extension TargetDependency {
   public struct Domain {
     public struct LoginDomain { }
     public struct ChattingDomain { }
+    public struct MapDomain { }
   }
 }
 
@@ -50,4 +51,16 @@ public extension TargetDependency.Domain.ChattingDomain {
   }
   
   static let Main = project(name: "ChattingDomain")
+}
+
+public extension TargetDependency.Domain.MapDomain {
+  static let folderName: String = "MapDomain"
+  static func project(name: String) -> TargetDependency {
+    return .project(
+      target: "\(name)",
+      path: .relativeToRoot("Domain/\(folderName)")
+    )
+  }
+  
+  static let Main = project(name: "MapDomain")
 }

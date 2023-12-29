@@ -21,6 +21,7 @@ let project = Project.makeLibraryProject(
   dependencies: [
     .Domain.LoginDomain.Main,
     .Domain.ChattingDomain.Main,
+    .Domain.MapDomain.Main,
     
     .Entity.Main
   ],
