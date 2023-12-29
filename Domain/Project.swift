@@ -19,6 +19,9 @@ let project = Project.makeLibraryProject(
   iOSTargetVersion: "16.0",
   baseSetting: .init(),
   dependencies: [
+    .Domain.LoginDomain.Main,
+    .Domain.ChattingDomain.Main,
+    
     .Entity.Main
   ],
   isDynamic: false,
