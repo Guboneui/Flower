@@ -21,7 +21,10 @@ let project = Project.makeLibraryProject(
   baseSetting: .init(),
   dependencies: [
     .Domain.Main,
+
     .Data.LoginData.Main,
+    .Data.ChattingData.Main,
+
     .Network.Main
   ],
   isDynamic: false,
