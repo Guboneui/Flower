@@ -10,6 +10,7 @@ import ProjectDescriptionHelpers
 
 import DataPlugin
 import DesignSystemPlugin
+import DomainPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Chatting"
@@ -20,7 +21,7 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
     .Data.ChattingData.Main,
-    
+    .Domain.ChattingDomain.Main,
     .ThirdParty.Main,
     .DesignSystem.Main
   ],
