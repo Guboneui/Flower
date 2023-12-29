@@ -11,6 +11,7 @@ import ProjectDescription
 extension TargetDependency {
   public struct Data {
     public struct LoginData { }
+    public struct ChattingData { }
   }
 }
 
@@ -39,4 +40,14 @@ public extension TargetDependency.Data.LoginData {
   static let Main = project(name: "LoginData")
 }
 
-
+public extension TargetDependency.Data.ChattingData {
+  static let folderName: String = "ChattingData"
+  static func project(name: String) -> TargetDependency {
+    return .project(
+      target: "\(name)",
+      path: .relativeToRoot("Data/\(folderName)")
+    )
+  }
+  
+  static let Main = project(name: "ChattingData")
+}

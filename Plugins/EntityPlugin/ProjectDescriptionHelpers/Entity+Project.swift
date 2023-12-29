@@ -11,6 +11,7 @@ import ProjectDescription
 extension TargetDependency {
   public struct Entity {
     public struct LoginEntity { }
+    public struct ChattingEntity { }
   }
 }
 
@@ -37,4 +38,16 @@ public extension TargetDependency.Entity.LoginEntity {
   }
   
   static let Main = project(name: "LoginEntity")
+}
+
+public extension TargetDependency.Entity.ChattingEntity {
+  static let folderName: String = "ChattingEntity"
+  static func project(name: String) -> TargetDependency {
+    return .project(
+      target: "\(name)",
+      path: .relativeToRoot("Entity/\(folderName)")
+    )
+  }
+  
+  static let Main = project(name: "ChattingEntity")
 }
