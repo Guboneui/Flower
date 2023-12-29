@@ -21,7 +21,8 @@ let project = Project.makeLibraryProject(
   baseSetting: .init(),
   dependencies: [
     .NetworkHelper.Main,
-    .Network.LoginNetwork.Main
+    .Network.LoginNetwork.Main,
+    .Network.MapNetwork.Main
   ],
   isDynamic: false,
   needTestTarget: false,

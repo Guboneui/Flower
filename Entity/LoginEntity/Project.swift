@@ -22,4 +22,3 @@ let project = Project.makeLibraryProject(
   needTestTarget: false,
   needDemoAppTarget: false
 )
-

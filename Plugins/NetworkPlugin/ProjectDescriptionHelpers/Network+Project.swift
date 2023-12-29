@@ -12,6 +12,7 @@ extension TargetDependency {
   public struct Network {
     public struct LoginNetwork { }
     public struct ChattingNetwork { }
+    public struct MapNetwork { }
   }
 }
 
@@ -50,4 +51,16 @@ public extension TargetDependency.Network.ChattingNetwork {
   }
   
   static let Main = project(name: "ChattingNetwork")
+}
+
+public extension TargetDependency.Network.MapNetwork {
+  static let folderName: String = "MapNetwork"
+  static func project(name: String) -> TargetDependency {
+    return .project(
+      target: "\(name)",
+      path: .relativeToRoot("Network/\(folderName)")
+    )
+  }
+  
+  static let Main = project(name: "MapNetwork")
 }
