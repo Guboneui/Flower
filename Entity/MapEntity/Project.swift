@@ -2,27 +2,22 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 구본의 on 2023/11/10.
+//  Created by 구본의 on 2023/12/30.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import DataPlugin
-import DomainPlugin
-import NetworkPlugin
+import EntityPlugin
 
-let projectName: String = "LoginData"
+let projectName: String = "MapEntity"
 let iOSTargetVersion: String = "16.0"
 
 let project = Project.makeLibraryProject(
-  name: "LoginData",
+  name: projectName,
   iOSTargetVersion: "16.0",
   baseSetting: .init(),
-  dependencies: [
-    .Domain.LoginDomain.Main,
-    .Network.LoginNetwork.Main
-  ],
+  dependencies: [],
   isDynamic: false,
   needTestTarget: false,
   needDemoAppTarget: false

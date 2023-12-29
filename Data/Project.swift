@@ -24,6 +24,7 @@ let project = Project.makeLibraryProject(
 
     .Data.LoginData.Main,
     .Data.ChattingData.Main,
+    .Data.MapData.Main,
 
     .Network.Main
   ],

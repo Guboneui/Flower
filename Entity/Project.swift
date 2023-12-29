@@ -19,7 +19,8 @@ let project = Project.makeLibraryProject(
   baseSetting: .init(),
   dependencies: [
     .Entity.LoginEntity.Main,
-    .Entity.ChattingEntity.Main
+    .Entity.ChattingEntity.Main,
+    .Entity.MapEntity.Main
   ],
   isDynamic: false,
   needTestTarget: false,
