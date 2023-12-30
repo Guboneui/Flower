@@ -24,6 +24,9 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		static let snapShotAreaHorizontalMargin: CGFloat = 36
 		static let bottomContainerViewHeight: CGFloat = 56
 		static let bottomButtonSize: CGSize = .init(width: 24, height: 24)
+		static let buttonStackViewHorizontalMargin: CGFloat = 86
+		static let buttonStackViewTopMargin: CGFloat = 8
+		static let buttonStackViewBottomMargin: CGFloat = -24
 	}
 	
 	// MARK: - TextSet
@@ -32,25 +35,40 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 	}
 	
 	// MARK: - UI Property
-	private let snapShotAreaView: UIView = UIView().then {
-		$0.backgroundColor = .clear
+	private let navigationBarView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
 	}
 	
 	private let profileImageView: UIImageView = UIImageView().then {
-		$0.backgroundColor = .green
+		$0.backgroundColor = AppTheme.Color.black
+		$0.contentMode = .scaleAspectFit
 	}
 	
-	private let navigationBarView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+	private let snapShotAreaView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.black
+	}
+	
+	private let blurView: UIVisualEffectView = UIVisualEffectView().then {
+		$0.effect = UIBlurEffect(style: .dark)
+		$0.backgroundColor = UIColor.clear
 	}
 	
 	private let bottomContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
 	}
 	
+	private let topGuideAreaView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+	}
+	
+	private let bottomGuideAreaView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+	}
+	
 	// MARK: - Property
 	private let selectedImage: UIImage
 	private let disposeBag: DisposeBag
+	private var toggle: Bool = true
 	
 	// MARK: - Initialize
 	init(selectedImage: UIImage) {
@@ -72,7 +90,9 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		profileImageView.rx.tapGesture()
 			.when(.recognized)
 			.bind { _ in
-				print("DEBUG: 이미지 스냅샷 영역 터치 테스트")
+				self.toggle.toggle()
+				if self.toggle { self.blurView.effect = UIBlurEffect(style: .dark) }
+				else { self.blurView.effect = nil }
 			}
 			.disposed(by: disposeBag)
 	}
@@ -82,6 +102,10 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		setupSnapShotGuideLineLayer()
 		view.bringSubviewToFront(navigationBarView)
 		view.bringSubviewToFront(bottomContainerView)
+		view.bringSubviewToFront(topGuideAreaView)
+		view.bringSubviewToFront(bottomGuideAreaView)
+		
+		setupSnapShowGuideLineBlurLayer()
 	}
 }
 
@@ -95,6 +119,8 @@ private extension EditProfileImageAtSignupViewController {
 	func setupViews() {
 		view.addSubview(snapShotAreaView)
 		snapShotAreaView.addSubview(profileImageView)
+		profileImageView.addSubview(blurView)
+		
 		setupConstraints()
 		setNavigationBar()
 		setBottomContainerView()
@@ -111,29 +137,55 @@ private extension EditProfileImageAtSignupViewController {
 		profileImageView.snp.makeConstraints { make in
 			make.edges.equalTo(view.safeAreaLayoutGuide)
 		}
+		
+		blurView.snp.makeConstraints { make in
+			make.edges.equalTo(view.snp.edges)
+		}
+		
 		view.layoutIfNeeded()
 	}
 	
 	func setupSnapShotGuideLineLayer() {
 		let snapShotFrame: CGRect = snapShotAreaView.frame
 		let snapShotSize: CGSize = snapShotFrame.size
-		let rect = CGRect(
-			x: snapShotFrame.minX,
-			y: snapShotFrame.minY,
-			width: snapShotSize.width,
-			height: snapShotSize.height
-		)
 		let maskLayer = CAShapeLayer()
-		maskLayer.frame = self.view.bounds
+		maskLayer.frame = self.profileImageView.bounds
 		maskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
 		let path = UIBezierPath(
-			roundedRect: rect,
+			roundedRect: snapShotFrame,
 			cornerRadius: snapShotSize.width / 2.0
 		)
 		path.append(UIBezierPath(rect: view.bounds))
 		maskLayer.path = path.cgPath
 		maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
 		view.layer.addSublayer(maskLayer)
+	}
+	
+	func setupSnapShowGuideLineBlurLayer() {
+		let maskView = UIView(frame: view.bounds)
+		maskView.clipsToBounds = true
+		maskView.backgroundColor = UIColor.clear
+		
+		let outerbezierPath = UIBezierPath.init(
+			roundedRect: view.bounds,
+			cornerRadius: .zero
+		)
+		let snapShotFrame: CGRect = snapShotAreaView.frame
+		let snapShotSize: CGSize = snapShotFrame.size
+		let innerCirclepath = UIBezierPath.init(
+			roundedRect: snapShotFrame,
+			cornerRadius: snapShotSize.width / 2.0
+		)
+		outerbezierPath.append(innerCirclepath)
+		outerbezierPath.usesEvenOddFillRule = true
+		
+		let fillLayer = CAShapeLayer()
+		fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
+		fillLayer.fillColor = AppTheme.Color.black.cgColor
+		fillLayer.path = outerbezierPath.cgPath
+		maskView.layer.addSublayer(fillLayer)
+		
+		blurView.mask = maskView
 	}
 }
 
@@ -146,7 +198,7 @@ private extension EditProfileImageAtSignupViewController {
 		}
 		
 		let confirmButton: UIButton = UIButton(type: .system).then {
-			$0.setTitle("완료", for: .normal)
+			$0.setTitle(TextSet.confirmButtonTitle, for: .normal)
 			$0.titleLabel?.font = AppTheme.Font.Bold_18
 			$0.tintColor = AppTheme.Color.primary
 		}
@@ -236,34 +288,29 @@ private extension EditProfileImageAtSignupViewController {
 		}
 		
 		buttonStackView.snp.makeConstraints { make in
-			make.horizontalEdges.equalToSuperview().inset(86)
-			make.top.equalToSuperview().offset(8)
-			make.bottom.equalToSuperview().offset(-24)
+			make.horizontalEdges.equalToSuperview()
+				.inset(Metric.buttonStackViewHorizontalMargin)
+			make.top.equalToSuperview()
+				.offset(Metric.buttonStackViewTopMargin)
+			make.bottom.equalToSuperview()
+				.offset(Metric.buttonStackViewBottomMargin)
 		}
 	}
 	
 	func setGuideAreaViews() {
-		let topGuideAreaView: UIView = UIView().then {
-			$0.backgroundColor = AppTheme.Color.black
-		}
-		
-		let bottomGuideAreaView: UIView = UIView().then {
-			$0.backgroundColor = AppTheme.Color.black
-		}
-		
 		view.addSubview(topGuideAreaView)
 		view.addSubview(bottomGuideAreaView)
 		
 		topGuideAreaView.snp.makeConstraints { make in
-			make.top.equalTo(view.safeAreaLayoutGuide)
+			make.top.equalTo(view.snp.top)
 			make.horizontalEdges.equalToSuperview()
-			make.height.equalTo(21)
+			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
 		}
 		
 		bottomGuideAreaView.snp.makeConstraints { make in
-			make.bottom.equalTo(view.safeAreaLayoutGuide)
+			make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom)
 			make.horizontalEdges.equalToSuperview()
-			make.height.equalTo(30)
+			make.bottom.equalTo(view.snp.bottom)
 		}
 	}
 }
