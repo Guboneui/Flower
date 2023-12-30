@@ -27,6 +27,9 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		static let buttonStackViewHorizontalMargin: CGFloat = 86
 		static let buttonStackViewTopMargin: CGFloat = 8
 		static let buttonStackViewBottomMargin: CGFloat = -24
+		
+		static let maxScale: CGFloat = 3.0
+		static let minScale: CGFloat = 1.0
 	}
 	
 	// MARK: - TextSet
@@ -68,12 +71,14 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 	// MARK: - Property
 	private let selectedImage: UIImage
 	private let disposeBag: DisposeBag
+	private var imageViewScale: CGFloat
 	private var toggle: Bool = true
 	
 	// MARK: - Initialize
 	init(selectedImage: UIImage) {
 		self.selectedImage = selectedImage
 		self.disposeBag = .init()
+		self.imageViewScale = 1.0
 		super.init(nibName: nil, bundle: nil)
 	}
 	
@@ -86,15 +91,8 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		super.viewDidLoad()
 		setupConfigures()
 		setupViews()
-		
-		profileImageView.rx.tapGesture()
-			.when(.recognized)
-			.bind { _ in
-				self.toggle.toggle()
-				if self.toggle { self.blurView.effect = UIBlurEffect(style: .dark) }
-				else { self.blurView.effect = nil }
-			}
-			.disposed(by: disposeBag)
+		setupImagePinchGesture()
+		setupImagePanGesture()
 	}
 	
 	override func viewDidLayoutSubviews() {
@@ -186,6 +184,77 @@ private extension EditProfileImageAtSignupViewController {
 		maskView.layer.addSublayer(fillLayer)
 		
 		blurView.mask = maskView
+	}
+	
+	func setGuideAreaViews() {
+		view.addSubview(topGuideAreaView)
+		view.addSubview(bottomGuideAreaView)
+		
+		topGuideAreaView.snp.makeConstraints { make in
+			make.top.equalTo(view.snp.top)
+			make.horizontalEdges.equalToSuperview()
+			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
+		}
+		
+		bottomGuideAreaView.snp.makeConstraints { make in
+			make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+			make.horizontalEdges.equalToSuperview()
+			make.bottom.equalTo(view.snp.bottom)
+		}
+	}
+	
+	private func setupImagePinchGesture() {
+		profileImageView.rx.pinchGesture()
+			.when(.began, .changed, .ended)
+			.share(replay: 1)
+			.subscribe(onNext: { [weak self] recognize in
+				guard let self = self else { return }
+				switch recognize.state {
+				case .began: self.blurView.effect = nil
+				case .changed:
+					let pinchScale: CGFloat = recognize.scale
+					if self.imageViewScale * pinchScale < Metric.maxScale &&
+						 self.imageViewScale * pinchScale > Metric.minScale {
+						self.imageViewScale *= pinchScale
+						self.profileImageView.transform = self.profileImageView.transform.scaledBy(
+							x: pinchScale,
+							y: pinchScale
+						)
+					}
+					recognize.scale = 1.0
+				case .ended:
+					self.blurView.effect = UIBlurEffect(style: .dark)
+				default: break
+				}
+			}).disposed(by: disposeBag)
+	}
+	
+	private func setupImagePanGesture() {
+		var imageCenterOffset: CGPoint = .zero
+		profileImageView.rx.panGesture()
+			.when(.began, .changed, .ended)
+			.share(replay: 1)
+			.subscribe(onNext: { [weak self] recognize in
+				guard let self = self else { return }
+				switch recognize.state {
+				case .began:
+					imageCenterOffset = CGPoint(
+						x: self.profileImageView.center.x,
+						y: self.profileImageView.center.y
+					)
+					self.blurView.effect = nil
+				case .changed:
+					let translation = recognize.translation(in: self.profileImageView)
+					self.profileImageView.center = CGPoint(
+						x: imageCenterOffset.x + translation.x,
+						y: imageCenterOffset.y + translation.y
+					)
+				case .ended:
+					imageCenterOffset = .zero
+					self.blurView.effect = UIBlurEffect(style: .dark)
+				default: break
+				}
+			}).disposed(by: disposeBag)
 	}
 }
 
@@ -294,23 +363,6 @@ private extension EditProfileImageAtSignupViewController {
 				.offset(Metric.buttonStackViewTopMargin)
 			make.bottom.equalToSuperview()
 				.offset(Metric.buttonStackViewBottomMargin)
-		}
-	}
-	
-	func setGuideAreaViews() {
-		view.addSubview(topGuideAreaView)
-		view.addSubview(bottomGuideAreaView)
-		
-		topGuideAreaView.snp.makeConstraints { make in
-			make.top.equalTo(view.snp.top)
-			make.horizontalEdges.equalToSuperview()
-			make.bottom.equalTo(view.safeAreaLayoutGuide.snp.top)
-		}
-		
-		bottomGuideAreaView.snp.makeConstraints { make in
-			make.top.equalTo(view.safeAreaLayoutGuide.snp.bottom)
-			make.horizontalEdges.equalToSuperview()
-			make.bottom.equalTo(view.snp.bottom)
 		}
 	}
 }
