@@ -10,20 +10,18 @@ import UIKit
 import ResourceKit
 import UtilityKit
 
+import NMapsMap
 import SnapKit
 import Then
 
 final class MapView: UIView {
 	// MARK: - TextSet
 	private enum TextSet {
-		static let titleText: String = "Map View"
+
 	}
 	
 	// MARK: - UI Property
-	private let titleLabel: UILabel = UILabel().then {
-		$0.text = TextSet.titleText
-		$0.font = AppTheme.Font.Bold_24
-	}
+	private let mapView = NMFMapView()
 	
 	// MARK: - Iitialize
 	override init(frame: CGRect) {
@@ -43,14 +41,15 @@ extension MapView: Viewable {
 	}
 	
 	func setupViews() {
-		addSubview(titleLabel)
+		addSubview(mapView)
 		
 		setupConstraints()
 	}
 	
 	func setupConstraints() {
-		titleLabel.snp.makeConstraints { make in
-			make.center.equalToSuperview()
+		mapView.snp.makeConstraints { make in
+			make.height.equalToSuperview()
+			make.width.equalToSuperview()
 		}
 	}
 	
