@@ -70,8 +70,10 @@ public extension Project {
                 "NSAppTransportSecurity": [
                   "NSAllowsArbitraryLoads": true
                 ]
-              ]
-            
+              ].merging(
+                name == "Map" ? ["NMFClientId": "wyq2xwziaq"] : [:],
+                uniquingKeysWith: { $1 }
+            )
           ),
           sources: ["./DemoApp/Sources/**"],
           resources: ["./DemoApp/Resources/**"],
