@@ -34,7 +34,8 @@ private let infoPlist: [String: InfoPlist.Value] = [
   "CFBundleIconName": "AppIcon",
   "NSAppTransportSecurity": [
     "NSAllowsArbitraryLoads": "YES"
-  ]
+  ],
+  "NMFClientId": "wyq2xwziaq"
 ]
 
 private let baseSettings: [String: SettingValue] = [
