@@ -25,7 +25,7 @@ public final class EmailSignupNameViewController: UIViewController {
 		static let profileViewSize: CGFloat = 108
 		static let profileViewTopMargin: CGFloat = 52
 		
-		static let profileImageViewSize: CGFloat = 48
+		static let profileImageSize: CGSize = .init(width: 48, height: 48)
 		
 		static let editProfileImageButtonRadius: CGFloat = 18
 		static let editProfileImageButtonSize: CGFloat = 36
@@ -78,8 +78,13 @@ public final class EmailSignupNameViewController: UIViewController {
 		$0.makeCornerRadiusWithBorder(Metric.profileViewBorderRadius)
 	}
 	
+	private let profileDefaultImageView: UIImageView = UIImageView().then {
+		$0.contentMode = .scaleAspectFit
+		$0.tintColor = ColorSet.profileImageViewColor
+	}
+	
 	private let profileImageView: UIImageView = UIImageView().then {
-		$0.image = Image.profileImage
+		$0.contentMode = .scaleAspectFit
 		$0.tintColor = ColorSet.profileImageViewColor
 	}
 	
@@ -144,6 +149,7 @@ private extension EmailSignupNameViewController {
 		view.addSubview(navigationBar)
 		
 		view.addSubview(profileView)
+		profileView.addSubview(profileDefaultImageView)
 		profileView.addSubview(profileImageView)
 		view.addSubview(editProfileImageButton)
 		
@@ -168,9 +174,13 @@ private extension EmailSignupNameViewController {
 			make.centerX.equalToSuperview()
 		}
 		
-		profileImageView.snp.makeConstraints { make in
-			make.size.equalTo(Metric.profileImageViewSize)
+		profileDefaultImageView.snp.makeConstraints { make in
+			make.size.equalTo(Metric.profileImageSize)
 			make.centerX.centerY.equalToSuperview()
+		}
+		
+		profileImageView.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
 		}
 		
 		editProfileImageButton.snp.makeConstraints { make in
@@ -248,6 +258,22 @@ private extension EmailSignupNameViewController {
 				self.emailSignupNameViewModel.nameRelay.accept(nameText)
 				self.nextButton.isEnabled = !nameText.isEmpty
 			}).disposed(by: disposeBag)
+		
+		emailSignupNameViewModel.userProfileImage
+			.asDriver()
+			.drive { [weak self] profileImage in
+				guard let self else { return }
+				if let profileImage {
+					self.profileDefaultImageView.isHidden = true
+					self.profileImageView.isHidden = false
+					self.profileImageView.image = profileImage
+				} else {
+					self.profileImageView.isHidden = true
+					self.profileDefaultImageView.isHidden = false
+					self.profileDefaultImageView.image = Image.profileImage
+				}
+			}.disposed(by: disposeBag)
+			
 	}
 	
 	/// 사용자 엘범 띄우는 메소드
@@ -277,6 +303,7 @@ extension EmailSignupNameViewController: PHPickerViewControllerDelegate {
 					DispatchQueue.main.async {
 						guard let selectedImage: UIImage = image as? UIImage else { return }
 						let editProfileImageViewController: UIViewController = EditProfileImageAtSignupViewController(
+							viewModel: self.emailSignupNameViewModel, 
 							selectedImage: selectedImage
 						)
 						editProfileImageViewController.modalPresentationStyle = .overFullScreen

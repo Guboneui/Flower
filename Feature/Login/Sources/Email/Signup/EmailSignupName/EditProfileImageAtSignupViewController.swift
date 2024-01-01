@@ -65,13 +65,18 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 	}
 	
 	// MARK: - Property
+	private let viewModel: EmailSignupNameViewModelInterface
 	private let selectedImage: UIImage
 	private let disposeBag: DisposeBag
 	private var imageViewScale: CGFloat
 	private var toggle: Bool = true
 	
 	// MARK: - Initialize
-	init(selectedImage: UIImage) {
+	init(
+		viewModel: EmailSignupNameViewModelInterface,
+		selectedImage: UIImage
+	) {
+		self.viewModel = viewModel
 		self.selectedImage = selectedImage
 		self.disposeBag = .init()
 		self.imageViewScale = 1.0
@@ -299,6 +304,8 @@ private extension EditProfileImageAtSignupViewController {
 		rightButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
+				let croppedImage: UIImage? = self.snapShotAreaView.snapshotImage()
+				self.viewModel.userProfileImage.accept(croppedImage)
 				self.dismiss(animated: true)
 			}.disposed(by: disposeBag)
 	}
