@@ -9,6 +9,7 @@ import UIKit
 
 import ResourceKit
 
+import RxGesture
 import RxSwift
 import SnapKit
 import Then
@@ -364,5 +365,19 @@ private extension EditProfileImageAtSignupViewController {
 			make.bottom.equalToSuperview()
 				.offset(Metric.buttonStackViewBottomMargin)
 		}
+		
+		rotateLeftButton.rx.tapGesture()
+			.when(.recognized)
+			.bind { [weak self] _ in
+				guard let self else { return }
+				self.profileImageView.transform = self.profileImageView.transform.rotated(by: -(.pi / 2.0))
+			}.disposed(by: disposeBag)
+		
+		rotateRightButton.rx.tapGesture()
+			.when(.recognized)
+			.bind { [weak self] _ in
+				guard let self else { return }
+				self.profileImageView.transform = self.profileImageView.transform.rotated(by: .pi / 2.0)
+			}.disposed(by: disposeBag)
 	}
 }
