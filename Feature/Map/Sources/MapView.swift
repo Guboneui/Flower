@@ -21,7 +21,7 @@ final class MapView: UIView {
 	}
 	
 	// MARK: - UI Property
-	private let mapView = NMFMapView()
+	private(set) var mapView: NMFMapView = NMFMapView()
 	
 	// MARK: - Iitialize
 	override init(frame: CGRect) {
