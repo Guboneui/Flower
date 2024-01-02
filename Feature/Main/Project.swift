@@ -19,7 +19,6 @@ let project = Project.makeFrameworkProject(
   name: projectName,
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
-
     .Feature.Chatting.Main,
     .Feature.Map.Main,
     .ThirdParty.Main,
