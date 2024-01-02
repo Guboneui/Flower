@@ -231,8 +231,14 @@ private extension EmailSignupNameViewController {
 					
 					let repository: UsersRepositoryInterface = UsersRepository()
 					let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
+					
 					let name: String = emailSignupNameViewModel.nameRelay.value
 					emailSignupNameViewModel.userSignupDTO.userName = name
+					
+					let image: Data = emailSignupNameViewModel.userProfileImage.value?
+						.jpegData(compressionQuality: 0.5) ?? Data()
+					emailSignupNameViewModel.userSignupDTO.profileImg = image
+					
 					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
 						userSignupDTO: emailSignupNameViewModel.userSignupDTO,
 						useCase: useCase

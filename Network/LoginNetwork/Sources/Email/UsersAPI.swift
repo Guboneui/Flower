@@ -70,19 +70,19 @@ extension UsersAPI: TargetType {
 		switch self {
 		case let .emailLogin(email, password):
 			return .requestParameters(
-				parameters: ["email": email, "password": password], 
+				parameters: ["email": email, "password": password],
 				encoding: JSONEncoding.default
 			)
 			
 		case let .emailAuth(email):
 			return .requestParameters(
-				parameters: ["email": email], 
+				parameters: ["email": email],
 				encoding: JSONEncoding.default
 			)
 			
 		case let .emailConfirm(email):
 			return .requestParameters(
-				parameters: ["email": email], 
+				parameters: ["email": email],
 				encoding: JSONEncoding.default
 			)
 			
@@ -104,20 +104,29 @@ extension UsersAPI: TargetType {
 			var multipartFormData: [MultipartFormData] = []
 			
 			let parameters: [String: Any] = [
-									"email": email ?? "",
-									"password": password ?? "",
-									"userName": userName ?? "",
-									"userNickName": userNickName ?? "",
-									"birth": birth ?? "",
-									"phoneNum": phoneNum ?? "",
-									"profileImg": profileImg ?? Data()
-							]
+				"email": email ?? "",
+				"password": password ?? "",
+				"userName": userName ?? "",
+				"userNickName": userNickName ?? "",
+				"birth": birth ?? "",
+				"phoneNum": phoneNum ?? ""
+			]
 			
 			for (key, value) in parameters {
 				multipartFormData.append(
 					MultipartFormData(provider: .data("\(value)".data(using: .utf8) ?? Data()), name: key)
 				)
 			}
+			
+			multipartFormData.append(
+				MultipartFormData(
+					provider: .data(profileImg ?? Data()),
+					name: "profileImg",
+					fileName: "\(userName ?? "UnKnown").jpeg",
+					mimeType: "image/jpeg"
+				)
+			)
+			
 			return .uploadMultipart(multipartFormData)
 		}
 	}
