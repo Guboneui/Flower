@@ -27,11 +27,7 @@ class LoginAppDelegate: UIResponder, UIApplicationDelegate {
 private extension LoginAppDelegate {
 	func makeWindow() {
 		window = UIWindow(frame: UIScreen.main.bounds)
-		let viewModel: EmailSignupNameViewModel = EmailSignupNameViewModel(
-			userSignupDTO: .init(email: "", password: "", userName: "", userNickName: "", birth: "", profileImg: nil, phoneNum: nil)
-		)
-		let signupNameVC = EmailSignupNameViewController(emailSignupNameViewModel: viewModel)
-		window?.rootViewController = signupNameVC
+		window?.rootViewController = LoginViewController()
 		window?.makeKeyAndVisible()
 	}
 }
