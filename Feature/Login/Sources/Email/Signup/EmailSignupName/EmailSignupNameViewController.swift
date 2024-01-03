@@ -315,7 +315,6 @@ private extension EmailSignupNameViewController {
 			
 			let name: String = emailSignupNameViewModel.nameRelay.value
 			emailSignupNameViewModel.userSignupDTO.userName = name
-			
 			emailSignupNameViewModel.userSignupDTO.profileImg = profileImageData
 			
 			let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
