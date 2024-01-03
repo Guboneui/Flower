@@ -301,7 +301,8 @@ private extension EmailSignupNameViewController {
 	}
 	
 	func pushSignupPhoneViewController(with profileImageData: Data) {
-		if let navigation = self.navigationController as? EmailLoginNavigationController {
+		guard let navigation = self.navigationController 
+						as? EmailLoginNavigationController else { return }
 			navigation.pageController.moveToNextPage()
 			
 			let repository: UsersRepositoryInterface = UsersRepository()
@@ -319,7 +320,6 @@ private extension EmailSignupNameViewController {
 			
 			let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
 			navigation.pushViewController(signupPhoneVC, animated: true)
-		}
 	}
 }
 
