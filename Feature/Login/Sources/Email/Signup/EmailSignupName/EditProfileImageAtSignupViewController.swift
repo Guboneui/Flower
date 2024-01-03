@@ -52,6 +52,11 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		$0.backgroundColor = AppTheme.Color.black
 	}
 	
+	private let blurView: UIVisualEffectView = UIVisualEffectView().then {
+		$0.effect = UIBlurEffect(style: .dark)
+		$0.backgroundColor = UIColor.clear
+	}
+	
 	private let bottomContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
 	}
@@ -118,6 +123,7 @@ private extension EditProfileImageAtSignupViewController {
 	func setupViews() {
 		view.addSubview(snapShotAreaView)
 		snapShotAreaView.addSubview(profileImageView)
+		snapShotAreaView.addSubview(blurView)
 		
 		setupConstraints()
 		setNavigationBar()
@@ -134,6 +140,10 @@ private extension EditProfileImageAtSignupViewController {
 		
 		profileImageView.snp.makeConstraints { make in
 			make.edges.equalTo(view.safeAreaLayoutGuide)
+		}
+		
+		blurView.snp.makeConstraints { make in
+			make.edges.equalTo(view.snp.edges)
 		}
 		
 		view.layoutIfNeeded()
@@ -178,6 +188,8 @@ private extension EditProfileImageAtSignupViewController {
 		fillLayer.fillColor = AppTheme.Color.black.cgColor
 		fillLayer.path = outerbezierPath.cgPath
 		maskView.layer.addSublayer(fillLayer)
+		
+		blurView.mask = maskView
 	}
 	
 	func setGuideAreaViews() {
@@ -204,7 +216,7 @@ private extension EditProfileImageAtSignupViewController {
 			.subscribe(onNext: { [weak self] recognize in
 				guard let self = self else { return }
 				switch recognize.state {
-				case .began: print("시작")
+				case .began: self.blurView.effect = nil
 				case .changed:
 					let pinchScale: CGFloat = recognize.scale
 					if self.imageViewScale * pinchScale < Metric.maxScale &&
@@ -217,7 +229,7 @@ private extension EditProfileImageAtSignupViewController {
 					}
 					recognize.scale = 1.0
 				case .ended:
-					print("끝")
+					self.blurView.effect = UIBlurEffect(style: .dark)
 				default: break
 				}
 			}).disposed(by: disposeBag)
@@ -236,6 +248,7 @@ private extension EditProfileImageAtSignupViewController {
 						x: self.profileImageView.center.x,
 						y: self.profileImageView.center.y
 					)
+					self.blurView.effect = nil
 				case .changed:
 					let translation = recognize.translation(in: self.profileImageView)
 					self.profileImageView.center = CGPoint(
@@ -244,6 +257,7 @@ private extension EditProfileImageAtSignupViewController {
 					)
 				case .ended:
 					imageCenterOffset = .zero
+					self.blurView.effect = UIBlurEffect(style: .dark)
 				default: break
 				}
 			}).disposed(by: disposeBag)
