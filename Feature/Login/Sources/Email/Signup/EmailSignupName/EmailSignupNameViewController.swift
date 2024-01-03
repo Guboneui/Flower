@@ -40,6 +40,8 @@ public final class EmailSignupNameViewController: UIViewController {
 		
 		static let nextButtonBottomMargin: CGFloat = 34
 		static let nextButttonBothsides: CGFloat = 24
+		
+		static let profileimageCompressionQuality: CGFloat = 0.5
 	}
 	
 	// MARK: - FONT
@@ -68,6 +70,9 @@ public final class EmailSignupNameViewController: UIViewController {
 		static let navigationBarText: String = "회원가입"
 		static let nameLabelText: String = "이름을 입력해 주세요"
 		static let nextButtonText: String = "다음"
+		static let alertTitleText: String = "실패"
+		static let alertMessageText: String = "프로필 이미지를 다시 선택해 주세요"
+		static let alertConfirmButtonTitleText: String = "확인"
 	}
 	
 	// MARK: - PRIVATE PROPERTY
@@ -225,22 +230,32 @@ private extension EmailSignupNameViewController {
 		nextButton.rx.touchHandler()
 			.bind { [weak self] in
 				guard let self else { return }
+					
+					guard let profileImage: UIImage = emailSignupNameViewModel.userProfileImage.value else {
+						pushSignupPhoneViewController(with: Data())
+						return
+					}
+					
+					guard let profileImageData: Data = profileImage.jpegData(
+						compressionQuality: Metric.profileimageCompressionQuality
+					) else {
+						let alert = UIAlertController(
+							title: TextSet.alertTitleText,
+							message: TextSet.alertMessageText,
+							preferredStyle: .alert
+						)
+						
+						let confirmButton = UIAlertAction(
+							title: TextSet.alertConfirmButtonTitleText,
+							style: .default
+						)
+						
+						alert.addAction(confirmButton)
+						present(alert, animated: true)
+						return
+					}
 				
-				if let navigation = self.navigationController as? EmailLoginNavigationController {
-					navigation.pageController.moveToNextPage()
-					
-					let repository: UsersRepositoryInterface = UsersRepository()
-					let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
-					let name: String = emailSignupNameViewModel.nameRelay.value
-					emailSignupNameViewModel.userSignupDTO.userName = name
-					let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
-						userSignupDTO: emailSignupNameViewModel.userSignupDTO,
-						useCase: useCase
-					)
-					
-					let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
-					navigation.pushViewController(signupPhoneVC, animated: true)
-				}
+				pushSignupPhoneViewController(with: profileImageData)
 			}.disposed(by: disposeBag)
 		
 		editProfileImageButton.rx.touchHandler()
@@ -273,7 +288,6 @@ private extension EmailSignupNameViewController {
 					self.profileDefaultImageView.image = Image.profileImage
 				}
 			}.disposed(by: disposeBag)
-			
 	}
 	
 	/// 사용자 엘범 띄우는 메소드
@@ -289,6 +303,29 @@ private extension EmailSignupNameViewController {
 			rootViewController: phpickerViewController
 		)
 		self.present(phpickerNavigationController, animated: true, completion: nil)
+	}
+	
+	func pushSignupPhoneViewController(with profileImageData: Data) {
+		guard let navigation = self.navigationController 
+						as? EmailLoginNavigationController else { return }
+			navigation.pageController.moveToNextPage()
+			
+			let repository: UsersRepositoryInterface = UsersRepository()
+			let useCase: UsersUseCaseInterface = UsersUseCase(usersRepository: repository)
+			
+			let name: String = emailSignupNameViewModel.nameRelay.value
+			emailSignupNameViewModel.userSignupDTO.userName = name
+			emailSignupNameViewModel.userSignupDTO.profileImg = profileImageData
+			
+			let viewModel: EmailSignupPhoneViewModel = EmailSignupPhoneViewModel(
+				userSignupDTO: emailSignupNameViewModel.userSignupDTO,
+				useCase: useCase
+			)
+			
+		let signupPhoneVC: EmailSignupPhoneViewController = EmailSignupPhoneViewController(
+			emailSignupPhoneViewModel: viewModel
+		)
+			navigation.pushViewController(signupPhoneVC, animated: true)
 	}
 }
 
