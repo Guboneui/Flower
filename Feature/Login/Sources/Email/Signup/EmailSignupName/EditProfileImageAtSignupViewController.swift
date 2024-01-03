@@ -57,6 +57,8 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		$0.backgroundColor = UIColor.clear
 	}
 	
+	private let snapShotGuideLineMaskLayer: CAShapeLayer = .init()
+	
 	private let bottomContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
 	}
@@ -152,17 +154,16 @@ private extension EditProfileImageAtSignupViewController {
 	func setupSnapShotGuideLineLayer() {
 		let snapShotFrame: CGRect = snapShotAreaView.frame
 		let snapShotSize: CGSize = snapShotFrame.size
-		let maskLayer = CAShapeLayer()
-		maskLayer.frame = self.profileImageView.bounds
-		maskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
+		snapShotGuideLineMaskLayer.frame = self.profileImageView.bounds
+		snapShotGuideLineMaskLayer.fillColor = UIColor.clear.cgColor
 		let path = UIBezierPath(
 			roundedRect: snapShotFrame,
 			cornerRadius: snapShotSize.width / 2.0
 		)
 		path.append(UIBezierPath(rect: view.bounds))
-		maskLayer.path = path.cgPath
-		maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-		view.layer.addSublayer(maskLayer)
+		snapShotGuideLineMaskLayer.path = path.cgPath
+		snapShotGuideLineMaskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+		view.layer.addSublayer(snapShotGuideLineMaskLayer)
 	}
 	
 	func setupSnapShowGuideLineBlurLayer() {
@@ -216,7 +217,9 @@ private extension EditProfileImageAtSignupViewController {
 			.subscribe(onNext: { [weak self] recognize in
 				guard let self = self else { return }
 				switch recognize.state {
-				case .began: self.blurView.effect = nil
+				case .began: 
+					self.blurView.effect = nil
+					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
 				case .changed:
 					let pinchScale: CGFloat = recognize.scale
 					if self.imageViewScale * pinchScale < Metric.maxScale &&
@@ -230,6 +233,7 @@ private extension EditProfileImageAtSignupViewController {
 					recognize.scale = 1.0
 				case .ended:
 					self.blurView.effect = UIBlurEffect(style: .dark)
+					self.snapShotGuideLineMaskLayer.fillColor = UIColor.clear.cgColor
 				default: break
 				}
 			}).disposed(by: disposeBag)
@@ -249,6 +253,7 @@ private extension EditProfileImageAtSignupViewController {
 						y: self.profileImageView.center.y
 					)
 					self.blurView.effect = nil
+					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
 				case .changed:
 					let translation = recognize.translation(in: self.profileImageView)
 					self.profileImageView.center = CGPoint(
@@ -258,6 +263,7 @@ private extension EditProfileImageAtSignupViewController {
 				case .ended:
 					imageCenterOffset = .zero
 					self.blurView.effect = UIBlurEffect(style: .dark)
+					self.snapShotGuideLineMaskLayer.fillColor = UIColor.clear.cgColor
 				default: break
 				}
 			}).disposed(by: disposeBag)
