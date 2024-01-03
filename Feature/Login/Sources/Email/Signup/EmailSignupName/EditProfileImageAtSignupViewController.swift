@@ -255,11 +255,31 @@ private extension EditProfileImageAtSignupViewController {
 					self.blurView.effect = nil
 					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
 				case .changed:
+					let transform: CGAffineTransform = self.profileImageView.transform
 					let translation = recognize.translation(in: self.profileImageView)
-					self.profileImageView.center = CGPoint(
-						x: imageCenterOffset.x + translation.x,
-						y: imageCenterOffset.y + translation.y
-					)
+					if transform.a >= 1.0 && transform.d >= 1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x + translation.x,
+							y: imageCenterOffset.y + translation.y
+						)
+					} else if transform.b >= 1.0 && transform.c <= -1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x - translation.y,
+							y: imageCenterOffset.y + translation.x
+						)
+					} else if transform.a <= -1.0 && transform.d <= -1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x - translation.x,
+							y: imageCenterOffset.y - translation.y
+						)
+					} else if transform.b <= -1.0 && transform.c >= 1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x + translation.y,
+							y: imageCenterOffset.y - translation.x
+						)
+					} else {
+						break
+					}
 				case .ended:
 					imageCenterOffset = .zero
 					self.blurView.effect = UIBlurEffect(style: .dark)
