@@ -40,6 +40,8 @@ public final class EmailSignupNameViewController: UIViewController {
 		
 		static let nextButtonBottomMargin: CGFloat = 34
 		static let nextButttonBothsides: CGFloat = 24
+		
+		static let profileimageCompressionQuality: CGFloat = 0.5
 	}
 	
 	// MARK: - FONT
@@ -234,7 +236,9 @@ private extension EmailSignupNameViewController {
 						return
 					}
 					
-					guard let profileImageData: Data = profileImage.jpegData(compressionQuality: 0.5) else {
+					guard let profileImageData: Data = profileImage.jpegData(
+						compressionQuality: Metric.profileimageCompressionQuality
+					) else {
 						let alert = UIAlertController(
 							title: TextSet.failureAlertTitleText,
 							message: TextSet.failureAlertMessageText,
