@@ -198,7 +198,7 @@ private extension EditProfileImageAtSignupViewController {
 	}
 	
 	private func setupImagePinchGesture() {
-		profileImageView.rx.pinchGesture()
+		snapShotAreaView.rx.pinchGesture()
 			.when(.began, .changed, .ended)
 			.share(replay: 1)
 			.subscribe(onNext: { [weak self] recognize in
