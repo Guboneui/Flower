@@ -70,9 +70,9 @@ public final class EmailSignupNameViewController: UIViewController {
 		static let navigationBarText: String = "회원가입"
 		static let nameLabelText: String = "이름을 입력해 주세요"
 		static let nextButtonText: String = "다음"
-		static let failureAlertTitleText: String = "실패"
-		static let failureAlertMessageText: String = "프로필 이미지를 다시 선택해 주세요"
-		static let failureAlertBtnTitleText: String = "확인"
+		static let alertTitleText: String = "실패"
+		static let alertMessageText: String = "프로필 이미지를 다시 선택해 주세요"
+		static let alertConfirmButtonTitleText: String = "확인"
 	}
 	
 	// MARK: - PRIVATE PROPERTY
@@ -240,17 +240,17 @@ private extension EmailSignupNameViewController {
 						compressionQuality: Metric.profileimageCompressionQuality
 					) else {
 						let alert = UIAlertController(
-							title: TextSet.failureAlertTitleText,
-							message: TextSet.failureAlertMessageText,
+							title: TextSet.alertTitleText,
+							message: TextSet.alertMessageText,
 							preferredStyle: .alert
 						)
 						
-						let failure = UIAlertAction(
-							title: TextSet.failureAlertBtnTitleText,
+						let confirmButton = UIAlertAction(
+							title: TextSet.alertConfirmButtonTitleText,
 							style: .default
 						)
 						
-						alert.addAction(failure)
+						alert.addAction(confirmButton)
 						present(alert, animated: true)
 						return
 					}
