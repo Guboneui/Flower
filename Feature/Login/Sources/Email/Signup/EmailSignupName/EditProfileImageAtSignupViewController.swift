@@ -225,7 +225,7 @@ private extension EditProfileImageAtSignupViewController {
 	
 	private func setupImagePanGesture() {
 		var imageCenterOffset: CGPoint = .zero
-		profileImageView.rx.panGesture()
+		snapShotAreaView.rx.panGesture()
 			.when(.began, .changed, .ended)
 			.share(replay: 1)
 			.subscribe(onNext: { [weak self] recognize in
