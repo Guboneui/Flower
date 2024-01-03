@@ -323,7 +323,9 @@ private extension EmailSignupNameViewController {
 				useCase: useCase
 			)
 			
-			let signupPhoneVC = EmailSignupPhoneViewController(emailSignupPhoneViewModel: viewModel)
+		let signupPhoneVC: EmailSignupPhoneViewController = EmailSignupPhoneViewController(
+			emailSignupPhoneViewModel: viewModel
+		)
 			navigation.pushViewController(signupPhoneVC, animated: true)
 	}
 }
