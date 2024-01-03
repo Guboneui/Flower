@@ -247,7 +247,8 @@ private extension EmailSignupNameViewController {
 						
 						let failure = UIAlertAction(
 							title: TextSet.failureAlertBtnTitleText,
-							style: .default)
+							style: .default
+						)
 						
 						alert.addAction(failure)
 						present(alert, animated: true)
