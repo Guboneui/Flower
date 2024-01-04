@@ -356,7 +356,7 @@ private extension EditProfileImageAtSignupViewController {
 			$0.setImage(AppTheme.Image.rotateLeft, for: .normal)
 		}
 		
-		let rotatePIButton: UIButton = UIButton(type: .system).then {
+		let rotateResetButton: UIButton = UIButton(type: .system).then {
 			$0.tintColor = AppTheme.Color.white
 			$0.setImage(AppTheme.Image.rotatePI, for: .normal)
 		}
@@ -368,7 +368,7 @@ private extension EditProfileImageAtSignupViewController {
 		
 		let buttonStackView: UIStackView = .init(arrangedSubviews: [
 			rotateLeftButton,
-			rotatePIButton,
+			rotateResetButton,
 			rotateRightButton
 		]).then {
 			$0.distribution = .equalSpacing
@@ -399,16 +399,36 @@ private extension EditProfileImageAtSignupViewController {
 				.offset(Metric.buttonStackViewBottomMargin)
 		}
 		
-		rotateLeftButton.rx.tapGesture()
-			.when(.recognized)
-			.bind { [weak self] _ in
+		rotateLeftButton.rx.touchHandler()
+			.bind { [weak self] in
 				guard let self else { return }
 				self.profileImageView.transform = self.profileImageView.transform.rotated(by: -(.pi / 2.0))
 			}.disposed(by: disposeBag)
 		
-		rotateRightButton.rx.tapGesture()
-			.when(.recognized)
-			.bind { [weak self] _ in
+		rotateResetButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				let radians: CGFloat = atan2(
+					self.profileImageView.transform.b,
+					self.profileImageView.transform.a
+				)
+				let degrees: CGFloat = radians * (180 / .pi)
+				switch degrees {
+				case 45..<135:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: -(.pi / 2.0))
+				case 135...180:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: .pi)
+				case -180 ..< -135:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: -.pi)
+				case -135 ..< -45:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: (.pi / 2.0))
+				default:
+					break
+				}
+			}.disposed(by: disposeBag)
+		
+		rotateRightButton.rx.touchHandler()
+			.bind { [weak self] in
 				guard let self else { return }
 				self.profileImageView.transform = self.profileImageView.transform.rotated(by: .pi / 2.0)
 			}.disposed(by: disposeBag)
