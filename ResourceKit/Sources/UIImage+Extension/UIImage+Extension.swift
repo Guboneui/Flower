@@ -37,6 +37,10 @@ extension AppTheme {
 		public static let rotatePI = ResourceKitAsset.Image.rotatePI.image
 		public static let locationMarker = ResourceKitAsset.Image.locationMarker.image
 		public static let rating = ResourceKitAsset.Image.rating.image
+		public static let userLocation = ResourceKitAsset.Image.userLocation.image
+		public static let houseList = ResourceKitAsset.Image.houseList.image
+		public static let filter = ResourceKitAsset.Image.filter.image
+		public static let calendar = ResourceKitAsset.Image.calendar.image
 		
 		// MARK: LOGIN
 		public static let naverLogin = ResourceKitAsset.Image.naverLogin.image
