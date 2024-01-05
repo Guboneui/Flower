@@ -36,6 +36,41 @@ final class MapView: UIView {
 		return cv
 	}()
 	
+	private let houseListButtonView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.primary
+		$0.makeCornerRadius(17, edge: .all)
+		$0.layer.shadowOpacity = 0.2
+		$0.layer.shadowColor = AppTheme.Color.black.cgColor
+		$0.layer.shadowOffset = CGSize(width: 2, height: 2)
+		$0.layer.shadowRadius = 10
+		$0.layer.masksToBounds = false
+	}
+	
+	private let hoouseListButtonImageView: UIImageView = UIImageView().then {
+		$0.image = AppTheme.Image.houseList
+		$0.tintColor = AppTheme.Color.white
+	}
+	
+	private let houseListLabel: UILabel = UILabel().then {
+		$0.text = "목록보기"
+		$0.font = AppTheme.Font.Regular_14
+		$0.textColor = AppTheme.Color.white
+	}
+	
+	private let userLocationButtonView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.white
+		$0.makeCornerRadius(20, edge: .all)
+		$0.layer.shadowOpacity = 0.2
+		$0.layer.shadowColor = AppTheme.Color.black.cgColor
+		$0.layer.shadowOffset = CGSize(width: 1, height: 1)
+		$0.layer.shadowRadius = 10
+		$0.layer.masksToBounds = false
+	}
+	
+	private let userLocationImageView: UIImageView = UIImageView().then {
+		$0.image = AppTheme.Image.userLocation
+	}
+	
 	// MARK: - Iitialize
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -56,6 +91,13 @@ extension MapView: Viewable {
 	func setupViews() {
 		addSubview(mapView)
 		addSubview(mapCollectionView)
+		addSubview(houseListButtonView)
+		addSubview(userLocationButtonView)
+		
+		houseListButtonView.addSubview(hoouseListButtonImageView)
+		houseListButtonView.addSubview(houseListLabel)
+		
+		userLocationButtonView.addSubview(userLocationImageView)
 		
 		setupConstraints()
 	}
@@ -70,6 +112,35 @@ extension MapView: Viewable {
 			make.horizontalEdges.equalToSuperview()
 			make.bottom.equalToSuperview().offset(-106)
 			make.height.equalTo(141)
+		}
+		
+		houseListButtonView.snp.makeConstraints { make in
+			make.width.equalTo(92)
+			make.height.equalTo(33)
+			make.bottom.equalTo(mapCollectionView.snp.top).offset(-12)
+			make.centerX.equalToSuperview()
+		}
+		
+		hoouseListButtonImageView.snp.makeConstraints { make in
+			make.size.equalTo(16)
+			make.centerY.equalToSuperview()
+			make.leading.equalToSuperview().offset(12)
+		}
+		
+		houseListLabel.snp.makeConstraints { make in
+			make.centerY.equalToSuperview()
+			make.trailing.equalToSuperview().offset(-12)
+		}
+		
+		userLocationButtonView.snp.makeConstraints { make in
+			make.size.equalTo(40)
+			make.bottom.equalTo(mapCollectionView.snp.top).offset(-12)
+			make.trailing.equalToSuperview().offset(-32)
+		}
+		
+		userLocationImageView.snp.makeConstraints { make in
+			make.size.equalTo(24)
+			make.center.equalToSuperview()
 		}
 	}
 	
