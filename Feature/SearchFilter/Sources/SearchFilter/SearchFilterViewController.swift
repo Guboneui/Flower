@@ -21,7 +21,6 @@ public final class SearchFilterViewController: UIViewController, View {
 		static let minumumGroupCount: Int = 0
 		static let maximumGroupCount: Int = 6
 	}
-	
 	// MARK: - UI PROPERTY
 	private let rootView: SearchFilterView = SearchFilterView()
 	

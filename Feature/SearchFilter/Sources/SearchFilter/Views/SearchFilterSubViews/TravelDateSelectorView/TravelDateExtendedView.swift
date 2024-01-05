@@ -21,6 +21,13 @@ final class TravelDateExtendedView: UIView {
 	private enum Metric {
 		static let radius: CGFloat = 12
 		
+		static let selectionContainerViewRadius: CGFloat = 24
+		static let selectionContainerViewHeight: CGFloat = 48
+		static let selectionContainerViewTopMargin: CGFloat = 16
+		static let selectionContainerViewHorizontalMargin: CGFloat = 10
+		static let selectionViewHeight: CGFloat = 32
+		static let selectionViewRadius: CGFloat = 16
+		
 		static let topMargin: CGFloat = 24
 		static let horizontalMargin: CGFloat = 22
 		static let searchButtonBottomMargin: CGFloat = -44
@@ -29,6 +36,8 @@ final class TravelDateExtendedView: UIView {
 	private enum TextSet {
 		static let titleLabelText: String = "일정을 알려주세요"
 		static let searchText: String = "검색하기"
+		static let simpleSelectionButtonTitle: String = "간편 선택"
+		static let periodSelectionButtonTitle: String = "기간 선택"
 	}
 	
 	// MARK: - UI PROPERTY
@@ -37,6 +46,37 @@ final class TravelDateExtendedView: UIView {
 		$0.font = AppTheme.Font.Bold_20
 		$0.textColor = AppTheme.Color.black
 	}
+	
+	private let selectionContainerView: UIView = UIView().then {
+		$0.makeCornerRadius(Metric.selectionContainerViewRadius)
+		$0.backgroundColor = AppTheme.Color.grey90
+	}
+	
+	private let selectionView: UIView = UIView().then {
+		$0.backgroundColor = AppTheme.Color.white
+		$0.makeCornerRadius(Metric.selectionViewRadius)
+	}
+	
+	fileprivate let simpleSelectionButton: UIButton = UIButton(type: .system).then {
+		$0.setTitle(TextSet.simpleSelectionButtonTitle, for: .normal)
+		$0.titleLabel?.font = AppTheme.Font.Bold_12
+		$0.tintColor = AppTheme.Color.black
+	}
+	
+	fileprivate let periodSelectionButton: UIButton = UIButton(type: .system).then {
+		$0.setTitle(TextSet.periodSelectionButtonTitle, for: .normal)
+		$0.titleLabel?.font = AppTheme.Font.Bold_12
+		$0.tintColor = AppTheme.Color.black
+	}
+	
+	private lazy var selectionStackView: UIStackView = UIStackView(
+		arrangedSubviews: [
+			simpleSelectionButton,
+			periodSelectionButton
+		]).then {
+			$0.axis = .horizontal
+			$0.spacing = 112
+		}
 	
 	private let containerView: UIView = UIView().then {
 		$0.backgroundColor = .blue
@@ -50,10 +90,50 @@ final class TravelDateExtendedView: UIView {
 	
 	private let disposeBag: DisposeBag = .init()
 	
+	private var state: PublishSubject<Bool> = .init()
+	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
 		setupConfigure()
 		setupSubViews()
+		
+		state
+			.distinctUntilChanged()
+			.observe(on: MainScheduler.instance)
+			.bind { currentState in
+				if currentState {
+					UIView.animate(withDuration: 0.3, animations: {
+						self.selectionView.snp.remakeConstraints { make in
+							make.center.equalTo(self.simpleSelectionButton.snp.center)
+							make.height.equalTo(Metric.selectionViewHeight)
+							make.width.equalTo(self.selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+						}
+						self.layoutIfNeeded()
+					})
+				} else {
+					UIView.animate(withDuration: 0.3, animations: {
+						self.selectionView.snp.remakeConstraints { make in
+							make.center.equalTo(self.periodSelectionButton.snp.center)
+							make.height.equalTo(Metric.selectionViewHeight)
+							make.width.equalTo(self.selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+						}
+						self.layoutIfNeeded()
+					})
+				}
+			}.disposed(by: disposeBag)
+		
+		simpleSelectionButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				self.state.onNext(true)
+			}.disposed(by: disposeBag)
+		
+		periodSelectionButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				self.state.onNext(false)
+			}.disposed(by: disposeBag)
+		
 	}
 	
 	required init?(coder: NSCoder) {
@@ -69,6 +149,9 @@ private extension TravelDateExtendedView {
 	
 	func setupSubViews() {
 		addSubview(titleLabel)
+		addSubview(selectionContainerView)
+		selectionContainerView.addSubview(selectionView)
+		selectionContainerView.addSubview(selectionStackView)
 		addSubview(containerView)
 		addSubview(searchButton)
 		
@@ -81,8 +164,24 @@ private extension TravelDateExtendedView {
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
 		}
 		
+		selectionContainerView.snp.makeConstraints { make in
+			make.top.equalTo(titleLabel.snp.bottom).offset(Metric.selectionContainerViewTopMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.selectionContainerViewHorizontalMargin)
+			make.height.equalTo(Metric.selectionContainerViewHeight)
+		}
+		
+		selectionView.snp.makeConstraints { make in
+			make.center.equalTo(simpleSelectionButton.snp.center)
+			make.height.equalTo(Metric.selectionViewHeight)
+			make.width.equalTo(selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+		}
+		
+		selectionStackView.snp.makeConstraints { make in
+			make.center.equalToSuperview()
+		}
+		
 		containerView.snp.makeConstraints { make in
-			make.top.equalTo(titleLabel.snp.bottom).offset(Metric.topMargin)
+			make.top.equalTo(selectionContainerView.snp.bottom).offset(Metric.topMargin)
 			make.horizontalEdges.equalToSuperview().inset(20)
 			make.bottom.equalTo(searchButton.snp.top).offset(-20)
 		}
