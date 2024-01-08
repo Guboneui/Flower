@@ -70,6 +70,8 @@ private let appTarget: Target = Target(
     
     .Feature.Login.Main,
     .Feature.SearchFilter.Main,
+    .Feature.Main.Main,
+    
     .Domain.Main,
     .Data.Main
   ],
