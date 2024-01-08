@@ -193,8 +193,6 @@ private extension TravelDateExtendedView {
 	}
 }
 
-// MARK: - COLLECTIONVIEW {
-
 // MARK: - REACTIVE EXTENSION
 extension Reactive where Base: TravelDateExtendedView {
 	var didTapSearchDateButton: ControlEvent<Void> {
