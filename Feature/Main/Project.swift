@@ -8,7 +8,9 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
+import DesignSystemPlugin
 import FeaturePlugin
+import ThirdPartyDependencyPlugin
 
 let projectName: String = "Main"
 let iOSTargetVersion: String = "16.0"
@@ -18,7 +20,9 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
     .Feature.Chatting.Main,
-    .Feature.Map.Main
+    .Feature.Map.Main,
+    .ThirdParty.Main,
+    .DesignSystem.Main
   ],
   isDynamic: false,
   needTestTarget: false,

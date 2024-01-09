@@ -24,6 +24,7 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "RxSwift": .framework,
     "RxGesture": .framework,
     "Moya": .framework,
+    "RxMoya": .framework,
     "NMapsMap": .framework,
     "ReactorKit": .framework,
     "HorizonCalendar": .framework

@@ -32,6 +32,9 @@ extension AppTheme {
 		public static let showOn = ResourceKitAsset.Image.showOn.image
 		public static let success = ResourceKitAsset.Image.success.image
 		public static let xmark = ResourceKitAsset.Image.xmark.image
+		public static let rotateLeft = ResourceKitAsset.Image.rotateLeft.image
+		public static let rotateRight = ResourceKitAsset.Image.rotateRight.image
+		public static let rotatePI = ResourceKitAsset.Image.rotatePI.image
 		
 		// MARK: LOGIN
 		public static let naverLogin = ResourceKitAsset.Image.naverLogin.image
