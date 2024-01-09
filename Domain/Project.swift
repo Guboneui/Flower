@@ -22,7 +22,7 @@ let project = Project.makeLibraryProject(
     .Domain.LoginDomain.Main,
     .Domain.ChattingDomain.Main,
     .Domain.MapDomain.Main,
-
+    
     .Entity.Main
   ],
   isDynamic: false,
