@@ -9,7 +9,9 @@ import UIKit
 
 import DesignSystem
 import ResourceKit
+import UtilityKit
 
+import HorizonCalendar
 import RxCocoa
 import RxSwift
 import SnapKit
@@ -78,6 +80,8 @@ final class TravelDateExtendedView: UIView {
 			$0.spacing = 112
 		}
 	
+	private var calendarView: CalendarView?
+	
 	private let containerView: UIView = UIView().then {
 		$0.backgroundColor = .blue
 	}
@@ -94,9 +98,77 @@ final class TravelDateExtendedView: UIView {
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
-		setupConfigure()
-		setupSubViews()
+		guard let content = makeContent() else { return }
+		self.calendarView = .init(initialContent: content)
+		setupConfigures()
+		setupViews()
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+}
+
+// MARK: - Viewable METHOD
+extension TravelDateExtendedView: Viewable {
+	func setupConfigures() {
+		backgroundColor = AppTheme.Color.white
+	}
+	
+	func setupViews() {
+		addSubview(titleLabel)
+		addSubview(selectionContainerView)
+		selectionContainerView.addSubview(selectionView)
+		selectionContainerView.addSubview(selectionStackView)
+		addSubview(calendarView ?? containerView)
+		addSubview(searchButton)
 		
+		setupConstraints()
+	}
+	
+	func setupConstraints() {
+		titleLabel.snp.makeConstraints { make in
+			make.top.equalToSuperview().offset(Metric.topMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+		}
+		
+		selectionContainerView.snp.makeConstraints { make in
+			make.top.equalTo(titleLabel.snp.bottom).offset(Metric.selectionContainerViewTopMargin)
+			make.horizontalEdges.equalToSuperview().inset(Metric.selectionContainerViewHorizontalMargin)
+			make.height.equalTo(Metric.selectionContainerViewHeight)
+		}
+		
+		selectionView.snp.makeConstraints { make in
+			make.center.equalTo(simpleSelectionButton.snp.center)
+			make.height.equalTo(Metric.selectionViewHeight)
+			make.width.equalTo(selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+		}
+		
+		selectionStackView.snp.makeConstraints { make in
+			make.center.equalToSuperview()
+		}
+		
+		if let calendarView {
+			calendarView.snp.makeConstraints { make in
+				make.top.equalTo(selectionContainerView.snp.bottom).offset(Metric.topMargin)
+				make.horizontalEdges.equalToSuperview()
+				make.bottom.equalTo(searchButton.snp.top).offset(-20)
+			}
+		} else {
+			containerView.snp.makeConstraints { make in
+				make.top.equalTo(selectionContainerView.snp.bottom).offset(Metric.topMargin)
+				make.horizontalEdges.equalToSuperview()
+				make.bottom.equalTo(searchButton.snp.top).offset(-20)
+			}
+		}
+		
+		searchButton.snp.makeConstraints { make in
+			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+			make.bottom.equalToSuperview().offset(Metric.searchButtonBottomMargin)
+		}
+	}
+	
+	func setupBinds() {
 		state
 			.distinctUntilChanged()
 			.observe(on: MainScheduler.instance)
@@ -135,60 +207,60 @@ final class TravelDateExtendedView: UIView {
 			}.disposed(by: disposeBag)
 		
 	}
-	
-	required init?(coder: NSCoder) {
-		fatalError("init(coder:) has not been implemented")
-	}
 }
 
-// MARK: - PRIVATE METHOD
+// MARK: - Calendar Method
 private extension TravelDateExtendedView {
-	func setupConfigure() {
-		backgroundColor = AppTheme.Color.white
-	}
-	
-	func setupSubViews() {
-		addSubview(titleLabel)
-		addSubview(selectionContainerView)
-		selectionContainerView.addSubview(selectionView)
-		selectionContainerView.addSubview(selectionStackView)
-		addSubview(containerView)
-		addSubview(searchButton)
+	private func makeContent() -> CalendarViewContent? {
+		let calendar = Calendar.current
+		let currentYear: Int = calendar.component(.year, from: .now)
+		let currentMonth: Int = calendar.component(.month, from: .now)
 		
-		setupConstraints()
-	}
-	
-	func setupConstraints() {
-		titleLabel.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(Metric.topMargin)
-			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
+		guard
+			let afterSixMonthFromNow = calendar.date(byAdding: .month, value: 6, to: .now),
+			let range = calendar.range(of: .day, in: .month, for: afterSixMonthFromNow),
+			let startDate = calendar.date(
+				from: DateComponents(
+					year: currentYear,
+					month: currentMonth,
+					day: 01
+				)
+			),
+			let endDate = calendar.date(
+				from: DateComponents(
+					year: calendar.component(.year, from: afterSixMonthFromNow),
+					month: calendar.component(.month, from: afterSixMonthFromNow),
+					day: range.count
+				)
+			)
+		else {
+			return nil
 		}
-		
-		selectionContainerView.snp.makeConstraints { make in
-			make.top.equalTo(titleLabel.snp.bottom).offset(Metric.selectionContainerViewTopMargin)
-			make.horizontalEdges.equalToSuperview().inset(Metric.selectionContainerViewHorizontalMargin)
-			make.height.equalTo(Metric.selectionContainerViewHeight)
+
+		return CalendarViewContent(
+			calendar: calendar,
+			visibleDateRange: startDate...endDate,
+			monthsLayout: .vertical(options: VerticalMonthsLayoutOptions())
+		)
+		.dayItemProvider { day in
+			DayLabel.calendarItemModel(
+				invariantViewProperties: .init(
+					font: AppTheme.Font.Bold_12,
+					textColor: AppTheme.Color.black,
+					backgroundColor: AppTheme.Color.white
+				),
+				content: .init(day: day)
+			)
 		}
-		
-		selectionView.snp.makeConstraints { make in
-			make.center.equalTo(simpleSelectionButton.snp.center)
-			make.height.equalTo(Metric.selectionViewHeight)
-			make.width.equalTo(selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
-		}
-		
-		selectionStackView.snp.makeConstraints { make in
-			make.center.equalToSuperview()
-		}
-		
-		containerView.snp.makeConstraints { make in
-			make.top.equalTo(selectionContainerView.snp.bottom).offset(Metric.topMargin)
-			make.horizontalEdges.equalToSuperview().inset(20)
-			make.bottom.equalTo(searchButton.snp.top).offset(-20)
-		}
-		
-		searchButton.snp.makeConstraints { make in
-			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
-			make.bottom.equalToSuperview().offset(Metric.searchButtonBottomMargin)
+		.monthHeaderItemProvider { month in
+			MonthLabel.calendarItemModel(
+				invariantViewProperties: .init(
+					font: AppTheme.Font.Bold_14,
+					textColor: AppTheme.Color.black,
+					backgroundColor: AppTheme.Color.white
+				),
+				content: .init(month: month)
+			)
 		}
 	}
 }
