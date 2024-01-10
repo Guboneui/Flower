@@ -37,7 +37,7 @@ final class MapView: UIView {
 		return cv
 	}()
 	
-	private let houseListButtonView: UIView = UIView().then {
+	private(set) var houseListButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.primary
 		$0.makeCornerRadius(17, edge: .all)
 		$0.layer.shadowOpacity = 0.2

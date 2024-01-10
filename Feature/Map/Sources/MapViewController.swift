@@ -10,6 +10,7 @@ import UIKit
 import ResourceKit
 
 import NMapsMap
+import RxSwift
 
 public final class MapViewController: UIViewController {
 	
@@ -17,16 +18,19 @@ public final class MapViewController: UIViewController {
 	private let rootView: MapView = MapView()
 	private var mapView: NMFMapView { rootView.mapView }
 	private var mapCollectionView: UICollectionView { rootView.mapCollectionView }
-	
-	var currentIndex: CGFloat = 0
+	private var houseListButtonView: UIView { rootView.houseListButtonView }
 	
 	// MARK: LifeCycle
 	public override func loadView() {
 		view = rootView
 	}
 	
+	private let disposeBag = DisposeBag()
+	
 	public override func viewDidLoad() {
 		super.viewDidLoad()
+		setupGestures()
+		
 		mapCollectionView.dataSource = self
 		mapCollectionView.delegate = self
 		
@@ -34,8 +38,6 @@ public final class MapViewController: UIViewController {
 		mapCollectionView.decelerationRate = .fast
 		mapCollectionView.isPagingEnabled = false
 
-		// 스크롤 시 빠르게 감속 되도록 설정
-		mapCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
 		
 		//TODO: 리스트 형태로 넣을 수 있도록 변경해야함
 		let marker = NMFMarker()
@@ -90,4 +92,23 @@ extension MapViewController: UICollectionViewDelegate,
 				y: scrollView.contentInset.top)
 			targetContentOffset.pointee = offset
 		}
+}
+
+private extension MapViewController {
+	func setupGestures() {
+		houseListButtonView.rx.tapGesture()
+					.when(.recognized)
+					.throttle(.milliseconds(300),
+										latest: false,
+										scheduler: MainScheduler.instance)
+					.bind { [weak self] _ in
+						guard let self else { return }
+						print("collectionView 클릭")
+						mapCollectionView.isHidden = true
+						
+						houseListButtonView.snp.makeConstraints { make in
+							make.bottom.equalToSuperview().offset(114)
+						}
+					}.disposed(by: disposeBag)
+	}
 }
