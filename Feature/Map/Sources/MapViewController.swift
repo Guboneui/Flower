@@ -18,6 +18,8 @@ public final class MapViewController: UIViewController {
 	private var mapView: NMFMapView { rootView.mapView }
 	private var mapCollectionView: UICollectionView { rootView.mapCollectionView }
 	
+	var currentIndex: CGFloat = 0
+	
 	// MARK: LifeCycle
 	public override func loadView() {
 		view = rootView
@@ -29,6 +31,11 @@ public final class MapViewController: UIViewController {
 		mapCollectionView.delegate = self
 		
 		mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: "MapCollectionViewCell")
+		mapCollectionView.decelerationRate = .fast
+		mapCollectionView.isPagingEnabled = false
+
+		// 스크롤 시 빠르게 감속 되도록 설정
+		mapCollectionView.decelerationRate = UIScrollView.DecelerationRate.fast
 		
 		//TODO: 리스트 형태로 넣을 수 있도록 변경해야함
 		let marker = NMFMarker()
@@ -40,7 +47,10 @@ public final class MapViewController: UIViewController {
 	}
 }
 
-extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension MapViewController: UICollectionViewDelegate,
+														 UICollectionViewDataSource,
+														 UICollectionViewDelegateFlowLayout,
+														 UIScrollViewDelegate {
 	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 		return 10
 	}
@@ -48,19 +58,36 @@ extension MapViewController: UICollectionViewDelegate, UICollectionViewDataSourc
 	public func collectionView(
 		_ collectionView: UICollectionView,
 		cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-		guard let cell = collectionView.dequeueReusableCell(
-			withReuseIdentifier: "MapCollectionViewCell",
-			for: indexPath) as? MapCollectionViewCell else {
-			return UICollectionViewCell()
+			guard let cell = collectionView.dequeueReusableCell(
+				withReuseIdentifier: "MapCollectionViewCell",
+				for: indexPath) as? MapCollectionViewCell else {
+				return UICollectionViewCell()
+			}
+			return cell
 		}
-		return cell
-	}
 	
 	public func collectionView(
-						_ collectionView: UICollectionView,
-						layout collectionViewLayout: UICollectionViewLayout,
-						sizeForItemAt indexPath: IndexPath
-			 ) -> CGSize {
-						return CGSize(width: 320, height: 141)
-			 }
+		_ collectionView: UICollectionView,
+		layout collectionViewLayout: UICollectionViewLayout,
+		sizeForItemAt indexPath: IndexPath
+	) -> CGSize {
+		return CGSize(width: 320, height: 141)
+	}
+	
+	public func scrollViewWillEndDragging(
+		_ scrollView: UIScrollView,
+		withVelocity velocity: CGPoint,
+		targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+			guard let layout = self.mapCollectionView.collectionViewLayout as?UICollectionViewFlowLayout else { return }
+			
+			var cellWidthIncludingSpacing: CGFloat = 328
+			var offset = targetContentOffset.pointee
+			let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
+			var roundedIndex = round(index)
+			
+			offset = CGPoint(
+				x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left,
+				y: scrollView.contentInset.top)
+			targetContentOffset.pointee = offset
+		}
 }

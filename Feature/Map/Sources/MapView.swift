@@ -33,6 +33,7 @@ final class MapView: UIView {
 		let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
 		cv.backgroundColor = .none
 		cv.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+		cv.showsHorizontalScrollIndicator = false
 		return cv
 	}()
 	
