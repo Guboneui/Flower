@@ -40,9 +40,14 @@ Name  | Description
 [Dev Branch] | 기능 개발
 
 ---
+### Xcode Template
+[GH Xcode Templates 사용하기](https://github.com/Guboneui/GuestHouse-Xcode-Templates)
+
+---
 
 ### Tech
-Swift, Combine
-Tuist
-SnapKit, Then
+Swift, ~~Combine~~ </br>
+Tuist </br>
+SnapKit, Then </br>
+RxSwift, MVVM, ReactorKit </br>
 
