@@ -25,15 +25,21 @@ final class TravelGroupDefaultView: UIView {
 		static let counterLabelTrailingMargin: CGFloat = -32
 	}
 	
+	// MARK: - TextSet
+	private enum TextSet {
+		static let travlerText: String = "여행자"
+		static let counterText: String = "0 명"
+	}
+	
 	// MARK: - UI PROPERTY
 	private let travlerLabel: UILabel = UILabel().then {
-		$0.text = "여행자"
+		$0.text = TextSet.travlerText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 	}
 	
 	fileprivate let counterLabel: UILabel = UILabel().then {
-		$0.text = "0 명"
+		$0.text = TextSet.counterText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 	}

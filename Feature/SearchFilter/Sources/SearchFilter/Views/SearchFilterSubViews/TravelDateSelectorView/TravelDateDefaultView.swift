@@ -25,15 +25,21 @@ final class TravelDateDefaultView: UIView {
 		static let selectedDateLabelTrailingMargin: CGFloat = -32
 	}
 	
+	// MARK: - TextSet
+	private enum TextSet {
+		static let dateText: String = "날짜"
+		static let selectedDateInitText: String = "-"
+	}
+	
 	// MARK: - UI PROPERTY
 	private let dateLabel: UILabel = UILabel().then {
-		$0.text = "날짜"
+		$0.text = TextSet.dateText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 	}
 	
 	fileprivate let selectedDateLabel: UILabel = UILabel().then {
-		$0.text = "-"
+		$0.text = TextSet.selectedDateInitText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 	}

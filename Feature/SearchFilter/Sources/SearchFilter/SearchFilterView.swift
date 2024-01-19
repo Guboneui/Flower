@@ -32,6 +32,8 @@ final class SearchFilterView: UIView {
 		static let bottomButtonTopMargin: CGFloat = 12
 		static let bottomButtonHorizontalMargin: CGFloat = 20
 		static let bottomButtonBottomMargin: CGFloat = UIDevice.hasNotch ? -66 : -32
+		
+		static let animationTime: TimeInterval = 0.3
 	}
 	
 	// MARK: - TEXT SET
@@ -139,7 +141,7 @@ final class SearchFilterView: UIView {
 	}
 	
 	private func updateBottomView(with state: SearchFilterExtendedState) {
-		UIView.animate(withDuration: 0.3, animations: {
+		UIView.animate(withDuration: Metric.animationTime, animations: {
 			switch state {
 			case .travelDate:
 				self.travelDateStackView.snp.remakeConstraints { make in

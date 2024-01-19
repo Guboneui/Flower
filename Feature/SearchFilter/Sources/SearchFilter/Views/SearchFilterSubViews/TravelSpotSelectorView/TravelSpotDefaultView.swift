@@ -25,15 +25,19 @@ final class TravelSpotDefaultView: UIView {
 		static let counterLabelTrailingMargin: CGFloat = -32
 	}
 	
+	// MARK: - TextSet
+	private enum TextSet {
+		static let locationText: String = "위치"
+	}
+	
 	// MARK: - UI PROPERTY
 	fileprivate let locationLabel: UILabel = UILabel().then {
-		$0.text = "위치"
+		$0.text = TextSet.locationText
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 	}
 	
 	fileprivate let selectedLocationLabel: UILabel = UILabel().then {
-		$0.text = "제에주우도오"
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 	}

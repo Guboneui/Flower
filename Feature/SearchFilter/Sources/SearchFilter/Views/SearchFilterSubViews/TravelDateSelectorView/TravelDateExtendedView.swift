@@ -29,10 +29,15 @@ final class TravelDateExtendedView: UIView {
 		static let selectionContainerViewHorizontalMargin: CGFloat = 10
 		static let selectionViewHeight: CGFloat = 32
 		static let selectionViewRadius: CGFloat = 16
-		
+		static let containerViewBottomMargin: CGFloat = -20
+		static let stackViewSpacing: CGFloat = 112
 		static let topMargin: CGFloat = 24
 		static let horizontalMargin: CGFloat = 22
 		static let searchButtonBottomMargin: CGFloat = -44
+		
+		static let selectionViewMultiplied: CGFloat = 173.0 / 344.0
+		
+		static let animationTime: TimeInterval = 0.3
 	}
 	
 	private enum TextSet {
@@ -77,7 +82,7 @@ final class TravelDateExtendedView: UIView {
 			periodSelectionButton
 		]).then {
 			$0.axis = .horizontal
-			$0.spacing = 112
+			$0.spacing = Metric.stackViewSpacing
 		}
 	
 	private var calendarView: CalendarView?
@@ -141,7 +146,8 @@ extension TravelDateExtendedView: Viewable {
 		selectionView.snp.makeConstraints { make in
 			make.center.equalTo(simpleSelectionButton.snp.center)
 			make.height.equalTo(Metric.selectionViewHeight)
-			make.width.equalTo(selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+			make.width.equalTo(selectionContainerView.snp.width)
+				.multipliedBy(Metric.selectionViewMultiplied)
 		}
 		
 		selectionStackView.snp.makeConstraints { make in
@@ -152,13 +158,13 @@ extension TravelDateExtendedView: Viewable {
 			calendarView.snp.makeConstraints { make in
 				make.top.equalTo(selectionContainerView.snp.bottom).offset(Metric.topMargin)
 				make.horizontalEdges.equalToSuperview()
-				make.bottom.equalTo(searchButton.snp.top).offset(-20)
+				make.bottom.equalTo(searchButton.snp.top).offset(Metric.containerViewBottomMargin)
 			}
 		} else {
 			containerView.snp.makeConstraints { make in
 				make.top.equalTo(selectionContainerView.snp.bottom).offset(Metric.topMargin)
 				make.horizontalEdges.equalToSuperview()
-				make.bottom.equalTo(searchButton.snp.top).offset(-20)
+				make.bottom.equalTo(searchButton.snp.top).offset(Metric.containerViewBottomMargin)
 			}
 		}
 		
@@ -174,20 +180,22 @@ extension TravelDateExtendedView: Viewable {
 			.observe(on: MainScheduler.instance)
 			.bind { currentState in
 				if currentState {
-					UIView.animate(withDuration: 0.3, animations: {
+					UIView.animate(withDuration: Metric.animationTime, animations: {
 						self.selectionView.snp.remakeConstraints { make in
 							make.center.equalTo(self.simpleSelectionButton.snp.center)
 							make.height.equalTo(Metric.selectionViewHeight)
-							make.width.equalTo(self.selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+							make.width.equalTo(self.selectionContainerView.snp.width)
+								.multipliedBy(Metric.selectionViewMultiplied)
 						}
 						self.layoutIfNeeded()
 					})
 				} else {
-					UIView.animate(withDuration: 0.3, animations: {
+					UIView.animate(withDuration: Metric.animationTime, animations: {
 						self.selectionView.snp.remakeConstraints { make in
 							make.center.equalTo(self.periodSelectionButton.snp.center)
 							make.height.equalTo(Metric.selectionViewHeight)
-							make.width.equalTo(self.selectionContainerView.snp.width).multipliedBy(173.0 / 344.0)
+							make.width.equalTo(self.selectionContainerView.snp.width)
+								.multipliedBy(Metric.selectionViewMultiplied)
 						}
 						self.layoutIfNeeded()
 					})

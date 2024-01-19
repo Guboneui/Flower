@@ -34,15 +34,21 @@ final class TravelGroupExtendedView: UIView {
 		static let resizedImageSize: CGSize = .init(width: 28, height: 28)
 	}
 	
+	// MARK: - TextSet
+	private enum TextSet {
+		static let titleText: String = "마지막입니다"
+		static let groupText: String = "인원"
+	}
+	
 	// MARK: - UI PROPERTY
 	private let titleLabel: UILabel = UILabel().then {
-		$0.text = "마지막입니다"
+		$0.text = TextSet.titleText
 		$0.font = AppTheme.Font.Bold_20
 		$0.textColor = AppTheme.Color.black
 	}
 	
 	private let groupLabel: UILabel = UILabel().then {
-		$0.text = "인원"
+		$0.text = TextSet.groupText
 		$0.font = AppTheme.Font.Bold_14
 		$0.textColor = AppTheme.Color.black
 	}
