@@ -45,7 +45,9 @@ final class ChattingDemoAppRootViewController: UIViewController {
 		moveToChatButton.rx.tap
 			.bind { [weak self] in
 				guard let self else { return }
-				let chattingViewController: ChattingViewController = ChattingViewController()
+				let viewModel = ChattingRoomViewModel()
+				let chattingViewController: ChattingRoomViewController =
+				ChattingRoomViewController(chattingRoomViewModel: viewModel)
 				chattingViewController.modalPresentationStyle = .overFullScreen
 				self.present(chattingViewController, animated: true)
 			}.disposed(by: disposeBag)
