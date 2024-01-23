@@ -225,9 +225,7 @@ extension ChattingRoomView: Viewable {
 		}
 	}
 	
-	func setupBinds() {
-		
-	}
+	func setupBinds() { }
 	
 	func addPhotoMenuButtonAnimation(with isMenuOpen: Bool) {
 		UIView.animate(withDuration: Metric.animateWithDuration, animations: {

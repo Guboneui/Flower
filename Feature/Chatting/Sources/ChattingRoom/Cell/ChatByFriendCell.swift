@@ -119,7 +119,5 @@ private extension ChatByFriendCell {
 		}
 	}
 	
-	func setupBinds() {
-		
-	}
+	func setupBinds() { }
 }

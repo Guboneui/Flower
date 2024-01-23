@@ -149,7 +149,5 @@ private extension ChatByFriendWithProfileImageCell {
 		}
 	}
 	
-	func setupBinds() {
-		
-	}
+	func setupBinds() { }
 }

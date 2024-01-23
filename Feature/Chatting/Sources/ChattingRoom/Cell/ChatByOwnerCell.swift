@@ -120,7 +120,5 @@ private extension ChatByOwnerCell {
 		}
 	}
 	
-	func setupBinds() {
-		
-	}
+	func setupBinds() { }
 }
