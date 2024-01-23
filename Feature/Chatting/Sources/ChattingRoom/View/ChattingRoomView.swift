@@ -116,7 +116,7 @@ final class ChattingRoomView: UIView {
 		$0.makeBorder()
 	}
 	
-	public let inputMessageTextView: UITextView = UITextView().then {
+	fileprivate let inputMessageTextView: UITextView = UITextView().then {
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.black
 		$0.backgroundColor = AppTheme.Color.grey90
@@ -148,8 +148,62 @@ final class ChattingRoomView: UIView {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+	
+	// MARK: - PUBLIC METHOD
+	public func addPhotoMenuButtonAnimation(with isMenuOpen: Bool) {
+		UIView.animate(withDuration: Metric.animateWithDuration, animations: {
+			self.addPhotoMenuView.alpha = isMenuOpen ? 0.0 : 1.0
+			self.addPhotoMenuView.isHidden = isMenuOpen
+			self.addPhotoMenuButton.transform = isMenuOpen ?
+				.identity : CGAffineTransform(rotationAngle: .pi / 4 )
+		})
+	}
+	
+	public func sendMessageButtonAnimation(with isHidden: Bool) {
+		UIView.animate(withDuration: Metric.animateWithDuration, animations: {
+			self.sendMessageButton.isHidden = isHidden
+			self.sendMessageButton.alpha = isHidden ? 0.0 : 1.0
+			
+			if isHidden {
+				self.inputMessageTextView.text = ""
+			}
+		})
+	}
+	
+	public func sizingBottomView() {
+		guard let font = self.inputMessageTextView.font else { return }
+		let estimatedFrame = self.inputMessageTextView.text.getEstimatedFrame(with: font)
+		
+		if estimatedFrame.height > 15 && estimatedFrame.height < 58 {
+			self.chattingRoomBottomView.snp.updateConstraints { make in
+				make.height.equalTo(estimatedFrame.height + Metric.chattingRoomBottomViewHeight)
+			}
+		} else if estimatedFrame.height > 57 {
+			self.inputMessageTextView.isScrollEnabled = true
+		} else {
+			returnOriginalSizingBottomView()
+		}
+	}
+	
+	public func returnOriginalSizingBottomView() {
+		self.chattingRoomBottomView.snp.updateConstraints { make in
+			make.height.equalTo(Metric.chattingRoomBottomViewHeight)
+		}
+	}
+	
+	public func scollingBottom() {
+		self.chattingRoomCollectionView.setContentOffset(
+			CGPoint(
+				x: 0,
+				y: self.chattingRoomCollectionView.contentSize.height
+				- self.chattingRoomCollectionView.bounds.height
+			),
+			animated: true
+		)
+	}
 }
 
+// MARK: - Viewable METHOD
 extension ChattingRoomView: Viewable {
 	func setupConfigures() {
 		backgroundColor = AppTheme.Color.white
@@ -226,60 +280,9 @@ extension ChattingRoomView: Viewable {
 	}
 	
 	func setupBinds() { }
-	
-	func addPhotoMenuButtonAnimation(with isMenuOpen: Bool) {
-		UIView.animate(withDuration: Metric.animateWithDuration, animations: {
-			self.addPhotoMenuView.alpha = isMenuOpen ? 0.0 : 1.0
-			self.addPhotoMenuView.isHidden = isMenuOpen
-			self.addPhotoMenuButton.transform = isMenuOpen ?
-				.identity : CGAffineTransform(rotationAngle: .pi / 4 )
-		})
-	}
-	
-	func sendMessageButtonAnimation(with isHidden: Bool) {
-		UIView.animate(withDuration: Metric.animateWithDuration, animations: {
-			self.sendMessageButton.isHidden = isHidden
-			self.sendMessageButton.alpha = isHidden ? 0.0 : 1.0
-			
-			if isHidden {
-				self.inputMessageTextView.text = ""
-			}
-		})
-	}
-	
-	func sizingBottomView() {
-		guard let font = self.inputMessageTextView.font else { return }
-		let estimatedFrame = self.inputMessageTextView.text.getEstimatedFrame(with: font)
-		
-		if estimatedFrame.height > 15 && estimatedFrame.height < 58 {
-			self.chattingRoomBottomView.snp.updateConstraints { make in
-				make.height.equalTo(estimatedFrame.height + Metric.chattingRoomBottomViewHeight)
-			}
-		} else if estimatedFrame.height > 57 {
-			self.inputMessageTextView.isScrollEnabled = true
-		} else {
-			returnOriginalSizingBottomView()
-		}
-	}
-	
-	func returnOriginalSizingBottomView() {
-		self.chattingRoomBottomView.snp.updateConstraints { make in
-			make.height.equalTo(Metric.chattingRoomBottomViewHeight)
-		}
-	}
-	
-	func scollingBottom() {
-		self.chattingRoomCollectionView.setContentOffset(
-			CGPoint(
-				x: 0,
-				y: self.chattingRoomCollectionView.contentSize.height
-				- self.chattingRoomCollectionView.bounds.height
-			),
-			animated: true
-		)
-	}
 }
 
+// MARK: - Reactive Extension
 extension Reactive where Base: ChattingRoomView {
 	var didTapSendMessageButton: ControlEvent<Void> {
 		let source = base.sendMessageButton.rx.touchHandler()
