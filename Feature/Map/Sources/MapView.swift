@@ -18,7 +18,36 @@ import Then
 final class MapView: UIView {
 	// MARK: - TextSet
 	private enum TextSet {
-
+		static let houseListLabelText: String = "목록보기"
+	}
+	
+	//MARK: - Metric
+	private enum Metric {
+		static let mapCollectionViewSpacing: CGFloat = 8
+		static let mapCollectionViewInsetTop: CGFloat = 0
+		static let mapCollectionViewInsetleft: CGFloat = 8
+		static let mapCollectionViewInsetBottom: CGFloat = 0
+		static let mapCollectionViewInsetRight: CGFloat = 8
+		static let houseListButtonViewCornerRadius: CGFloat = 17
+		static let houseListButtonViewShadowOpacity: Float = 0.2
+		static let houseListButtonViewShadowOffset: CGFloat = 2
+		static let houseListButtonViewShadowRadius: CGFloat = 10
+		static let userLocationButtonViewCornerRadius: CGFloat = 20
+		static let userLocationButtonViewShadowOpacity: Float = 0.2
+		static let userLocationButtonViewShadowOffset: CGFloat = 1
+		static let userLocationButtonViewShadowRadius: CGFloat = 10
+		static let mapCollectionViewBottomMargin: CGFloat = -106
+		static let mapCollectionViewHeightMargin: CGFloat = 0
+		static let houseListButtonViewWidthMargin: CGFloat = 92
+		static let houseListButtonViewHeightMargin: CGFloat = 33
+		static let houseListButtonViewBottomMargin: CGFloat = -12
+		static let hoouseListButtonImageViewSize: CGFloat = 16
+		static let hoouseListButtonImageViewLeftMargin: CGFloat = 12
+		static let houseListLabelRightMargin: CGFloat = -12
+		static let userLocationButtonViewSize: CGFloat = 40
+		static let userLocationButtonViewBottomMargin: CGFloat = -12
+		static let userLocationButtonViewRightMargin: CGFloat = -32
+		static let userLocationImageViewSize: CGFloat = 24
 	}
 	
 	// MARK: - UI Property
@@ -26,13 +55,18 @@ final class MapView: UIView {
 	
 	private(set) var mapCollectionView: UICollectionView = {
 		var layout = UICollectionViewFlowLayout()
-		layout.minimumLineSpacing = 8
+		layout.minimumLineSpacing = Metric.mapCollectionViewSpacing
 		layout.scrollDirection = .horizontal
 		layout.sectionInset = .zero
 		
 		let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
 		cv.backgroundColor = .none
-		cv.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+		cv.contentInset = UIEdgeInsets(
+			top: Metric.mapCollectionViewInsetTop,
+			left: Metric.mapCollectionViewInsetleft,
+			bottom: Metric.mapCollectionViewInsetBottom,
+			right: Metric.mapCollectionViewInsetRight
+		)
 		cv.showsHorizontalScrollIndicator = false
 		cv.isHidden = true
 		return cv
@@ -40,11 +74,14 @@ final class MapView: UIView {
 	
 	private(set) var houseListButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.primary
-		$0.makeCornerRadius(17, edge: .all)
-		$0.layer.shadowOpacity = 0.2
+		$0.makeCornerRadius(Metric.houseListButtonViewCornerRadius, edge: .all)
+		$0.layer.shadowOpacity = Metric.houseListButtonViewShadowOpacity
 		$0.layer.shadowColor = AppTheme.Color.black.cgColor
-		$0.layer.shadowOffset = CGSize(width: 2, height: 2)
-		$0.layer.shadowRadius = 10
+		$0.layer.shadowOffset = CGSize(
+			width: Metric.houseListButtonViewShadowOffset,
+			height: Metric.houseListButtonViewShadowOffset
+		)
+		$0.layer.shadowRadius = Metric.houseListButtonViewShadowRadius
 		$0.layer.masksToBounds = false
 	}
 	
@@ -54,18 +91,21 @@ final class MapView: UIView {
 	}
 	
 	private(set) var houseListLabel: UILabel = UILabel().then {
-		$0.text = "목록보기"
+		$0.text = TextSet.houseListLabelText
 		$0.font = AppTheme.Font.Regular_14
 		$0.textColor = AppTheme.Color.white
 	}
 	
 	private let userLocationButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
-		$0.makeCornerRadius(20, edge: .all)
-		$0.layer.shadowOpacity = 0.2
+		$0.makeCornerRadius(Metric.userLocationButtonViewCornerRadius, edge: .all)
+		$0.layer.shadowOpacity = Metric.userLocationButtonViewShadowOpacity
 		$0.layer.shadowColor = AppTheme.Color.black.cgColor
-		$0.layer.shadowOffset = CGSize(width: 1, height: 1)
-		$0.layer.shadowRadius = 10
+		$0.layer.shadowOffset = CGSize(
+			width: Metric.userLocationButtonViewShadowOffset,
+			height: Metric.userLocationButtonViewShadowOffset
+		)
+		$0.layer.shadowRadius = Metric.userLocationButtonViewShadowRadius
 		$0.layer.masksToBounds = false
 	}
 	
@@ -112,36 +152,36 @@ extension MapView: Viewable {
 		
 		mapCollectionView.snp.makeConstraints { make in
 			make.horizontalEdges.equalToSuperview()
-			make.bottom.equalToSuperview().offset(-106)
-			make.height.equalTo(0)
+			make.bottom.equalToSuperview().offset(Metric.mapCollectionViewBottomMargin)
+			make.height.equalTo(Metric.mapCollectionViewHeightMargin)
 		}
 		
 		houseListButtonView.snp.makeConstraints { make in
-			make.width.equalTo(92)
-			make.height.equalTo(33)
-			make.bottom.equalTo(mapCollectionView.snp.top).offset(-12)
+			make.width.equalTo(Metric.houseListButtonViewWidthMargin)
+			make.height.equalTo(Metric.houseListButtonViewHeightMargin)
+			make.bottom.equalTo(mapCollectionView.snp.top).offset(Metric.houseListButtonViewBottomMargin)
 			make.centerX.equalToSuperview()
 		}
 		
 		hoouseListButtonImageView.snp.makeConstraints { make in
-			make.size.equalTo(16)
+			make.size.equalTo(Metric.hoouseListButtonImageViewSize)
 			make.centerY.equalToSuperview()
-			make.leading.equalToSuperview().offset(12)
+			make.leading.equalToSuperview().offset(Metric.hoouseListButtonImageViewLeftMargin)
 		}
 		
 		houseListLabel.snp.makeConstraints { make in
 			make.centerY.equalToSuperview()
-			make.trailing.equalToSuperview().offset(-12)
+			make.trailing.equalToSuperview().offset(Metric.houseListLabelRightMargin)
 		}
 		
 		userLocationButtonView.snp.makeConstraints { make in
-			make.size.equalTo(40)
-			make.bottom.equalTo(mapCollectionView.snp.top).offset(-12)
-			make.trailing.equalToSuperview().offset(-32)
+			make.size.equalTo(Metric.userLocationButtonViewSize)
+			make.bottom.equalTo(mapCollectionView.snp.top).offset(Metric.userLocationButtonViewBottomMargin)
+			make.trailing.equalToSuperview().offset(Metric.userLocationButtonViewRightMargin)
 		}
 		
 		userLocationImageView.snp.makeConstraints { make in
-			make.size.equalTo(24)
+			make.size.equalTo(Metric.userLocationImageViewSize)
 			make.center.equalToSuperview()
 		}
 	}
