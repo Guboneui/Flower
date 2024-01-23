@@ -34,6 +34,7 @@ final class MapView: UIView {
 		cv.backgroundColor = .none
 		cv.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
 		cv.showsHorizontalScrollIndicator = false
+		cv.isHidden = true
 		return cv
 	}()
 	
@@ -52,7 +53,7 @@ final class MapView: UIView {
 		$0.tintColor = AppTheme.Color.white
 	}
 	
-	private let houseListLabel: UILabel = UILabel().then {
+	private(set) var houseListLabel: UILabel = UILabel().then {
 		$0.text = "목록보기"
 		$0.font = AppTheme.Font.Regular_14
 		$0.textColor = AppTheme.Color.white
@@ -112,7 +113,7 @@ extension MapView: Viewable {
 		mapCollectionView.snp.makeConstraints { make in
 			make.horizontalEdges.equalToSuperview()
 			make.bottom.equalToSuperview().offset(-106)
-			make.height.equalTo(141)
+			make.height.equalTo(0)
 		}
 		
 		houseListButtonView.snp.makeConstraints { make in

@@ -19,6 +19,7 @@ public final class MapViewController: UIViewController {
 	private var mapView: NMFMapView { rootView.mapView }
 	private var mapCollectionView: UICollectionView { rootView.mapCollectionView }
 	private var houseListButtonView: UIView { rootView.houseListButtonView }
+	private var houseListLabel: UILabel { rootView.houseListLabel }
 	
 	// MARK: LifeCycle
 	public override func loadView() {
@@ -103,12 +104,21 @@ private extension MapViewController {
 										scheduler: MainScheduler.instance)
 					.bind { [weak self] _ in
 						guard let self else { return }
-						print("collectionView 클릭")
-						mapCollectionView.isHidden = true
-						
-						houseListButtonView.snp.makeConstraints { make in
-							make.bottom.equalToSuperview().offset(114)
+						if mapCollectionView.isHidden {
+							mapCollectionView.isHidden = false
+							houseListLabel.text = "목록닫기"
+							mapCollectionView.snp.updateConstraints({ make in
+								make.height.equalTo(141)
+								make.bottom.equalToSuperview().offset(-106)
+							})
+						} else {
+							houseListLabel.text = "목록보기"
+							mapCollectionView.isHidden = true
+							mapCollectionView.snp.updateConstraints({ make in
+								make.bottom.equalToSuperview().offset(0)
+							})
 						}
+						
 					}.disposed(by: disposeBag)
 	}
 }
