@@ -17,7 +17,5 @@ public final class ChattingRoomViewModel: ChattingRoomViewModelInterface {
 	public var isMenuOpen: BehaviorRelay<Bool> = .init(value: true)
 	public var chattingCurrentText: BehaviorRelay<String> = .init(value: "")
 	
-	public init() {
-
-	}
+	public init() { }
 }
