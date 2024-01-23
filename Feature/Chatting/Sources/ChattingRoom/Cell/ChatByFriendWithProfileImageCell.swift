@@ -14,7 +14,7 @@ import UtilityKit
 import SnapKit
 import Then
 
-public class ChatByFriendWithProfileImageCell: UICollectionViewCell {
+public final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	// MARK: - METRIC
 	private enum Metric {
 		static let profileImageViewCornerRadius: CGFloat = 18

@@ -14,7 +14,7 @@ import UtilityKit
 import SnapKit
 import Then
 
-public class ChatByFriendCell: UICollectionViewCell {
+public final class ChatByFriendCell: UICollectionViewCell {
 	// MARK: - METRIC
 	private enum Metric {
 		static let messageBubbleViewCornerRadius: CGFloat = 12
