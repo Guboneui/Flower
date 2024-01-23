@@ -300,7 +300,7 @@ extension Reactive where Base: ChattingRoomView {
 		return base.inputMessageTextView.rx.text
 	}
 	
-	var didChangeInputMessageTextView: ControlEvent<()> {
+	var didChangeInputMessageTextView: ControlEvent<Void> {
 		let source = base.inputMessageTextView.rx.didChange
 		return ControlEvent(events: source)
 	}
