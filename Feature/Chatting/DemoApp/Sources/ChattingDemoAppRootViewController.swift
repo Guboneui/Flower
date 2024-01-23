@@ -45,7 +45,7 @@ final class ChattingDemoAppRootViewController: UIViewController {
 		moveToChatButton.rx.tap
 			.bind { [weak self] in
 				guard let self else { return }
-				let viewModel = ChattingRoomViewModel()
+				let viewModel: ChattingRoomViewModelInterface = ChattingRoomViewModel()
 				let chattingViewController: ChattingRoomViewController =
 				ChattingRoomViewController(chattingRoomViewModel: viewModel)
 				chattingViewController.modalPresentationStyle = .overFullScreen
