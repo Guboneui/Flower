@@ -14,7 +14,7 @@ import UtilityKit
 import SnapKit
 import Then
 
-public final class ChatByOwnerCell: UICollectionViewCell {
+final class ChatByOwnerCell: UICollectionViewCell {
 	// MARK: - METRIC
 	private enum Metric {
 		static let messageBubbleViewCornerRadius: CGFloat = 12
@@ -69,7 +69,7 @@ public final class ChatByOwnerCell: UICollectionViewCell {
 	}
 	
 	// MARK: - PUBLIC METHOD
-	public func remakeCellConstraints() {		
+	public func remakeCellConstraints() {
 		messageBubbleView.snp.remakeConstraints { make in
 			guard let messageText = messageLabel.text else { return }
 			let estimatedFrame = messageText.getEstimatedFrame(with: messageLabel.font)
@@ -83,8 +83,8 @@ public final class ChatByOwnerCell: UICollectionViewCell {
 	}
 }
 
-// MARK: - PRIVATE METHOD
-private extension ChatByOwnerCell {
+// MARK: - Viewable METHOD
+extension ChatByOwnerCell: Viewable {
 	func setupConfigures() {
 		self.backgroundColor = AppTheme.Color.grey90
 	}

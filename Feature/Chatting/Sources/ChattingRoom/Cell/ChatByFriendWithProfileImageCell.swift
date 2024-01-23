@@ -14,7 +14,7 @@ import UtilityKit
 import SnapKit
 import Then
 
-public final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
+final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	// MARK: - METRIC
 	private enum Metric {
 		static let profileImageViewCornerRadius: CGFloat = 18
@@ -99,8 +99,8 @@ public final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	}
 }
 
-// MARK: - PRIVATE METHOD
-private extension ChatByFriendWithProfileImageCell {
+// MARK: - Viewable METHOD
+extension ChatByFriendWithProfileImageCell: Viewable {
 	func setupConfigures() {
 		self.backgroundColor = AppTheme.Color.grey90
 	}

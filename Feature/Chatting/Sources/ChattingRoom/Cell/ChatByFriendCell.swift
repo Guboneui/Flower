@@ -14,7 +14,7 @@ import UtilityKit
 import SnapKit
 import Then
 
-public final class ChatByFriendCell: UICollectionViewCell {
+final class ChatByFriendCell: UICollectionViewCell {
 	// MARK: - METRIC
 	private enum Metric {
 		static let messageBubbleViewCornerRadius: CGFloat = 12
@@ -82,8 +82,8 @@ public final class ChatByFriendCell: UICollectionViewCell {
 	}
 }
 
-// MARK: - PRIVATE METHOD
-private extension ChatByFriendCell {
+// MARK: - Viewable METHOD
+extension ChatByFriendCell: Viewable {
 	func setupConfigures() {
 		self.backgroundColor = AppTheme.Color.grey90
 	}
