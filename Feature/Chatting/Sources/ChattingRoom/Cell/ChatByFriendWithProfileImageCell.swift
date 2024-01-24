@@ -37,11 +37,6 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 		static let timeLabelLeftMargin: CGFloat = 4
 	}
 	
-	// MARK: - TextSet
-	private enum TextSet {
-		static let identifier: String = "ChatByFriendWithProfileImageCell"
-	}
-	
 	// MARK: - UI Property
 	private let profileImageView: UIImageView = UIImageView().then {
 		$0.backgroundColor = .orange
@@ -69,9 +64,6 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 		$0.font = AppTheme.Font.Regular_10
 		$0.textColor = AppTheme.Color.black
 	}
-	
-	// MARK: - Property
-	static let identifier = TextSet.identifier
 	
 	// MARK: - Iitialize
 	public override init(frame: CGRect) {

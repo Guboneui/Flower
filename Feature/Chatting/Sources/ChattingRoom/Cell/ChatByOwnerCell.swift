@@ -30,11 +30,6 @@ final class ChatByOwnerCell: UICollectionViewCell {
 		static let timeLabelRightMargin: CGFloat = -4
 	}
 	
-	// MARK: - TextSet
-	private enum TextSet {
-		static let identifier: String = "ChatByOwnerCell"
-	}
-	
 	// MARK: - UI Property
 	private let messageBubbleView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
@@ -53,9 +48,6 @@ final class ChatByOwnerCell: UICollectionViewCell {
 		$0.font = AppTheme.Font.Regular_10
 		$0.textColor = AppTheme.Color.black
 	}
-	
-	// MARK: - Property
-	static let identifier = TextSet.identifier
 	
 	// MARK: - Iitialize
 	public override init(frame: CGRect) {
