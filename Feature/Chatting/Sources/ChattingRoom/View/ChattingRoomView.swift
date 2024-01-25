@@ -26,20 +26,22 @@ final class ChattingRoomView: UIView {
 		static let bottomStackViewHorizontalMargin: CGFloat = 12
 		
 		static let addPhotoMenuButtonViewWidth: CGFloat = 24
-		static let addPhotoMenuButtonBottomMargin: CGFloat = 8
+		static let addPhotoMenuButtonBottomMargin: CGFloat = 11
 		
 		static let addPhotoMenuViewWidth: CGFloat = 60
-		static let cameraButtonBottomMargin: CGFloat = 8
+		static let cameraButtonBottomMargin: CGFloat = 11
 		static let galleryButtonLeftMargin: CGFloat = 12
 		
-		static let messageTextViewCornerRadius: CGFloat = 20
+		static let messageInputViewCornerRadius: CGFloat = 20
 		static let inputMessageTextViewMinHeight: CGFloat = 30.333333333333332
 		static let inputMessageTextViewMaxHeight: CGFloat = 73.33333333333333
 		static let inputMessageTextViewVerticalMargin: CGFloat = 8
 		static let inputMessageTextViewLeftMargin: CGFloat = 16
 		static let inputMessageTextViewRightMargin: CGFloat = 45
-		static let sendMessageButtonBottomMargin: CGFloat = 8
+		static let sendMessageButtonBottomMargin: CGFloat = 11
 		static let sendMessageButtonRightMargin: CGFloat = 12
+		
+		static let defaultButtinSize: CGFloat = 24
 	}
 	
 	// MARK: - UI Property
@@ -109,9 +111,9 @@ final class ChattingRoomView: UIView {
 		$0.tintColor = AppTheme.Color.black
 	}
 	
-	private let messageTextFieldView: UIView = UIView().then {
+	private let messageInputView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.grey90
-		$0.makeCornerRadius(Metric.messageTextViewCornerRadius)
+		$0.makeCornerRadius(Metric.messageInputViewCornerRadius)
 		$0.makeBorder()
 	}
 	
@@ -130,7 +132,7 @@ final class ChattingRoomView: UIView {
 		arrangedSubviews: [
 			addPhotoMenuButtonView,
 			addPhotoMenuView,
-			messageTextFieldView
+			messageInputView
 		]).then {
 			$0.axis = .horizontal
 			$0.distribution = .fill
@@ -223,8 +225,8 @@ extension ChattingRoomView: Viewable {
 		addPhotoMenuView.addSubview(cameraButton)
 		addPhotoMenuView.addSubview(galleryButton)
 		
-		messageTextFieldView.addSubview(inputMessageTextView)
-		messageTextFieldView.addSubview(sendMessageButton)
+		messageInputView.addSubview(inputMessageTextView)
+		messageInputView.addSubview(sendMessageButton)
 		
 		setupConstraints()
 	}
@@ -253,6 +255,7 @@ extension ChattingRoomView: Viewable {
 		addPhotoMenuButton.snp.makeConstraints { make in
 			make.centerX.equalToSuperview()
 			make.bottom.equalToSuperview().inset(Metric.addPhotoMenuButtonBottomMargin)
+			make.size.equalTo(Metric.defaultButtinSize)
 		}
 		
 		addPhotoMenuView.snp.makeConstraints { make in
@@ -262,11 +265,13 @@ extension ChattingRoomView: Viewable {
 		cameraButton.snp.makeConstraints { make in
 			make.bottom.equalToSuperview().inset(Metric.cameraButtonBottomMargin)
 			make.leading.equalToSuperview()
+			make.size.equalTo(Metric.defaultButtinSize)
 		}
 		
 		galleryButton.snp.makeConstraints { make in
 			make.centerY.equalTo(cameraButton)
 			make.leading.equalTo(cameraButton.snp.trailing).offset(Metric.galleryButtonLeftMargin)
+			make.size.equalTo(Metric.defaultButtinSize)
 		}
 		
 		inputMessageTextView.snp.makeConstraints { make in
@@ -279,6 +284,7 @@ extension ChattingRoomView: Viewable {
 		sendMessageButton.snp.makeConstraints { make in
 			make.bottom.equalToSuperview().inset(Metric.sendMessageButtonBottomMargin)
 			make.trailing.equalToSuperview().inset(Metric.sendMessageButtonRightMargin)
+			make.size.equalTo(Metric.defaultButtinSize)
 		}
 	}
 	
