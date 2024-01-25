@@ -22,9 +22,6 @@ final class ChattingRoomView: UIView {
 		static let animateWithDuration: TimeInterval = 0.5
 		
 		static let bottomStackViewSpcing: CGFloat = 12
-		
-		static let chattingRoomBottomViewHeight: CGFloat = 56
-		
 		static let bottomStackViewVerticalMargin: CGFloat = 8
 		static let bottomStackViewHorizontalMargin: CGFloat = 12
 		
@@ -36,6 +33,8 @@ final class ChattingRoomView: UIView {
 		static let galleryButtonLeftMargin: CGFloat = 12
 		
 		static let messageTextViewCornerRadius: CGFloat = 20
+		static let inputMessageTextViewMinHeight: CGFloat = 30.333333333333332
+		static let inputMessageTextViewMaxHeight: CGFloat = 73.33333333333333
 		static let inputMessageTextViewVerticalMargin: CGFloat = 8
 		static let inputMessageTextViewLeftMargin: CGFloat = 16
 		static let inputMessageTextViewRightMargin: CGFloat = 45
@@ -171,24 +170,28 @@ final class ChattingRoomView: UIView {
 	}
 	
 	public func sizingBottomView() {
-		guard let font = self.inputMessageTextView.font else { return }
-		let estimatedFrame = self.inputMessageTextView.text.getEstimatedFrame(with: font)
-		
-		if estimatedFrame.height > 15 && estimatedFrame.height < 58 {
-			self.chattingRoomBottomView.snp.updateConstraints { make in
-				make.height.equalTo(estimatedFrame.height + Metric.chattingRoomBottomViewHeight)
+		let size = CGSize(width: self.inputMessageTextView.frame.width, height: .infinity)
+		let estimatedSize = inputMessageTextView.sizeThatFits(size)
+
+		if estimatedSize.height > Metric.inputMessageTextViewMaxHeight {
+			self.inputMessageTextView.snp.updateConstraints { make in
+				make.height.equalTo(Metric.inputMessageTextViewMaxHeight)
 			}
-		} else if estimatedFrame.height > 57 {
 			self.inputMessageTextView.isScrollEnabled = true
+			
 		} else {
-			returnOriginalSizingBottomView()
+			self.inputMessageTextView.snp.updateConstraints { make in
+				make.height.equalTo(estimatedSize.height)
+			}
+			self.inputMessageTextView.isScrollEnabled = false
 		}
 	}
 	
 	public func returnOriginalSizingBottomView() {
-		self.chattingRoomBottomView.snp.updateConstraints { make in
-			make.height.equalTo(Metric.chattingRoomBottomViewHeight)
+		self.inputMessageTextView.snp.updateConstraints { make in
+			make.height.equalTo(Metric.inputMessageTextViewMinHeight)
 		}
+		self.inputMessageTextView.isScrollEnabled = false
 	}
 	
 	public func scollingBottom() {
@@ -234,7 +237,6 @@ extension ChattingRoomView: Viewable {
 		}
 		
 		chattingRoomBottomView.snp.makeConstraints { make in
-			make.height.equalTo(Metric.chattingRoomBottomViewHeight)
 			make.horizontalEdges.equalToSuperview()
 			make.bottom.equalTo(keyboardLayoutGuide.snp.top)
 		}
@@ -268,6 +270,7 @@ extension ChattingRoomView: Viewable {
 		}
 		
 		inputMessageTextView.snp.makeConstraints { make in
+			make.height.equalTo(Metric.inputMessageTextViewMinHeight)
 			make.verticalEdges.equalToSuperview().inset(Metric.inputMessageTextViewVerticalMargin)
 			make.leading.equalToSuperview().inset(Metric.inputMessageTextViewLeftMargin)
 			make.trailing.equalToSuperview().inset(Metric.inputMessageTextViewRightMargin)
