@@ -25,17 +25,16 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 		static let userNameLabelLeftMargin: CGFloat = 8
 		
 		static let messageBubbleViewCornerRadius: CGFloat = 12
-		static let messageBubbleViewAddWidthtMargin: CGFloat = 20
-		static let messageBubbleViewAddHeightMargin: CGFloat = 16
 		static let messageBubbleViewTopMargin: CGFloat = 4
 		static let messageBubbleViewBottomMargin: CGFloat = 4
 		
 		static let messageLabelNumberOfLines: Int = 0
 		static let messageLabelVerticalMargin: CGFloat = 8
-		static let messageLabelHorizontalMargin: CGFloat = 8
+		static let messageLabelHorizontalMargin: CGFloat = 10
 		
+		static let timeLabelCompressionResistancePriority: Float = 751
 		static let timeLabelLeftMargin: CGFloat = 4
-	}
+		static let timeLabelRightMargin: CGFloat = 46	}
 	
 	// MARK: - UI Property
 	private let profileImageView: UIImageView = UIImageView().then {
@@ -63,6 +62,10 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	private let timeLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_10
 		$0.textColor = AppTheme.Color.black
+		$0.setContentCompressionResistancePriority(
+			UILayoutPriority(Metric.timeLabelCompressionResistancePriority),
+			for: .horizontal
+		)
 	}
 	
 	// MARK: - Iitialize
@@ -74,20 +77,6 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
-	}
-	
-	// MARK: - PUBLIC METHOD
-	public func remakeCellConstraints() {
-		messageBubbleView.snp.remakeConstraints { make in
-			guard let messageText = messageLabel.text else { return }
-			let estimatedFrame = messageText.getEstimatedFrame(with: messageLabel.font)
-			
-			make.width.equalTo(estimatedFrame.width + Metric.messageBubbleViewAddWidthtMargin)
-			make.height.equalTo(estimatedFrame.height + Metric.messageBubbleViewAddHeightMargin)
-			make.top.equalTo(userNameLabel.snp.bottom).offset(Metric.messageBubbleViewTopMargin)
-			make.leading.equalTo(userNameLabel.snp.leading)
-			make.bottom.equalToSuperview().inset(Metric.messageBubbleViewBottomMargin)
-		}
 	}
 }
 
@@ -120,11 +109,6 @@ extension ChatByFriendWithProfileImageCell: Viewable {
 		}
 		
 		messageBubbleView.snp.makeConstraints { make in
-			guard let messageText = messageLabel.text else { return }
-			let estimatedFrame = messageText.getEstimatedFrame(with: messageLabel.font)
-			
-			make.width.equalTo(estimatedFrame.width + Metric.messageBubbleViewAddWidthtMargin)
-			make.height.equalTo(estimatedFrame.height + Metric.messageBubbleViewAddHeightMargin)
 			make.top.equalTo(userNameLabel.snp.bottom).offset(Metric.messageBubbleViewTopMargin)
 			make.leading.equalTo(userNameLabel.snp.leading)
 			make.bottom.equalToSuperview().inset(Metric.messageBubbleViewBottomMargin)
@@ -138,6 +122,7 @@ extension ChatByFriendWithProfileImageCell: Viewable {
 		timeLabel.snp.makeConstraints { make in
 			make.bottom.equalTo(messageBubbleView.snp.bottom)
 			make.leading.equalTo(messageBubbleView.snp.trailing).offset(Metric.timeLabelLeftMargin)
+			make.trailing.lessThanOrEqualToSuperview().inset(Metric.timeLabelRightMargin)
 		}
 	}
 	
