@@ -34,7 +34,8 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 		
 		static let timeLabelCompressionResistancePriority: Float = 751
 		static let timeLabelLeftMargin: CGFloat = 4
-		static let timeLabelRightMargin: CGFloat = 46	}
+		static let timeLabelRightMargin: CGFloat = 46
+	}
 	
 	// MARK: - UI Property
 	private let profileImageView: UIImageView = UIImageView().then {
