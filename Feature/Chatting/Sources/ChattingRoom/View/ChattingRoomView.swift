@@ -169,7 +169,7 @@ final class ChattingRoomView: UIView {
 		})
 	}
 	
-	public func sizingBottomView() {
+	public func setSizingInputMessageTextView() {
 		let size = CGSize(width: self.inputMessageTextView.frame.width, height: .infinity)
 		let estimatedSize = inputMessageTextView.sizeThatFits(size)
 
@@ -187,7 +187,7 @@ final class ChattingRoomView: UIView {
 		}
 	}
 	
-	public func returnOriginalSizingBottomView() {
+	public func setOriginalSizingInputMessageTextView() {
 		self.inputMessageTextView.snp.updateConstraints { make in
 			make.height.equalTo(Metric.inputMessageTextViewMinHeight)
 		}

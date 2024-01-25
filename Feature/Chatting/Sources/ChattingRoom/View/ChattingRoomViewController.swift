@@ -62,7 +62,7 @@ private extension ChattingRoomViewController {
 			.subscribe(onNext: { [weak self] in
 				guard let self else { return }
 				
-				self.rootView.sizingBottomView()
+				self.rootView.setSizingInputMessageTextView()
 			}).disposed(by: disposeBag)
 	}
 	
@@ -80,7 +80,7 @@ private extension ChattingRoomViewController {
 				guard let self else { return }
 				
 				rootView.sendMessageButtonAnimation(with: true)
-				rootView.returnOriginalSizingBottomView()
+				rootView.setOriginalSizingInputMessageTextView()
 			}).disposed(by: disposeBag)
 		
 		rootView.rx.didTapChattingRoomCollectionView
