@@ -24,7 +24,8 @@ public extension TargetDependency.ThirdParty {
     Moya,
     NMapsMap,
     ReactorKit,
-    HorizontalCalendar
+    HorizontalCalendar,
+    SocketIO
   ]
   
   static func project(name: String) -> TargetDependency {
@@ -46,4 +47,5 @@ extension TargetDependency.ThirdParty {
   static let NMapsMap = TargetDependency.external(name: "NMapsMap")
   static let ReactorKit = TargetDependency.external(name: "ReactorKit")
   static let HorizontalCalendar = TargetDependency.external(name: "HorizonCalendar")
+  static let SocketIO = TargetDependency.external(name: "SocketIO")
 }

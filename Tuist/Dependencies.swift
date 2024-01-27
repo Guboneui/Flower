@@ -16,7 +16,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     .remote(url: "https://github.com/Moya/Moya.git", requirement: .upToNextMajor(from: "15.0.0")),
     .remote(url: "https://github.com/Guboneui/NaverMap-SPM", requirement: .upToNextMajor(from: "3.17.0")),
     .package(url: "https://github.com/ReactorKit/ReactorKit.git", .upToNextMajor(from: "3.0.0")),
-    .package(url: "https://github.com/airbnb/HorizonCalendar.git", from: "2.0.0")
+    .package(url: "https://github.com/airbnb/HorizonCalendar.git", from: "2.0.0"),
+    .package(url: "https://github.com/socketio/socket.io-client-swift", .upToNextMajor(from: "16.0.0"))
   ],
   productTypes: [
     "SnapKit": .framework,
@@ -27,7 +28,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "RxMoya": .framework,
     "NMapsMap": .framework,
     "ReactorKit": .framework,
-    "HorizonCalendar": .framework
+    "HorizonCalendar": .framework,
+    "SocketIO": .framework
   ]
 )
 
