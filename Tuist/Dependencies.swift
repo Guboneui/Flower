@@ -18,7 +18,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     .package(url: "https://github.com/ReactorKit/ReactorKit.git", .upToNextMajor(from: "3.0.0")),
     .package(url: "https://github.com/airbnb/HorizonCalendar.git", from: "2.0.0"),
     .package(url: "https://github.com/socketio/socket.io-client-swift", .upToNextMajor(from: "16.0.0")),
-    .package(url: "https://github.com/realm/realm-swift", .upToNextMajor(from: "10.46.0"))
+    .package(url: "https://github.com/realm/realm-swift", .upToNextMajor(from: "10.46.0")),
+    .package(url: "https://github.com/kean/Nuke", .upToNextMajor(from: "12.0.0"))
   ],
   productTypes: [
     "SnapKit": .framework,
@@ -31,7 +32,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "ReactorKit": .framework,
     "HorizonCalendar": .framework,
     "SocketIO": .framework,
-    "Realm": .framework
+    "Realm": .framework,
+    "Nuke": .framework
   ]
 )
 

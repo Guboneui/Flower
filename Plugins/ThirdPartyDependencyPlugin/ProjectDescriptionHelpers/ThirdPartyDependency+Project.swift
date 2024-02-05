@@ -26,7 +26,8 @@ public extension TargetDependency.ThirdParty {
     ReactorKit,
     HorizontalCalendar,
     SocketIO,
-    Realm
+    Realm,
+    Nuke
   ]
   
   static func project(name: String) -> TargetDependency {
@@ -50,4 +51,5 @@ extension TargetDependency.ThirdParty {
   static let HorizontalCalendar = TargetDependency.external(name: "HorizonCalendar")
   static let SocketIO = TargetDependency.external(name: "SocketIO")
   static let Realm = TargetDependency.external(name: "Realm")
+  static let Nuke = TargetDependency.external(name: "Nuke")
 }
