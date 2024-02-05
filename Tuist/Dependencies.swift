@@ -17,7 +17,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     .remote(url: "https://github.com/Guboneui/NaverMap-SPM", requirement: .upToNextMajor(from: "3.17.0")),
     .package(url: "https://github.com/ReactorKit/ReactorKit.git", .upToNextMajor(from: "3.0.0")),
     .package(url: "https://github.com/airbnb/HorizonCalendar.git", from: "2.0.0"),
-    .package(url: "https://github.com/socketio/socket.io-client-swift", .upToNextMajor(from: "16.0.0"))
+    .package(url: "https://github.com/socketio/socket.io-client-swift", .upToNextMajor(from: "16.0.0")),
+    .package(url: "https://github.com/realm/realm-swift", .upToNextMajor(from: "10.46.0"))
   ],
   productTypes: [
     "SnapKit": .framework,
@@ -29,7 +30,8 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "NMapsMap": .framework,
     "ReactorKit": .framework,
     "HorizonCalendar": .framework,
-    "SocketIO": .framework
+    "SocketIO": .framework,
+    "RealmSwift": .framework
   ]
 )
 
