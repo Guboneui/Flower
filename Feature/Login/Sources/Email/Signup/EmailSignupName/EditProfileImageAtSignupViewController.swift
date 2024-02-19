@@ -52,6 +52,13 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 		$0.backgroundColor = AppTheme.Color.black
 	}
 	
+	private let blurView: UIVisualEffectView = UIVisualEffectView().then {
+		$0.effect = UIBlurEffect(style: .dark)
+		$0.backgroundColor = UIColor.clear
+	}
+	
+	private let snapShotGuideLineMaskLayer: CAShapeLayer = .init()
+	
 	private let bottomContainerView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
 	}
@@ -118,6 +125,7 @@ private extension EditProfileImageAtSignupViewController {
 	func setupViews() {
 		view.addSubview(snapShotAreaView)
 		snapShotAreaView.addSubview(profileImageView)
+		snapShotAreaView.addSubview(blurView)
 		
 		setupConstraints()
 		setNavigationBar()
@@ -136,23 +144,26 @@ private extension EditProfileImageAtSignupViewController {
 			make.edges.equalTo(view.safeAreaLayoutGuide)
 		}
 		
+		blurView.snp.makeConstraints { make in
+			make.edges.equalTo(view.snp.edges)
+		}
+		
 		view.layoutIfNeeded()
 	}
 	
 	func setupSnapShotGuideLineLayer() {
 		let snapShotFrame: CGRect = snapShotAreaView.frame
 		let snapShotSize: CGSize = snapShotFrame.size
-		let maskLayer = CAShapeLayer()
-		maskLayer.frame = self.profileImageView.bounds
-		maskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
+		snapShotGuideLineMaskLayer.frame = self.profileImageView.bounds
+		snapShotGuideLineMaskLayer.fillColor = UIColor.clear.cgColor
 		let path = UIBezierPath(
 			roundedRect: snapShotFrame,
 			cornerRadius: snapShotSize.width / 2.0
 		)
 		path.append(UIBezierPath(rect: view.bounds))
-		maskLayer.path = path.cgPath
-		maskLayer.fillRule = CAShapeLayerFillRule.evenOdd
-		view.layer.addSublayer(maskLayer)
+		snapShotGuideLineMaskLayer.path = path.cgPath
+		snapShotGuideLineMaskLayer.fillRule = CAShapeLayerFillRule.evenOdd
+		view.layer.addSublayer(snapShotGuideLineMaskLayer)
 	}
 	
 	func setupSnapShowGuideLineBlurLayer() {
@@ -178,6 +189,8 @@ private extension EditProfileImageAtSignupViewController {
 		fillLayer.fillColor = AppTheme.Color.black.cgColor
 		fillLayer.path = outerbezierPath.cgPath
 		maskView.layer.addSublayer(fillLayer)
+		
+		blurView.mask = maskView
 	}
 	
 	func setGuideAreaViews() {
@@ -198,13 +211,15 @@ private extension EditProfileImageAtSignupViewController {
 	}
 	
 	private func setupImagePinchGesture() {
-		profileImageView.rx.pinchGesture()
+		snapShotAreaView.rx.pinchGesture()
 			.when(.began, .changed, .ended)
 			.share(replay: 1)
 			.subscribe(onNext: { [weak self] recognize in
 				guard let self = self else { return }
 				switch recognize.state {
-				case .began: print("시작")
+				case .began: 
+					self.blurView.effect = nil
+					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
 				case .changed:
 					let pinchScale: CGFloat = recognize.scale
 					if self.imageViewScale * pinchScale < Metric.maxScale &&
@@ -217,7 +232,8 @@ private extension EditProfileImageAtSignupViewController {
 					}
 					recognize.scale = 1.0
 				case .ended:
-					print("끝")
+					self.blurView.effect = UIBlurEffect(style: .dark)
+					self.snapShotGuideLineMaskLayer.fillColor = UIColor.clear.cgColor
 				default: break
 				}
 			}).disposed(by: disposeBag)
@@ -225,7 +241,7 @@ private extension EditProfileImageAtSignupViewController {
 	
 	private func setupImagePanGesture() {
 		var imageCenterOffset: CGPoint = .zero
-		profileImageView.rx.panGesture()
+		snapShotAreaView.rx.panGesture()
 			.when(.began, .changed, .ended)
 			.share(replay: 1)
 			.subscribe(onNext: { [weak self] recognize in
@@ -236,14 +252,38 @@ private extension EditProfileImageAtSignupViewController {
 						x: self.profileImageView.center.x,
 						y: self.profileImageView.center.y
 					)
+					self.blurView.effect = nil
+					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
 				case .changed:
+					let transform: CGAffineTransform = self.profileImageView.transform
 					let translation = recognize.translation(in: self.profileImageView)
-					self.profileImageView.center = CGPoint(
-						x: imageCenterOffset.x + translation.x,
-						y: imageCenterOffset.y + translation.y
-					)
+					if transform.a >= 1.0 && transform.d >= 1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x + translation.x,
+							y: imageCenterOffset.y + translation.y
+						)
+					} else if transform.b >= 1.0 && transform.c <= -1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x - translation.y,
+							y: imageCenterOffset.y + translation.x
+						)
+					} else if transform.a <= -1.0 && transform.d <= -1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x - translation.x,
+							y: imageCenterOffset.y - translation.y
+						)
+					} else if transform.b <= -1.0 && transform.c >= 1.0 {
+						self.profileImageView.center = CGPoint(
+							x: imageCenterOffset.x + translation.y,
+							y: imageCenterOffset.y - translation.x
+						)
+					} else {
+						break
+					}
 				case .ended:
 					imageCenterOffset = .zero
+					self.blurView.effect = UIBlurEffect(style: .dark)
+					self.snapShotGuideLineMaskLayer.fillColor = UIColor.clear.cgColor
 				default: break
 				}
 			}).disposed(by: disposeBag)
@@ -316,7 +356,7 @@ private extension EditProfileImageAtSignupViewController {
 			$0.setImage(AppTheme.Image.rotateLeft, for: .normal)
 		}
 		
-		let rotatePIButton: UIButton = UIButton(type: .system).then {
+		let rotateResetButton: UIButton = UIButton(type: .system).then {
 			$0.tintColor = AppTheme.Color.white
 			$0.setImage(AppTheme.Image.rotatePI, for: .normal)
 		}
@@ -328,7 +368,7 @@ private extension EditProfileImageAtSignupViewController {
 		
 		let buttonStackView: UIStackView = .init(arrangedSubviews: [
 			rotateLeftButton,
-			rotatePIButton,
+			rotateResetButton,
 			rotateRightButton
 		]).then {
 			$0.distribution = .equalSpacing
@@ -359,16 +399,36 @@ private extension EditProfileImageAtSignupViewController {
 				.offset(Metric.buttonStackViewBottomMargin)
 		}
 		
-		rotateLeftButton.rx.tapGesture()
-			.when(.recognized)
-			.bind { [weak self] _ in
+		rotateLeftButton.rx.touchHandler()
+			.bind { [weak self] in
 				guard let self else { return }
 				self.profileImageView.transform = self.profileImageView.transform.rotated(by: -(.pi / 2.0))
 			}.disposed(by: disposeBag)
 		
-		rotateRightButton.rx.tapGesture()
-			.when(.recognized)
-			.bind { [weak self] _ in
+		rotateResetButton.rx.touchHandler()
+			.bind { [weak self] in
+				guard let self else { return }
+				let radians: CGFloat = atan2(
+					self.profileImageView.transform.b,
+					self.profileImageView.transform.a
+				)
+				let degrees: CGFloat = radians * (180 / .pi)
+				switch degrees {
+				case 45..<135:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: -(.pi / 2.0))
+				case 135...180:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: .pi)
+				case -180 ..< -135:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: -.pi)
+				case -135 ..< -45:
+					self.profileImageView.transform = self.profileImageView.transform.rotated(by: (.pi / 2.0))
+				default:
+					break
+				}
+			}.disposed(by: disposeBag)
+		
+		rotateRightButton.rx.touchHandler()
+			.bind { [weak self] in
 				guard let self else { return }
 				self.profileImageView.transform = self.profileImageView.transform.rotated(by: .pi / 2.0)
 			}.disposed(by: disposeBag)

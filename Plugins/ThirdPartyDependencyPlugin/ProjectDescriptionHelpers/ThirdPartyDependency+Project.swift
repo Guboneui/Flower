@@ -23,7 +23,11 @@ public extension TargetDependency.ThirdParty {
     RxGesture,
     Moya,
     NMapsMap,
-    ReactorKit
+    ReactorKit,
+    HorizontalCalendar,
+    SocketIO,
+    Realm,
+    Nuke
   ]
   
   static func project(name: String) -> TargetDependency {
@@ -44,4 +48,8 @@ extension TargetDependency.ThirdParty {
   static let Moya = TargetDependency.external(name: "Moya")
   static let NMapsMap = TargetDependency.external(name: "NMapsMap")
   static let ReactorKit = TargetDependency.external(name: "ReactorKit")
+  static let HorizontalCalendar = TargetDependency.external(name: "HorizonCalendar")
+  static let SocketIO = TargetDependency.external(name: "SocketIO")
+  static let Realm = TargetDependency.external(name: "Realm")
+  static let Nuke = TargetDependency.external(name: "Nuke")
 }
