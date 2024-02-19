@@ -21,7 +21,7 @@ final class MapView: UIView {
 		static let houseListLabelText: String = "목록보기"
 	}
 	
-	//MARK: - Metric
+	// MARK: - Metric
 	private enum Metric {
 		static let mapCollectionViewSpacing: CGFloat = 8
 		static let mapCollectionViewInsetTop: CGFloat = 0
@@ -37,7 +37,7 @@ final class MapView: UIView {
 		static let userLocationButtonViewShadowOffset: CGFloat = 1
 		static let userLocationButtonViewShadowRadius: CGFloat = 10
 		static let mapCollectionViewBottomMargin: CGFloat = -106
-		static let mapCollectionViewHeightMargin: CGFloat = 0
+		static let mapCollectionViewHeightMargin: CGFloat = 141
 		static let houseListButtonViewWidthMargin: CGFloat = 92
 		static let houseListButtonViewHeightMargin: CGFloat = 33
 		static let houseListButtonViewBottomMargin: CGFloat = -12
@@ -68,7 +68,6 @@ final class MapView: UIView {
 			right: Metric.mapCollectionViewInsetRight
 		)
 		cv.showsHorizontalScrollIndicator = false
-		cv.isHidden = true
 		return cv
 	}()
 	
@@ -85,7 +84,7 @@ final class MapView: UIView {
 		$0.layer.masksToBounds = false
 	}
 	
-	private let hoouseListButtonImageView: UIImageView = UIImageView().then {
+	private let houseListButtonImageView: UIImageView = UIImageView().then {
 		$0.image = AppTheme.Image.houseList
 		$0.tintColor = AppTheme.Color.white
 	}
@@ -96,7 +95,7 @@ final class MapView: UIView {
 		$0.textColor = AppTheme.Color.white
 	}
 	
-	private let userLocationButtonView: UIView = UIView().then {
+	private(set) var userLocationButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
 		$0.makeCornerRadius(Metric.userLocationButtonViewCornerRadius, edge: .all)
 		$0.layer.shadowOpacity = Metric.userLocationButtonViewShadowOpacity
@@ -136,7 +135,7 @@ extension MapView: Viewable {
 		addSubview(houseListButtonView)
 		addSubview(userLocationButtonView)
 		
-		houseListButtonView.addSubview(hoouseListButtonImageView)
+		houseListButtonView.addSubview(houseListButtonImageView)
 		houseListButtonView.addSubview(houseListLabel)
 		
 		userLocationButtonView.addSubview(userLocationImageView)
@@ -163,7 +162,7 @@ extension MapView: Viewable {
 			make.centerX.equalToSuperview()
 		}
 		
-		hoouseListButtonImageView.snp.makeConstraints { make in
+		houseListButtonImageView.snp.makeConstraints { make in
 			make.size.equalTo(Metric.hoouseListButtonImageViewSize)
 			make.centerY.equalToSuperview()
 			make.leading.equalToSuperview().offset(Metric.hoouseListButtonImageViewLeftMargin)

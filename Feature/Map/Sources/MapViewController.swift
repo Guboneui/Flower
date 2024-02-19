@@ -20,6 +20,7 @@ public final class MapViewController: UIViewController {
 	private var mapCollectionView: UICollectionView { rootView.mapCollectionView }
 	private var houseListButtonView: UIView { rootView.houseListButtonView }
 	private var houseListLabel: UILabel { rootView.houseListLabel }
+	private var userLocationButtonView: UIView { rootView.userLocationButtonView }
 	
 	// MARK: LifeCycle
 	public override func loadView() {
@@ -104,21 +105,18 @@ private extension MapViewController {
 										scheduler: MainScheduler.instance)
 					.bind { [weak self] _ in
 						guard let self else { return }
-						if mapCollectionView.isHidden {
-							mapCollectionView.isHidden = false
-							houseListLabel.text = "목록닫기"
-							mapCollectionView.snp.updateConstraints({ make in
-								make.height.equalTo(141)
-								make.bottom.equalToSuperview().offset(-106)
-							})
-						} else {
-							houseListLabel.text = "목록보기"
-							mapCollectionView.isHidden = true
-							mapCollectionView.snp.updateConstraints({ make in
-								make.bottom.equalToSuperview().offset(0)
-							})
-						}
+						//TODO: 목록 페이지로 이동
 						
 					}.disposed(by: disposeBag)
+		
+		userLocationButtonView.rx.tapGesture()
+			.when(.recognized)
+				.throttle(.milliseconds(300),
+									latest: false,
+									scheduler: MainScheduler.instance)
+				.bind { [weak self] _ in
+					guard let self else { return }
+					//TODO: 현재위치로 이동
+				}.disposed(by: disposeBag)
 	}
 }
