@@ -9,6 +9,7 @@ import UIKit
 
 import DesignSystem
 import ResourceKit
+import UtilityKit
 
 import SnapKit
 import Then
@@ -24,6 +25,7 @@ class MapCollectionViewCell: UICollectionViewCell {
 		static let rateLabelLeftMargin: CGFloat = 2
 		static let rateNumLabelLeftMargin: CGFloat = 2
 		static let housePriceLabelBottomMargin: CGFloat = -16
+		static let cellCornerRadius: CGFloat = 12
 	}
 	
 	private enum TextSet {
@@ -92,10 +94,10 @@ class MapCollectionViewCell: UICollectionViewCell {
 	}
 }
 
-extension MapCollectionViewCell {
+extension MapCollectionViewCell: Viewable {
 	func setupConfigures() {
 		backgroundColor = AppTheme.Color.white
-		makeCornerRadius(12, edge: .all)
+		makeCornerRadius(Metric.cellCornerRadius, edge: .all)
 	}
 	
 	func setupViews() {
@@ -162,7 +164,5 @@ extension MapCollectionViewCell {
 		}
 	}
 	
-	func setupBinds() {
-		
-	}
+	func setupBinds() { }
 }

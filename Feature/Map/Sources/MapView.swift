@@ -24,10 +24,8 @@ final class MapView: UIView {
 	// MARK: - Metric
 	private enum Metric {
 		static let mapCollectionViewSpacing: CGFloat = 8
-		static let mapCollectionViewInsetTop: CGFloat = 0
-		static let mapCollectionViewInsetleft: CGFloat = 8
-		static let mapCollectionViewInsetBottom: CGFloat = 0
-		static let mapCollectionViewInsetRight: CGFloat = 8
+		static let mapCollectionViewHorizontalInset: CGFloat = 8
+		static let mapCollectionViewVerticalInset: CGFloat = 0
 		static let houseListButtonViewCornerRadius: CGFloat = 17
 		static let houseListButtonViewShadowOpacity: Float = 0.2
 		static let houseListButtonViewShadowOffset: CGFloat = 2
@@ -185,7 +183,5 @@ extension MapView: Viewable {
 		}
 	}
 	
-	func setupBinds() {
-		
-	}
+	func setupBinds() { }
 }

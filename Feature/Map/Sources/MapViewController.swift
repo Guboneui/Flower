@@ -55,13 +55,17 @@ extension MapViewController: UICollectionViewDelegate,
 														 UICollectionViewDataSource,
 														 UICollectionViewDelegateFlowLayout,
 														 UIScrollViewDelegate {
-	public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+	public func collectionView(
+		_ collectionView: UICollectionView,
+		numberOfItemsInSection section: Int
+	) -> Int {
 		return 10
 	}
 	
 	public func collectionView(
 		_ collectionView: UICollectionView,
-		cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		cellForItemAt indexPath: IndexPath
+	) -> UICollectionViewCell {
 			guard let cell = collectionView.dequeueReusableCell(
 				withReuseIdentifier: "MapCollectionViewCell",
 				for: indexPath) as? MapCollectionViewCell else {
@@ -81,8 +85,9 @@ extension MapViewController: UICollectionViewDelegate,
 	public func scrollViewWillEndDragging(
 		_ scrollView: UIScrollView,
 		withVelocity velocity: CGPoint,
-		targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-			guard let layout = self.mapCollectionView.collectionViewLayout as?UICollectionViewFlowLayout else { return }
+		targetContentOffset: UnsafeMutablePointer<CGPoint>
+	) {
+			guard let layout = self.mapCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
 			
 			var cellWidthIncludingSpacing: CGFloat = 328
 			var offset = targetContentOffset.pointee
@@ -91,7 +96,8 @@ extension MapViewController: UICollectionViewDelegate,
 			
 			offset = CGPoint(
 				x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left,
-				y: scrollView.contentInset.top)
+				y: scrollView.contentInset.top
+			)
 			targetContentOffset.pointee = offset
 		}
 }
@@ -100,9 +106,11 @@ private extension MapViewController {
 	func setupGestures() {
 		houseListButtonView.rx.tapGesture()
 					.when(.recognized)
-					.throttle(.milliseconds(300),
-										latest: false,
-										scheduler: MainScheduler.instance)
+					.throttle(
+						.milliseconds(300),
+						latest: false,
+						scheduler: MainScheduler.instance
+					)
 					.bind { [weak self] _ in
 						guard let self else { return }
 						//TODO: 목록 페이지로 이동
@@ -111,9 +119,11 @@ private extension MapViewController {
 		
 		userLocationButtonView.rx.tapGesture()
 			.when(.recognized)
-				.throttle(.milliseconds(300),
-									latest: false,
-									scheduler: MainScheduler.instance)
+				.throttle(
+					.milliseconds(300),
+					latest: false,
+					scheduler: MainScheduler.instance
+				)
 				.bind { [weak self] _ in
 					guard let self else { return }
 					//TODO: 현재위치로 이동
