@@ -11,7 +11,6 @@ import ProjectDescriptionHelpers
 import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
-import SecureStorageKitPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Map"
@@ -24,8 +23,7 @@ let project = Project.makeFrameworkProject(
     .Data.MapData.Main,
     .Domain.MapDomain.Main,
     .ThirdParty.Main,
-    .DesignSystem.Main,
-    .SecureStorageKit.Main
+    .DesignSystem.Main
   ],
   isDynamic: false,
   needTestTarget: false,

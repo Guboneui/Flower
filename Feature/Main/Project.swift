@@ -10,7 +10,6 @@ import ProjectDescriptionHelpers
 
 import DesignSystemPlugin
 import FeaturePlugin
-import SecureStorageKitPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Main"
@@ -24,8 +23,7 @@ let project = Project.makeFrameworkProject(
     .Feature.Map.Main,
     .Feature.Profile.Main,
     .ThirdParty.Main,
-    .DesignSystem.Main,
-    .SecureStorageKit.Main
+    .DesignSystem.Main
   ],
   isDynamic: false,
   needTestTarget: false,
