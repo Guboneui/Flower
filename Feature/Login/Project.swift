@@ -12,6 +12,7 @@ import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
 import FeaturePlugin
+import SecureStorageKitPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "Login"
@@ -25,7 +26,8 @@ let project = Project.makeFrameworkProject(
     .DesignSystem.Main,
     .Domain.LoginDomain.Main,
     .Data.LoginData.Main,
-    .Feature.Main.Main
+    .Feature.Main.Main,
+    .SecureStorageKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,

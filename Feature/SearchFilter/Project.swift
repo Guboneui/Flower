@@ -11,6 +11,7 @@ import ProjectDescriptionHelpers
 import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
+import SecureStorageKitPlugin
 import ThirdPartyDependencyPlugin
 
 let projectName: String = "SearchFilter"
@@ -21,7 +22,8 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
     .ThirdParty.Main,
-    .DesignSystem.Main
+    .DesignSystem.Main,
+    .SecureStorageKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,
