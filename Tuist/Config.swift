@@ -11,6 +11,7 @@ let config = Config(
     .local(path: .relativeToManifest("../../Plugins/DataPlugin")),
     .local(path: .relativeToManifest("../../Plugins/NetworkPlugin")),
     .local(path: .relativeToManifest("../../Plugins/NetworkHelperPlugin")),
-    .local(path: .relativeToManifest("../../Plugins/UtilityKitPlugin"))
+    .local(path: .relativeToManifest("../../Plugins/UtilityKitPlugin")),
+    .local(path: .relativeToManifest("../../Plugins/SecureStorageKitPlugin"))
   ]
 )
