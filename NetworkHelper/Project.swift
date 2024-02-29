@@ -8,6 +8,8 @@
 import ProjectDescription
 import ProjectDescriptionHelpers
 
+import SecureStorageKitPlugin
+
 let projectName: String = "NetworkHelper"
 let iOSTargetVersion: String = "16.0"
 
@@ -16,7 +18,8 @@ let project = Project.makeLibraryProject(
   iOSTargetVersion: "16.0",
   baseSetting: .init(),
   dependencies: [
-    .external(name: "RxMoya")
+    .external(name: "RxMoya"),
+    .SecureStorageKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,
