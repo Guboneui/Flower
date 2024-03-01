@@ -78,7 +78,7 @@ private extension ProfileViewReactor {
 		return [userInfo]
 	}
 	
-	func fetchUserScheduleCellectionViewCellViewModel() -> [UserScheduleCollectionViewCellViewModel] {
+	func fetchUserScheduleCellectionViewCellViewModel() -> [UserScheduleCollectionViewCellViewModel]? {
 		let userSchedule: UserScheduleCollectionViewCellViewModel = .init(
 			imageURL: "",
 			guestHouseName: "연남 민박",
