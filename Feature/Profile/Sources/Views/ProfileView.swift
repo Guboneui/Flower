@@ -25,6 +25,7 @@ final class ProfileView: UIView {
 	private enum Section {
 		case userInfo
 		case userInfoSeparator
+		case userActivity
 	}
 	
   // MARK: - Metric
@@ -35,6 +36,7 @@ final class ProfileView: UIView {
   // MARK: - TextSet
 	private enum TextSet {
 		static let navigationTitle: String = "마이페이지"
+		static let userActivityHeaderTitle: String = "내 활동"
 	}
   
   // MARK: - UI Property
@@ -50,6 +52,10 @@ final class ProfileView: UIView {
 		$0.register(
 			CollectionViewSeparateLineCell.self,
 			forCellWithReuseIdentifier: CollectionViewSeparateLineCell.identifier
+		)
+		$0.register(
+			UserActivityCollectionViewCell.self,
+			forCellWithReuseIdentifier: UserActivityCollectionViewCell.identifier
 		)
 		$0.bounces = false
 		$0.backgroundColor = AppTheme.Color.white
@@ -93,6 +99,13 @@ final class ProfileView: UIView {
 			)
 		}
 		
+		if let userActivity: [UserActivityCollectionViewCellViewModel] = viewModel.userActivity {
+			snapShot.appendSections([.userActivity])
+			snapShot.appendItems(
+				userActivity,
+				toSection: .userActivity
+			)
+		}
 		dataSource.apply(snapShot)
 	}
 }
@@ -137,6 +150,8 @@ extension ProfileView {
 				return UserInfoCollectionViewCell.cellLayout()
 			case .userInfoSeparator:
 				return CollectionViewSeparateLineCell.cellLayout(height: Metric.userInfoSeparatorHeight)
+			case .userActivity:
+				return UserActivityCollectionViewCell.cellLayout()
 			case .none:
 				return nil
 			}
@@ -154,6 +169,8 @@ extension ProfileView {
 					return self.makeUserInfoCell(collectionView, indexPath, viewModel)
 				case .userInfoSeparator:
 					return self.makeUserInfoSeparatorCell(collectionView, indexPath, viewModel)
+				case .userActivity:
+					return self.makeUserActivityCell(collectionView, indexPath, viewModel)
 				}
 			}
 		)
@@ -190,6 +207,25 @@ extension ProfileView {
 		else {
 			return .init()
 		}
+		return cell
+	}
+	
+	private func makeUserActivityCell(
+		_ collectionView: UICollectionView,
+		_ indexPath: IndexPath,
+		_ viewModel: AnyHashable
+	) -> UICollectionViewCell {
+		guard
+			let viewModel: UserActivityCollectionViewCellViewModel = viewModel
+				as? UserActivityCollectionViewCellViewModel,
+			let cell: UserActivityCollectionViewCell = collectionView.dequeueReusableCell(
+				withReuseIdentifier: UserActivityCollectionViewCell.identifier,
+				for: indexPath
+			) as? UserActivityCollectionViewCell
+		else {
+			return .init()
+		}
+		cell.setupCellData(with: viewModel)
 		return cell
 	}
 }

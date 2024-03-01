@@ -53,11 +53,11 @@ public final class ProfileViewReactor: Reactor {
 // MARK: - Mutate Method
 private extension ProfileViewReactor {
 	func performLoad() -> Observable<Mutation> {
-		let userInfo: [UserInfoCellectionViewCellViewModel] = fetchUserInfoCellectionViewCellViewModel()
 		return .just(
 			.setCollectionViewModel(
 				ProfileViewModel(
-					userInfo: userInfo
+					userInfo: fetchUserInfoCellectionViewCellViewModel(),
+					userActivity: fetchUserActivityCollectionViewCellViewModel(),
 				)
 			)
 		)
@@ -74,5 +74,15 @@ private extension ProfileViewReactor {
 			userLoginType: ""
 		)
 		return [userInfo]
+	}
+	
+	func fetchUserActivityCollectionViewCellViewModel() -> [UserActivityCollectionViewCellViewModel] {
+		let userActivity: UserActivityCollectionViewCellViewModel = .init(
+			recentCount: 1, 
+			reservationCount: 2,
+			bookmarkCount: 3,
+			reviewCount: 4
+		)
+		return [userActivity]
 	}
 }
