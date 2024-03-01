@@ -144,6 +144,18 @@ extension UserActivityCollectionViewCell {
 		// MARK: Section
 		let section: NSCollectionLayoutSection = .init(group: group)
 		
+		// MARK: Header
+		let headerSize: NSCollectionLayoutSize = .init(
+			widthDimension: .fractionalWidth(1.0),
+			heightDimension: .absolute(Metric.cellHeaderHeight)
+		)
+		let header: NSCollectionLayoutBoundarySupplementaryItem = .init(
+			layoutSize: headerSize,
+			elementKind: UICollectionView.elementKindSectionHeader,
+			alignment: .top
+		)
+		
+		section.boundarySupplementaryItems = [header]
 
 		return section
 	}

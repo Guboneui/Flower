@@ -11,7 +11,7 @@ public protocol ReusablIdentifierProtocol {
 		static var identifier: String { get }
 }
 
-extension UICollectionViewCell: ReusablIdentifierProtocol {
+extension UICollectionReusableView: ReusablIdentifierProtocol {
 	public static var identifier: String {
 		return String(describing: self)
 	}

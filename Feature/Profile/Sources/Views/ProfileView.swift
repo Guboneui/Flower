@@ -57,6 +57,11 @@ final class ProfileView: UIView {
 			UserActivityCollectionViewCell.self,
 			forCellWithReuseIdentifier: UserActivityCollectionViewCell.identifier
 		)
+		$0.register(
+			ProfileHeaderCell.self,
+			forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+			withReuseIdentifier: ProfileHeaderCell.identifier
+		)
 		$0.bounces = false
 		$0.backgroundColor = AppTheme.Color.white
 	}
@@ -174,6 +179,28 @@ extension ProfileView {
 				}
 			}
 		)
+		
+		dataSource.supplementaryViewProvider = { [weak self] collectionView, kind, indexPath in
+			guard
+				let self,
+				kind == UICollectionView.elementKindSectionHeader,
+				let headerView: ProfileHeaderCell = collectionView.dequeueReusableSupplementaryView(
+					ofKind: kind,
+					withReuseIdentifier: ProfileHeaderCell.identifier,
+					for: indexPath
+				) as? ProfileHeaderCell
+			else {
+				return .init()
+			}
+			
+			switch self.currentSection[indexPath.section] {
+			case .userActivity:
+				headerView.setupTitle(with: TextSet.userActivityHeaderTitle)
+			default:
+				return nil
+			}
+			return headerView
+		}
 		
 		return dataSource
 	}
