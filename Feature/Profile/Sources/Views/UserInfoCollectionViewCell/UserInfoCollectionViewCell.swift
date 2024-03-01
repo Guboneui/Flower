@@ -13,6 +13,7 @@ import UtilityKit
 final class UserInfoCollectionViewCell: UICollectionViewCell {
 	// MARK: - Metric
 	private enum Metric {
+		static let height: CGFloat = 82.0
 		static let horizontalMargin: CGFloat = 24.0
 		static let profileImageViewSize: CGSize = .init(width: 82.0, height: 82.0)
 		static let userLoginTypeImageViewSize: CGSize = .init(width: 16.0, height: 16.0)
@@ -22,6 +23,12 @@ final class UserInfoCollectionViewCell: UICollectionViewCell {
 		static let userInfoStackViewSpacing: CGFloat = 16.0
 		static let userInfoStackViewTopMargin: CGFloat = 20.0
 		static let cellGroupEstimatedHeight: CGFloat = 126.0
+		static let sectionContentInsets: NSDirectionalEdgeInsets = .init(
+			top: 20.0,
+			leading: 0,
+			bottom: 24.0,
+			trailing: 0
+		)
 	}
 	
 	// MARK: - UI Property
@@ -121,9 +128,8 @@ extension UserInfoCollectionViewCell: Viewable {
 		}
 		
 		userInfoStackView.snp.makeConstraints { make in
-			make.top.equalToSuperview().offset(Metric.userInfoStackViewTopMargin)
+			make.verticalEdges.equalToSuperview()
 			make.horizontalEdges.equalToSuperview().inset(Metric.horizontalMargin)
-			make.bottom.equalToSuperview().offset(-24)
 		}
 	}
 	
@@ -143,7 +149,7 @@ extension UserInfoCollectionViewCell {
 		// MARK: Group
 		let groupSize: NSCollectionLayoutSize = .init(
 			widthDimension: .fractionalWidth(1.0),
-			heightDimension: .estimated(Metric.cellGroupEstimatedHeight)
+			heightDimension: .estimated(Metric.height)
 		)
 		let group: NSCollectionLayoutGroup = .horizontal(
 			layoutSize: groupSize,
@@ -152,6 +158,7 @@ extension UserInfoCollectionViewCell {
 		
 		// MARK: Section
 		let section: NSCollectionLayoutSection = .init(group: group)
+		section.contentInsets = Metric.sectionContentInsets
 		return section
 	}
 }
