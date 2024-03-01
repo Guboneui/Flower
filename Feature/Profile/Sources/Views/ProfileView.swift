@@ -168,9 +168,7 @@ extension ProfileView: Viewable {
 		}
   }
   
-  func setupBinds() {
-    
-  }
+  func setupBinds() { }
 }
 
 // MARK: - CollectionView
