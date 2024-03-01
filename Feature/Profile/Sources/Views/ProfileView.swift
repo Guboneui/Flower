@@ -24,9 +24,13 @@ final class ProfileView: UIView {
 	// MARK: - Section
 	private enum Section {
 		case userInfo
+		case userInfoSeparator
 	}
 	
   // MARK: - Metric
+	private enum Metric {
+		static let userInfoSeparatorHeight: CGFloat = 4.0
+	}
   
   // MARK: - TextSet
 	private enum TextSet {
@@ -42,6 +46,10 @@ final class ProfileView: UIView {
 		$0.register(
 			UserInfoCollectionViewCell.self,
 			forCellWithReuseIdentifier: UserInfoCollectionViewCell.identifier
+		)
+		$0.register(
+			CollectionViewSeparateLineCell.self,
+			forCellWithReuseIdentifier: CollectionViewSeparateLineCell.identifier
 		)
 		$0.bounces = false
 		$0.backgroundColor = AppTheme.Color.white
@@ -73,7 +81,16 @@ final class ProfileView: UIView {
 		
 		if let userInfo: [UserInfoCellectionViewCellViewModel] = viewModel.userInfo {
 			snapShot.appendSections([.userInfo])
-			snapShot.appendItems(userInfo, toSection: .userInfo)
+			snapShot.appendItems(
+				userInfo,
+				toSection: .userInfo
+			)
+			
+			snapShot.appendSections([.userInfoSeparator])
+			snapShot.appendItems(
+				viewModel.userInfoSeparateLine,
+				toSection: .userInfoSeparator
+			)
 		}
 		
 		dataSource.apply(snapShot)
@@ -118,6 +135,8 @@ extension ProfileView {
 			switch self?.currentSection[section] {
 			case .userInfo:
 				return UserInfoCollectionViewCell.cellLayout()
+			case .userInfoSeparator:
+				return CollectionViewSeparateLineCell.cellLayout(height: Metric.userInfoSeparatorHeight)
 			case .none:
 				return nil
 			}
@@ -133,6 +152,8 @@ extension ProfileView {
 				switch self.currentSection[indexPath.section] {
 				case .userInfo:
 					return self.makeUserInfoCell(collectionView, indexPath, viewModel)
+				case .userInfoSeparator:
+					return self.makeUserInfoSeparatorCell(collectionView, indexPath, viewModel)
 				}
 			}
 		)
@@ -150,6 +171,22 @@ extension ProfileView {
 				withReuseIdentifier: UserInfoCollectionViewCell.identifier,
 				for: indexPath
 			) as? UserInfoCollectionViewCell
+		else {
+			return .init()
+		}
+		return cell
+	}
+	
+	private func makeUserInfoSeparatorCell(
+		_ collectionView: UICollectionView,
+		_ indexPath: IndexPath,
+		_ viewModel: AnyHashable
+	) -> UICollectionViewCell {
+		guard
+			let cell: CollectionViewSeparateLineCell = collectionView.dequeueReusableCell(
+				withReuseIdentifier: CollectionViewSeparateLineCell.identifier,
+				for: indexPath
+			) as? CollectionViewSeparateLineCell
 		else {
 			return .init()
 		}
