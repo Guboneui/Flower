@@ -58,6 +58,7 @@ private extension ProfileViewReactor {
 				ProfileViewModel(
 					userInfo: fetchUserInfoCellectionViewCellViewModel(),
 					userActivity: fetchUserActivityCollectionViewCellViewModel(),
+					serviceManagement: fetchServiceManagementCollectionViewCellViewModel()
 				)
 			)
 		)
@@ -84,5 +85,14 @@ private extension ProfileViewReactor {
 			reviewCount: 4
 		)
 		return [userActivity]
+	}
+	
+	func fetchServiceManagementCollectionViewCellViewModel() -> [ServiceManagementCollectionViewCelViewModel] {
+		let serviceManagements: [ServiceManagementCollectionViewCelViewModel] = [
+			.init(title: "공지사항"),
+			.init(title: "설정"),
+			.init(title: "앱 정보")
+		]
+		return serviceManagements
 	}
 }

@@ -26,6 +26,7 @@ final class ProfileView: UIView {
 		case userInfo
 		case userInfoSeparator
 		case userActivity
+		case serviceManagement
 	}
 	
   // MARK: - Metric
@@ -37,6 +38,7 @@ final class ProfileView: UIView {
 	private enum TextSet {
 		static let navigationTitle: String = "마이페이지"
 		static let userActivityHeaderTitle: String = "내 활동"
+		static let serviceManagermentHeaderTitle: String = "서비스 관리"
 	}
   
   // MARK: - UI Property
@@ -56,6 +58,10 @@ final class ProfileView: UIView {
 		$0.register(
 			UserActivityCollectionViewCell.self,
 			forCellWithReuseIdentifier: UserActivityCollectionViewCell.identifier
+		)
+		$0.register(
+			ServiceManagementCollectionViewCell.self,
+			forCellWithReuseIdentifier: ServiceManagementCollectionViewCell.identifier
 		)
 		$0.register(
 			ProfileHeaderCell.self,
@@ -111,6 +117,15 @@ final class ProfileView: UIView {
 				toSection: .userActivity
 			)
 		}
+
+		if let serviceManagement: [ServiceManagementCollectionViewCelViewModel] = viewModel.serviceManagement {
+			snapShot.appendSections([.serviceManagement])
+			snapShot.appendItems(
+				serviceManagement,
+				toSection: .serviceManagement
+			)
+		}
+		
 		dataSource.apply(snapShot)
 	}
 }
@@ -157,6 +172,8 @@ extension ProfileView {
 				return CollectionViewSeparateLineCell.cellLayout(height: Metric.userInfoSeparatorHeight)
 			case .userActivity:
 				return UserActivityCollectionViewCell.cellLayout()
+			case .serviceManagement:
+				return ServiceManagementCollectionViewCell.cellLayout()
 			case .none:
 				return nil
 			}
@@ -176,6 +193,8 @@ extension ProfileView {
 					return self.makeUserInfoSeparatorCell(collectionView, indexPath, viewModel)
 				case .userActivity:
 					return self.makeUserActivityCell(collectionView, indexPath, viewModel)
+				case .serviceManagement:
+					return self.makeServiceManagementCell(collectionView, indexPath, viewModel)
 				}
 			}
 		)
@@ -196,6 +215,8 @@ extension ProfileView {
 			switch self.currentSection[indexPath.section] {
 			case .userActivity:
 				headerView.setupTitle(with: TextSet.userActivityHeaderTitle)
+			case .serviceManagement:
+				headerView.setupTitle(with: TextSet.serviceManagermentHeaderTitle)
 			default:
 				return nil
 			}
@@ -249,6 +270,25 @@ extension ProfileView {
 				withReuseIdentifier: UserActivityCollectionViewCell.identifier,
 				for: indexPath
 			) as? UserActivityCollectionViewCell
+		else {
+			return .init()
+		}
+		cell.setupCellData(with: viewModel)
+		return cell
+	}
+	
+	private func makeServiceManagementCell(
+		_ collectionView: UICollectionView,
+		_ indexPath: IndexPath,
+		_ viewModel: AnyHashable
+	) -> UICollectionViewCell {
+		guard
+			let viewModel: ServiceManagementCollectionViewCelViewModel = viewModel
+				as? ServiceManagementCollectionViewCelViewModel,
+			let cell: ServiceManagementCollectionViewCell = collectionView.dequeueReusableCell(
+				withReuseIdentifier: ServiceManagementCollectionViewCell.identifier,
+				for: indexPath
+			) as? ServiceManagementCollectionViewCell
 		else {
 			return .init()
 		}
