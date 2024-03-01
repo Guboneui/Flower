@@ -19,6 +19,7 @@ extension AppTheme {
 		public static let grey40 = ResourceKitAsset.Color.grey40.color
 		public static let grey70 = ResourceKitAsset.Color.grey70.color
 		public static let grey90 = ResourceKitAsset.Color.grey90.color
+		public static let separator = ResourceKitAsset.Color.separator.color
 		
 		// MARK: - Primary
 		public static let primary = ResourceKitAsset.Color.primary.color
