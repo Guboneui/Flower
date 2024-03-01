@@ -57,6 +57,7 @@ private extension ProfileViewReactor {
 			.setCollectionViewModel(
 				ProfileViewModel(
 					userInfo: fetchUserInfoCellectionViewCellViewModel(),
+					userSchedule: fetchUserScheduleCellectionViewCellViewModel(),
 					userActivity: fetchUserActivityCollectionViewCellViewModel(),
 					serviceManagement: fetchServiceManagementCollectionViewCellViewModel()
 				)
@@ -75,6 +76,18 @@ private extension ProfileViewReactor {
 			userLoginType: ""
 		)
 		return [userInfo]
+	}
+	
+	func fetchUserScheduleCellectionViewCellViewModel() -> [UserScheduleCollectionViewCellViewModel] {
+		let userSchedule: UserScheduleCollectionViewCellViewModel = .init(
+			imageURL: "",
+			guestHouseName: "연남 민박",
+			guestHouseRoomName: "패밀리 룸",
+			checkInDate: "2월 22일 15:00",
+			checkOutDate: "2월 22일 15:00",
+			guestHousePrice: "298,000원 / 6박"
+		)
+		return [userSchedule]
 	}
 	
 	func fetchUserActivityCollectionViewCellViewModel() -> [UserActivityCollectionViewCellViewModel] {

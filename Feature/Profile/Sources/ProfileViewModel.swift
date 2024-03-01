@@ -11,6 +11,7 @@ import DesignSystem
 
 public struct ProfileViewModel: Equatable {
 	var userInfo: [UserInfoCellectionViewCellViewModel]?
+	var userSchedule: [UserScheduleCollectionViewCellViewModel]?
 	var userInfoSeparateLine: [CollectionViewSeparateLineCellViewModel] = [.init()]
 	var userActivity: [UserActivityCollectionViewCellViewModel]?
 	var serviceManagement: [ServiceManagementCollectionViewCelViewModel]?

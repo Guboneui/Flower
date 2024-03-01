@@ -24,6 +24,7 @@ final class ProfileView: UIView {
 	// MARK: - Section
 	private enum Section {
 		case userInfo
+		case userSchedule
 		case userInfoSeparator
 		case userActivity
 		case serviceManagement
@@ -50,6 +51,10 @@ final class ProfileView: UIView {
 		$0.register(
 			UserInfoCollectionViewCell.self,
 			forCellWithReuseIdentifier: UserInfoCollectionViewCell.identifier
+		)
+		$0.register(
+			UserScheduleCollectionViewCell.self,
+			forCellWithReuseIdentifier: UserScheduleCollectionViewCell.identifier
 		)
 		$0.register(
 			CollectionViewSeparateLineCell.self,
@@ -102,13 +107,21 @@ final class ProfileView: UIView {
 				userInfo,
 				toSection: .userInfo
 			)
-			
-			snapShot.appendSections([.userInfoSeparator])
+		}
+		
+		if let userSchedule: [UserScheduleCollectionViewCellViewModel] = viewModel.userSchedule {
+			snapShot.appendSections([.userSchedule])
 			snapShot.appendItems(
-				viewModel.userInfoSeparateLine,
-				toSection: .userInfoSeparator
+				userSchedule,
+				toSection: .userSchedule
 			)
 		}
+		
+		snapShot.appendSections([.userInfoSeparator])
+		snapShot.appendItems(
+			viewModel.userInfoSeparateLine,
+			toSection: .userInfoSeparator
+		)
 		
 		if let userActivity: [UserActivityCollectionViewCellViewModel] = viewModel.userActivity {
 			snapShot.appendSections([.userActivity])
@@ -168,6 +181,8 @@ extension ProfileView {
 			switch self?.currentSection[section] {
 			case .userInfo:
 				return UserInfoCollectionViewCell.cellLayout()
+			case .userSchedule:
+				return UserScheduleCollectionViewCell.cellLayout()
 			case .userInfoSeparator:
 				return CollectionViewSeparateLineCell.cellLayout(height: Metric.userInfoSeparatorHeight)
 			case .userActivity:
@@ -189,6 +204,8 @@ extension ProfileView {
 				switch self.currentSection[indexPath.section] {
 				case .userInfo:
 					return self.makeUserInfoCell(collectionView, indexPath, viewModel)
+				case .userSchedule:
+					return self.makeUserScheduleCell(collectionView, indexPath, viewModel)
 				case .userInfoSeparator:
 					return self.makeUserInfoSeparatorCell(collectionView, indexPath, viewModel)
 				case .userActivity:
@@ -239,6 +256,25 @@ extension ProfileView {
 		else {
 			return .init()
 		}
+		return cell
+	}
+	
+	private func makeUserScheduleCell(
+		_ collectionView: UICollectionView,
+		_ indexPath: IndexPath,
+		_ viewModel: AnyHashable
+	) -> UICollectionViewCell {
+		guard
+			let viewModel: UserScheduleCollectionViewCellViewModel = viewModel
+				as? UserScheduleCollectionViewCellViewModel,
+			let cell: UserScheduleCollectionViewCell = collectionView.dequeueReusableCell(
+				withReuseIdentifier: UserScheduleCollectionViewCell.identifier,
+				for: indexPath
+			) as? UserScheduleCollectionViewCell
+		else {
+			return .init()
+		}
+		cell.setupCellData(with: viewModel)
 		return cell
 	}
 	
