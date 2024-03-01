@@ -9,6 +9,7 @@ import UIKit
 
 extension AppTheme {
 	public enum Font {
+		// MARK: - Weight 400
 		public static let Regular_4 = ResourceKitFontFamily.Pretendard.regular.font(size: 4)
 		public static let Regular_6 = ResourceKitFontFamily.Pretendard.regular.font(size: 6)
 		public static let Regular_8 = ResourceKitFontFamily.Pretendard.regular.font(size: 8)
@@ -20,6 +21,19 @@ extension AppTheme {
 		public static let Regular_20 = ResourceKitFontFamily.Pretendard.regular.font(size: 20)
 		public static let Regular_22 = ResourceKitFontFamily.Pretendard.regular.font(size: 22)
 		public static let Regular_24 = ResourceKitFontFamily.Pretendard.regular.font(size: 24)
+		
+		// MARK: - Weight 500
+		public static let Medium_4 = ResourceKitFontFamily.Pretendard.medium.font(size: 4)
+		public static let Medium_6 = ResourceKitFontFamily.Pretendard.medium.font(size: 6)
+		public static let Medium_8 = ResourceKitFontFamily.Pretendard.medium.font(size: 8)
+		public static let Medium_10 = ResourceKitFontFamily.Pretendard.medium.font(size: 10)
+		public static let Medium_12 = ResourceKitFontFamily.Pretendard.medium.font(size: 12)
+		public static let Medium_14 = ResourceKitFontFamily.Pretendard.medium.font(size: 14)
+		public static let Medium_16 = ResourceKitFontFamily.Pretendard.medium.font(size: 16)
+		public static let Medium_18 = ResourceKitFontFamily.Pretendard.medium.font(size: 18)
+		public static let Medium_20 = ResourceKitFontFamily.Pretendard.medium.font(size: 20)
+		public static let Medium_22 = ResourceKitFontFamily.Pretendard.medium.font(size: 22)
+		public static let Medium_24 = ResourceKitFontFamily.Pretendard.medium.font(size: 24)
 		
 		// MARK: - Weight 700
 		public static let Bold_4 = ResourceKitFontFamily.Pretendard.bold.font(size: 4)
