@@ -30,6 +30,7 @@ Tag  | Description
 - make SearchFilterDemoApp: tuist generate SearchFilterDemoApp
 - make ChattingDemoApp: tuist generate ChattingDemoApp
 - make MapDemoApp: tuist generate MapDemoApp
+- make ProfileDemoApp: tuist generate ProfileDemoApp
 ---
 
 ### Branch
