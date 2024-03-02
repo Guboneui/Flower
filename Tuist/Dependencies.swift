@@ -33,6 +33,7 @@ let thirdPartySPM = SwiftPackageManagerDependencies(
     "HorizonCalendar": .framework,
     "SocketIO": .framework,
     "Realm": .framework,
+    "RealmSwift": .framework,
     "Nuke": .framework
   ]
 )
