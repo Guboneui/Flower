@@ -18,7 +18,8 @@ let project = Project.makeLibraryProject(
   iOSTargetVersion: "16.0",
   baseSetting: .init(),
   dependencies: [
-    .NetworkHelper.Main
+    .NetworkHelper.Main,
+    .external(name: "RealmSwift")
   ],
   isDynamic: false,
   needTestTarget: false,
