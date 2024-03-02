@@ -23,9 +23,7 @@ final class MapView: UIView {
 	
 	// MARK: - Metric
 	private enum Metric {
-		static let mapCollectionViewSpacing: CGFloat = 8
-		static let mapCollectionViewHorizontalInset: CGFloat = 8
-		static let mapCollectionViewVerticalInset: CGFloat = 0
+		static let mapCollectionViewHorizontalInset: CGFloat = 4
 		static let houseListButtonViewCornerRadius: CGFloat = 17
 		static let houseListButtonViewShadowOpacity: Float = 0.2
 		static let houseListButtonViewShadowOffset: CGFloat = 2
@@ -51,23 +49,35 @@ final class MapView: UIView {
 	// MARK: - UI Property
 	private(set) var mapView: NMFMapView = NMFMapView()
 	
-	private(set) var mapCollectionView: UICollectionView = {
-		var layout = UICollectionViewFlowLayout()
-		layout.minimumLineSpacing = Metric.mapCollectionViewSpacing
-		layout.scrollDirection = .horizontal
-		layout.sectionInset = .zero
+	private let mapCollectionViewLayout: UICollectionViewCompositionalLayout = {
+		let itemSize = NSCollectionLayoutSize.fractionalSize()
 		
-		let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-		cv.backgroundColor = .none
-		cv.contentInset = UIEdgeInsets(
-			top: Metric.mapCollectionViewInsetTop,
-			left: Metric.mapCollectionViewInsetleft,
-			bottom: Metric.mapCollectionViewInsetBottom,
-			right: Metric.mapCollectionViewInsetRight
+		let item = NSCollectionLayoutItem(layoutSize: itemSize)
+		
+		let groupSize = NSCollectionLayoutSize.fractionalSize()
+		let group = NSCollectionLayoutGroup.horizontal(
+			layoutSize: groupSize,
+			subitems: [item]
 		)
-		cv.showsHorizontalScrollIndicator = false
-		return cv
+		group.contentInsets.trailing = Metric.mapCollectionViewHorizontalInset
+		group.contentInsets.leading = Metric.mapCollectionViewHorizontalInset
+		
+		let section = NSCollectionLayoutSection(group: group)
+		section.orthogonalScrollingBehavior = .paging
+		let layout = UICollectionViewCompositionalLayout(section: section)
+		
+		return layout
 	}()
+	
+	private(set) lazy var mapCollectionView: UICollectionView = UICollectionView(
+		frame: .zero,
+		collectionViewLayout: mapCollectionViewLayout
+	).then {
+		$0.backgroundColor = .none
+		$0.showsHorizontalScrollIndicator = false
+		$0.showsVerticalScrollIndicator = false
+		$0.alwaysBounceVertical = false
+	}
 	
 	private(set) var houseListButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.primary

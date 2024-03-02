@@ -35,12 +35,8 @@ public final class MapViewController: UIViewController {
 		
 		mapCollectionView.dataSource = self
 		mapCollectionView.delegate = self
-		
-		mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: "MapCollectionViewCell")
-		mapCollectionView.decelerationRate = .fast
-		mapCollectionView.isPagingEnabled = false
 
-		
+		mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: "MapCollectionViewCell")
 		//TODO: 리스트 형태로 넣을 수 있도록 변경해야함
 		let marker = NMFMarker()
 		marker.position = NMGLatLng(lat: 37.3591784, lng: 127.1048319)
@@ -52,9 +48,7 @@ public final class MapViewController: UIViewController {
 }
 
 extension MapViewController: UICollectionViewDelegate,
-														 UICollectionViewDataSource,
-														 UICollectionViewDelegateFlowLayout,
-														 UIScrollViewDelegate {
+														 UICollectionViewDataSource {
 	public func collectionView(
 		_ collectionView: UICollectionView,
 		numberOfItemsInSection section: Int
@@ -73,33 +67,7 @@ extension MapViewController: UICollectionViewDelegate,
 			}
 			return cell
 		}
-	
-	public func collectionView(
-		_ collectionView: UICollectionView,
-		layout collectionViewLayout: UICollectionViewLayout,
-		sizeForItemAt indexPath: IndexPath
-	) -> CGSize {
-		return CGSize(width: 320, height: 141)
-	}
-	
-	public func scrollViewWillEndDragging(
-		_ scrollView: UIScrollView,
-		withVelocity velocity: CGPoint,
-		targetContentOffset: UnsafeMutablePointer<CGPoint>
-	) {
-			guard let layout = self.mapCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else { return }
-			
-			var cellWidthIncludingSpacing: CGFloat = 328
-			var offset = targetContentOffset.pointee
-			let index = (offset.x + scrollView.contentInset.left) / cellWidthIncludingSpacing
-			var roundedIndex = round(index)
-			
-			offset = CGPoint(
-				x: roundedIndex * cellWidthIncludingSpacing - scrollView.contentInset.left,
-				y: scrollView.contentInset.top
-			)
-			targetContentOffset.pointee = offset
-		}
+
 }
 
 private extension MapViewController {
