@@ -74,6 +74,10 @@ final class MapView: UIView {
 		collectionViewLayout: mapCollectionViewLayout
 	).then {
 		$0.backgroundColor = .none
+		$0.register(
+			MapCollectionViewCell.self,
+			forCellWithReuseIdentifier: MapCollectionViewCell.identifier
+		)
 		$0.showsHorizontalScrollIndicator = false
 		$0.showsVerticalScrollIndicator = false
 		$0.alwaysBounceVertical = false

@@ -36,7 +36,6 @@ public final class MapViewController: UIViewController {
 		mapCollectionView.dataSource = self
 		mapCollectionView.delegate = self
 
-		mapCollectionView.register(MapCollectionViewCell.self, forCellWithReuseIdentifier: "MapCollectionViewCell")
 		//TODO: 리스트 형태로 넣을 수 있도록 변경해야함
 		let marker = NMFMarker()
 		marker.position = NMGLatLng(lat: 37.3591784, lng: 127.1048319)
