@@ -19,7 +19,7 @@ let project = Project.makeLibraryProject(
   baseSetting: .init(),
   dependencies: [
     .NetworkHelper.Main,
-    .external(name: "RealmSwift")
+//    .external(name: "RealmSwift")
   ],
   isDynamic: false,
   needTestTarget: false,
