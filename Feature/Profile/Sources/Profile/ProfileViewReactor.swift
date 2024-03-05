@@ -15,12 +15,12 @@ public final class ProfileViewReactor: Reactor {
 	
 	public enum Mutation {
 		case setCollectionViewModel(ProfileViewModel)
-		case setRouter(ProfileViewRouter)
+		case setRouter(ProfileRouter)
 	}
 	
 	public struct State {
 		// MARK: Pulse
-		@Pulse var router: ProfileViewRouter?
+		@Pulse var router: ProfileRouter?
 
 		// MARK: Property
 		var collectionViewModel: ProfileViewModel
@@ -77,7 +77,7 @@ private extension ProfileViewReactor {
 		)
 	}
 	
-	func performRouter(to router: ProfileViewRouter) -> Observable<Mutation> {
+	func performRouter(to router: ProfileRouter) -> Observable<Mutation> {
 		return .just(.setRouter(router))
 	}
 }
