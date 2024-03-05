@@ -82,6 +82,8 @@ final class ProfileView: UIView {
 	private var currentSection: [Section] {
 		dataSource.snapshot().sectionIdentifiers as [Section]
 	}
+	private let disposeBag: DisposeBag = .init()
+	fileprivate let tapEditProfileButton: PublishSubject<Void> = .init()
 	
   // MARK: - Initialize
   override init(frame: CGRect) {
@@ -254,6 +256,11 @@ extension ProfileView {
 		else {
 			return .init()
 		}
+		
+		cell.rx.tapEditProfileButton
+			.bind(to: tapEditProfileButton)
+			.disposed(by: cell.disposeBag)
+		
 		return cell
 	}
 	
@@ -328,5 +335,12 @@ extension ProfileView {
 		}
 		cell.setupCellData(with: viewModel)
 		return cell
+	}
+}
+
+// MARK: - Reactive Extension
+extension Reactive where Base: ProfileView {
+	var tapEditProfileButton: ControlEvent<Void> {
+		return ControlEvent(events: base.tapEditProfileButton.asObservable())
 	}
 }

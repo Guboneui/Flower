@@ -10,6 +10,9 @@ import UIKit
 import ResourceKit
 import UtilityKit
 
+import RxCocoa
+import RxSwift
+
 final class UserInfoCollectionViewCell: UICollectionViewCell {
 	// MARK: - Metric
 	private enum Metric {
@@ -74,7 +77,7 @@ final class UserInfoCollectionViewCell: UICollectionViewCell {
 		$0.spacing = Metric.userInfoVerticalStackViewSpacing
 	}
 	
-	private let navigationButton: UIButton = UIButton(type: .system).then {
+	fileprivate let editProfileButton: UIButton = UIButton(type: .system).then {
 		$0.setImage(AppTheme.Image.arrowRight, for: .normal)
 		$0.tintColor = AppTheme.Color.grey40
 	}
@@ -83,13 +86,16 @@ final class UserInfoCollectionViewCell: UICollectionViewCell {
 		arrangedSubviews: [
 			profileImageView,
 			userInfoVerticalStackView,
-			navigationButton
+			editProfileButton
 		]
 	).then {
 		$0.axis = .horizontal
 		$0.spacing = Metric.userInfoStackViewSpacing
 		$0.alignment = .center
 	}
+	
+	// MARK: - Property
+	let disposeBag: DisposeBag = .init()
 	
 	// MARK: - Initialize
 	override init(frame: CGRect) {
@@ -123,7 +129,7 @@ extension UserInfoCollectionViewCell: Viewable {
 			make.size.equalTo(Metric.userLoginTypeImageViewSize)
 		}
 		
-		navigationButton.snp.makeConstraints { make in
+		editProfileButton.snp.makeConstraints { make in
 			make.size.equalTo(Metric.navigationButtonSize)
 		}
 		
@@ -160,5 +166,12 @@ extension UserInfoCollectionViewCell {
 		let section: NSCollectionLayoutSection = .init(group: group)
 		section.contentInsets = Metric.sectionContentInsets
 		return section
+	}
+}
+
+// MARK: - Reactive Extension
+extension Reactive where Base: UserInfoCollectionViewCell {
+	var tapEditProfileButton: ControlEvent<Void> {
+		return base.editProfileButton.rx.touchHandler()
 	}
 }

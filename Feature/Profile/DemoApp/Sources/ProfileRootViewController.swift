@@ -65,9 +65,13 @@ extension ProfileRootViewController: Viewable {
 				let profileViewReactor: ProfileViewReactor = .init()
 				let profileViewController: ProfileViewController = ProfileViewController()
 				profileViewController.reactor = profileViewReactor
-				profileViewController.modalPresentationStyle = .overFullScreen
+				let navigationController: UINavigationController = .init(
+					rootViewController: profileViewController
+				)
+				navigationController.navigationBar.isHidden = true
+				navigationController.modalPresentationStyle = .overFullScreen
 				self.present(
-					profileViewController,
+					navigationController,
 					animated: true
 				)
 			}.disposed(by: disposeBag)

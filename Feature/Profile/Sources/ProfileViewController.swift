@@ -35,7 +35,28 @@ public final class ProfileViewController: UIViewController, ReactorKit.View {
 				guard let self else { return }
 				self.rootView.setupSnapShot(with: viewModel)
 			}).disposed(by: disposeBag)
+		
+		reactor.pulse { $0.$router }
+			.asDriver(onErrorJustReturn: nil)
+			.compactMap { $0 }
+			.drive { [weak self] router in
+				guard let self else { return }
+				switch router {
+				case .profileEdit:
+					let profileEditVC: ProfileEditViewController = .init()
+					self.navigationController?.pushViewController(
+						profileEditVC,
+						animated: true
+					)
+				}
+			}.disposed(by: disposeBag)
 
+		// MARK: - Action
+		rootView.rx.tapEditProfileButton
+			.map { .tapEditProfileButton }
+			.bind(to: reactor.action)
+			.disposed(by: disposeBag)
+			
 		reactor.action.onNext(.load)
 	}
 }
