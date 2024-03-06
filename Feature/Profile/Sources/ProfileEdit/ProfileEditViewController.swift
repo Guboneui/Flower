@@ -7,9 +7,30 @@
 
 import UIKit
 
+import DesignSystem
+import ResourceKit
+
+import RxCocoa
+import RxSwift
+
 final class ProfileEditViewController: UIViewController {
-	override func viewDidLoad() {
-		super.viewDidLoad()
-		view.backgroundColor = .systemIndigo
-	}
+  // MARK: - UI Property
+  private let rootView: ProfileEditView = ProfileEditView()
+
+  // MARK: - Property
+  private let disposeBag: DisposeBag = DisposeBag()
+  
+  // MARK: - LIFE CYCLE
+  override func loadView() {
+    view = rootView
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+}
+
+// MARK: - Private Method
+private extension ProfileEditViewController {
+  
 }
