@@ -44,6 +44,7 @@ public final class ProfileViewController: UIViewController, ReactorKit.View {
 				switch router {
 				case .profileEdit:
 					let profileEditVC: ProfileEditViewController = .init()
+					profileEditVC.reactor = ProfileEditViewReactor()
 					self.navigationController?.pushViewController(
 						profileEditVC,
 						animated: true
