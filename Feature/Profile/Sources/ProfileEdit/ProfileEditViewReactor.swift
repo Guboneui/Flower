@@ -12,14 +12,20 @@ import ReactorKit
 public final class ProfileEditViewReactor: Reactor {
 	public enum Action {
 		case load
+		case tapProfileImageEditButton
+		case tapNavigationButton
+		case tapEmailEditButton
+		case tapPasswordEditButton
+		case tapPhoneNumberEditButton
 	}
 	
 	public enum Mutation {
-		
+		case setRouter(ProfileEditRouter)
 	}
 	
 	public struct State {
 		// MARK: Pulse
+		@Pulse var router: ProfileEditRouter?
 
 		// MARK: Property
 		var nameViewModel: ProfileEditStackViewModel
@@ -61,6 +67,16 @@ public final class ProfileEditViewReactor: Reactor {
 		switch action {
 		case .load:
 			return performLoad()
+		case .tapNavigationButton:
+			return performRouter(to: .back)
+		case .tapProfileImageEditButton:
+			return performRouter(to: .editProfileImage)
+		case .tapEmailEditButton:
+			return performRouter(to: .editEmail)
+		case .tapPasswordEditButton:
+			return performRouter(to: .editPassword)
+		case .tapPhoneNumberEditButton:
+			return performRouter(to: .editPhoneNumber)
 		}
 	}
 	
@@ -69,6 +85,10 @@ public final class ProfileEditViewReactor: Reactor {
 		mutation: Mutation
 	) -> State {
 		var state = state
+		switch mutation {
+		case let .setRouter(router):
+			state.router = router
+		}
 		return state
 	}
 }
@@ -77,6 +97,10 @@ public final class ProfileEditViewReactor: Reactor {
 private extension ProfileEditViewReactor {
 	func performLoad() -> Observable<Mutation> {
 		return .empty()
+	}
+	
+	func performRouter(to router: ProfileEditRouter) -> Observable<Mutation> {
+		return .just(.setRouter(router))
 	}
 }
 

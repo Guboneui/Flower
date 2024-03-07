@@ -33,7 +33,7 @@ final class ProfileEditView: UIView {
 		static let editProfileImageButtonTitle: String = "프로필 사진 바꾸기"
 	}
   // MARK: - UI Property
-	private let navigationBar: NavigationBar = .init(
+	fileprivate let navigationBar: NavigationBar = .init(
 		.back,
 		title: TextSet.navigationTitle
 	)
@@ -45,7 +45,7 @@ final class ProfileEditView: UIView {
 		$0.backgroundColor = AppTheme.Color.primary
 	}
 	
-	private let editProfileImageButton: UIButton = UIButton(type: .system).then {
+	fileprivate let editProfileImageButton: UIButton = UIButton(type: .system).then {
 		$0.setTitle(TextSet.editProfileImageButtonTitle, for: .normal)
 		$0.titleLabel?.font = AppTheme.Font.Medium_14
 		$0.tintColor = AppTheme.Color.primary
@@ -133,6 +133,26 @@ extension ProfileEditView: Viewable {
 
 // MARK: - Reactive Extension
 extension Reactive where Base: ProfileEditView {
+	var tapBackButton: ControlEvent<Void> {
+		return base.navigationBar.rx.tapLeftButton
+	}
+	
+	var tapEditProfileImageButton: ControlEvent<Void> {
+		return base.editProfileImageButton.rx.tap
+	}
+	
+	var tapEmailEditButton: ControlEvent<Void> {
+		return base.emailView.rx.tapEditButton
+	}
+	
+	var tapPasswordEditButton: ControlEvent<Void> {
+		return base.passwordView.rx.tapEditButton
+	}
+	
+	var tapPhoneNumberEditButton: ControlEvent<Void> {
+		return base.phoneNumberView.rx.tapEditButton
+	}
+	
 	var setNameView: Binder<ProfileEditStackViewModel> {
 		return Binder(base) { view, viewModel in
 			view.nameView.updateConfigure(with: viewModel)

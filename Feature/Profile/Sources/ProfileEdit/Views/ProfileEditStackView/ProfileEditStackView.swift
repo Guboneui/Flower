@@ -10,6 +10,8 @@ import UIKit
 import ResourceKit
 import UtilityKit
 
+import RxCocoa
+import RxSwift
 import SnapKit
 import Then
 
@@ -48,7 +50,7 @@ final class ProfileEditStackView: UIView {
 		$0.makeCornerRadius(Metric.imageViewRadius)
 	}
 	
-	private let editButton: UIButton = UIButton(type: .system).then {
+	fileprivate let editButton: UIButton = UIButton(type: .system).then {
 		$0.setTitle(TextSet.editButtonTitle, for: .normal)
 		$0.titleLabel?.font = AppTheme.Font.Medium_12
 		$0.tintColor = AppTheme.Color.primary
@@ -132,4 +134,11 @@ extension ProfileEditStackView: Viewable {
 	}
 	
 	func setupBinds() { }
+}
+
+// MARK: - Reactive Extension
+extension Reactive where Base: ProfileEditStackView {
+	var tapEditButton: ControlEvent<Void> {
+		return base.editButton.rx.tap
+	}
 }
