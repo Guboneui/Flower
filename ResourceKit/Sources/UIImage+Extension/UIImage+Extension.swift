@@ -43,6 +43,8 @@ extension AppTheme {
 		public static let houseList = ResourceKitAsset.Image.houseList.image
 		public static let filter = ResourceKitAsset.Image.filter.image
 		public static let calendar = ResourceKitAsset.Image.calendar.image
+		public static let filterCalendar = ResourceKitAsset.Image.filterCalendar.image
+		public static let filterPeople = ResourceKitAsset.Image.filterPeople.image
 		
 		// MARK: LOGIN
 		public static let naverLogin = ResourceKitAsset.Image.naverLogin.image
