@@ -50,11 +50,17 @@ final class MapView: UIView {
 	private(set) var mapView: NMFMapView = NMFMapView()
 	
 	private let mapCollectionViewLayout: UICollectionViewCompositionalLayout = {
-		let itemSize = NSCollectionLayoutSize.fractionalSize()
+		let itemSize = NSCollectionLayoutSize(
+			widthDimension: .fractionalWidth(1),
+			heightDimension: .fractionalHeight(1)
+			)
 		
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		
-		let groupSize = NSCollectionLayoutSize.fractionalSize()
+		let groupSize = NSCollectionLayoutSize(
+			widthDimension: .fractionalWidth(0.9),
+			heightDimension: .fractionalHeight(1)
+			)
 		let group = NSCollectionLayoutGroup.horizontal(
 			layoutSize: groupSize,
 			subitems: [item]
@@ -63,7 +69,7 @@ final class MapView: UIView {
 		group.contentInsets.leading = Metric.mapCollectionViewHorizontalInset
 		
 		let section = NSCollectionLayoutSection(group: group)
-		section.orthogonalScrollingBehavior = .paging
+		section.orthogonalScrollingBehavior = .groupPagingCentered
 		let layout = UICollectionViewCompositionalLayout(section: section)
 		
 		return layout

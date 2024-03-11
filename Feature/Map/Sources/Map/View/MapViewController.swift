@@ -13,7 +13,6 @@ import NMapsMap
 import RxSwift
 
 public final class MapViewController: UIViewController {
-	
 	// MARK: - UI Property
 	private let rootView: MapView = MapView()
 	private var mapView: NMFMapView { rootView.mapView }
@@ -21,6 +20,8 @@ public final class MapViewController: UIViewController {
 	private var houseListButtonView: UIView { rootView.houseListButtonView }
 	private var houseListLabel: UILabel { rootView.houseListLabel }
 	private var userLocationButtonView: UIView { rootView.userLocationButtonView }
+	
+	private var mapViewModel: MapViewModel = MapViewModel()
 	
 	// MARK: LifeCycle
 	public override func loadView() {
@@ -32,10 +33,8 @@ public final class MapViewController: UIViewController {
 	public override func viewDidLoad() {
 		super.viewDidLoad()
 		setupGestures()
+		setupBinds()
 		
-		mapCollectionView.dataSource = self
-		mapCollectionView.delegate = self
-
 		//TODO: 리스트 형태로 넣을 수 있도록 변경해야함
 		let marker = NMFMarker()
 		marker.position = NMGLatLng(lat: 37.3591784, lng: 127.1048319)
@@ -44,29 +43,6 @@ public final class MapViewController: UIViewController {
 		marker.width = 32
 		marker.height = 32
 	}
-}
-
-extension MapViewController: UICollectionViewDelegate,
-														 UICollectionViewDataSource {
-	public func collectionView(
-		_ collectionView: UICollectionView,
-		numberOfItemsInSection section: Int
-	) -> Int {
-		return 10
-	}
-	
-	public func collectionView(
-		_ collectionView: UICollectionView,
-		cellForItemAt indexPath: IndexPath
-	) -> UICollectionViewCell {
-			guard let cell = collectionView.dequeueReusableCell(
-				withReuseIdentifier: "MapCollectionViewCell",
-				for: indexPath) as? MapCollectionViewCell else {
-				return UICollectionViewCell()
-			}
-			return cell
-		}
-
 }
 
 private extension MapViewController {
@@ -95,5 +71,16 @@ private extension MapViewController {
 					guard let self else { return }
 					//TODO: 현재위치로 이동
 				}.disposed(by: disposeBag)
+	}
+	
+	func setupBinds() {
+		mapViewModel.collectionViewItems
+			.observe(on: MainScheduler.instance)
+			.bind(to: mapCollectionView.rx.items(
+				cellIdentifier: MapCollectionViewCell.identifier,
+				cellType: MapCollectionViewCell.self)
+			) { indexPath, spotInfo, cell in
+				
+			}.disposed(by: disposeBag)
 	}
 }
