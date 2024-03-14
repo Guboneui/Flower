@@ -12,6 +12,7 @@ import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
 import ThirdPartyDependencyPlugin
+import UserKitPlugin
 
 let projectName: String = "Chatting"
 let iOSTargetVersion: String = "16.0"
@@ -23,7 +24,8 @@ let project = Project.makeFrameworkProject(
     .Data.ChattingData.Main,
     .Domain.ChattingDomain.Main,
     .ThirdParty.Main,
-    .DesignSystem.Main
+    .DesignSystem.Main,
+    .UserKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,
