@@ -30,6 +30,7 @@ public extension SideBarPresentable where Self: UIViewController {
 		setupInitialLayout(parentVC: parentVC)
 		animateToShow(parentVC: parentVC, completion)
 	}
+
 	func hideSideBar(_ completion: (() -> Void)? = nil) {
 		guard let parentVC else { return }
 		animateToHide(parentVC: parentVC, completion)
