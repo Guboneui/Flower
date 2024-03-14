@@ -16,7 +16,7 @@ public protocol SideBarPresentable {
 	var parentVC: UIViewController? { get set }
 	
 	var backgroundView: UIView { get }
-	var sideBarView: UIView { get set }
+	var sideBarView: UIView { get }
 	var sideBarViewWidth: CGFloat { get set }
 	
 	func showSideBar(_ completion: (() -> Void)?)
