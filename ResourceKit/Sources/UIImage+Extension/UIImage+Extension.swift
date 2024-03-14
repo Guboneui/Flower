@@ -37,6 +37,8 @@ extension AppTheme {
 		public static let rotatePI = ResourceKitAsset.Image.rotatePI.image
 		public static let useCamera = ResourceKitAsset.Image.useCamera.image
 		public static let selectPhoto = ResourceKitAsset.Image.selectPhoto.image
+		public static let exit = ResourceKitAsset.Image.exit.image
+		public static let hostBadge = ResourceKitAsset.Image.hostBadge.image
 		
 		// MARK: LOGIN
 		public static let naverLogin = ResourceKitAsset.Image.naverLogin.image
