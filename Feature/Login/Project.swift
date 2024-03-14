@@ -13,6 +13,7 @@ import DesignSystemPlugin
 import DomainPlugin
 import FeaturePlugin
 import ThirdPartyDependencyPlugin
+import UserKitPlugin
 
 let projectName: String = "Login"
 let iOSTargetVersion: String = "16.0"
@@ -25,7 +26,8 @@ let project = Project.makeFrameworkProject(
     .DesignSystem.Main,
     .Domain.LoginDomain.Main,
     .Data.LoginData.Main,
-    .Feature.Main.Main
+    .Feature.Main.Main,
+    .UserKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,
