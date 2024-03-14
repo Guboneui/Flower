@@ -83,7 +83,7 @@ private extension SideBarPresentable where Self: UIViewController {
 		self.view.layoutIfNeeded()
 	}
 	
-	/// 모달이 올라올 때 애니메이션을 정의합니다.
+	/// 사이드바가 생성될 때 애니메이션을 정의합니다.
 	func animateToShow(
 		parentVC: UIViewController,
 		_ completion: (() -> Void)?
@@ -105,7 +105,7 @@ private extension SideBarPresentable where Self: UIViewController {
 		)
 	}
 	
-	/// 모달이 사라질 때 애니메이션을 정의합니다.
+	/// 사이드바가 사라질 때 애니메이션을 정의합니다.
 	func animateToHide(
 		parentVC: UIViewController,
 		_ completion: (() -> Void)?
