@@ -49,7 +49,7 @@ final class ChatRoomView: UIView {
 	private let compositionalLayout: UICollectionViewCompositionalLayout = {
 		var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
 		listConfiguration.showsSeparators = false
-		listConfiguration.backgroundColor = AppTheme.Color.grey90
+		listConfiguration.backgroundColor = AppTheme.Color.neutral50
 		let compositionalLayout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
 		return compositionalLayout
 	}()
@@ -102,8 +102,10 @@ final class ChatRoomView: UIView {
 	
 	private let messageInputView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.neutral50
-		$0.makeCornerRadius(Metric.messageInputViewCornerRadius)
-		$0.makeBorder()
+		$0.makeCornerRadiusWithBorder(
+			Metric.messageInputViewCornerRadius,
+			borderColor: AppTheme.Color.neutral100
+		)
 	}
 	
 	fileprivate let inputMessageTextView: UITextView = UITextView().then {

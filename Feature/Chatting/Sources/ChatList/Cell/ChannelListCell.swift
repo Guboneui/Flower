@@ -28,7 +28,7 @@ final class ChannelListCell: UICollectionViewCell {
 	
 	public let channelNameLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_20
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: - Iitialize

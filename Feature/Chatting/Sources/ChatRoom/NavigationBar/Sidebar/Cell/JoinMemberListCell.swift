@@ -32,7 +32,7 @@ final class JoinMemberListCell: UICollectionViewCell {
 	
 	public let memberNameLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: - Iitialize

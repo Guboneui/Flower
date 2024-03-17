@@ -49,18 +49,18 @@ final class ChatRoomSidebarView: UIView {
 	
 	public let chatRoomNameLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_18
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 		
 	public let joinMemberCountLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_14
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private let joinMemberLabel: UILabel = UILabel().then {
 		$0.text = TextSet.joinMemberLabelText
 		$0.font = AppTheme.Font.Bold_14
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var joinMemberStackView: UIStackView = UIStackView(
@@ -75,7 +75,7 @@ final class ChatRoomSidebarView: UIView {
 	}
 	
 	private let dividingLineView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 	}
 	
 	private let middleContainerView: UIView = UIView().then {
@@ -85,7 +85,7 @@ final class ChatRoomSidebarView: UIView {
 	private let joinMemberListLabel: UILabel = UILabel().then {
 		$0.text = TextSet.joinMemberListLabelText
 		$0.font = AppTheme.Font.Bold_16
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let compositionalLayout: UICollectionViewCompositionalLayout = {
@@ -107,24 +107,24 @@ final class ChatRoomSidebarView: UIView {
 	}
 	
 	private let bottomContainerView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 	}
 	
 	private let exitChattingRoomButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.exit.withRenderingMode(.alwaysTemplate), for: .normal)
-		$0.tintColor = AppTheme.Color.grey40
+		$0.tintColor = AppTheme.Color.neutral300
 	}
 	
 	private let exitScheduleLabel: UILabel = UILabel().then {
 		$0.text = TextSet.exitScheduleLabelText
 		$0.font = AppTheme.Font.Regular_14
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private let exitScheduleDateLabel: UILabel = UILabel().then {
 		$0.text = "2023.12.12"
 		$0.font = AppTheme.Font.Bold_14
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var exitScheduleStackView: UIStackView = UIStackView(

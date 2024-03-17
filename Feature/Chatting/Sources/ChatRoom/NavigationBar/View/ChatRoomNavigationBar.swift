@@ -34,12 +34,12 @@ final class ChatRoomNavigationBar: UIView {
 	// MARK: - PROPERTY
 	public let titleLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_18
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	public let memberCountLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_18
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var titleStackView: UIStackView = UIStackView(
@@ -55,12 +55,12 @@ final class ChatRoomNavigationBar: UIView {
 	
 	fileprivate let backButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.arrowLeft, for: .normal)
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 	
 	fileprivate let sideBarButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.hamburger, for: .normal)
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: - Iitialize
