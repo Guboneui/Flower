@@ -93,18 +93,18 @@ public final class EmailSignupIDViewController: UIViewController {
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let cautionViewColor: UIColor = AppTheme.Color.white
-		static let emailLabelColor: UIColor = AppTheme.Color.black
+		static let emailLabelColor: UIColor = AppTheme.Color.neutral900
 		static let cautionLabelSuccessColor: UIColor = AppTheme.Color.primary
-		static let cautionLabelFailureColor: UIColor = AppTheme.Color.warning
-		static let announcementLabelColor: UIColor = AppTheme.Color.grey70
+		static let cautionLabelFailureColor: UIColor = AppTheme.Color.error
+		static let announcementLabelColor: UIColor = AppTheme.Color.neutral100
 		
 		static let authViewBackgroundColor: UIColor = AppTheme.Color.white
-		static let authLabelColor: UIColor = AppTheme.Color.black
-		static let authResendButtonColor: UIColor = AppTheme.Color.black
+		static let authLabelColor: UIColor = AppTheme.Color.neutral900
+		static let authResendButtonColor: UIColor = AppTheme.Color.neutral900
 		static let authCautionViewColor: UIColor = AppTheme.Color.white
 		static let authCautionLabelSuccessColor: UIColor = AppTheme.Color.primary
-		static let authCautionLabelFailureColor: UIColor = AppTheme.Color.warning
-		static let authAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
+		static let authCautionLabelFailureColor: UIColor = AppTheme.Color.error
+		static let authAnnouncementLabelColor: UIColor = AppTheme.Color.neutral100
 		static let timerLabelColor: UIColor = AppTheme.Color.primary
 	}
 	

@@ -33,7 +33,7 @@ public final class LoginViewController: UIViewController {
 	private let loginLabel: UILabel = UILabel().then {
 		$0.text = "로그인/회원가입"
 		$0.font = AppTheme.Font.Regular_14
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let loginStackView: UIStackView = UIStackView().then {

@@ -58,7 +58,7 @@ final class ChatRoomView: UIView {
 		frame: .zero,
 		collectionViewLayout: compositionalLayout
 	).then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 		$0.register(
 			ChatByFriendWithProfileImageCell.self,
 			forCellWithReuseIdentifier: ChatByFriendWithProfileImageCell.identifier
@@ -83,7 +83,7 @@ final class ChatRoomView: UIView {
 	
 	fileprivate let addPhotoMenuButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.plus, for: .normal)
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 	
 	private let addPhotoMenuView: UIView = UIView().then {
@@ -92,24 +92,24 @@ final class ChatRoomView: UIView {
 	
 	fileprivate let cameraButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.useCamera, for: .normal)
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 	
 	fileprivate let galleryButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.selectPhoto, for: .normal)
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 	
 	private let messageInputView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 		$0.makeCornerRadius(Metric.messageInputViewCornerRadius)
 		$0.makeBorder()
 	}
 	
 	fileprivate let inputMessageTextView: UITextView = UITextView().then {
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.textColor = AppTheme.Color.neutral900
+		$0.backgroundColor = AppTheme.Color.neutral50
 		$0.isScrollEnabled = false
 	}
 	
