@@ -86,26 +86,18 @@ extension ServiceManagementCollectionViewCell: Viewable {
 
 // MARK: - ServiceManagementCollectionViewCell Compositonal Layout
 extension ServiceManagementCollectionViewCell {
-	static func cellLayout() -> NSCollectionLayoutSection {
-		// MARK: Item
-		let itemSize: NSCollectionLayoutSize = .init(
-			widthDimension: .fractionalWidth(1.0),
-			heightDimension: .fractionalHeight(1.0)
-		)
-		let item: NSCollectionLayoutItem = .init(layoutSize: itemSize)
-		
-		// MARK: Group
-		let groupSize: NSCollectionLayoutSize = .init(
-			widthDimension: .fractionalWidth(1.0),
-			heightDimension: .absolute(Metric.height)
-		)
-		let group: NSCollectionLayoutGroup = .horizontal(
-			layoutSize: groupSize,
-			subitems: [item]
-		)
+	static func cellLayout(
+		with environment: NSCollectionLayoutEnvironment
+	) -> NSCollectionLayoutSection {
+		// MARK: Configuration
+		var configuration: UICollectionLayoutListConfiguration = .init(appearance: .plain)
+		configuration.showsSeparators = false
 		
 		// MARK: Section
-		let section: NSCollectionLayoutSection = .init(group: group)
+		let section: NSCollectionLayoutSection = .list(
+			using: configuration,
+			layoutEnvironment: environment
+		)
 		
 		// MARK: Header
 		let headerSize: NSCollectionLayoutSize = .init(

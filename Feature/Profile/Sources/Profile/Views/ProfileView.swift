@@ -177,7 +177,7 @@ extension ProfileView: Viewable {
 extension ProfileView {
 	/// ProfileView의 CollectionView Compositional Layout을 생성합니다.
 	private func makeCollectionViewLayout() -> UICollectionViewCompositionalLayout {
-		UICollectionViewCompositionalLayout { [weak self] section, _ in
+		UICollectionViewCompositionalLayout { [weak self] section, layoutEnvironment in
 			switch self?.currentSection[section] {
 			case .userInfo:
 				return UserInfoCollectionViewCell.cellLayout()
@@ -188,7 +188,7 @@ extension ProfileView {
 			case .userActivity:
 				return UserActivityCollectionViewCell.cellLayout()
 			case .serviceManagement:
-				return ServiceManagementCollectionViewCell.cellLayout()
+				return ServiceManagementCollectionViewCell.cellLayout(with: layoutEnvironment)
 			case .none:
 				return nil
 			}
