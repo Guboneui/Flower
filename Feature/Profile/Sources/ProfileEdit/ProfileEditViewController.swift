@@ -38,7 +38,9 @@ final class ProfileEditViewController: UIViewController, ReactorKit.View {
 				case .editProfileImage:
 					print("MOVE TO EDIT PROFILE IMAGE")
 				case .editEmail:
-					print("MOVE TO EDIT EMAIL")
+					let passwordEditViewController: PasswordEditViewController = .init()
+					passwordEditViewController.parentVC = self
+					passwordEditViewController.showModal()
 				case .editPassword:
 					print("MOVE TO EDIT PASSWORD")
 				case .editPhoneNumber:
