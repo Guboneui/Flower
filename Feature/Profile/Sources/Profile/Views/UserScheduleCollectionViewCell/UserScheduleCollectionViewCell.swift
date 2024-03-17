@@ -50,14 +50,14 @@ final class UserScheduleCollectionViewCell: UICollectionViewCell {
 		$0.backgroundColor = AppTheme.Color.white
 		$0.makeCornerRadiusWithBorder(
 			Metric.radius,
-			borderColor: AppTheme.Color.background
+			borderColor: AppTheme.Color.neutral20
 		)
 	}
 	
 	private let titleLabel: UILabel = UILabel().then {
 		$0.text = TextSet.title
 		$0.font = AppTheme.Font.Bold_16
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let guestHouseImageView: UIImageView = UIImageView().then {
@@ -67,12 +67,12 @@ final class UserScheduleCollectionViewCell: UICollectionViewCell {
 	
 	private let guestHouseNameLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_14
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let guestHouseRoomLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Medium_12
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var guestHouseStackView: UIStackView = UIStackView(
@@ -146,7 +146,7 @@ final class UserScheduleCollectionViewCell: UICollectionViewCell {
 	
 	private let guestHousePriceLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Medium_12
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	// MARK: - Initialize

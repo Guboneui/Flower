@@ -53,10 +53,10 @@ final class UserActivityCollectionViewCell: UICollectionViewCell {
 	)
 	
 	private let containerView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.background
+		$0.backgroundColor = AppTheme.Color.neutral20
 		$0.makeCornerRadiusWithBorder(
 			Metric.radius,
-			borderColor: AppTheme.Color.grey90
+			borderColor: AppTheme.Color.neutral50
 		)
 	}
 	

@@ -40,7 +40,7 @@ final class ProfileEditView: UIView {
 	private let profileImageView: UIImageView = UIImageView().then {
 		$0.makeCornerRadiusWithBorder(
 			Metric.profileImageRadius,
-			borderColor: AppTheme.Color.background
+			borderColor: AppTheme.Color.neutral20
 		)
 		$0.backgroundColor = AppTheme.Color.primary
 	}

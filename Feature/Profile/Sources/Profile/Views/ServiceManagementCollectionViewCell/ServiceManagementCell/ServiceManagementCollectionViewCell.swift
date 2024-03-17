@@ -25,12 +25,12 @@ final class ServiceManagementCollectionViewCell: UICollectionViewCell {
 	// MARK: - UI Property
 	private let titleLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Medium_14
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let navigationButton: UIButton = UIButton(type: .system).then {
 		$0.setImage(AppTheme.Image.arrowRight, for: .normal)
-		$0.tintColor = AppTheme.Color.grey40
+		$0.tintColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var stackView: UIStackView = UIStackView(

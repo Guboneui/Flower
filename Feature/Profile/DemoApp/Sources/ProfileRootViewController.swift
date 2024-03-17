@@ -26,7 +26,7 @@ final class ProfileRootViewController: UIViewController {
 	// MARK: - UI Property
 	private let button: UIButton = UIButton().then {
 		$0.setTitle("Profile", for: .normal)
-		$0.backgroundColor = AppTheme.Color.grey40
+		$0.backgroundColor = AppTheme.Color.neutral300
 	}
 	
 	// MARK: - Property

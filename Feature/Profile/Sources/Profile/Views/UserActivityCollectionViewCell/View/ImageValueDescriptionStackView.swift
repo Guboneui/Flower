@@ -25,7 +25,7 @@ final class ImageValueDescriptionStackView: UIView {
 	
 	private let valueLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_16
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private lazy var horizontalStackView: UIStackView = UIStackView(
@@ -41,7 +41,7 @@ final class ImageValueDescriptionStackView: UIView {
 	
 	private let descriptionLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Medium_12
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var verticalStackView: UIStackView = UIStackView(
@@ -84,7 +84,7 @@ final class ImageValueDescriptionStackView: UIView {
 // MARK: - Viewable
 extension ImageValueDescriptionStackView: Viewable {
 	func setupConfigures() {
-		backgroundColor = AppTheme.Color.background
+		backgroundColor = AppTheme.Color.neutral20
 		imageView.image = image
 		descriptionLabel.text = descriptionText
 	}

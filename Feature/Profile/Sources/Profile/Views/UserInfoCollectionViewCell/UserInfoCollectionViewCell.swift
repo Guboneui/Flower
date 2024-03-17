@@ -43,7 +43,7 @@ final class UserInfoCollectionViewCell: UICollectionViewCell {
 	private let nameLabel: UILabel = UILabel().then {
 		$0.text = "구본의"
 		$0.font = AppTheme.Font.Bold_16
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let userLoginTypeImageView: UIImageView = UIImageView().then {
@@ -53,7 +53,7 @@ final class UserInfoCollectionViewCell: UICollectionViewCell {
 	private let userEmailLabel: UILabel = UILabel().then {
 		$0.text = "starku2249@naver.com"
 		$0.font = AppTheme.Font.Medium_12
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var userEmailStackView: UIStackView = UIStackView(
@@ -79,7 +79,7 @@ final class UserInfoCollectionViewCell: UICollectionViewCell {
 	
 	fileprivate let editProfileButton: UIButton = UIButton(type: .system).then {
 		$0.setImage(AppTheme.Image.arrowRight, for: .normal)
-		$0.tintColor = AppTheme.Color.grey40
+		$0.tintColor = AppTheme.Color.neutral300
 	}
 	
 	private lazy var userInfoStackView: UIStackView = UIStackView(

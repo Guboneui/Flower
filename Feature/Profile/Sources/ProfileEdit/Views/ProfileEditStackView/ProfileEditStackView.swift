@@ -36,12 +36,12 @@ final class ProfileEditStackView: UIView {
 	// MARK: - UI Property
 	private let titleLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Medium_14
-		$0.textColor = AppTheme.Color.grey40
+		$0.textColor = AppTheme.Color.neutral300
 	}
 	
 	private let contentsLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Medium_14
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 		$0.setContentHuggingPriority(.defaultHigh, for: .horizontal)
 	}
 	

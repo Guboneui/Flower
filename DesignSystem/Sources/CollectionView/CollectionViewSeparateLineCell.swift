@@ -27,7 +27,7 @@ public final class CollectionViewSeparateLineCell: UICollectionViewCell {
 
 extension CollectionViewSeparateLineCell: Viewable {
 	public func setupConfigures() {
-		contentView.backgroundColor = AppTheme.Color.background
+		contentView.backgroundColor = AppTheme.Color.neutral20
 	}
 	
 	public func setupViews() { }

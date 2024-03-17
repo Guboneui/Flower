@@ -22,7 +22,7 @@ public final class ProfileHeaderCell: UICollectionReusableView {
 	// MARK: - UI Property
 	private let titleLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_16
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: - Initialize
