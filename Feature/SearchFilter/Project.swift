@@ -12,6 +12,7 @@ import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
 import ThirdPartyDependencyPlugin
+import UserKitPlugin
 
 let projectName: String = "SearchFilter"
 let iOSTargetVersion: String = "16.0"
@@ -21,7 +22,8 @@ let project = Project.makeFrameworkProject(
   iOSTargetVersion: iOSTargetVersion,
   dependencies: [
     .ThirdParty.Main,
-    .DesignSystem.Main
+    .DesignSystem.Main,
+    .UserKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,

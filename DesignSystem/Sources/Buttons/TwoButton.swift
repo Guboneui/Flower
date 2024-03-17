@@ -93,7 +93,7 @@ private extension TwoButton {
 			leftButton.backgroundColor = AppTheme.Color.white
 			leftButton.makeCornerRadiusWithBorder(Metric.buttonRadius)
 			leftButton.setTitle(leftButtonTitle, for: .normal)
-			leftButton.tintColor = AppTheme.Color.grey40
+			leftButton.tintColor = AppTheme.Color.neutral300
 			leftButton.titleLabel?.font = AppTheme.Font.Bold_12
 		case .primary:
 			leftButton.backgroundColor = AppTheme.Color.primary
@@ -110,7 +110,7 @@ private extension TwoButton {
 			rightButton.backgroundColor = AppTheme.Color.white
 			rightButton.makeCornerRadiusWithBorder(Metric.buttonRadius)
 			rightButton.setTitle(rightButtonTitle, for: .normal)
-			rightButton.tintColor = AppTheme.Color.grey40
+			rightButton.tintColor = AppTheme.Color.neutral300
 			rightButton.titleLabel?.font = AppTheme.Font.Bold_12
 		case .primary:
 			rightButton.backgroundColor = AppTheme.Color.primary

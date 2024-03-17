@@ -9,25 +9,21 @@ import UIKit
 
 extension AppTheme {
 	public enum Color {
-		// MARK: - Black
-		public static let black = ResourceKitAsset.Color.black.color
-		
-		// MARK: - White
-		public static let white = ResourceKitAsset.Color.white.color
-		
-		// MARK: - Grey
-		public static let grey40 = ResourceKitAsset.Color.grey40.color
-		public static let grey70 = ResourceKitAsset.Color.grey70.color
-		public static let grey90 = ResourceKitAsset.Color.grey90.color
-		public static let background = ResourceKitAsset.Color.background.color
-		
-		// MARK: - Primary
+		// MARK: - Main
 		public static let primary = ResourceKitAsset.Color.primary.color
-
-		// MARK: - Secondary
 		public static let secondary = ResourceKitAsset.Color.secondary.color
 		
-		// MARK: - Wrarning
-		public static let warning = ResourceKitAsset.Color.warning.color
+		// MARK: - Sementic
+		public static let error = ResourceKitAsset.Color.error.color
+		public static let notice400 = ResourceKitAsset.Color.notice400.color
+		public static let notice500 = ResourceKitAsset.Color.notice500.color
+		
+		// MARK: - Neutral
+		public static let white = ResourceKitAsset.Color.white.color
+		public static let neutral20 = ResourceKitAsset.Color.neutral20.color
+		public static let neutral50 = ResourceKitAsset.Color.neutral50.color
+		public static let neutral100 = ResourceKitAsset.Color.neutral100.color
+		public static let neutral300 = ResourceKitAsset.Color.neutral300.color
+		public static let neutral900 = ResourceKitAsset.Color.neutral900.color
 	}
 }

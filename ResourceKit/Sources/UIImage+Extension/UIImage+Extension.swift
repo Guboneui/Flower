@@ -41,7 +41,8 @@ extension AppTheme {
 		public static let myReservation = ResourceKitAsset.Image.myReservation.image
 		public static let saveGH = ResourceKitAsset.Image.saveGH.image
 		public static let review = ResourceKitAsset.Image.review.image
-		
+		public static let exit = ResourceKitAsset.Image.exit.image
+		public static let hostBadge = ResourceKitAsset.Image.hostBadge.image
 		
 		// MARK: LOGIN
 		public static let naverLogin = ResourceKitAsset.Image.naverLogin.image

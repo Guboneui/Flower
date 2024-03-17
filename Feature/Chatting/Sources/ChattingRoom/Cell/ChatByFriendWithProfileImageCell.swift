@@ -45,7 +45,7 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	
 	public let userNameLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 	
 	private let messageBubbleView: UIView = UIView().then {
@@ -55,14 +55,14 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	
 	public let messageLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 		$0.numberOfLines = Metric.messageLabelNumberOfLines
 		$0.lineBreakMode = .byCharWrapping
 	}
 	
 	private let timeLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_10
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 		$0.setContentCompressionResistancePriority(
 			UILayoutPriority(Metric.timeLabelCompressionResistancePriority),
 			for: .horizontal
@@ -84,7 +84,7 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 // MARK: - Viewable METHOD
 extension ChatByFriendWithProfileImageCell: Viewable {
 	func setupConfigures() {
-		self.backgroundColor = AppTheme.Color.grey90
+		self.backgroundColor = AppTheme.Color.neutral50
 	}
 	
 	func setupViews() {
