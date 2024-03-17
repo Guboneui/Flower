@@ -43,7 +43,7 @@ private extension SideBarPresentable where Self: UIViewController {
 	var showAnimationDurationTime: TimeInterval { 0.3 }
 	var hideAnimationDurationTime: TimeInterval { 0.3 }
 	
-	var backgroundViewColor: UIColor { AppTheme.Color.black.withAlphaComponent(0.7) }
+	var backgroundViewColor: UIColor { AppTheme.Color.neutral900.withAlphaComponent(0.7) }
 	var sideBarViewColor: UIColor { AppTheme.Color.white }
 	
 	// MARK: - METHOD

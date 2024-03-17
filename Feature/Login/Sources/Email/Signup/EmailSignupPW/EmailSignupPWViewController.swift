@@ -82,18 +82,18 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let pwViewBackgroundColor: UIColor = AppTheme.Color.white
 		static let pwCheckViewBackgroundColor: UIColor = AppTheme.Color.white
-		static let pwLabelColor: UIColor = AppTheme.Color.black
+		static let pwLabelColor: UIColor = AppTheme.Color.neutral900
 		
 		static let pwCautionViewColor: UIColor = AppTheme.Color.white
 		static let pwCautionLabelSuccessColor: UIColor = AppTheme.Color.primary
-		static let pwCautionLabelFailureColor: UIColor = AppTheme.Color.warning
+		static let pwCautionLabelFailureColor: UIColor = AppTheme.Color.error
 		
 		static let pwCheckCautionViewColor: UIColor = AppTheme.Color.white
 		static let pwCheckCautionLabelSuccessColor: UIColor = AppTheme.Color.primary
-		static let pwCheckCautionLabelFailureColor: UIColor = AppTheme.Color.warning
+		static let pwCheckCautionLabelFailureColor: UIColor = AppTheme.Color.error
 
-		static let pwAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
-		static let pwCheckAnnouncementLabelColor: UIColor = AppTheme.Color.grey70
+		static let pwAnnouncementLabelColor: UIColor = AppTheme.Color.neutral100
+		static let pwCheckAnnouncementLabelColor: UIColor = AppTheme.Color.neutral100
 	}
 	
 	// MARK: - TEXTSET

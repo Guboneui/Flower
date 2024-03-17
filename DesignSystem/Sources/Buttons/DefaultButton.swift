@@ -33,7 +33,7 @@ public class DefaultButton: UIButton {
 		static let enableTitleColor: UIColor = AppTheme.Color.white
 		static let enableBackgroundColor: UIColor = AppTheme.Color.primary
 		static let disableTitleColor: UIColor = AppTheme.Color.white
-    static let disableBackgroundColor: UIColor = AppTheme.Color.grey70
+    static let disableBackgroundColor: UIColor = AppTheme.Color.neutral100
 		static let pressedColor: UIColor = AppTheme.Color.primary.withAlphaComponent(0.75)
   }
   
