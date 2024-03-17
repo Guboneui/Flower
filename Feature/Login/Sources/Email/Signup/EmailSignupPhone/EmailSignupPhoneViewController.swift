@@ -38,7 +38,7 @@ public final class EmailSignupPhoneViewController: UIViewController {
 	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
-		static let phoneNumberLabelColor: UIColor = AppTheme.Color.black
+		static let phoneNumberLabelColor: UIColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: - TEXTSET

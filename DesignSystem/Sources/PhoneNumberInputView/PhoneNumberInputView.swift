@@ -41,7 +41,7 @@ public class PhoneNumberInputView: UIView {
 	private let firstNumberDropdownButton: UIButton = UIButton(primaryAction: nil).then {
 		$0.titleLabel?.font = AppTheme.Font.Bold_20
 		$0.titleLabel?.textAlignment = .left
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 		$0.showsMenuAsPrimaryAction = true
 		$0.changesSelectionAsPrimaryAction = true
 		$0.contentEdgeInsets = .init(
@@ -62,7 +62,7 @@ public class PhoneNumberInputView: UIView {
 	
 	private let middleNumberTextField: UITextField = UITextField().then {
 		$0.font = AppTheme.Font.Bold_20
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 		$0.textAlignment = .center
 		$0.keyboardType = .numberPad
 	}
@@ -74,7 +74,7 @@ public class PhoneNumberInputView: UIView {
 	
 	private let lastNumberTextField: UITextField = UITextField().then {
 		$0.font = AppTheme.Font.Bold_20
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 		$0.textAlignment = .center
 		$0.keyboardType = .numberPad
 	}

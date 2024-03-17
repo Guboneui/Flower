@@ -28,7 +28,7 @@ public class HeaderSlideView: UIView {
 		var backgroundColor: UIColor {
 			switch self {
 			case .loginError:
-				return AppTheme.Color.warning
+				return AppTheme.Color.error
 			}
 		}
 		

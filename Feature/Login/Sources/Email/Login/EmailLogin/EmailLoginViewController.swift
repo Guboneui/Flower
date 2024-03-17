@@ -64,11 +64,11 @@ public final class EmailLoginViewController: UIViewController {
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
 		static let idSaveCheckViewColor: UIColor = AppTheme.Color.white
-		static let emailLoginLabelColor: UIColor = AppTheme.Color.black
-		static let idSaveCheckLabelColor: UIColor = AppTheme.Color.black
-		static let passwordFindButtonColor: UIColor = AppTheme.Color.black
-		static let signupQuestionLabelColor: UIColor = AppTheme.Color.black
-		static let emailSignupButtonColor: UIColor = AppTheme.Color.black
+		static let emailLoginLabelColor: UIColor = AppTheme.Color.neutral900
+		static let idSaveCheckLabelColor: UIColor = AppTheme.Color.neutral900
+		static let passwordFindButtonColor: UIColor = AppTheme.Color.neutral900
+		static let signupQuestionLabelColor: UIColor = AppTheme.Color.neutral900
+		static let emailSignupButtonColor: UIColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: - TEXTSET

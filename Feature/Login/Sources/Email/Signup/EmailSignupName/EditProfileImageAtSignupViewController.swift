@@ -40,16 +40,16 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 	
 	// MARK: - UI Property
 	private let navigationBarView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+		$0.backgroundColor = AppTheme.Color.neutral900.withAlphaComponent(0.7)
 	}
 	
 	private let profileImageView: UIImageView = UIImageView().then {
-		$0.backgroundColor = AppTheme.Color.black
+		$0.backgroundColor = AppTheme.Color.neutral900
 		$0.contentMode = .scaleAspectFit
 	}
 	
 	private let snapShotAreaView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.black
+		$0.backgroundColor = AppTheme.Color.neutral900
 	}
 	
 	private let blurView: UIVisualEffectView = UIVisualEffectView().then {
@@ -60,15 +60,15 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 	private let snapShotGuideLineMaskLayer: CAShapeLayer = .init()
 	
 	private let bottomContainerView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+		$0.backgroundColor = AppTheme.Color.neutral900.withAlphaComponent(0.7)
 	}
 	
 	private let topGuideAreaView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+		$0.backgroundColor = AppTheme.Color.neutral900.withAlphaComponent(0.7)
 	}
 	
 	private let bottomGuideAreaView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.black.withAlphaComponent(0.7)
+		$0.backgroundColor = AppTheme.Color.neutral900.withAlphaComponent(0.7)
 	}
 	
 	// MARK: - Property
@@ -118,7 +118,7 @@ final class EditProfileImageAtSignupViewController: UIViewController {
 // MARK: - Private Extension
 private extension EditProfileImageAtSignupViewController {
 	func setupConfigures() {
-		view.backgroundColor = AppTheme.Color.black
+		view.backgroundColor = AppTheme.Color.neutral900
 		profileImageView.image = selectedImage
 	}
 	
@@ -186,7 +186,7 @@ private extension EditProfileImageAtSignupViewController {
 		
 		let fillLayer = CAShapeLayer()
 		fillLayer.fillRule = CAShapeLayerFillRule.evenOdd
-		fillLayer.fillColor = AppTheme.Color.black.cgColor
+		fillLayer.fillColor = AppTheme.Color.neutral900.cgColor
 		fillLayer.path = outerbezierPath.cgPath
 		maskView.layer.addSublayer(fillLayer)
 		
@@ -219,7 +219,7 @@ private extension EditProfileImageAtSignupViewController {
 				switch recognize.state {
 				case .began: 
 					self.blurView.effect = nil
-					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
+					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.neutral900.withAlphaComponent(0.3).cgColor
 				case .changed:
 					let pinchScale: CGFloat = recognize.scale
 					if self.imageViewScale * pinchScale < Metric.maxScale &&
@@ -253,7 +253,7 @@ private extension EditProfileImageAtSignupViewController {
 						y: self.profileImageView.center.y
 					)
 					self.blurView.effect = nil
-					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.black.withAlphaComponent(0.3).cgColor
+					self.snapShotGuideLineMaskLayer.fillColor = AppTheme.Color.neutral900.withAlphaComponent(0.3).cgColor
 				case .changed:
 					let transform: CGAffineTransform = self.profileImageView.transform
 					let translation = recognize.translation(in: self.profileImageView)
