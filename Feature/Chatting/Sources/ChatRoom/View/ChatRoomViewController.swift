@@ -133,7 +133,8 @@ private extension ChatRoomViewController {
 		rootView.navigationBarView.rx.didTapSideBarButton
 			.bind(onNext: { [weak self] in
 				guard let self else { return }
-				
+				self.view.endEditing(true)
+
 				let trepository: TestTokenRespositoryInterface = TestTokenRespository()
 				let repository: ChatRepositoryInterface = ChatRepository()
 				let useCase: ChatUseCaseInterface = ChatUseCase(
