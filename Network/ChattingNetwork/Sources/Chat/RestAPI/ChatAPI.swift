@@ -28,8 +28,8 @@ extension ChatAPI: TargetType {
 		case let .channelMemberList(channelID):
 			return "/\(channelID)/member"
 			
-		case let .channelMessageHistory(channelID, before, limit):
-			return "/\(channelID)/message?before=\(before ?? "")&limit=\(limit ?? "")"
+		case let .channelMessageHistory(channelID, _, _):
+			return "/\(channelID)/message"
 		}
 	}
 	
@@ -42,8 +42,19 @@ extension ChatAPI: TargetType {
 	
 	public var task: Moya.Task {
 		switch self {
-		case .channelList, .channelMemberList, .channelMessageHistory:
+		case .channelList, .channelMemberList:
 			return .requestPlain
+			
+		case let .channelMessageHistory(_, before, limit):
+			var params: [String: Any] = ["limit": limit ?? "50"]
+			
+			if let before = before {
+				params["before"] = before
+			}
+			
+			return .requestParameters(
+				parameters: params,
+				encoding: URLEncoding.queryString)
 		}
 	}
 	

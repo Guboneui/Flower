@@ -44,6 +44,14 @@ public final class ChatUseCase: ChatUseCaseInterface {
 	public func fetchChannelMemberList(channelID: String) -> Single<ChannelMemberListResponse> {
 		chatRepository.fetchChannelMemberListAPI(channelID: channelID)
 	}
+	
+	public func fetchChannelMessageHistory(
+		channelID: String,
+		before: String?,
+		limit: String?
+	) -> Single<MessageHistoryResponse> {
+		chatRepository.fetchChannelMessageHistoryAPI(channelID: channelID, before: before, limit: limit)
+	}
 
 	public func enterChattingRoom() {
 		chatRepository.connectSoket()

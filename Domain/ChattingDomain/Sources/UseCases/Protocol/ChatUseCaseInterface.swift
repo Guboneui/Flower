@@ -20,7 +20,12 @@ public protocol ChatUseCaseInterface {
 	
 	func fetchChannelList() -> Single<ChannelListResponse>
 	func fetchChannelMemberList(channelID: String) -> Single<ChannelMemberListResponse>
-
+	func fetchChannelMessageHistory(
+		channelID: String,
+		before: String?,
+		limit: String?
+	) -> Single<MessageHistoryResponse>
+	
 	func enterChattingRoom()
 	func disconnectSoket()
 	func sendChatMessage(d: SendMessageData)

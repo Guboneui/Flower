@@ -26,6 +26,14 @@ public final class ChatRepository: NetworkRepository<ChatAPI>, ChatRepositoryInt
 	public func fetchChannelMemberListAPI(channelID: String) -> Single<ChannelMemberListResponse> {
 		request(endPoint: .channelMemberList(channelID: channelID))
 	}
+	
+	public func fetchChannelMessageHistoryAPI(
+		channelID: String,
+		before: String?,
+		limit: String?
+	) -> Single<MessageHistoryResponse> {
+		request(endPoint: .channelMessageHistory(channelID: channelID, before: before, limit: limit))
+	}
 
 	public func connectSoket() {
 		ChatSoketIOManager.shared.socket.connect()

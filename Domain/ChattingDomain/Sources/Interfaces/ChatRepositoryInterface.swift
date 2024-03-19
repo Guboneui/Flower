@@ -16,6 +16,11 @@ public protocol ChatRepositoryInterface {
 	
 	func fetchChannelListAPI() -> Single<ChannelListResponse>
 	func fetchChannelMemberListAPI(channelID: String) -> Single<ChannelMemberListResponse>
+	func fetchChannelMessageHistoryAPI(
+		channelID: String,
+		before: String?,
+		limit: String?
+	) -> Single<MessageHistoryResponse>
 	
 	func connectSoket()
 	func disconnentSoket()

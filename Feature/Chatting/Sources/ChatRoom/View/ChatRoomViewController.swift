@@ -70,7 +70,7 @@ private extension ChatRoomViewController {
 				self.rootView.setSizingInputMessageTextView()
 			}).disposed(by: disposeBag)
 		
-		chatRoomViewModel.displayableMessageArray
+		chatRoomViewModel.displayableMessagesRelay
 			.bind(to: rootView.chatListCollectionView.rx.items) { _, row, element in
 				let indexPath = IndexPath(row: row, section: 0)
 				let uid = element.uid
@@ -82,7 +82,7 @@ private extension ChatRoomViewController {
 					) as? ChatByOwnerCell else { return ChatByOwnerCell() }
 					
 					cell.messageLabel.text = element.data
-					cell.timeLabel.text = element.time
+					cell.timeLabel.text = element.convertTime
 					cell.timeLabel.isHidden = element.isHiddenTime
 					
 					return cell
@@ -94,7 +94,7 @@ private extension ChatRoomViewController {
 						) as? ChatByFriendCell else { return ChatByFriendCell() }
 						
 						cell.messageLabel.text = element.data
-						cell.timeLabel.text = element.time
+						cell.timeLabel.text = element.convertTime
 						cell.timeLabel.isHidden = element.isHiddenTime
 
 						return cell
@@ -106,7 +106,7 @@ private extension ChatRoomViewController {
 					
 					cell.userNameLabel.text = self.chatRoomViewModel.membersDictionary[element.uid]
 					cell.messageLabel.text = element.data
-					cell.timeLabel.text = element.time
+					cell.timeLabel.text = element.convertTime
 					cell.timeLabel.isHidden = element.isHiddenTime
 					
 					return cell
