@@ -90,7 +90,8 @@ final class ChatRoomSidebarView: UIView {
 	
 	private let compositionalLayout: UICollectionViewCompositionalLayout = {
 		var listConfiguration = UICollectionLayoutListConfiguration(appearance: .plain)
-		listConfiguration.showsSeparators = true
+		listConfiguration.showsSeparators = false
+		listConfiguration.backgroundColor = AppTheme.Color.white
 		let compositionalLayout = UICollectionViewCompositionalLayout.list(using: listConfiguration)
 		return compositionalLayout
 	}()
