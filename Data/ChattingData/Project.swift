@@ -2,28 +2,25 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 구본의 on 2023/12/29.
+//  Created by 구본의 on 3/24/24.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import DataPlugin
-import DomainPlugin
-import NetworkPlugin
+private let name: String = "ChattingData"
 
-let projectName: String = "ChattingData"
-let iOSTargetVersion: String = "16.0"
-
-let project = Project.makeLibraryProject(
-  name: "ChattingData",
-  iOSTargetVersion: "16.0",
-  baseSetting: .init(),
+let project: Project = Project.featureLibrary(
+  name: name,
   dependencies: [
-    .Domain.ChattingDomain.Main,
-    .Network.ChattingNetwork.Main
-  ],
-  isDynamic: false,
-  needTestTarget: false,
-  needDemoAppTarget: false
+    .project(
+      target: "ChattingDomain",
+      path: .relativeToRoot("Domain/ChattingDomain")
+    ),
+    .project(
+      target: "ChattingService",
+      path: .relativeToRoot("Service/ChattingService")
+    )
+  ]
 )
+

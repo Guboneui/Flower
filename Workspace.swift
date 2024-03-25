@@ -1,8 +1,8 @@
 //
 //  Workspace.swift
-//  GuestHouseManifests
+//  MyTemplateManifests
 //
-//  Created by 구본의 on 2023/09/08.
+//  Created by 구본의 on 2024/03/21.
 //
 
 import ProjectDescription

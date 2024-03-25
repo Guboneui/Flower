@@ -2,28 +2,24 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 구본의 on 2023/11/10.
+//  Created by 구본의 on 3/24/24.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import DataPlugin
-import DomainPlugin
-import NetworkPlugin
+private let name: String = "LoginData"
 
-let projectName: String = "LoginData"
-let iOSTargetVersion: String = "16.0"
-
-let project = Project.makeLibraryProject(
-  name: "LoginData",
-  iOSTargetVersion: "16.0",
-  baseSetting: .init(),
+let project: Project = Project.featureLibrary(
+  name: name,
   dependencies: [
-    .Domain.LoginDomain.Main,
-    .Network.LoginNetwork.Main
-  ],
-  isDynamic: false,
-  needTestTarget: false,
-  needDemoAppTarget: false
+    .project(
+      target: "LoginDomain",
+      path: .relativeToRoot("Domain/LoginDomain")
+    ),
+    .project(
+      target: "LoginService",
+      path: .relativeToRoot("Service/LoginService")
+    )
+  ]
 )

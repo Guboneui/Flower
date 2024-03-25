@@ -2,32 +2,30 @@
 //  Project.swift
 //  ProjectDescriptionHelpers
 //
-//  Created by 구본의 on 2023/12/28.
+//  Created by 구본의 on 3/24/24.
 //
 
 import ProjectDescription
 import ProjectDescriptionHelpers
 
-import DataPlugin
-import DesignSystemPlugin
-import DomainPlugin
-import ThirdPartyDependencyPlugin
-import UserKitPlugin
+private let name: String = "Chatting"
 
-let projectName: String = "Chatting"
-let iOSTargetVersion: String = "16.0"
-
-let project = Project.makeFrameworkProject(
-  name: projectName,
-  iOSTargetVersion: iOSTargetVersion,
+let project: Project = Project.featureLibrary(
+  name: name,
   dependencies: [
-    .Data.ChattingData.Main,
-    .Domain.ChattingDomain.Main,
-    .ThirdParty.Main,
-    .DesignSystem.Main,
-    .UserKit.Main
+    .project(
+      target: "ChattingData",
+      path: .relativeToRoot("Data/ChattingData")
+    ),
+    .project(
+      target: "ThirdPartyKit",
+      path: .relativeToRoot("ThirdParty/ThirdPartyKit")
+    ),
+    .project(
+      target: "DesignSystem",
+      path: .relativeToRoot("Design/DesignSystem")
+    )
   ],
-  isDynamic: false,
-  needTestTarget: false,
-  needDemoAppTarget: true
+  ifNeedDemoApp: true
 )
+
