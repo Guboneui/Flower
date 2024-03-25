@@ -71,6 +71,7 @@ final class ChatRoomView: UIView {
 			ChatByOwnerCell.self,
 			forCellWithReuseIdentifier: ChatByOwnerCell.identifier
 		)
+		$0.contentInset = UIEdgeInsets(top: 60, left: 0, bottom: 0, right: 0)
 	}
 	
 	private let chatRoomBottomView: UIView = UIView().then {
@@ -185,17 +186,6 @@ final class ChatRoomView: UIView {
 			make.height.equalTo(Metric.inputMessageTextViewMinHeight)
 		}
 		self.inputMessageTextView.isScrollEnabled = false
-	}
-	
-	public func scollingBottom() {
-		self.chatListCollectionView.setContentOffset(
-			CGPoint(
-				x: 0,
-				y: self.chatListCollectionView.contentSize.height
-				- self.chatListCollectionView.bounds.height
-			),
-			animated: true
-		)
 	}
 }
 
