@@ -37,6 +37,12 @@ extension AppTheme {
     public static let rotatePI = ResourceKitAsset.Image.rotatePI.image
     public static let useCamera = ResourceKitAsset.Image.useCamera.image
     public static let selectPhoto = ResourceKitAsset.Image.selectPhoto.image
+    public static let locationMarker = ResourceKitAsset.Image.locationMarker.image
+    public static let rating = ResourceKitAsset.Image.rating.image
+    public static let userLocation = ResourceKitAsset.Image.userLocation.image
+    public static let houseList = ResourceKitAsset.Image.houseList.image
+    public static let filter = ResourceKitAsset.Image.filter.image
+    public static let calendar = ResourceKitAsset.Image.calendar.image
     public static let exit = ResourceKitAsset.Image.exit.image
     public static let hostBadge = ResourceKitAsset.Image.hostBadge.image
     
