@@ -45,6 +45,14 @@ extension AppTheme {
 		public static let calendar = ResourceKitAsset.Image.calendar.image
 		public static let exit = ResourceKitAsset.Image.exit.image
 		public static let hostBadge = ResourceKitAsset.Image.hostBadge.image
+		public static let locationMarker = ResourceKitAsset.Image.locationMarker.image
+		public static let rating = ResourceKitAsset.Image.rating.image
+		public static let userLocation = ResourceKitAsset.Image.userLocation.image
+		public static let houseList = ResourceKitAsset.Image.houseList.image
+		public static let filter = ResourceKitAsset.Image.filter.image
+		public static let calendar = ResourceKitAsset.Image.calendar.image
+		public static let filterCalendar = ResourceKitAsset.Image.filterCalendar.image
+		public static let filterPeople = ResourceKitAsset.Image.filterPeople.image
 		
 		// MARK: LOGIN
 		public static let naverLogin = ResourceKitAsset.Image.naverLogin.image
