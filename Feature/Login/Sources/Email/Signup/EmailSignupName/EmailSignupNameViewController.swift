@@ -58,9 +58,9 @@ public final class EmailSignupNameViewController: UIViewController {
 	// MARK: - COLORSET
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
-		static let nameLabelColor: UIColor = AppTheme.Color.black
+		static let nameLabelColor: UIColor = AppTheme.Color.neutral900
 		static let profileViewBackgroundColor: UIColor = AppTheme.Color.white
-		static let profileImageViewColor: UIColor = AppTheme.Color.grey40
+		static let profileImageViewColor: UIColor = AppTheme.Color.neutral300
 		static let cameraViewBackgroundColor: UIColor = AppTheme.Color.primary
 		static let cameraImageViewColor: UIColor = AppTheme.Color.white
 	}

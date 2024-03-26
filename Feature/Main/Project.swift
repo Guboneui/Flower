@@ -11,6 +11,7 @@ import ProjectDescriptionHelpers
 import DesignSystemPlugin
 import FeaturePlugin
 import ThirdPartyDependencyPlugin
+import UserKitPlugin
 
 let projectName: String = "Main"
 let iOSTargetVersion: String = "16.0"
@@ -23,7 +24,8 @@ let project = Project.makeFrameworkProject(
     .Feature.Map.Main,
     .Feature.Profile.Main,
     .ThirdParty.Main,
-    .DesignSystem.Main
+    .DesignSystem.Main,
+    .UserKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,

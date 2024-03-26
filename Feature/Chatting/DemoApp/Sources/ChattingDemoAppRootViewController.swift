@@ -18,8 +18,8 @@ import Then
 final class ChattingDemoAppRootViewController: UIViewController {
 	
 	private let moveToChatButton: UIButton = UIButton(type: .system).then {
-		$0.backgroundColor = AppTheme.Color.grey70
-		$0.tintColor = AppTheme.Color.black
+		$0.backgroundColor = AppTheme.Color.neutral100
+		$0.tintColor = AppTheme.Color.neutral900
 		$0.setTitle("채팅 바로가기", for: .normal)
 		$0.titleLabel?.font = AppTheme.Font.Bold_14
 	}

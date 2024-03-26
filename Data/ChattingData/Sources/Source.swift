@@ -5,6 +5,6 @@
 //  Created by 구본의 on 2023/12/29.
 //
 
-import Foundationm
+import Foundation
 
 let source: Int = 10

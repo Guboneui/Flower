@@ -12,6 +12,7 @@ import DataPlugin
 import DesignSystemPlugin
 import DomainPlugin
 import ThirdPartyDependencyPlugin
+import UserKitPlugin
 
 let projectName: String = "Map"
 let iOSTargetVersion: String = "16.0"
@@ -23,7 +24,8 @@ let project = Project.makeFrameworkProject(
     .Data.MapData.Main,
     .Domain.MapDomain.Main,
     .ThirdParty.Main,
-    .DesignSystem.Main
+    .DesignSystem.Main,
+    .UserKit.Main
   ],
   isDynamic: false,
   needTestTarget: false,

@@ -34,7 +34,7 @@ public class PageController: UIView {
   public init(
     pageCount: Int,
 		selectedColor: UIColor = AppTheme.Color.primary,
-    defaultColor: UIColor = AppTheme.Color.grey70,
+    defaultColor: UIColor = AppTheme.Color.neutral100,
     defaultControllerSize: CGSize,
     selectedControllerHeight: CGFloat,
     durationTime: TimeInterval = 0.35

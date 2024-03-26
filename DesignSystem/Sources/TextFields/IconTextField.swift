@@ -43,8 +43,8 @@ public class IconTextField: UIView {
 	
 	// MARK: ColorSet
 	private enum ColorSet {
-		static let backgroundColor: UIColor = AppTheme.Color.grey90
-		static let textFieldColor: UIColor = AppTheme.Color.black
+		static let backgroundColor: UIColor = AppTheme.Color.neutral50
+		static let textFieldColor: UIColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: INPUT PROPERTY
@@ -60,7 +60,7 @@ public class IconTextField: UIView {
 	private let textField: UITextField = UITextField()
 	private let clearButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.delete, for: .normal)
-		$0.tintColor = AppTheme.Color.grey70
+		$0.tintColor = AppTheme.Color.neutral100
 	}
 	
 	// MARK: INITIALIZE
@@ -134,7 +134,7 @@ private extension IconTextField {
 		makeCornerRadius(Metric.cornerRadius)
 		
 		iconImageView.image = icon
-		iconImageView.tintColor = AppTheme.Color.black
+		iconImageView.tintColor = AppTheme.Color.neutral900
 		
 		textField.keyboardType = keyboardType
 		textField.placeholder = placeHolder

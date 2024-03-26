@@ -75,7 +75,7 @@ public class IconBorderTextField: UIView {
 	
 	// MARK: ColorSet
 	private enum ColorSet {
-		static let textFieldColor: UIColor = AppTheme.Color.black
+		static let textFieldColor: UIColor = AppTheme.Color.neutral900
 	}
   
   // MARK: INPUT PROPERTY
@@ -165,7 +165,7 @@ private extension IconBorderTextField {
       .asDriver(onErrorJustReturn: "")
       .drive(onNext: { [weak self] text in
         self?.currentText.accept(text)
-        self?.iconImageView.tintColor = text.isEmpty ? AppTheme.Color.grey70 : AppTheme.Color.black
+        self?.iconImageView.tintColor = text.isEmpty ? AppTheme.Color.neutral100 : AppTheme.Color.neutral900
       }).disposed(by: disposeBag)
   }
 }
