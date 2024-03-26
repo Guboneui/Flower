@@ -56,9 +56,9 @@ public class NavigationBar: UIView {
 	// MARK: ColorSet
 	private enum ColorSet {
 		static let backgroundColor: UIColor = AppTheme.Color.white
-		static let navigationTitleColor: UIColor = AppTheme.Color.black
-		static let navigationLeftButtonColor: UIColor = AppTheme.Color.black
-		static let guideLineColor: UIColor = AppTheme.Color.grey70
+		static let navigationTitleColor: UIColor = AppTheme.Color.neutral900
+		static let navigationLeftButtonColor: UIColor = AppTheme.Color.neutral900
+		static let guideLineColor: UIColor = AppTheme.Color.neutral100
 	}
 	
 	// MARK: - TAP SUBJECT

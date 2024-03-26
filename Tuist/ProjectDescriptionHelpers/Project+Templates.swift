@@ -20,6 +20,7 @@ extension Project {
         destinations: .iOS,
         product: .framework,
         bundleId: "com.boni.guesthouse.\(name)",
+        deploymentTargets: .iOS("16.0"),
         infoPlist: .default,
         sources: ["Sources/**"],
         resources: ["Resources/**"],
@@ -34,6 +35,7 @@ extension Project {
           destinations: .iOS,
           product: .unitTests,
           bundleId: "com.boni.guesthouse.\(name)Tests",
+          deploymentTargets: .iOS("16.0"),
           infoPlist: .default,
           sources: ["Sources/**"],
           resources: ["Resources/**",],
@@ -61,6 +63,7 @@ extension Project {
         destinations: .iOS,
         product: .staticLibrary,
         bundleId: "com.boni.guesthouse.\(name)",
+        deploymentTargets: .iOS("16.0"),
         infoPlist: .default,
         sources: ["Sources/**"],
         dependencies: dependencies
@@ -93,6 +96,7 @@ extension Project {
             ]
           ),
           sources: ["./DemoApp/Sources/**"],
+          resources: ["./DemoApp/Resources/**"],
           dependencies: [.target(name: name)],
           settings: .settings(base: demoAppSetting, configurations: [])
 

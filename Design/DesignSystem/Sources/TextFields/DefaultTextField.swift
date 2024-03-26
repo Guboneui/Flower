@@ -28,7 +28,7 @@ public class DefaultTextField: UIView {
 			case .success:
 				makeBorder(borderColor: AppTheme.Color.primary)
 			case .failure:
-				makeBorder(borderColor: AppTheme.Color.warning)
+				makeBorder(borderColor: AppTheme.Color.error)
 			}
 		}
 	}
@@ -98,8 +98,8 @@ public class DefaultTextField: UIView {
 	}
 	
 	private enum ColorSet {
-		static let baseBackgroundColor: UIColor = AppTheme.Color.grey90
-		static let textFieldColor: UIColor = AppTheme.Color.black
+		static let baseBackgroundColor: UIColor = AppTheme.Color.neutral100
+		static let textFieldColor: UIColor = AppTheme.Color.neutral900
 	}
 	
 	// MARK: INPUT PROPERTY
@@ -113,7 +113,7 @@ public class DefaultTextField: UIView {
 	private let textField: UITextField = UITextField()
 	private let clearButton: UIButton = UIButton().then {
 		$0.setImage(AppTheme.Image.delete, for: .normal)
-		$0.tintColor = AppTheme.Color.grey70
+		$0.tintColor = AppTheme.Color.neutral100
 	}
 	
 	private let securityButton: UIButton = UIButton().then {
