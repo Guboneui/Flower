@@ -65,7 +65,7 @@ final class MapView: UIView {
 		static let searchTitleLabelLeftMargin: CGFloat = 8
 		static let searchSubTitleLabelTopMargin: CGFloat = 2
 		static let searchSubTitleLabelLeftMargin: CGFloat = 8
-		static let filterButtonViewTopMargin: CGFloat = 12
+		static let fillterStackViewTopMargin: CGFloat = 12
 		static let dateFilterButtonViewTopMargin: CGFloat = 12
 		static let dateFilterButtonViewLeftMargin: CGFloat = 8
 		static let peopleFilterButtonViewTopMargin: CGFloat = 12
@@ -212,7 +212,15 @@ final class MapView: UIView {
 		title: TextSet.peopleFilterButtonViewText,
 		initSelectedState: true
 	)
-	
+
+	private let fillterStackView: UIStackView = UIStackView().then {
+		$0.translatesAutoresizingMaskIntoConstraints = false
+		$0.axis = .horizontal
+		$0.alignment = .fill
+		$0.distribution = .equalSpacing
+		$0.spacing = 8
+	}
+
 	// MARK: - Iitialize
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -243,10 +251,11 @@ extension MapView: Viewable {
 		userLocationButtonView.addSubview(userLocationImageView)
 		
 		searchView.addSubview(searchButtonView)
-		searchView.addSubview(filterButtonView)
-		searchView.addSubview(dateFilterButtonView)
-		searchView.addSubview(peopleFilterButtonView)
-		
+		searchView.addSubview(fillterStackView)
+		fillterStackView.addArrangedSubview(filterButtonView)
+		fillterStackView.addArrangedSubview(dateFilterButtonView)
+		fillterStackView.addArrangedSubview(peopleFilterButtonView)
+
 		searchButtonView.addSubview(searchImageView)
 		searchButtonView.addSubview(searchTitleLabel)
 		searchButtonView.addSubview(searchSubTitleLabel)
@@ -324,19 +333,9 @@ extension MapView: Viewable {
 			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchSubTitleLabelLeftMargin)
 		}
 		
-		filterButtonView.snp.makeConstraints { make in
-			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.filterButtonViewTopMargin)
+		fillterStackView.snp.makeConstraints { make in
+			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.fillterStackViewTopMargin)
 			make.leading.equalTo(searchButtonView.snp.leading)
-		}
-		
-		dateFilterButtonView.snp.makeConstraints { make in
-			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.dateFilterButtonViewTopMargin)
-			make.leading.equalTo(filterButtonView.snp.trailing).offset(Metric.dateFilterButtonViewTopMargin)
-		}
-		
-		peopleFilterButtonView.snp.makeConstraints { make in
-			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.peopleFilterButtonViewTopMargin)
-			make.leading.equalTo(dateFilterButtonView.snp.trailing).offset(Metric.peopleFilterButtonViewLeftMargin)
 		}
 	}
 	
