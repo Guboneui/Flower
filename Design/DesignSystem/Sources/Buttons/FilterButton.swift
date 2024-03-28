@@ -13,7 +13,7 @@ import RxSwift
 import SnapKit
 import Then
 
-public class FilterButton: UIView {
+public final class FilterButton: UIView {
 	
 	// MARK: METRIC
 	private enum Metric {
