@@ -14,6 +14,7 @@ let buildNumber: String = {
 }()
 
 let infoPlist: [String: Plist.Value] = [
+  "CFBundleDevelopmentRegion": "ko_KR",
   "CFBundleShortVersionString": "1.0.0",
   "CFBundleVersion": "1",
   "UIMainStoryboardFile": "",
