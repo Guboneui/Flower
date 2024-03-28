@@ -213,7 +213,8 @@ final class MapView: UIView {
 		initSelectedState: true
 	)
 
-	private let fillterStackView: UIStackView = UIStackView().then {
+	private let peopleFilterButtonView2 = FilterButton(
+	private let filterStackView: UIStackView = UIStackView().then {
 		$0.translatesAutoresizingMaskIntoConstraints = false
 		$0.axis = .horizontal
 		$0.alignment = .fill
@@ -251,10 +252,11 @@ extension MapView: Viewable {
 		userLocationButtonView.addSubview(userLocationImageView)
 		
 		searchView.addSubview(searchButtonView)
-		searchView.addSubview(fillterStackView)
-		fillterStackView.addArrangedSubview(filterButtonView)
-		fillterStackView.addArrangedSubview(dateFilterButtonView)
-		fillterStackView.addArrangedSubview(peopleFilterButtonView)
+		searchView.addSubview(filterStackView)
+		filterStackView.addArrangedSubview(filterButtonView)
+		filterStackView.addArrangedSubview(dateFilterButtonView)
+		filterStackView.addArrangedSubview(peopleFilterButtonView)
+		filterStackView.addArrangedSubview(peopleFilterButtonView2)
 
 		searchButtonView.addSubview(searchImageView)
 		searchButtonView.addSubview(searchTitleLabel)
@@ -333,7 +335,7 @@ extension MapView: Viewable {
 			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchSubTitleLabelLeftMargin)
 		}
 		
-		fillterStackView.snp.makeConstraints { make in
+		filterStackView.snp.makeConstraints { make in
 			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.fillterStackViewTopMargin)
 			make.leading.equalTo(searchButtonView.snp.leading)
 		}
