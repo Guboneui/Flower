@@ -55,7 +55,8 @@ extension Project {
     name: String,
     packages: [Package] = [],
     dependencies: [TargetDependency] = [],
-    ifNeedDemoApp: Bool = false
+    ifNeedDemoApp: Bool = false,
+    demoAppPlist: [String: Plist.Value] = [:]
   ) -> Project {
     var targets: [Target] = [
       .target(
@@ -80,6 +81,17 @@ extension Project {
         "CODE_SIGN_STYLE": "Automatic"
       ]
       
+      let domoAppDefaultInfoPlist: [String: Plist.Value] = [
+        "CFBundleDevelopmentRegion": "ko_KR",
+        "CFBundleShortVersionString": "1.0",
+        "CFBundleVersion": "1",
+        "UILaunchStoryboardName": "LaunchScreen.storyboard",
+        "NSAppTransportSecurity": [
+          "NSAllowsArbitraryLoads": "YES"
+        ],
+        "NMFClientId": "wyq2xwziaq"
+      ]
+      
       targets.append(
         .target(
           name: "\(name)DemoApp",
@@ -88,12 +100,7 @@ extension Project {
           bundleId: "com.boni.guesthouse.\(name)DemoApp",
           deploymentTargets: .iOS("16.0"),
           infoPlist: .extendingDefault(
-            with: [
-              "CFBundleDevelopmentRegion": "ko_KR",
-              "CFBundleShortVersionString": "1.0",
-              "CFBundleVersion": "1",
-              "UILaunchStoryboardName": "LaunchScreen.storyboard",
-            ]
+            with: domoAppDefaultInfoPlist.merging(demoAppPlist) { (_, new) in new }
           ),
           sources: ["./DemoApp/Sources/**"],
           resources: ["./DemoApp/Resources/**"],
