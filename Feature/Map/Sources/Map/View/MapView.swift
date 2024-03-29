@@ -182,7 +182,12 @@ final class MapView: UIView {
 		$0.image = AppTheme.Image.search
 		$0.tintColor = AppTheme.Color.neutral900
 	}
-	
+
+	private let searchTitleStackView: UIStackView = UIStackView().then {
+		$0.axis = .vertical
+		$0.spacing = 2
+	}
+
 	private let searchTitleLabel: UILabel = UILabel().then {
 		$0.text = TextSet.searchTitleLabelText
 		$0.textColor = AppTheme.Color.neutral900
@@ -261,8 +266,9 @@ extension MapView: Viewable {
 		filterStackView.addArrangedSubview(peopleFilterButtonView)
 
 		searchButtonView.addSubview(searchImageView)
-		searchButtonView.addSubview(searchTitleLabel)
-		searchButtonView.addSubview(searchSubTitleLabel)
+		searchButtonView.addSubview(searchTitleStackView)
+		searchTitleStackView.addArrangedSubview(searchTitleLabel)
+		searchTitleStackView.addArrangedSubview(searchSubTitleLabel)
 
 		setupConstraints()
 	}
@@ -327,14 +333,11 @@ extension MapView: Viewable {
 			make.verticalEdges.equalToSuperview().inset(Metric.searchImageViewVerticalInset)
 		}
 
-		searchTitleLabel.snp.makeConstraints { make in
-			make.bottom.equalTo(searchButtonView.snp.centerY)
-			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchTitleLabelLeftMargin)
-		}
-
-		searchSubTitleLabel.snp.makeConstraints { make in
-			make.top.equalTo(searchButtonView.snp.centerY).offset(Metric.searchSubTitleLabelTopMargin)
-			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchSubTitleLabelLeftMargin)
+		searchTitleStackView.snp.makeConstraints { make in
+			make.leading.equalTo(searchImageView.snp.trailing).offset(8)
+			//TODO: trailing
+			make.trailing.equalToSuperview().offset(-18)
+			make.centerY.equalToSuperview()
 		}
 
 		filterScrollView.snp.makeConstraints { make in
