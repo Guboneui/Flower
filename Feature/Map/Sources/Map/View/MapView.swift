@@ -194,7 +194,7 @@ final class MapView: UIView {
 		$0.textColor = AppTheme.Color.neutral300
 		$0.font = AppTheme.Font.Regular_10
 	}
-	
+
 	private let filterButtonView = FilterButton(
 		icon: AppTheme.Image.filter,
 		title: TextSet.filterButtonViewText,
@@ -213,13 +213,14 @@ final class MapView: UIView {
 		initSelectedState: true
 	)
 
-	private let peopleFilterButtonView2 = FilterButton(
 	private let filterStackView: UIStackView = UIStackView().then {
-		$0.translatesAutoresizingMaskIntoConstraints = false
 		$0.axis = .horizontal
-		$0.alignment = .fill
-		$0.distribution = .equalSpacing
 		$0.spacing = 8
+	}
+
+	private let filterScrollView: UIScrollView = UIScrollView().then {
+		$0.showsHorizontalScrollIndicator = false
+		$0.showsVerticalScrollIndicator = false
 	}
 
 	// MARK: - Iitialize
@@ -238,108 +239,113 @@ extension MapView: Viewable {
 	func setupConfigures() {
 		backgroundColor = AppTheme.Color.white
 	}
-	
+
 	func setupViews() {
 		addSubview(mapView)
 		addSubview(mapCollectionView)
 		addSubview(houseListButtonView)
 		addSubview(userLocationButtonView)
 		addSubview(searchView)
-		
+
 		houseListButtonView.addSubview(houseListButtonImageView)
 		houseListButtonView.addSubview(houseListLabel)
-		
+
 		userLocationButtonView.addSubview(userLocationImageView)
-		
+
 		searchView.addSubview(searchButtonView)
-		searchView.addSubview(filterStackView)
+		searchView.addSubview(filterScrollView)
+		filterScrollView.addSubview(filterStackView)
+
 		filterStackView.addArrangedSubview(filterButtonView)
 		filterStackView.addArrangedSubview(dateFilterButtonView)
 		filterStackView.addArrangedSubview(peopleFilterButtonView)
-		filterStackView.addArrangedSubview(peopleFilterButtonView2)
 
 		searchButtonView.addSubview(searchImageView)
 		searchButtonView.addSubview(searchTitleLabel)
 		searchButtonView.addSubview(searchSubTitleLabel)
-		
+
 		setupConstraints()
 	}
-	
+
 	func setupConstraints() {
 		mapView.snp.makeConstraints { make in
 			make.height.equalToSuperview()
 			make.width.equalToSuperview()
 		}
-		
+
 		mapCollectionView.snp.makeConstraints { make in
 			make.horizontalEdges.equalToSuperview()
 			make.bottom.equalToSuperview().offset(Metric.mapCollectionViewBottomMargin)
 			make.height.equalTo(Metric.mapCollectionViewHeightMargin)
 		}
-		
+
 		houseListButtonView.snp.makeConstraints { make in
 			make.width.equalTo(Metric.houseListButtonViewWidthMargin)
 			make.height.equalTo(Metric.houseListButtonViewHeightMargin)
 			make.bottom.equalTo(mapCollectionView.snp.top).offset(Metric.houseListButtonViewBottomMargin)
 			make.centerX.equalToSuperview()
 		}
-		
+
 		houseListButtonImageView.snp.makeConstraints { make in
 			make.size.equalTo(Metric.hoouseListButtonImageViewSize)
 			make.centerY.equalToSuperview()
 			make.leading.equalToSuperview().offset(Metric.hoouseListButtonImageViewLeftMargin)
 		}
-		
+
 		houseListLabel.snp.makeConstraints { make in
 			make.centerY.equalToSuperview()
 			make.trailing.equalToSuperview().offset(Metric.houseListLabelRightMargin)
 		}
-		
+
 		userLocationButtonView.snp.makeConstraints { make in
 			make.size.equalTo(Metric.userLocationButtonViewSize)
 			make.bottom.equalTo(mapCollectionView.snp.top).offset(Metric.userLocationButtonViewBottomMargin)
 			make.trailing.equalToSuperview().offset(Metric.userLocationButtonViewRightMargin)
 		}
-		
+
 		userLocationImageView.snp.makeConstraints { make in
 			make.size.equalTo(Metric.userLocationImageViewSize)
 			make.center.equalToSuperview()
 		}
-		
+
 		// MARK: 상단 검색 바
 		searchView.snp.makeConstraints { make in
 			make.top.equalToSuperview()
 			make.horizontalEdges.equalToSuperview()
-			make.bottom.equalTo(filterButtonView.snp.bottom).offset(Metric.searchViewBottomMargin)
+			make.bottom.equalTo(filterScrollView.snp.bottom).offset(Metric.searchViewBottomMargin)
 		}
-		
+
 		searchButtonView.snp.makeConstraints { make in
 			make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(Metric.searchButtonViewTopMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.searchButtonViewHorizontalInset)
 			make.height.equalTo(Metric.searchButtonViewHeightMargin)
 		}
-		
+
 		searchImageView.snp.makeConstraints { make in
 			make.size.equalTo(Metric.searchImageViewSize)
 			make.leading.equalToSuperview().offset(Metric.searchImageViewLeftMargin)
 			make.verticalEdges.equalToSuperview().inset(Metric.searchImageViewVerticalInset)
 		}
-		
+
 		searchTitleLabel.snp.makeConstraints { make in
 			make.bottom.equalTo(searchButtonView.snp.centerY)
 			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchTitleLabelLeftMargin)
 		}
-		
+
 		searchSubTitleLabel.snp.makeConstraints { make in
 			make.top.equalTo(searchButtonView.snp.centerY).offset(Metric.searchSubTitleLabelTopMargin)
 			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchSubTitleLabelLeftMargin)
 		}
-		
-		filterStackView.snp.makeConstraints { make in
+
+		filterScrollView.snp.makeConstraints { make in
 			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.fillterStackViewTopMargin)
 			make.leading.equalTo(searchButtonView.snp.leading)
+			make.trailing.equalTo(searchButtonView.snp.trailing)
+			make.height.equalTo(32)
+		}
+
+		filterStackView.snp.makeConstraints { make in
+			make.edges.equalToSuperview()
 		}
 	}
-	
-	func setupBinds() { }
 }
