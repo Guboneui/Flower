@@ -88,9 +88,11 @@ extension Project {
         "UILaunchStoryboardName": "LaunchScreen.storyboard",
         "NSAppTransportSecurity": [
           "NSAllowsArbitraryLoads": "YES"
-        ],
-        "NMFClientId": "wyq2xwziaq"
-      ]
+        ]
+      ].merging(
+        name == "Map" ? ["NMFClientId": "wyq2xwziaq"] : [:],
+        uniquingKeysWith: { $1 }
+      )
       
       targets.append(
         .target(
