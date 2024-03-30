@@ -6,6 +6,10 @@
 
 ---
 
+Tuist v4.0.0
+
+---
+
 ### Coding Convention
 [GH Coding Convention](https://github.com/Guboneui/GuestHoust-User/wiki/Coding-Convention)
 : `SwiftLint` 적용
