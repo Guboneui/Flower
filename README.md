@@ -5,8 +5,11 @@
 주변 장소 추천
 
 ---
+### Version
 
-Tuist v4.0.0
+Tuist v4.0.0 </br>
+Xcode v15.3.0 </br>
+Swift v5.9
 
 ---
 
@@ -40,9 +43,9 @@ Tag  | Description
 ### Branch
 Name  | Description
 ---  | --- 
-[Main Branch] | 최종
-[Test Branch] | 기능 개발 테스트
-[Dev Branch] | 기능 개발
+[Master Branch] | 최종
+~~[Test Branch]~~ | ~~기능 개발 테스트~~
+~~[Dev Branch]~~ | ~~기능 개발~~
 
 ---
 ### Xcode Template
