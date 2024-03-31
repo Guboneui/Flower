@@ -24,6 +24,7 @@ extension Project {
         infoPlist: .default,
         sources: ["Sources/**"],
         resources: ["Resources/**"],
+        scripts: [.SwiftLintScript],
         dependencies: dependencies
       )
     ]
@@ -39,6 +40,7 @@ extension Project {
           infoPlist: .default,
           sources: ["Sources/**"],
           resources: ["Resources/**",],
+          scripts: [.SwiftLintScript],
           dependencies: [.target(name: name)]
         )
       )
@@ -67,6 +69,7 @@ extension Project {
         deploymentTargets: .iOS("16.0"),
         infoPlist: .default,
         sources: ["Sources/**"],
+        scripts: [.SwiftLintScript],
         dependencies: dependencies
       )
     ]
@@ -88,9 +91,11 @@ extension Project {
         "UILaunchStoryboardName": "LaunchScreen.storyboard",
         "NSAppTransportSecurity": [
           "NSAllowsArbitraryLoads": "YES"
-        ],
-        "NMFClientId": "wyq2xwziaq"
-      ]
+        ]
+      ].merging(
+        name == "Map" ? ["NMFClientId": "wyq2xwziaq"] : [:],
+        uniquingKeysWith: { $1 }
+      )
       
       targets.append(
         .target(
@@ -104,6 +109,7 @@ extension Project {
           ),
           sources: ["./DemoApp/Sources/**"],
           resources: ["./DemoApp/Resources/**"],
+          scripts: [.SwiftLintScript],
           dependencies: [.target(name: name)],
           settings: .settings(base: demoAppSetting, configurations: [])
 
