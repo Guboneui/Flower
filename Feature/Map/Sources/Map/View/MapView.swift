@@ -28,6 +28,9 @@ final class MapView: UIView {
 	
 	// MARK: - Metric
 	private enum Metric {
+		static let mapCollectionViewItemSize: CGFloat = 1
+		static let mapCollectionViewGroupWidthSize: CGFloat = 0.9
+		static let mapCollectionViewGroupHeightSize: CGFloat = 1
 		static let mapCollectionViewHorizontalInset: CGFloat = 4
 		static let houseListButtonViewCornerRadius: CGFloat = 17
 		static let houseListButtonViewShadowOpacity: Float = 0.2
@@ -38,9 +41,9 @@ final class MapView: UIView {
 		static let userLocationButtonViewShadowOffset: CGFloat = 1
 		static let userLocationButtonViewShadowRadius: CGFloat = 10
 		static let mapCollectionViewBottomMargin: CGFloat = -106
-		static let mapCollectionViewHeightMargin: CGFloat = 141
-		static let houseListButtonViewWidthMargin: CGFloat = 92
-		static let houseListButtonViewHeightMargin: CGFloat = 33
+		static let mapCollectionViewHeightSize: CGFloat = 141
+		static let houseListButtonViewWidthSize: CGFloat = 92
+		static let houseListButtonViewHeightSize: CGFloat = 33
 		static let houseListButtonViewBottomMargin: CGFloat = -12
 		static let hoouseListButtonImageViewSize: CGFloat = 16
 		static let hoouseListButtonImageViewLeftMargin: CGFloat = 12
@@ -58,18 +61,16 @@ final class MapView: UIView {
 		static let searchViewBottomMargin: CGFloat = 8
 		static let searchButtonViewTopMargin: CGFloat = 6
 		static let searchButtonViewHorizontalInset: CGFloat = 24
-		static let searchButtonViewHeightMargin: CGFloat = 52
+		static let searchButtonViewHeightSize: CGFloat = 52
 		static let searchImageViewSize: CGFloat = 24
 		static let searchImageViewLeftMargin: CGFloat = 18
 		static let searchImageViewVerticalInset: CGFloat = 14
-		static let searchTitleLabelLeftMargin: CGFloat = 8
-		static let searchSubTitleLabelTopMargin: CGFloat = 2
-		static let searchSubTitleLabelLeftMargin: CGFloat = 8
-		static let fillterStackViewTopMargin: CGFloat = 12
-		static let dateFilterButtonViewTopMargin: CGFloat = 12
-		static let dateFilterButtonViewLeftMargin: CGFloat = 8
-		static let peopleFilterButtonViewTopMargin: CGFloat = 12
-		static let peopleFilterButtonViewLeftMargin: CGFloat = 8
+		static let filterScrollViewTopMargin: CGFloat = 12
+		static let searchTitleStackViewSpacing: CGFloat = 2
+		static let filterStackViewSpacing: CGFloat = 8
+		static let searchTitleStackViewLeftMargin: CGFloat = 8
+		static let searchTitleStackViewRightMargin: CGFloat = -18
+		static let filterScrollViewHeightSize: CGFloat = 32
 	}
 	
 	// MARK: - UI Property
@@ -77,15 +78,15 @@ final class MapView: UIView {
 	
 	private let mapCollectionViewLayout: UICollectionViewCompositionalLayout = {
 		let itemSize = NSCollectionLayoutSize(
-			widthDimension: .fractionalWidth(1),
-			heightDimension: .fractionalHeight(1)
+			widthDimension: .fractionalWidth(Metric.mapCollectionViewItemSize),
+			heightDimension: .fractionalHeight(Metric.mapCollectionViewItemSize)
 			)
 		
 		let item = NSCollectionLayoutItem(layoutSize: itemSize)
 		
 		let groupSize = NSCollectionLayoutSize(
-			widthDimension: .fractionalWidth(0.9),
-			heightDimension: .fractionalHeight(1)
+			widthDimension: .fractionalWidth(Metric.mapCollectionViewGroupWidthSize),
+			heightDimension: .fractionalHeight(Metric.mapCollectionViewGroupHeightSize)
 			)
 		let group = NSCollectionLayoutGroup.horizontal(
 			layoutSize: groupSize,
@@ -185,7 +186,7 @@ final class MapView: UIView {
 
 	private let searchTitleStackView: UIStackView = UIStackView().then {
 		$0.axis = .vertical
-		$0.spacing = 2
+		$0.spacing = Metric.searchTitleStackViewSpacing
 	}
 
 	private let searchTitleLabel: UILabel = UILabel().then {
@@ -220,7 +221,7 @@ final class MapView: UIView {
 
 	private let filterStackView: UIStackView = UIStackView().then {
 		$0.axis = .horizontal
-		$0.spacing = 8
+		$0.spacing = Metric.filterStackViewSpacing
 	}
 
 	private let filterScrollView: UIScrollView = UIScrollView().then {
@@ -282,12 +283,12 @@ extension MapView: Viewable {
 		mapCollectionView.snp.makeConstraints { make in
 			make.horizontalEdges.equalToSuperview()
 			make.bottom.equalToSuperview().offset(Metric.mapCollectionViewBottomMargin)
-			make.height.equalTo(Metric.mapCollectionViewHeightMargin)
+			make.height.equalTo(Metric.mapCollectionViewHeightSize)
 		}
 
 		houseListButtonView.snp.makeConstraints { make in
-			make.width.equalTo(Metric.houseListButtonViewWidthMargin)
-			make.height.equalTo(Metric.houseListButtonViewHeightMargin)
+			make.width.equalTo(Metric.houseListButtonViewWidthSize)
+			make.height.equalTo(Metric.houseListButtonViewHeightSize)
 			make.bottom.equalTo(mapCollectionView.snp.top).offset(Metric.houseListButtonViewBottomMargin)
 			make.centerX.equalToSuperview()
 		}
@@ -324,7 +325,7 @@ extension MapView: Viewable {
 		searchButtonView.snp.makeConstraints { make in
 			make.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(Metric.searchButtonViewTopMargin)
 			make.horizontalEdges.equalToSuperview().inset(Metric.searchButtonViewHorizontalInset)
-			make.height.equalTo(Metric.searchButtonViewHeightMargin)
+			make.height.equalTo(Metric.searchButtonViewHeightSize)
 		}
 
 		searchImageView.snp.makeConstraints { make in
@@ -334,17 +335,16 @@ extension MapView: Viewable {
 		}
 
 		searchTitleStackView.snp.makeConstraints { make in
-			make.leading.equalTo(searchImageView.snp.trailing).offset(8)
-			//TODO: trailing
-			make.trailing.equalToSuperview().offset(-18)
+			make.leading.equalTo(searchImageView.snp.trailing).offset(Metric.searchTitleStackViewLeftMargin)
+			make.trailing.equalToSuperview().offset(Metric.searchTitleStackViewRightMargin)
 			make.centerY.equalToSuperview()
 		}
 
 		filterScrollView.snp.makeConstraints { make in
-			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.fillterStackViewTopMargin)
+			make.top.equalTo(searchButtonView.snp.bottom).offset(Metric.filterScrollViewTopMargin)
 			make.leading.equalTo(searchButtonView.snp.leading)
 			make.trailing.equalTo(searchButtonView.snp.trailing)
-			make.height.equalTo(32)
+			make.height.equalTo(Metric.filterScrollViewHeightSize)
 		}
 
 		filterStackView.snp.makeConstraints { make in
