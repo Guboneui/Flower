@@ -7,6 +7,7 @@
 
 import UIKit
 
+import DesignSystem
 import ResourceKit
 
 import NMapsMap
@@ -20,7 +21,7 @@ public final class MapViewController: UIViewController {
 	private var houseListButtonView: UIView { rootView.houseListButtonView }
 	private var houseListLabel: UILabel { rootView.houseListLabel }
 	private var userLocationButtonView: UIView { rootView.userLocationButtonView }
-	
+
 	private var mapViewModel: MapViewModel = MapViewModel()
 	
 	// MARK: LifeCycle
@@ -74,13 +75,13 @@ private extension MapViewController {
 	}
 	
 	func setupBinds() {
-		mapViewModel.collectionViewItems
+		mapViewModel.mapCollectionViewItems
 			.observe(on: MainScheduler.instance)
 			.bind(to: mapCollectionView.rx.items(
 				cellIdentifier: MapCollectionViewCell.identifier,
 				cellType: MapCollectionViewCell.self)
 			) { indexPath, spotInfo, cell in
-				
+
 			}.disposed(by: disposeBag)
 	}
 }

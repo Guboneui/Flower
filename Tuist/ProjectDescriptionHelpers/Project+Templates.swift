@@ -21,7 +21,11 @@ extension Project {
         product: .framework,
         bundleId: "com.boni.guesthouse.\(name)",
         deploymentTargets: .iOS("16.0"),
-        infoPlist: .default,
+        infoPlist: .extendingDefault(with: [
+          "NSAppTransportSecurity": [
+            "NSAllowsArbitraryLoads": true
+          ]
+        ]),
         sources: ["Sources/**"],
         resources: ["Resources/**"],
         scripts: [.SwiftLintScript],
@@ -37,7 +41,11 @@ extension Project {
           product: .unitTests,
           bundleId: "com.boni.guesthouse.\(name)Tests",
           deploymentTargets: .iOS("16.0"),
-          infoPlist: .default,
+          infoPlist: .extendingDefault(with: [
+            "NSAppTransportSecurity": [
+              "NSAllowsArbitraryLoads": true
+            ]
+          ]),
           sources: ["Sources/**"],
           resources: ["Resources/**",],
           scripts: [.SwiftLintScript],
@@ -67,7 +75,11 @@ extension Project {
         product: .staticLibrary,
         bundleId: "com.boni.guesthouse.\(name)",
         deploymentTargets: .iOS("16.0"),
-        infoPlist: .default,
+        infoPlist: .extendingDefault(with: [
+          "NSAppTransportSecurity": [
+            "NSAllowsArbitraryLoads": true
+          ]
+        ]),
         sources: ["Sources/**"],
         scripts: [.SwiftLintScript],
         dependencies: dependencies
@@ -90,7 +102,7 @@ extension Project {
         "CFBundleVersion": "1",
         "UILaunchStoryboardName": "LaunchScreen.storyboard",
         "NSAppTransportSecurity": [
-          "NSAllowsArbitraryLoads": "YES"
+          "NSAllowsArbitraryLoads": true
         ]
       ].merging(
         name == "Map" ? ["NMFClientId": "wyq2xwziaq"] : [:],

@@ -7,10 +7,9 @@ bf9e02c5ae0e6f3353054f93a5e8ccac8f68f544 refs/heads/feature/ci-script
 d8d70493da36f6f52f4b7eace6e3c2d9e57d1870 refs/heads/feature/scheduler
 805da82c4554f4d01fa99883ed4a5eb318790171 refs/heads/feature/update-ci
 14d790df65590b5235d39a664848ab556d985f47 refs/heads/gh-pages
-a16329a2036269fc6fce482c041b2b07a59f3800 refs/heads/master
+b19c3771b1f56df64337748d4ec08d92140606e6 refs/heads/master
 34db3d5579cf55c93a080f19f3c5bc01e4a18a20 refs/heads/revert-135-Ensure-that-the-last-state-can-be-observed-immediately
 30d495987cd3b6fab91f45b9795d1508f400a958 refs/heads/self-triggering-mutation
-bcdba00d56812f13c55b1f016fff59fcac87dc3e refs/heads/task/docc
 a50e0aa068d0728ecb18a2502bc4ee3ed36a265d refs/pull/1/head
 e4ded97745492e9d86e41e0c4144e2778d5067a8 refs/pull/100/head
 a3b2f407f534f347411076a43f6fb90b08922301 refs/pull/102/head
@@ -93,7 +92,6 @@ a0fd024b833797c9c3c85cf295d5aa770c5d4e0c refs/pull/223/head
 562baa30e2fad5598a70b0b9928d7a1c1fb0b102 refs/pull/224/head
 bd298256e72c2a7a2df28e8d0927910cbb6d77e3 refs/pull/225/head
 2aca4ded2459272a7cf1d991597ef8d8bb920d74 refs/pull/226/head
-bcdba00d56812f13c55b1f016fff59fcac87dc3e refs/pull/227/head
 a4790264bc0bee719476662a5107dd69060b916c refs/pull/23/head
 5f4cdd0230bcf1c409b3bdc38a78f8bdf28ede10 refs/pull/24/head
 7a4594dc7cb8fb75d9bb0e57face278f3d755236 refs/pull/24/merge
