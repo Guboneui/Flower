@@ -15,7 +15,7 @@ bf5a2dfd148e05228174630d45e96fe1ec30d1c3	not-for-merge	branch 'feature/docc-docs
 74456f2d852220d73ac8041bbba4729a660862fd	not-for-merge	branch 'feature/websocket-request-typed-throws' of https://github.com/Alamofire/Alamofire
 fcb06f4a952948b6ceff9794ed4f85166ff15baf	not-for-merge	branch 'finalize-websocketrequest' of https://github.com/Alamofire/Alamofire
 747c8db8d57b68d5e35275f10c92d55f982adbd4	not-for-merge	branch 'hotfix' of https://github.com/Alamofire/Alamofire
-9e9943fbdffbe9d5bb0324f16b44873bc11e6dd9	not-for-merge	branch 'master' of https://github.com/Alamofire/Alamofire
+f455c2975872ccd2d9c81594c658af65716e9b9a	not-for-merge	branch 'master' of https://github.com/Alamofire/Alamofire
 f29333cca6e0762bb2d6d08cd65a0c372a06bf4b	not-for-merge	branch 'update/sendability' of https://github.com/Alamofire/Alamofire
 49af2935da64d7e661316d5515888029f46b3f71	not-for-merge	branch 'xcode14.3-sendability' of https://github.com/Alamofire/Alamofire
 7f104e7a0427300bdbb6c54b40f8100600ffb3b9	not-for-merge	'refs/pull/1002/head' of https://github.com/Alamofire/Alamofire
@@ -1126,7 +1126,9 @@ e084deff1c4c308589f1df146a92bba9eb7181ae	not-for-merge	'refs/pull/3840/head' of 
 170debc2dd30e87a8f07362eb914e51fe076cfc6	not-for-merge	'refs/pull/3845/head' of https://github.com/Alamofire/Alamofire
 fa41056282fdfd7c03e51f59439948b66f827fcf	not-for-merge	'refs/pull/3848/head' of https://github.com/Alamofire/Alamofire
 1187765607178c41c63c30a3b1a73ca1092b0d17	not-for-merge	'refs/pull/3854/head' of https://github.com/Alamofire/Alamofire
-9e57360348ffa4ac7dd12a3c815f7a40ba528911	not-for-merge	'refs/pull/3854/merge' of https://github.com/Alamofire/Alamofire
+3d1547e390609918166a2c1b70b387fc26059d91	not-for-merge	'refs/pull/3854/merge' of https://github.com/Alamofire/Alamofire
+aa3a6656507950f6cf0938faa2488be6d11660ae	not-for-merge	'refs/pull/3856/head' of https://github.com/Alamofire/Alamofire
+9c08bbe5a77b0bb2d6069448c14cb2425ed4e1a6	not-for-merge	'refs/pull/3857/head' of https://github.com/Alamofire/Alamofire
 82c90694294f99d942d46676ecdcd4139bc20596	not-for-merge	'refs/pull/387/head' of https://github.com/Alamofire/Alamofire
 c2f04567a5ec31f44265004b535b9e44d3e05c50	not-for-merge	'refs/pull/39/head' of https://github.com/Alamofire/Alamofire
 e4504c9cf0c8b759c2ba1d15c11fe54eba03ea4c	not-for-merge	'refs/pull/39/merge' of https://github.com/Alamofire/Alamofire
@@ -1545,3 +1547,4 @@ bc268c28fb170f494de9e9927c371b8342979ece	not-for-merge	tag '5.7.1' of https://gi
 b2fa556e4e48cbf06cf8c63def138c98f4b811fa	not-for-merge	tag '5.8.0' of https://github.com/Alamofire/Alamofire
 3dc6a42c7727c49bf26508e29b0a0b35f9c7e1ad	not-for-merge	tag '5.8.1' of https://github.com/Alamofire/Alamofire
 723fa5a6c65812aec4a0d7cc432ee198883b6e00	not-for-merge	tag '5.9.0' of https://github.com/Alamofire/Alamofire
+f455c2975872ccd2d9c81594c658af65716e9b9a	not-for-merge	tag '5.9.1' of https://github.com/Alamofire/Alamofire
