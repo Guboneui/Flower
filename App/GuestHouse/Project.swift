@@ -22,7 +22,7 @@ let infoPlist: [String: Plist.Value] = [
   "UILaunchStoryboardName": "LaunchScreen",
   "CFBundleIconName": "AppIcon",
   "NSAppTransportSecurity": [
-    "NSAllowsArbitraryLoads": "YES"
+    "NSAllowsArbitraryLoads": true
   ],
   "NMFClientId": "wyq2xwziaq"
 ]
