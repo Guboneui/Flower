@@ -1,6 +1,7 @@
 import Foundation
 
 import ProjectDescription
+import ProjectDescriptionHelpers
 
 let name: String = "GuestHouse"
 let bundleID: String = "com.boni.guestHouse.user.app"
@@ -53,6 +54,7 @@ let appTarget: Target = .target(
   ),
   sources: ["GuestHouse/Sources/**"],
   resources: ["GuestHouse/Resources/**"],
+  scripts: [.SwiftLintScript],
   dependencies: [
     // MARK: - Domain
     .project(target: "AppDomain", path: .relativeToRoot("Domain/AppDomain")),
