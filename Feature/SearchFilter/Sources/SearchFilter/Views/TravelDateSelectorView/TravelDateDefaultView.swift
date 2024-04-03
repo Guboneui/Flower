@@ -35,13 +35,13 @@ final class TravelDateDefaultView: UIView {
 	private let dateLabel: UILabel = UILabel().then {
 		$0.text = TextSet.dateText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let selectedDateLabel: UILabel = UILabel().then {
 		$0.text = TextSet.selectedDateInitText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private let disposeBag: DisposeBag = .init()

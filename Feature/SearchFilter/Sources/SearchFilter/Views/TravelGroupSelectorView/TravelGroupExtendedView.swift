@@ -44,13 +44,13 @@ final class TravelGroupExtendedView: UIView {
 	private let titleLabel: UILabel = UILabel().then {
 		$0.text = TextSet.titleText
 		$0.font = AppTheme.Font.Bold_20
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private let groupLabel: UILabel = UILabel().then {
 		$0.text = TextSet.groupText
 		$0.font = AppTheme.Font.Bold_14
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let minusButton: UIButton = UIButton().then {
@@ -66,7 +66,7 @@ final class TravelGroupExtendedView: UIView {
 
 	fileprivate let selectingGroupCountLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Bold_16
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 		$0.textAlignment = .center
 
 	}

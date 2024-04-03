@@ -35,13 +35,13 @@ final class TravelGroupDefaultView: UIView {
 	private let travlerLabel: UILabel = UILabel().then {
 		$0.text = TextSet.travlerText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let counterLabel: UILabel = UILabel().then {
 		$0.text = TextSet.counterText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private let disposeBag: DisposeBag = .init()

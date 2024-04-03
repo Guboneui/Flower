@@ -51,12 +51,12 @@ final class TravelDateExtendedView: UIView {
 	private let titleLabel: UILabel = UILabel().then {
 		$0.text = TextSet.titleLabelText
 		$0.font = AppTheme.Font.Bold_20
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private let selectionContainerView: UIView = UIView().then {
 		$0.makeCornerRadius(Metric.selectionContainerViewRadius)
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 	}
 
 	private let selectionView: UIView = UIView().then {
@@ -67,13 +67,13 @@ final class TravelDateExtendedView: UIView {
 	fileprivate let simpleSelectionButton: UIButton = UIButton(type: .system).then {
 		$0.setTitle(TextSet.simpleSelectionButtonTitle, for: .normal)
 		$0.titleLabel?.font = AppTheme.Font.Bold_12
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let periodSelectionButton: UIButton = UIButton(type: .system).then {
 		$0.setTitle(TextSet.periodSelectionButtonTitle, for: .normal)
 		$0.titleLabel?.font = AppTheme.Font.Bold_12
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 
 	private lazy var selectionStackView: UIStackView = UIStackView(
@@ -254,7 +254,7 @@ private extension TravelDateExtendedView {
 			DayLabel.calendarItemModel(
 				invariantViewProperties: .init(
 					font: AppTheme.Font.Bold_12,
-					textColor: AppTheme.Color.black,
+					textColor: AppTheme.Color.neutral900,
 					backgroundColor: AppTheme.Color.white
 				),
 				content: .init(day: day)
@@ -264,7 +264,7 @@ private extension TravelDateExtendedView {
 			MonthLabel.calendarItemModel(
 				invariantViewProperties: .init(
 					font: AppTheme.Font.Bold_14,
-					textColor: AppTheme.Color.black,
+					textColor: AppTheme.Color.neutral900,
 					backgroundColor: AppTheme.Color.white
 				),
 				content: .init(month: month)

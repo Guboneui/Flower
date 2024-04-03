@@ -55,10 +55,10 @@ final class PopularTranvelSpotCollectionViewCell: UICollectionViewCell {
 				borderWidth: Metric.selectedWidth,
 				borderColor: AppTheme.Color.primary
 			)
-			titleLabel.textColor = AppTheme.Color.black
+			titleLabel.textColor = AppTheme.Color.neutral900
 		} else {
 			contentView.makeCornerRadiusWithBorder(Metric.radius)
-			titleLabel.textColor = AppTheme.Color.grey40
+			titleLabel.textColor = AppTheme.Color.neutral300
 		}
 	}
 }

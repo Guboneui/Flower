@@ -38,7 +38,7 @@ final class SearchSpotListView: UIView {
 	)
 
 	private let containerView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 	}
 
 	private let modalView: UIView = UIView().then {

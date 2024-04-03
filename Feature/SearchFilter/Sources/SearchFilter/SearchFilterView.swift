@@ -51,7 +51,7 @@ final class SearchFilterView: UIView {
 	)
 
 	private let containerView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 	}
 
 	fileprivate let travelSpotDefaultView: TravelSpotDefaultView = .init()
@@ -101,7 +101,7 @@ final class SearchFilterView: UIView {
 	}
 
 	private let bottomContainerGuideLineView: UIView = UIView().then {
-		$0.backgroundColor = AppTheme.Color.grey70
+		$0.backgroundColor = AppTheme.Color.neutral100
 	}
 
 	fileprivate let bottomButton: TwoButton = TwoButton(

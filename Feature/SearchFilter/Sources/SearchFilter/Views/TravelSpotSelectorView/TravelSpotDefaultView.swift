@@ -34,12 +34,12 @@ final class TravelSpotDefaultView: UIView {
 	fileprivate let locationLabel: UILabel = UILabel().then {
 		$0.text = TextSet.locationText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let selectedLocationLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private let disposeBag: DisposeBag = .init()

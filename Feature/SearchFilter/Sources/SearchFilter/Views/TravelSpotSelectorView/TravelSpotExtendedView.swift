@@ -50,29 +50,29 @@ final class TravelSpotExtendedView: UIView {
 	private let titleLabel: UILabel = UILabel().then {
 		$0.text = TextSet.titleLabelText
 		$0.font = AppTheme.Font.Bold_20
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let locationSearchContainerButton: UIButton = UIButton().then {
-		$0.backgroundColor = AppTheme.Color.grey90
+		$0.backgroundColor = AppTheme.Color.neutral50
 		$0.makeCornerRadius(Metric.radius)
 	}
 
 	private let searchImageView: UIImageView = UIImageView().then {
 		$0.image = AppTheme.Image.search
-		$0.tintColor = AppTheme.Color.black
+		$0.tintColor = AppTheme.Color.neutral900
 	}
 
 	fileprivate let searchLabel: UILabel = UILabel().then {
 		$0.text = TextSet.searchLabelText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private let popularSearchLabel: UILabel = UILabel().then {
 		$0.text = TextSet.popularSearchLabelText
 		$0.font = AppTheme.Font.Regular_12
-		$0.textColor = AppTheme.Color.black
+		$0.textColor = AppTheme.Color.neutral900
 	}
 
 	private lazy var popularSpotCollectionView: UICollectionView = UICollectionView(
