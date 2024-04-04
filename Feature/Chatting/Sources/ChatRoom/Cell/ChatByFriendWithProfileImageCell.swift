@@ -79,6 +79,18 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
 	}
+	
+	public func messageConfiguration(
+		name: String,
+		message: String,
+		time: String,
+		timeHide: Bool
+	) {
+		self.userNameLabel.text = name
+		self.messageLabel.text = message
+		self.timeLabel.text = time
+		self.timeLabel.isHidden = timeHide
+	}
 }
 
 // MARK: - Viewable METHOD

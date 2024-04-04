@@ -37,14 +37,14 @@ final class ChatByOwnerCell: UICollectionViewCell {
 		$0.makeBorder(borderColor: AppTheme.Color.primary)
 	}
 	
-	public let messageLabel: UILabel = UILabel().then {
+	private let messageLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.neutral900
 		$0.numberOfLines = Metric.messageLabelNumberOfLines
 		$0.lineBreakMode = .byCharWrapping
 	}
 	
-	public let timeLabel: UILabel = UILabel().then {
+	private let timeLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_10
 		$0.textColor = AppTheme.Color.neutral900
 		$0.setContentCompressionResistancePriority(
@@ -62,6 +62,16 @@ final class ChatByOwnerCell: UICollectionViewCell {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	public func messageConfiguration(
+		message: String,
+		time: String,
+		timeHide: Bool
+	) {
+		self.messageLabel.text = message
+		self.timeLabel.text = time
+		self.timeLabel.isHidden = timeHide
 	}
 }
 

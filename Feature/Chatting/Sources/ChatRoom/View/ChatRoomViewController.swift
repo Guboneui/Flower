@@ -81,9 +81,11 @@ private extension ChatRoomViewController {
 						withReuseIdentifier: ChatByOwnerCell.identifier, for: indexPath
 					) as? ChatByOwnerCell else { return ChatByOwnerCell() }
 					
-					cell.messageLabel.text = element.data
-					cell.timeLabel.text = element.convertTime
-					cell.timeLabel.isHidden = element.isHiddenTime
+					cell.messageConfiguration(
+						message: element.data,
+						time: element.convertTime,
+						timeHide: element.isHiddenTime
+					)
 					
 					return cell
 					
@@ -93,9 +95,11 @@ private extension ChatRoomViewController {
 							withReuseIdentifier: ChatByFriendCell.identifier, for: indexPath
 						) as? ChatByFriendCell else { return ChatByFriendCell() }
 						
-						cell.messageLabel.text = element.data
-						cell.timeLabel.text = element.convertTime
-						cell.timeLabel.isHidden = element.isHiddenTime
+						cell.messageConfiguration(
+							message: element.data,
+							time: element.convertTime,
+							timeHide: element.isHiddenTime
+						)
 
 						return cell
 					}
@@ -104,10 +108,12 @@ private extension ChatRoomViewController {
 						withReuseIdentifier: ChatByFriendWithProfileImageCell.identifier, for: indexPath
 					) as? ChatByFriendWithProfileImageCell else { return ChatByFriendWithProfileImageCell() }
 					
-					cell.userNameLabel.text = self.chatRoomViewModel.membersDictionary[element.uid]
-					cell.messageLabel.text = element.data
-					cell.timeLabel.text = element.convertTime
-					cell.timeLabel.isHidden = element.isHiddenTime
+					cell.messageConfiguration(
+						name: self.chatRoomViewModel.membersDictionary[element.uid] ?? "Unknown",
+						message: element.data,
+						time: element.convertTime,
+						timeHide: element.isHiddenTime
+					)
 					
 					return cell
 				}
