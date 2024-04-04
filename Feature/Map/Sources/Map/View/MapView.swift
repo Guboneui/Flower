@@ -59,6 +59,7 @@ final class MapView: UIView {
 		static let searchButtonViewCornerRadius: CGFloat = 12
 		static let searchButtonViewBorder: CGFloat = 1
 		static let searchViewBottomMargin: CGFloat = 8
+		static let searchViewShadowRadius: CGFloat = 10
 		static let searchButtonViewTopMargin: CGFloat = 6
 		static let searchButtonViewHorizontalInset: CGFloat = 24
 		static let searchButtonViewHeightSize: CGFloat = 52
@@ -119,14 +120,15 @@ final class MapView: UIView {
 	private(set) var houseListButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.primary
 		$0.makeCornerRadius(Metric.houseListButtonViewCornerRadius, edge: .all)
-		$0.layer.shadowOpacity = Metric.houseListButtonViewShadowOpacity
-		$0.layer.shadowColor = AppTheme.Color.neutral900.cgColor
-		$0.layer.shadowOffset = CGSize(
-			width: Metric.houseListButtonViewShadowOffset,
-			height: Metric.houseListButtonViewShadowOffset
+		$0.makeShadow(
+			color: AppTheme.Color.neutral900,
+			opacity: Metric.houseListButtonViewShadowOpacity, 
+			offset: CGSize(
+				width: Metric.houseListButtonViewShadowOffset,
+				height: Metric.houseListButtonViewShadowOffset
+			),
+			radius: Metric.houseListButtonViewShadowRadius
 		)
-		$0.layer.shadowRadius = Metric.houseListButtonViewShadowRadius
-		$0.layer.masksToBounds = false
 	}
 	
 	private let houseListButtonImageView: UIImageView = UIImageView().then {
@@ -143,14 +145,15 @@ final class MapView: UIView {
 	private(set) var userLocationButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
 		$0.makeCornerRadius(Metric.userLocationButtonViewCornerRadius, edge: .all)
-		$0.layer.shadowOpacity = Metric.userLocationButtonViewShadowOpacity
-		$0.layer.shadowColor = AppTheme.Color.neutral900.cgColor
-		$0.layer.shadowOffset = CGSize(
-			width: Metric.userLocationButtonViewShadowOffset,
-			height: Metric.userLocationButtonViewShadowOffset
+		$0.makeShadow(
+			color: AppTheme.Color.neutral900,
+			opacity: Metric.userLocationButtonViewShadowOpacity,
+			offset: CGSize(
+				width: Metric.userLocationButtonViewShadowOffset,
+				height: Metric.userLocationButtonViewShadowOffset
+			),
+			radius: Metric.userLocationButtonViewShadowRadius
 		)
-		$0.layer.shadowRadius = Metric.userLocationButtonViewShadowRadius
-		$0.layer.masksToBounds = false
 	}
 	
 	private let userLocationImageView: UIImageView = UIImageView().then {
@@ -161,13 +164,15 @@ final class MapView: UIView {
 	private let searchView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
 		$0.layer.borderWidth = Metric.searchViewBorderWidth
-		$0.layer.masksToBounds = false
-		$0.layer.shadowColor = UIColor.black.cgColor
-		$0.layer.shadowOffset = CGSize(
-			width: Metric.searchViewShadowOffsetWidth,
-			height: Metric.searchViewShadowOffsetHeight
+		$0.makeShadow(
+			color: AppTheme.Color.neutral900,
+			opacity: Metric.searchViewshadowOpacity,
+			offset: CGSize(
+				width: Metric.searchViewShadowOffsetWidth,
+				height: Metric.searchViewShadowOffsetHeight
+			),
+			radius: Metric.searchViewShadowRadius
 		)
-		$0.layer.shadowOpacity = Metric.searchViewshadowOpacity
 	}
 	
 	private let searchButtonView: UIView = UIView().then {
