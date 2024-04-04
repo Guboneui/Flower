@@ -33,12 +33,9 @@ final class MapView: UIView {
 		static let mapCollectionViewGroupHeightSize: CGFloat = 1
 		static let mapCollectionViewHorizontalInset: CGFloat = 4
 		static let houseListButtonViewCornerRadius: CGFloat = 17
-		static let houseListButtonViewShadowOpacity: Float = 0.2
 		static let houseListButtonViewShadowOffset: CGFloat = 2
 		static let houseListButtonViewShadowRadius: CGFloat = 10
 		static let userLocationButtonViewCornerRadius: CGFloat = 20
-		static let userLocationButtonViewShadowOpacity: Float = 0.2
-		static let userLocationButtonViewShadowOffset: CGFloat = 1
 		static let userLocationButtonViewShadowRadius: CGFloat = 10
 		static let mapCollectionViewBottomMargin: CGFloat = -106
 		static let mapCollectionViewHeightSize: CGFloat = 141
@@ -121,8 +118,6 @@ final class MapView: UIView {
 		$0.backgroundColor = AppTheme.Color.primary
 		$0.makeCornerRadius(Metric.houseListButtonViewCornerRadius, edge: .all)
 		$0.makeShadow(
-			color: AppTheme.Color.neutral900,
-			opacity: Metric.houseListButtonViewShadowOpacity, 
 			offset: CGSize(
 				width: Metric.houseListButtonViewShadowOffset,
 				height: Metric.houseListButtonViewShadowOffset
@@ -145,15 +140,7 @@ final class MapView: UIView {
 	private(set) var userLocationButtonView: UIView = UIView().then {
 		$0.backgroundColor = AppTheme.Color.white
 		$0.makeCornerRadius(Metric.userLocationButtonViewCornerRadius, edge: .all)
-		$0.makeShadow(
-			color: AppTheme.Color.neutral900,
-			opacity: Metric.userLocationButtonViewShadowOpacity,
-			offset: CGSize(
-				width: Metric.userLocationButtonViewShadowOffset,
-				height: Metric.userLocationButtonViewShadowOffset
-			),
-			radius: Metric.userLocationButtonViewShadowRadius
-		)
+		$0.makeShadow(radius: Metric.userLocationButtonViewShadowRadius)
 	}
 	
 	private let userLocationImageView: UIImageView = UIImageView().then {
@@ -165,7 +152,6 @@ final class MapView: UIView {
 		$0.backgroundColor = AppTheme.Color.white
 		$0.layer.borderWidth = Metric.searchViewBorderWidth
 		$0.makeShadow(
-			color: AppTheme.Color.neutral900,
 			opacity: Metric.searchViewshadowOpacity,
 			offset: CGSize(
 				width: Metric.searchViewShadowOffsetWidth,
