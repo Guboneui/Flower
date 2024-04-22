@@ -33,11 +33,11 @@ public class ChatSoketIOManager: NSObject {
 		self.socket = self.manager.socket(forNamespace: "/v2/channel")
 
 		socket.on(clientEvent: .connect) { _, _ in
-			print("연결 됐냐?\(self.socket.status.active)")
+			print("Connent Soket\(self.socket.status.active)")
 		}
 		
 		socket.on(clientEvent: .disconnect) { _, _ in
-			print("연결 끊겼냐?\(self.socket.status.active)")
+			print("Disconnent Soket\(self.socket.status.active)")
 		}
 	}
 }

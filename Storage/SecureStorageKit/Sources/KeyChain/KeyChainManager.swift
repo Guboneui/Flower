@@ -76,7 +76,7 @@ public final class KeyChainManager {
 	public static func update(
 		key: KeyChainKey,
 		value: String
-	) -> Bool{
+	) -> Bool {
 		let keychainItem: [String: Any] = [
 			kSecClass: kSecClassGenericPassword
 		] as [String: Any]
@@ -106,7 +106,7 @@ public final class KeyChainManager {
 	@discardableResult
 	public static func delete(
 		key: KeyChainKey
-	) -> Bool{
+	) -> Bool {
 		let keychainItem: [String: Any] = [
 			kSecClass: kSecClassGenericPassword,
 			kSecAttrService: serviceName,
