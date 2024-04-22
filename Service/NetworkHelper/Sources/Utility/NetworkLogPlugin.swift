@@ -53,8 +53,16 @@ extension NetworkLogPlugin {
 		with target: TargetType
 	) {
 		let requestInfo = self.requestInfo(from: target)
-		let errorDescription = error.errorDescription ?? ""
-		let message = "FAILURE: \(requestInfo) \(errorDescription)"
+		guard
+			let responseData = error.response?.data,
+			let networkErrorModel = try? JSONDecoder().decode(NetworkErrorModel.self, from: responseData)
+		else {
+			let errorDescription = error.errorDescription ?? ""
+			let message = "FAILURE: \(requestInfo) \(errorDescription)"
+			print(message)
+			return
+		}
+		let message = "FAILURE: \(requestInfo) \(networkErrorModel)"
 		print(message)
 	}
 	
