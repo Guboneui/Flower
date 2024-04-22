@@ -22,6 +22,19 @@ open class NetworkRepository<API: TargetType> {
 	public func request<Response: Codable>(endPoint: API) -> Single<Response> {
 		provider.rx
 			.request(endPoint)
+			.filterSuccessfulStatusCodes()
 			.map(Response.self)
+			.catch { error in
+				if let moyaError = error as? MoyaError,
+					 let responseData = moyaError.response?.data {
+					do {
+						let customError = try JSONDecoder().decode(NetworkErrorModel.self, from: responseData)
+						throw customError
+					} catch let decodeError {
+						throw decodeError
+					}
+				}
+				throw error
+			}
 	}
 }
