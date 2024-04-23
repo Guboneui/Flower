@@ -8,7 +8,7 @@
 import Foundation
 
 public struct NetworkErrorModel: Codable, Error {
-	let code: String
-	let title: String
-	let message: String
+	public let code: String
+	public let title: String
+	public let message: String
 }
