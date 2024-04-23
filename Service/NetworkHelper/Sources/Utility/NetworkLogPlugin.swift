@@ -24,7 +24,7 @@ public struct NetworkLogPlugin: PluginType {
 		switch result {
 		case let .success(response):
 			printSuccessMessage(from: response, with: target)
-		case let.failure(error):
+		case let .failure(error):
 			printErrorMessage(from: error, with: target)
 		}
 	}
