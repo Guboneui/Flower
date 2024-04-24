@@ -8,6 +8,7 @@
 import Foundation
 
 import LoginEntity
+import NetworkHelper
 
 import RxSwift
 
@@ -27,11 +28,11 @@ public final class LoginUseCase: LoginUseCaseInterface {
 		return loginRepository.fetchEmailConfirmAPI(email: email)
 	}
 	
-	public func fetchEmailCodeSent(email: String) -> Single<EmailAuthResponse> {
+	public func fetchEmailCodeSent(email: String) -> Single<EmptyResponse> {
 		return loginRepository.fetchEmailCodeSentAPI(email: email)
 	}
 	
-	public func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmailCodeResponse> {
+	public func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmptyResponse> {
 		return loginRepository.fetchEmailCodeConfirmAPI(email: email, code: code)
 	}
 	

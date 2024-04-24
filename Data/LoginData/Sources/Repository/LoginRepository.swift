@@ -23,11 +23,11 @@ public final class LoginRepository: NetworkRepository<LoginAPI>, LoginRepository
 		request(endPoint: .emailConfirm(email: email))
 	}
 	
-	public func fetchEmailCodeSentAPI(email: String) -> Single<EmailAuthResponse> {
+	public func fetchEmailCodeSentAPI(email: String) -> Single<EmptyResponse> {
 		request(endPoint: .emailCodeSent(email: email))
 	}
 	
-	public func fetchEmailCodeConfirmAPI(email: String, code: String) -> Single<EmailCodeResponse> {
+	public func fetchEmailCodeConfirmAPI(email: String, code: String) -> Single<EmptyResponse> {
 		request(endPoint: .emailCodeConfirm(email: email, code: code))
 	}
 	
