@@ -14,7 +14,7 @@ import RxSwift
 public protocol LoginRepositoryInterface {
 	func fetchEmailLoginAPI(email: String, password: String) -> Single<EmailLoginResponse>
 	func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse>
-	func fetchEmailAuthAPI(email: String) -> Single<EmailAuthResponse>
-	func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse>
+	func fetchEmailCodeSentAPI(email: String) -> Single<EmailAuthResponse>
+	func fetchEmailCodeConfirmAPI(email: String, code: String) -> Single<EmailCodeResponse>
 	func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse>
 }

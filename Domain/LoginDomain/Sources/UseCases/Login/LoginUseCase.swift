@@ -27,12 +27,12 @@ public final class LoginUseCase: LoginUseCaseInterface {
 		return loginRepository.fetchEmailConfirmAPI(email: email)
 	}
 	
-	public func fetchEmailAuth(email: String) -> Single<EmailAuthResponse> {
-		return loginRepository.fetchEmailAuthAPI(email: email)
+	public func fetchEmailCodeSent(email: String) -> Single<EmailAuthResponse> {
+		return loginRepository.fetchEmailCodeSentAPI(email: email)
 	}
 	
-	public func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse> {
-		return loginRepository.fetchEmailCodeAPI(email: email, code: code)
+	public func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmailCodeResponse> {
+		return loginRepository.fetchEmailCodeConfirmAPI(email: email, code: code)
 	}
 	
 	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
