@@ -19,7 +19,7 @@ public final class LoginRepository: NetworkRepository<LoginAPI>, LoginRepository
 		request(endPoint: .emailLogin(email: email, password: password))
 	}
 	
-	public func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse> {
+	public func fetchEmailConfirmAPI(email: String) -> Single<EmptyResponse> {
 		request(endPoint: .emailConfirm(email: email))
 	}
 	
@@ -49,4 +49,3 @@ public final class LoginRepository: NetworkRepository<LoginAPI>, LoginRepository
 		super.init(networkProvider: NetworkProvider())
 	}
 }
-

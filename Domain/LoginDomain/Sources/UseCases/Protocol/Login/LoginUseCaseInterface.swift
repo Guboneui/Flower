@@ -14,7 +14,7 @@ import RxSwift
 
 public protocol LoginUseCaseInterface {
 	func fetchEmailLogin(email: String, password: String) -> Single<EmailLoginResponse>
-	func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse>
+	func fetchEmailConfirm(email: String) -> Single<EmptyResponse>
 	func fetchEmailCodeSent(email: String) -> Single<EmptyResponse>
 	func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmptyResponse>
 	func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse>
