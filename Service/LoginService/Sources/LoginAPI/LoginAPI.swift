@@ -45,7 +45,7 @@ extension LoginAPI: TargetType {
 			return "/email-code"
 			
 		case .emailConfirm:
-			return "/mail/confirm"
+			return "/verify/email"
 			
 		case .emailCodeConfirm:
 			return "/email-code/confirm"
