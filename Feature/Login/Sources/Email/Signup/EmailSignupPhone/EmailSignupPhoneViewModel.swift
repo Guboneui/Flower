@@ -9,6 +9,7 @@ import Foundation
 
 import LoginDomain
 import LoginEntity
+import NetworkHelper
 
 import RxRelay
 import RxSwift
@@ -42,10 +43,17 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 	// MARK: - PUBLIC METHOD
 	public func fetchEmailSignup() {
 		useCase.fetchEmailSignup(userSignupDTO: userSignupDTO)
-		.subscribe(onSuccess: { [weak self] responseData in
+		.subscribe(onSuccess: { [weak self] _ in
 			guard let self else { return }
 
-			self.isSignupCompletedRelay.accept(responseData.success)
+			self.isSignupCompletedRelay.accept(true)
+		}, onFailure: { error in
+			guard let error = error as? NetworkErrorModel else {
+				print("🚨에러: \(error.localizedDescription)")
+				return
+			}
+			
+			print(error.message)
 		}).disposed(by: disposeBag)
 	}
 }

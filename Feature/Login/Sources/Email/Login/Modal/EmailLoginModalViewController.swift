@@ -101,10 +101,10 @@ private extension EmailLoginModalViewController {
 			let userSignupDTO = UserSignupDTO(
 				email: "",
 				password: "",
-				userName: "",
-				userNickName: "",
-				birth: "",
-				profileImg: Data(),
+				name: "",
+				nickname: "조",
+				birth: "1000-10-10",
+				avatar: Data(),
 				phoneNum: ""
 			)
 			let viewModel = EmailSignupIDViewModel(useCase: useCase, userSignupDTO: userSignupDTO)

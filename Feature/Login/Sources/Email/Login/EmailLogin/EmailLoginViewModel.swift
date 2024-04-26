@@ -9,6 +9,8 @@ import Foundation
 
 import LoginDomain
 import LoginEntity
+import NetworkHelper
+import SecureStorageKit
 
 import RxRelay
 import RxSwift
@@ -32,11 +34,11 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 	public var isEmailEntered: BehaviorRelay<Bool> = .init(value: false)
 	public var isPasswordEntered: BehaviorRelay<Bool> = .init(value: false)
 	public var isLoginCompleted: BehaviorRelay<Bool?> = .init(value: nil)
-
+	
 	// MARK: - PRIVATE PROPERTY
 	private let loginUseCase: LoginUseCaseInterface
 	private var disposeBag: DisposeBag
-
+	
 	// MARK: - INITIALIZE
 	public init(useCase: LoginUseCaseInterface) {
 		self.loginUseCase = useCase
@@ -48,11 +50,18 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 		loginUseCase.fetchEmailLogin(
 			email: emailRelay.value,
 			password: passwordRelay.value
-		)
-			.subscribe(onSuccess: { [weak self] responseData in
-				guard let self else { return }
-				
-				self.isLoginCompleted.accept(responseData.success)
-			}).disposed(by: disposeBag)
+		).subscribe(onSuccess: { [weak self] responseData in
+			guard let self else { return }
+			
+			KeyChainManager.create(key: .accessToken, value: responseData.accessToken)
+			self.isLoginCompleted.accept(true)
+		}, onFailure: { error in
+			guard let error = error as? NetworkErrorModel else {
+				print("🚨에러: \(error.localizedDescription)")
+				return
+			}
+			
+			print(error.message)
+		}).disposed(by: disposeBag)
 	}
 }
