@@ -15,13 +15,13 @@ public enum LoginAPI {
 	case emailConfirm(email: String)
 	case emailCodeConfirm(email: String, code: String)
 	case emailSignup(
-		email: String?,
-		password: String?,
-		name: String?,
-		nickname: String?,
-		birth: String?,
+		email: String,
+		password: String,
+		name: String,
+		nickname: String,
+		birth: String,
 		avatar: Data?,
-		phoneNum: String?
+		phoneNum: String
 	)
 }
 
@@ -112,12 +112,12 @@ extension LoginAPI: TargetType {
 			var multipartFormData: [MultipartFormData] = []
 			
 			let parameters: [String: Any] = [
-				"email": email ?? "",
-				"password": password ?? "",
-				"name": name ?? "",
-				"nickname": nickname ?? "",
-				"birth": birth ?? "",
-				"phoneNum": phoneNum ?? ""
+				"email": email,
+				"password": password,
+				"name": name,
+				"nickname": nickname,
+				"birth": birth,
+				"phoneNum": phoneNum
 			]
 			
 			for (key, value) in parameters {
@@ -130,7 +130,7 @@ extension LoginAPI: TargetType {
 				MultipartFormData(
 					provider: .data(avatar ?? Data()),
 					name: "profileImg",
-					fileName: "\(name ?? "UnKnown").jpeg",
+					fileName: "\(name).jpeg",
 					mimeType: "image/jpeg"
 				)
 			)
