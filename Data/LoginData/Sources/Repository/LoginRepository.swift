@@ -31,7 +31,7 @@ public final class LoginRepository: NetworkRepository<LoginAPI>, LoginRepository
 		request(endPoint: .emailCodeConfirm(email: email, code: code))
 	}
 	
-	public func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
+	public func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse> {
 		request(
 			endPoint: .emailSignup(
 				email: userSignupDTO.email,
