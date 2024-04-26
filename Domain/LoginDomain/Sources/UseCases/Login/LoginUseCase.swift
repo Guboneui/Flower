@@ -36,7 +36,7 @@ public final class LoginUseCase: LoginUseCaseInterface {
 		return loginRepository.fetchEmailCodeConfirmAPI(email: email, code: code)
 	}
 	
-	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
+	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse> {
 		return loginRepository.fetchEmailSignupAPI(userSignupDTO: userSignupDTO)
 	}
 }

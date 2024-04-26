@@ -17,5 +17,5 @@ public protocol LoginRepositoryInterface {
 	func fetchEmailConfirmAPI(email: String) -> Single<EmptyResponse>
 	func fetchEmailCodeSentAPI(email: String) -> Single<EmptyResponse>
 	func fetchEmailCodeConfirmAPI(email: String, code: String) -> Single<EmptyResponse>
-	func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse>
+	func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse>
 }

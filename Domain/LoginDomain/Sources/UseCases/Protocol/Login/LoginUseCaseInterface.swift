@@ -17,5 +17,5 @@ public protocol LoginUseCaseInterface {
 	func fetchEmailConfirm(email: String) -> Single<EmptyResponse>
 	func fetchEmailCodeSent(email: String) -> Single<EmptyResponse>
 	func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmptyResponse>
-	func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse>
+	func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse>
 }
