@@ -98,7 +98,7 @@ public class DefaultTextField: UIView {
 	}
 	
 	private enum ColorSet {
-		static let baseBackgroundColor: UIColor = AppTheme.Color.neutral100
+		static let baseBackgroundColor: UIColor = AppTheme.Color.neutral50
 		static let textFieldColor: UIColor = AppTheme.Color.neutral900
 	}
 	
