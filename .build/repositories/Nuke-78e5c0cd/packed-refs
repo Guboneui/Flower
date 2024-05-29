@@ -1,7 +1,5 @@
 # pack-refs with: peeled fully-peeled sorted 
 d658f302f56abfd7a163e3b5f44de39b780a64c2 refs/heads/main
-2f053f5d3332e9690d20ff73f212c6e6bcf01a05 refs/heads/temp-xcode-15
-f8e1035e887fe4fe50b0a2c2759527d261645062 refs/heads/xcode-15
 b2eb9af6a4c8bb55ae58ea3eb956d4a31fbb3605 refs/pull/1/head
 52c3f6f0c15b89c2306a02e4708663144b754a70 refs/pull/1/merge
 a315c9a392fb19ee88a2013779624356318ecf2e refs/pull/100/head

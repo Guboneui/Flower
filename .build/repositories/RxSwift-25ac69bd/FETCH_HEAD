@@ -3,9 +3,10 @@
 b18c2272057b96b419a30cac5a7c594a31b9c4e1	not-for-merge	branch 'alias' of https://github.com/ReactiveX/RxSwift
 65a22bef2e55df93a536b5d4b0734300240cafe7	not-for-merge	branch 'apidocs' of https://github.com/ReactiveX/RxSwift
 ce1983353c92943810ce9d3f7c74fb34f734a721	not-for-merge	branch 'debugging-concurrent-scheduler-hang' of https://github.com/ReactiveX/RxSwift
+5ecce7fddf674c77cdf96a80cc36546936c3d73e	not-for-merge	branch 'dependabot/bundler/rexml-3.2.8' of https://github.com/ReactiveX/RxSwift
 1901c7e752e721418e86ddedb0522ee80b76be76	not-for-merge	branch 'distinctUntilChanged-kp' of https://github.com/ReactiveX/RxSwift
 7ba458080f9c9aa416b0873e547e82967ef0b29b	not-for-merge	branch 'extension-safety-flag' of https://github.com/ReactiveX/RxSwift
-92c47541ac02ae32c88dbaebd412063caace6f45	not-for-merge	branch 'main' of https://github.com/ReactiveX/RxSwift
+e2b0aa8dbbafe1552d3cfbc9b8c8087615762f0c	not-for-merge	branch 'main' of https://github.com/ReactiveX/RxSwift
 0bab5e2545b0461718fa747db815236d12c2f56a	not-for-merge	branch 'omit-return' of https://github.com/ReactiveX/RxSwift
 f9fe8c2e8c9b93fc4d551956de04e46d882e6124	not-for-merge	branch 'reactive-lookup-test' of https://github.com/ReactiveX/RxSwift
 787ec313b9dd1e404be4851d96bf715faed70498	not-for-merge	branch 'readme' of https://github.com/ReactiveX/RxSwift
@@ -1001,7 +1002,7 @@ e12e66e86a5d2d90f938460a573a67e2b3cef4a2	not-for-merge	'refs/pull/2425/head' of 
 8a9b5a5724db9a002d5dfdca33ed217558c13e94	not-for-merge	'refs/pull/2427/head' of https://github.com/ReactiveX/RxSwift
 a9d445c2cdf7375ce7427b9745f884497b724312	not-for-merge	'refs/pull/243/head' of https://github.com/ReactiveX/RxSwift
 8ede207aa9072c6c72f305c5fc1d438d959daa8c	not-for-merge	'refs/pull/2430/head' of https://github.com/ReactiveX/RxSwift
-0bea702dcdede71e1ac40933ec4bc01866caad98	not-for-merge	'refs/pull/2430/merge' of https://github.com/ReactiveX/RxSwift
+02e9d20b7c93b52d5b9f1d24f2d3109d92aca95d	not-for-merge	'refs/pull/2430/merge' of https://github.com/ReactiveX/RxSwift
 2827587d482be776d730b029286ce426eec46d9c	not-for-merge	'refs/pull/2431/head' of https://github.com/ReactiveX/RxSwift
 fcd513e3257bf394962508298f687161db96af92	not-for-merge	'refs/pull/2436/head' of https://github.com/ReactiveX/RxSwift
 afd6b11f0ce66a7d8b4da51033ccad85af770660	not-for-merge	'refs/pull/2437/head' of https://github.com/ReactiveX/RxSwift
@@ -1030,7 +1031,7 @@ d770a927323c5dd36a62e9d870bcf56074786d3b	not-for-merge	'refs/pull/2478/head' of 
 0955d7ee3d890c290a3fd30b3c10c7ca7bdbf174	not-for-merge	'refs/pull/2481/head' of https://github.com/ReactiveX/RxSwift
 08b3ae0c9765493e729df38b143a4e8382977cef	not-for-merge	'refs/pull/2482/head' of https://github.com/ReactiveX/RxSwift
 74ec84b546238f8fd0de5e5d0938de9e537e4790	not-for-merge	'refs/pull/2485/head' of https://github.com/ReactiveX/RxSwift
-1b41f721a46f74188c52f57d22854e03ec29afe5	not-for-merge	'refs/pull/2485/merge' of https://github.com/ReactiveX/RxSwift
+b9e3e0728a6c345da0d5e05929188835720e7d8c	not-for-merge	'refs/pull/2485/merge' of https://github.com/ReactiveX/RxSwift
 72183a8131fe77c4e35d7dc6b5146603be3ec58a	not-for-merge	'refs/pull/2486/head' of https://github.com/ReactiveX/RxSwift
 de80a28b817011a020738cb58f4039774a5f7f1f	not-for-merge	'refs/pull/2487/head' of https://github.com/ReactiveX/RxSwift
 d4e9c58ae7031ff6848c2b2095617ec774cfdae6	not-for-merge	'refs/pull/2488/head' of https://github.com/ReactiveX/RxSwift
@@ -1040,7 +1041,6 @@ d4e9c58ae7031ff6848c2b2095617ec774cfdae6	not-for-merge	'refs/pull/2488/head' of 
 be2a51cb9c038e7ec8d0f41eeb653fd1acfac059	not-for-merge	'refs/pull/25/head' of https://github.com/ReactiveX/RxSwift
 ae916d11e818fdad082301fa660f84cd12e4ece8	not-for-merge	'refs/pull/2505/head' of https://github.com/ReactiveX/RxSwift
 bb10116819d02cbf6bea0be6ee2a5cf2f249369f	not-for-merge	'refs/pull/2506/head' of https://github.com/ReactiveX/RxSwift
-e2d8c373b35cc276879c1ac1b7786404de1e5f2f	not-for-merge	'refs/pull/2506/merge' of https://github.com/ReactiveX/RxSwift
 625655cc508ba27b40a7e5496127481bff046756	not-for-merge	'refs/pull/2508/head' of https://github.com/ReactiveX/RxSwift
 00b0549f428b4578528037d2ea61b17aff0c655e	not-for-merge	'refs/pull/2509/head' of https://github.com/ReactiveX/RxSwift
 efdc77471c065cb3bfe17a7304c6d232ff73c49e	not-for-merge	'refs/pull/2512/head' of https://github.com/ReactiveX/RxSwift
@@ -1054,61 +1054,65 @@ e6f79b510f9acbb2ce0ea8e51acc30845076bf56	not-for-merge	'refs/pull/252/head' of h
 81579154e326407a1af655b545192590db6ea7b5	not-for-merge	'refs/pull/2520/head' of https://github.com/ReactiveX/RxSwift
 e2ef7458f4fa0860a5fef5f49bc9210867c874cb	not-for-merge	'refs/pull/2521/head' of https://github.com/ReactiveX/RxSwift
 00d6467f47b02f8237ce566b9fd6a658a5767166	not-for-merge	'refs/pull/2526/head' of https://github.com/ReactiveX/RxSwift
-8c3d94874453527bbefb3a24b6deaf34d4a075ff	not-for-merge	'refs/pull/2526/merge' of https://github.com/ReactiveX/RxSwift
+ba1aae5fb72226a9a8eefc2ec32c67b51eb77641	not-for-merge	'refs/pull/2526/merge' of https://github.com/ReactiveX/RxSwift
 3608adc027eb7c8ce2d90564d0bbdbc59e4b4d9d	not-for-merge	'refs/pull/2527/head' of https://github.com/ReactiveX/RxSwift
-97a895cda3bca6affcee10c75c6b3f389724e766	not-for-merge	'refs/pull/2527/merge' of https://github.com/ReactiveX/RxSwift
 6ffa13c6697525b0b47dce5d8937998d8ec6935c	not-for-merge	'refs/pull/2531/head' of https://github.com/ReactiveX/RxSwift
 5693f3e0383535f4b5ec05dcc4d6719b4358c9d0	not-for-merge	'refs/pull/2533/head' of https://github.com/ReactiveX/RxSwift
 5e55326ba710bf418b6dbff205c580656e356fb4	not-for-merge	'refs/pull/2534/head' of https://github.com/ReactiveX/RxSwift
 574e7522f1de0b787bc4d308321be9bff9e44fd6	not-for-merge	'refs/pull/2535/head' of https://github.com/ReactiveX/RxSwift
 c9d1604b1053300d8e06e82dac4f8e7ddc19d47e	not-for-merge	'refs/pull/2536/head' of https://github.com/ReactiveX/RxSwift
-5ace0dd639733a1c4a0383e731aedcabfd98d0ed	not-for-merge	'refs/pull/2536/merge' of https://github.com/ReactiveX/RxSwift
+154f7d734be87646c48961ef5bcaab7948fd7b18	not-for-merge	'refs/pull/2536/merge' of https://github.com/ReactiveX/RxSwift
 c0aafa53c52a22f3c64473ab6ec9d6f6618afc73	not-for-merge	'refs/pull/2537/head' of https://github.com/ReactiveX/RxSwift
 e159464dcb97ef25060eb812f24e79ed9aa4a90c	not-for-merge	'refs/pull/2541/head' of https://github.com/ReactiveX/RxSwift
-35f94304ef80c783205c91263549e9eae4160556	not-for-merge	'refs/pull/2541/merge' of https://github.com/ReactiveX/RxSwift
 a408a1fd75fb1e67963719c5f754d22ac324300e	not-for-merge	'refs/pull/2543/head' of https://github.com/ReactiveX/RxSwift
 184572c601710cb67bcf09552b7eb6b2e0e547e0	not-for-merge	'refs/pull/2544/head' of https://github.com/ReactiveX/RxSwift
 83601ad8bfda304125a2f77aa4637ffb61d8bf1a	not-for-merge	'refs/pull/2546/head' of https://github.com/ReactiveX/RxSwift
 1d92ba310ea5c84e27fce5094a1c1821c55df12f	not-for-merge	'refs/pull/2549/head' of https://github.com/ReactiveX/RxSwift
-828c728c05bca132decf76964938dea40a716c7a	not-for-merge	'refs/pull/2549/merge' of https://github.com/ReactiveX/RxSwift
+bd5ef713020e5bf348a31c94a471989f8c034a53	not-for-merge	'refs/pull/2549/merge' of https://github.com/ReactiveX/RxSwift
 2431bbcdbfb1dba4f2a4f70a2bca9a22e57ddee1	not-for-merge	'refs/pull/255/head' of https://github.com/ReactiveX/RxSwift
 c10eb7b9cd641ab9d5a456501eacb42335cbfcde	not-for-merge	'refs/pull/2552/head' of https://github.com/ReactiveX/RxSwift
-61d9a716e675baaf3fdeb2c91396d7986410229d	not-for-merge	'refs/pull/2552/merge' of https://github.com/ReactiveX/RxSwift
+e35eb67d7fde5fe7276af3fb8a89e2f499d1f48c	not-for-merge	'refs/pull/2552/merge' of https://github.com/ReactiveX/RxSwift
 ec75776c64a202d26a0fe2739dd7775351ad98c3	not-for-merge	'refs/pull/2555/head' of https://github.com/ReactiveX/RxSwift
-b1e86572bbd37e832112e9fbbce66f4aee45e525	not-for-merge	'refs/pull/2555/merge' of https://github.com/ReactiveX/RxSwift
 1679ecf8077b00ba6c4d46b6f622f3e63df9bc0e	not-for-merge	'refs/pull/2556/head' of https://github.com/ReactiveX/RxSwift
-f545aab3fa4073851d85f602d4c30c573f8829c5	not-for-merge	'refs/pull/2556/merge' of https://github.com/ReactiveX/RxSwift
 ff251c6cbfb1a8b302bc0c673982fa82ce7034d2	not-for-merge	'refs/pull/2557/head' of https://github.com/ReactiveX/RxSwift
-603b710b4375728d0b2aa35469fcdc4fec950682	not-for-merge	'refs/pull/2557/merge' of https://github.com/ReactiveX/RxSwift
+972b9fd1406e1b0f2c1fa465d5ab52960facbe2f	not-for-merge	'refs/pull/2557/merge' of https://github.com/ReactiveX/RxSwift
 f589dcfa2bbf3dfaf418084d98a56fda68a4e170	not-for-merge	'refs/pull/2559/head' of https://github.com/ReactiveX/RxSwift
 f5cfa32d85aa4aede642e236aaa1a07d89c087c5	not-for-merge	'refs/pull/2560/head' of https://github.com/ReactiveX/RxSwift
 15f25dc866e6983fe8f1da48336116b224b91c1b	not-for-merge	'refs/pull/2562/head' of https://github.com/ReactiveX/RxSwift
 4259ebef9b14dea113e0682e831862a86ee37b3f	not-for-merge	'refs/pull/2564/head' of https://github.com/ReactiveX/RxSwift
-327014da6a431108437ab1f8d19a0a8bfdbe7260	not-for-merge	'refs/pull/2564/merge' of https://github.com/ReactiveX/RxSwift
 929ab08c6ceaf688b9a21297c825beae1be87e7e	not-for-merge	'refs/pull/2566/head' of https://github.com/ReactiveX/RxSwift
-265fb08e006ca6a0d4dcf89f1edb691e145c3c25	not-for-merge	'refs/pull/2566/merge' of https://github.com/ReactiveX/RxSwift
 5a2807612f09df3a96e5c5865acd87b78cfc2e57	not-for-merge	'refs/pull/2568/head' of https://github.com/ReactiveX/RxSwift
-52cc2440aad33f897904aea8d011fb152735b7b7	not-for-merge	'refs/pull/2568/merge' of https://github.com/ReactiveX/RxSwift
 18efe76218c11c7f14731747c1559a361722ed37	not-for-merge	'refs/pull/257/head' of https://github.com/ReactiveX/RxSwift
 564777390694281a9e325c028068e0d377757bf2	not-for-merge	'refs/pull/257/merge' of https://github.com/ReactiveX/RxSwift
 f18b1bf97148ba17b66adbe20df00352ecbe8157	not-for-merge	'refs/pull/2570/head' of https://github.com/ReactiveX/RxSwift
-d6edcc4eff6151a32543dd8117ef3ab82379db9b	not-for-merge	'refs/pull/2570/merge' of https://github.com/ReactiveX/RxSwift
 d862b0385c84393811255c921938721dba69aca7	not-for-merge	'refs/pull/2572/head' of https://github.com/ReactiveX/RxSwift
 57f706eca7172c0771b96b35250745a9b6800ca9	not-for-merge	'refs/pull/2573/head' of https://github.com/ReactiveX/RxSwift
-e551c3bb71d9da40be30ac7be9c727b02d8d4942	not-for-merge	'refs/pull/2573/merge' of https://github.com/ReactiveX/RxSwift
 a25ac69cdcf0cd792db1ea0811d26a9e434532e7	not-for-merge	'refs/pull/2575/head' of https://github.com/ReactiveX/RxSwift
 d07fd05596f68c23585ad1328f01f739753c5883	not-for-merge	'refs/pull/2576/head' of https://github.com/ReactiveX/RxSwift
-20d1fc7a9ffc0760f6c96f5f6dc359969dcf18f3	not-for-merge	'refs/pull/2576/merge' of https://github.com/ReactiveX/RxSwift
-3f18372835665e2acbbab09ec760c348179b2e29	not-for-merge	'refs/pull/2577/head' of https://github.com/ReactiveX/RxSwift
-40445a5c0db45bdeb902863df91758f3cd0ca82f	not-for-merge	'refs/pull/2577/merge' of https://github.com/ReactiveX/RxSwift
+58ab98e9f46d085094fb036fb0fae9c3ad61c5a1	not-for-merge	'refs/pull/2576/merge' of https://github.com/ReactiveX/RxSwift
+d758d5fc62cae410300e89faf3378d2f62ab3777	not-for-merge	'refs/pull/2577/head' of https://github.com/ReactiveX/RxSwift
+d315029cc25ca8c12d0a6464738ad5aeb2f8639c	not-for-merge	'refs/pull/2577/merge' of https://github.com/ReactiveX/RxSwift
 a269a42a38b185c6678561415e3ae418e30e0001	not-for-merge	'refs/pull/258/head' of https://github.com/ReactiveX/RxSwift
 fe2f4553bf1fd882712272970601d55a19f3de17	not-for-merge	'refs/pull/2584/head' of https://github.com/ReactiveX/RxSwift
-bf4f724a74f3a75337e49c01562f4cc888e993fe	not-for-merge	'refs/pull/2584/merge' of https://github.com/ReactiveX/RxSwift
 f8465ac300922356f11b571055d8a8498167773e	not-for-merge	'refs/pull/2587/head' of https://github.com/ReactiveX/RxSwift
+3d4012ac3395fc975ad26fbb1e3d0f72a0f34647	not-for-merge	'refs/pull/2588/head' of https://github.com/ReactiveX/RxSwift
+0debd812fbf999b9d7be671cfeb92fd004622b60	not-for-merge	'refs/pull/2589/head' of https://github.com/ReactiveX/RxSwift
 a35b06b066ef4733e6db838f71984f0fca883cfc	not-for-merge	'refs/pull/259/head' of https://github.com/ReactiveX/RxSwift
 0ed7f1f5ccd333290028ba2f88bba8790ed0d149	not-for-merge	'refs/pull/259/merge' of https://github.com/ReactiveX/RxSwift
+0e81138fb0119489053aa2956b5f3d1651bc3bdb	not-for-merge	'refs/pull/2592/head' of https://github.com/ReactiveX/RxSwift
+9b6edb9261af1ed2613ef4e70982e0d94bcc96ce	not-for-merge	'refs/pull/2596/head' of https://github.com/ReactiveX/RxSwift
+15337cab32be9f2edd03be302861cadab7e5e97d	not-for-merge	'refs/pull/2596/merge' of https://github.com/ReactiveX/RxSwift
 ab47a23a78004c17d80a4fb5ad531e76a29b7b49	not-for-merge	'refs/pull/26/head' of https://github.com/ReactiveX/RxSwift
 a35b06b066ef4733e6db838f71984f0fca883cfc	not-for-merge	'refs/pull/260/head' of https://github.com/ReactiveX/RxSwift
+6361bf7f22cb2ad77d32f7f3682418f912122290	not-for-merge	'refs/pull/2600/head' of https://github.com/ReactiveX/RxSwift
+a99edbfa653c0c37e93bf28c024f903056a675a3	not-for-merge	'refs/pull/2600/merge' of https://github.com/ReactiveX/RxSwift
+5ecce7fddf674c77cdf96a80cc36546936c3d73e	not-for-merge	'refs/pull/2602/head' of https://github.com/ReactiveX/RxSwift
+7b5efc29215206458ebb616744b4ba0f1a5327e1	not-for-merge	'refs/pull/2602/merge' of https://github.com/ReactiveX/RxSwift
+4be65d4e8469764d846799eb3b77cb58b1cb0b2c	not-for-merge	'refs/pull/2603/head' of https://github.com/ReactiveX/RxSwift
+8e84560aa3874eb90f0a29f4a45018a80ec3d199	not-for-merge	'refs/pull/2603/merge' of https://github.com/ReactiveX/RxSwift
+e39bcb965ecd29812520c0df5de8094e74155c9c	not-for-merge	'refs/pull/2604/head' of https://github.com/ReactiveX/RxSwift
+e70a4d0fdba7fd59c2b947180543330fa387100b	not-for-merge	'refs/pull/2604/merge' of https://github.com/ReactiveX/RxSwift
+2d8b71e51e913e28625d4ac3b65116783d7fe3ed	not-for-merge	'refs/pull/2605/head' of https://github.com/ReactiveX/RxSwift
 120e1f85e90e12e39b5d4ba0c0e60f3f80891ca2	not-for-merge	'refs/pull/261/head' of https://github.com/ReactiveX/RxSwift
 34f9e092f9c1c4d9ce5ecc35116e7d9ff24dd19f	not-for-merge	'refs/pull/262/head' of https://github.com/ReactiveX/RxSwift
 ac954df089f06d5fb59f6500bd3ff788737b4fe0	not-for-merge	'refs/pull/263/head' of https://github.com/ReactiveX/RxSwift
@@ -1766,3 +1770,5 @@ a82518285848456f404abba1919120161465ea9f	not-for-merge	tag '6.0.0-rc.1' of https
 7c17a6ccca06b5c107cfa4284e634562ddaf5951	not-for-merge	tag '6.2.0' of https://github.com/ReactiveX/RxSwift
 b4307ba0b6425c0ba4178e138799946c3da594f8	not-for-merge	tag '6.5.0' of https://github.com/ReactiveX/RxSwift
 9dcaa4b333db437b0fbfaf453fad29069044a8b4	not-for-merge	tag '6.6.0' of https://github.com/ReactiveX/RxSwift
+5949cbd3d4f3f97968bb40b6cd232f8315c6341c	not-for-merge	tag '6.7.0' of https://github.com/ReactiveX/RxSwift
+b06a8c8596e4c3e8e7788e08e720e3248563ce6a	not-for-merge	tag '6.7.1' of https://github.com/ReactiveX/RxSwift

@@ -7,6 +7,7 @@ b5dbc38f7318aa98ff3e8e0454459b4496118cb4	not-for-merge	branch 'circle-workflow' 
 43edfd5a55a645288b8862c6b7d8de6e3322594d	not-for-merge	branch 'circleci-update-resource-class' of https://github.com/Moya/Moya
 b8088175d87ae1aae5ba44df3e292f580825fb8b	not-for-merge	branch 'danger_swift' of https://github.com/Moya/Moya
 5583f9aafd9bac9b2a00c751da55c8c1230b16f0	not-for-merge	branch 'dannymout-patch-1' of https://github.com/Moya/Moya
+a83080f885a572dcacd511422441518fce47a7dd	not-for-merge	branch 'dependabot/bundler/rexml-3.2.8' of https://github.com/Moya/Moya
 4660d0effed90de185e00fb72ad451e499ad5d10	not-for-merge	branch 'development' of https://github.com/Moya/Moya
 10dc50dc2a51cce7117d3477a3e7f15ebf68da30	not-for-merge	branch 'enhancement/dangerfile' of https://github.com/Moya/Moya
 ffe9d2b104d67e4ff2e5a435a61853555e924879	not-for-merge	branch 'enhancement/stubbing' of https://github.com/Moya/Moya
@@ -664,6 +665,8 @@ d1bb90afc679249d65ff5d93a3e06edca6a0a8b0	not-for-merge	'refs/pull/2336/head' of 
 dfa9cf4a4f0f38e0a1b09bf427bf52243a0f2bbb	not-for-merge	'refs/pull/2344/head' of https://github.com/Moya/Moya
 273f57777a73b46fc76503a74ac5a5af71f3dd90	not-for-merge	'refs/pull/2344/merge' of https://github.com/Moya/Moya
 c97809e55a0092e6e65d4cdde3c8779bdeed611d	not-for-merge	'refs/pull/2345/head' of https://github.com/Moya/Moya
+a83080f885a572dcacd511422441518fce47a7dd	not-for-merge	'refs/pull/2347/head' of https://github.com/Moya/Moya
+451a4889a2bb856fec0c68496017c7a36c8e5f32	not-for-merge	'refs/pull/2347/merge' of https://github.com/Moya/Moya
 e1bbea82a914f79741ff9cd4a0c6779bdb2456ac	not-for-merge	'refs/pull/235/head' of https://github.com/Moya/Moya
 6256a387855785ed8a7e5e03ff4799e323915917	not-for-merge	'refs/pull/235/merge' of https://github.com/Moya/Moya
 3d6ed4460b9a0d77a3d326389e9e5729b17fc2ec	not-for-merge	'refs/pull/237/head' of https://github.com/Moya/Moya

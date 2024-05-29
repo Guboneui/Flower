@@ -252,7 +252,6 @@ a6064749317ca0d5a9c2d1390ad463d7136b8851	not-for-merge	'refs/pull/756/head' of h
 2b199468e7fd2f87d1d84886fbbc56f125d13dca	not-for-merge	'refs/pull/759/head' of https://github.com/SnapKit/SnapKit
 636e80effa93ebc463c38e3f8a153673af3be139	not-for-merge	'refs/pull/76/head' of https://github.com/SnapKit/SnapKit
 fc945330c6218846839d2f92e7573dc656453e0f	not-for-merge	'refs/pull/760/head' of https://github.com/SnapKit/SnapKit
-eb17c6529430fbd1bb68ade141af1fb6682cca98	not-for-merge	'refs/pull/760/merge' of https://github.com/SnapKit/SnapKit
 6a3a57a859a4da1536bb8ef9b36e0df7582de7ad	not-for-merge	'refs/pull/762/head' of https://github.com/SnapKit/SnapKit
 0159ad71d960499a1a6ba917474b33c5c3cf3a3b	not-for-merge	'refs/pull/763/head' of https://github.com/SnapKit/SnapKit
 0e39c0f54744423e67b9b25d0b2dcea00494fb9b	not-for-merge	'refs/pull/777/head' of https://github.com/SnapKit/SnapKit
@@ -269,6 +268,8 @@ ff8dc07d1373420ffe4f9f2988b3501452205cde	not-for-merge	'refs/pull/793/head' of h
 8c9fdd4d3a668e8b61e63b31f3a48cc32e1f0472	not-for-merge	'refs/pull/80/head' of https://github.com/SnapKit/SnapKit
 4b7e3b5e5140a901f3f2881ee3409f2c900423ca	not-for-merge	'refs/pull/805/head' of https://github.com/SnapKit/SnapKit
 cbb713ced02a31da9f0f836257a88764be8cb226	not-for-merge	'refs/pull/805/merge' of https://github.com/SnapKit/SnapKit
+a0d50ee448d2c3b0b053b67b2b1ae9385ce09c48	not-for-merge	'refs/pull/808/head' of https://github.com/SnapKit/SnapKit
+2966ba2cc1065299ef882cba33cadd9e6341cf05	not-for-merge	'refs/pull/808/merge' of https://github.com/SnapKit/SnapKit
 9c321612c07e66e0c805b34e9f57fc59af77b083	not-for-merge	'refs/pull/88/head' of https://github.com/SnapKit/SnapKit
 ba2ace9522fa2cbeb175d34a2bf5114aef2b1ff8	not-for-merge	'refs/pull/89/head' of https://github.com/SnapKit/SnapKit
 db71ba97661f8c6b8960f7bafb6e4e880d22a187	not-for-merge	'refs/pull/9/head' of https://github.com/SnapKit/SnapKit
