@@ -16,6 +16,10 @@ let project: Project = Project.featureLibrary(
     .project(
       target: "LoginEntity",
       path: .relativeToRoot("Entity/LoginEntity")
+    ),
+    .project(
+      target: "NetworkHelper",
+      path: "../../Service/NetworkHelper"
     )
   ]
 )
