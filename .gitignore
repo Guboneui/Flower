@@ -50,6 +50,9 @@ playground.xcworkspace
 *.xcodeproj
 *.xcworkspace
 
+### OS X ###
+.DS_Store
+
 ### Tuist derived files ###
 graph.dot
 Derived/
