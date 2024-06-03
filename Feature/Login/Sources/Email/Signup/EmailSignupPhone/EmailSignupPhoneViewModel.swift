@@ -49,11 +49,13 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 			self.isSignupCompletedRelay.accept(true)
 		}, onFailure: { error in
 			guard let error = error as? NetworkErrorModel else {
-				print("🚨에러: \(error.localizedDescription)")
+				print("🚨네트워크 에러: \(error.localizedDescription)")
+				self.isSignupCompletedRelay.accept(false)
 				return
 			}
 			
-			print(error.message)
+			print("🚨에러:\(error.message)")
+			self.isSignupCompletedRelay.accept(false)
 		}).disposed(by: disposeBag)
 	}
 }

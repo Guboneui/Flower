@@ -55,13 +55,16 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 			
 			KeyChainManager.create(key: .accessToken, value: responseData.accessToken)
 			self.isLoginCompleted.accept(true)
-		}, onFailure: { error in
+		}, onFailure: { [weak self] error in
+			guard let self else { return }
 			guard let error = error as? NetworkErrorModel else {
-				print("🚨에러: \(error.localizedDescription)")
+				print("🚨네트워크 에러: \(error.localizedDescription)")
+				self.isLoginCompleted.accept(false)
 				return
 			}
 			
-			print(error.message)
+			print("🚨에러:\(error.message)")
+			self.isLoginCompleted.accept(false)
 		}).disposed(by: disposeBag)
 	}
 }

@@ -79,17 +79,21 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public func fetchEmailCodeSent() {
 		useCase.fetchEmailCodeSent(email: emailRelay.value)
 			.subscribe(onSuccess: { [weak self] _ in
-					guard let self else { return }
-					
-					self.currentViewState.accept(.init(state: .auth, enabled: nil))
-				}, onFailure: { error in
-					guard let error = error as? NetworkErrorModel else {
-						print("🚨에러: \(error.localizedDescription)")
-						return
-					}
-					
-					print(error.message)
-				}).disposed(by: disposeBag)
+				guard let self else { return }
+				
+				self.currentViewState.accept(.init(state: .auth, enabled: nil))
+			}, onFailure: { error in
+				guard let error = error as? NetworkErrorModel else {
+					print("🚨네트워크 에러: \(error.localizedDescription)")
+					self.currentViewState.accept(.init(state: .email, enabled: false))
+					self.emailCautionRelay.accept(error.localizedDescription)
+					return
+				}
+				
+				print("🚨에러:\(error.message)")
+				self.currentViewState.accept(.init(state: .email, enabled: false))
+				self.emailCautionRelay.accept(error.message)
+			}).disposed(by: disposeBag)
 	}
 	
 	public func startTimer(sec: Int) {
@@ -137,18 +141,18 @@ private extension EmailSignupIDViewModel {
 				)
 			}, onFailure: {  [weak self] error in
 				guard let self else { return }
-				
 				guard let error = error as? NetworkErrorModel else {
-					print("🚨에러: \(error.localizedDescription)")
-					
+					print("🚨네트워크 에러: \(error.localizedDescription)")
 					self.currentViewState.accept(
 						.init(state: .email, enabled: false)
 					)
+					self.emailCautionRelay.accept(error.localizedDescription)
 					return
 				}
 				
+				print("🚨에러:\(error.message)")
 				self.currentViewState.accept(
-				.init(state: .email, enabled: false)
+					.init(state: .email, enabled: false)
 				)
 				self.emailCautionRelay.accept(error.message)
 			}).disposed(by: disposeBag)
@@ -164,11 +168,17 @@ private extension EmailSignupIDViewModel {
 				)
 			}, onFailure: { error in
 				guard let error = error as? NetworkErrorModel else {
-					print("🚨에러: \(error.localizedDescription)")
+					print("🚨네트워크 에러: \(error.localizedDescription)")
+					self.currentViewState.accept(
+						.init(state: .auth, enabled: false)
+					)
 					return
 				}
 				
-				print(error.message)
+				print("🚨에러:\(error.message)")
+				self.currentViewState.accept(
+					.init(state: .auth, enabled: false)
+				)
 			}).disposed(by: disposeBag)
 	}
 }
