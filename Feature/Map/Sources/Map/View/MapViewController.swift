@@ -23,17 +23,25 @@ public final class MapViewController: UIViewController {
 	private var houseListLabel: UILabel { rootView.houseListLabel }
 	private var userLocationButtonView: UIView { rootView.userLocationButtonView }
 
-	private var mapViewModel: MapViewModel = MapViewModel()
-
-
-	// MARK: LifeCycle
-	public override func loadView() {
-		view = rootView
-	}
+	private var mapViewModel: MapViewModelInterface
 
 	private let disposeBag = DisposeBag()
 	let locationManager = CLLocationManager()
 	private var shouldMoveCameraToCurrentLocation = true
+
+	public init(mapViewModel: MapViewModelInterface) {
+		self.mapViewModel = mapViewModel
+		super.init(nibName: nil, bundle: nil)
+	}
+	
+	required init?(coder: NSCoder) {
+		fatalError("init(coder:) has not been implemented")
+	}
+	
+	// MARK: LifeCycle
+	public override func loadView() {
+		view = rootView
+	}
 
 	public override func viewDidLoad() {
 		super.viewDidLoad()
@@ -43,6 +51,7 @@ public final class MapViewController: UIViewController {
 		mapView.addCameraDelegate(delegate: self)
 		locationManager.delegate = self
 		locationManager.requestWhenInUseAuthorization()
+		mapViewModel.fetchAccommodationList()
 	}
 }
 

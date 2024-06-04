@@ -72,8 +72,8 @@ final class MapView: UIView {
 	}
 	
 	// MARK: - UI Property
-	private(set) var mapView: NMFMapView = NMFMapView()
-	
+	private(set) var mapView: NMFMapView = NMFMapView( )
+
 	private let mapCollectionViewLayout: UICollectionViewCompositionalLayout = {
 		let itemSize = NSCollectionLayoutSize(
 			widthDimension: .fractionalWidth(Metric.mapCollectionViewItemSize),

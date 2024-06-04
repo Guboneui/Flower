@@ -7,17 +7,42 @@
 
 import UIKit
 
+import MapDomain
+import MapEntity
 import ResourceKit
 
 import RxRelay
 import RxSwift
 
-struct Model {
+public struct Model {
 	let title: String
 }
 
-public final class MapViewModel {
-	var mapCollectionViewItems: BehaviorRelay<[Model]> = .init(value: [
+public protocol MapViewModelInterface {
+	var mapCollectionViewItems: BehaviorRelay<[Model]> { get }
+
+	func fetchAccommodationList()
+}
+
+public final class MapViewModel: MapViewModelInterface {
+
+	private let MapUseCase: MapUseCaseInterface
+	private var disposeBag: DisposeBag
+
+	public var mapCollectionViewItems: BehaviorRelay<[Model]> = .init(value: [
 		.init(title: "title1"), .init(title: "title2"), .init(title: "title3")
 	])
+
+	public init(useCase: MapUseCaseInterface) {
+		self.MapUseCase = useCase
+		self.disposeBag = .init()
+	}
+
+	public func fetchAccommodationList() {
+		MapUseCase.fetchAccommodationList()
+			.subscribe(onSuccess: { responseData in
+				print(responseData)
+			}).disposed(by: disposeBag)
+	}
+
 }

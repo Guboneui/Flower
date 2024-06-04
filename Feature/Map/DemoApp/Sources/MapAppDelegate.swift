@@ -8,6 +8,9 @@
 import UIKit
 
 import Map
+import MapData
+import MapDomain
+
 
 @main
 class ChattingAppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,7 +20,11 @@ class ChattingAppDelegate: UIResponder, UIApplicationDelegate {
 		didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
 	) -> Bool {
 		let window = UIWindow(frame: UIScreen.main.bounds)
-		window.rootViewController = MapViewController()
+
+		let mapRepository: MapRepositoryInterface = MapRepository()
+		let mapUseCase: MapUseCaseInterface = MapUseCase(MapRepository: mapRepository)
+		let mapViewModel = MapViewModel(useCase: mapUseCase)
+		window.rootViewController = MapViewController(mapViewModel: mapViewModel)
 		window.makeKeyAndVisible()
 		self.window = window
 		return true
