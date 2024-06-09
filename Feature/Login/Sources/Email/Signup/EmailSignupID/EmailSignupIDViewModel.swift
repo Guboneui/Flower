@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 import LoginDomain
 import LoginEntity
@@ -84,13 +85,13 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 				self.currentViewState.accept(.init(state: .auth, enabled: nil))
 			}, onFailure: { error in
 				guard let error = error as? NetworkErrorModel else {
-					print("🚨네트워크 에러: \(error.localizedDescription)")
+					os_log(.error, log: .APIError, "%@", "[EmailCode] \(error.localizedDescription)")
 					self.currentViewState.accept(.init(state: .email, enabled: false))
 					self.emailCautionRelay.accept(error.localizedDescription)
 					return
 				}
 				
-				print("🚨에러:\(error.message)")
+				os_log(.error, log: .APIError, "%@", "[EmailCode] \(error.message)")
 				self.currentViewState.accept(.init(state: .email, enabled: false))
 				self.emailCautionRelay.accept(error.message)
 			}).disposed(by: disposeBag)
@@ -142,7 +143,7 @@ private extension EmailSignupIDViewModel {
 			}, onFailure: {  [weak self] error in
 				guard let self else { return }
 				guard let error = error as? NetworkErrorModel else {
-					print("🚨네트워크 에러: \(error.localizedDescription)")
+					os_log(.error, log: .APIError, "%@", "[EmailConfirm] \(error.localizedDescription)")
 					self.currentViewState.accept(
 						.init(state: .email, enabled: false)
 					)
@@ -150,7 +151,7 @@ private extension EmailSignupIDViewModel {
 					return
 				}
 				
-				print("🚨에러:\(error.message)")
+				os_log(.error, log: .APIError, "%@", "[EmailConfirm] \(error.message)")
 				self.currentViewState.accept(
 					.init(state: .email, enabled: false)
 				)
@@ -168,14 +169,14 @@ private extension EmailSignupIDViewModel {
 				)
 			}, onFailure: { error in
 				guard let error = error as? NetworkErrorModel else {
-					print("🚨네트워크 에러: \(error.localizedDescription)")
+					os_log(.error, log: .APIError, "%@", "[EmailCodeConfirm] \(error.localizedDescription)")
 					self.currentViewState.accept(
 						.init(state: .auth, enabled: false)
 					)
 					return
 				}
 				
-				print("🚨에러:\(error.message)")
+				os_log(.error, log: .APIError, "%@", "[EmailCodeConfirm] \(error.message)")
 				self.currentViewState.accept(
 					.init(state: .auth, enabled: false)
 				)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 import LoginDomain
 import LoginEntity
@@ -57,13 +58,13 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 			self.isLoginCompleted.accept(true)
 		}, onFailure: { [weak self] error in
 			guard let self else { return }
-			guard let error = error as? NetworkErrorModel else {
-				print("🚨네트워크 에러: \(error.localizedDescription)")
+			guard let error = error as? NetworkErrorModel else {				
+				os_log(.error, log: .APIError, "%@", "[EmailLogin] \(error.localizedDescription)")
 				self.isLoginCompleted.accept(false)
 				return
 			}
 			
-			print("🚨에러:\(error.message)")
+			os_log(.error, log: .APIError, "%@", "[EmailLogin] \(error.message)")
 			self.isLoginCompleted.accept(false)
 		}).disposed(by: disposeBag)
 	}

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 import LoginDomain
 import LoginEntity
@@ -49,12 +50,12 @@ public final class EmailSignupPhoneViewModel: EmailSignupPhoneViewModelInterface
 			self.isSignupCompletedRelay.accept(true)
 		}, onFailure: { error in
 			guard let error = error as? NetworkErrorModel else {
-				print("🚨네트워크 에러: \(error.localizedDescription)")
+				os_log(.error, log: .APIError, "%@", "[EmailSignup] \(error.localizedDescription)")
 				self.isSignupCompletedRelay.accept(false)
 				return
 			}
 			
-			print("🚨에러:\(error.message)")
+			os_log(.error, log: .APIError, "%@", "[EmailSignup] \(error.message)")
 			self.isSignupCompletedRelay.accept(false)
 		}).disposed(by: disposeBag)
 	}
