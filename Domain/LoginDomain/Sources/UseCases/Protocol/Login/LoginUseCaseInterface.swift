@@ -8,13 +8,14 @@
 import Foundation
 
 import LoginEntity
+import NetworkHelper
 
 import RxSwift
 
 public protocol LoginUseCaseInterface {
 	func fetchEmailLogin(email: String, password: String) -> Single<EmailLoginResponse>
-	func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse>
-	func fetchEmailAuth(email: String) -> Single<EmailAuthResponse>
-	func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse>
-	func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse>
+	func fetchEmailConfirm(email: String) -> Single<EmptyResponse>
+	func fetchEmailCodeSent(email: String) -> Single<EmptyResponse>
+	func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmptyResponse>
+	func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse>
 }

@@ -75,7 +75,7 @@ public final class EmailLoginViewController: UIViewController {
 	private enum TextSet {
 		static let emailLoginLabelText: String = "이메일 로그인"
 		static let loginButtonText: String = "로그인"
-		static let idSaveCheckLabelText: String = "ID 저장하기"
+		static let idSaveCheckLabelText: String = "이메일 기억하기"
 		static let passwordFindButtonText: String = "비밀번호 찾기"
 		static let signupQuestionLabelText: String = "아직 게하 회원이 아니신가요?"
 		static let emailSignupButtonText: String = "이메일로 가입하기"

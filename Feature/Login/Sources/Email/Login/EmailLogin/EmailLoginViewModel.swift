@@ -6,9 +6,12 @@
 //
 
 import Foundation
+import OSLog
 
 import LoginDomain
 import LoginEntity
+import NetworkHelper
+import SecureStorageKit
 
 import RxRelay
 import RxSwift
@@ -32,11 +35,11 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 	public var isEmailEntered: BehaviorRelay<Bool> = .init(value: false)
 	public var isPasswordEntered: BehaviorRelay<Bool> = .init(value: false)
 	public var isLoginCompleted: BehaviorRelay<Bool?> = .init(value: nil)
-
+	
 	// MARK: - PRIVATE PROPERTY
 	private let loginUseCase: LoginUseCaseInterface
 	private var disposeBag: DisposeBag
-
+	
 	// MARK: - INITIALIZE
 	public init(useCase: LoginUseCaseInterface) {
 		self.loginUseCase = useCase
@@ -48,11 +51,21 @@ public final class EmailLoginViewModel: EmailLoginViewModelInterface {
 		loginUseCase.fetchEmailLogin(
 			email: emailRelay.value,
 			password: passwordRelay.value
-		)
-			.subscribe(onSuccess: { [weak self] responseData in
-				guard let self else { return }
-				
-				self.isLoginCompleted.accept(responseData.success)
-			}).disposed(by: disposeBag)
+		).subscribe(onSuccess: { [weak self] responseData in
+			guard let self else { return }
+			
+			KeyChainManager.create(key: .accessToken, value: responseData.accessToken)
+			self.isLoginCompleted.accept(true)
+		}, onFailure: { [weak self] error in
+			guard let self else { return }
+			guard let error = error as? NetworkErrorModel else {				
+				os_log(.error, log: .APIError, "%@", "[EmailLogin] \(error.localizedDescription)")
+				self.isLoginCompleted.accept(false)
+				return
+			}
+			
+			os_log(.error, log: .APIError, "%@", "[EmailLogin] \(error.message)")
+			self.isLoginCompleted.accept(false)
+		}).disposed(by: disposeBag)
 	}
 }

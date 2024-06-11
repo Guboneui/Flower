@@ -8,12 +8,7 @@
 import Foundation
 
 public struct EmailLoginResponse: Codable {
-	public let message: String
-	public let body: LoginBody?
-	public let success: Bool
-}
-
-public struct LoginBody: Codable {
-	public let email: String
-	public let token: String
+	public let accessToken: String
+	public let refreshToken: String
+	public let provider: String
 }

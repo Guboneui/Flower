@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import OSLog
 
 import LoginDomain
 import LoginEntity
+import NetworkHelper
 
 import RxRelay
 import RxSwift
@@ -24,7 +26,7 @@ public protocol EmailSignupIDViewModelInterface {
 	
 	func isValidEmail()
 	func isValiedAuthNumber()
-	func fetchEmailAuth()
+	func fetchEmailCodeSent()
 	func startTimer(sec: Int)
 	func stopTimer()
 }
@@ -68,21 +70,30 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 	public func isValiedAuthNumber() {
 		if currentViewState.value.state == .auth {
 			if authRelay.value.count == 6 {
-				fetchEmailCode()
+				fetchEmailCodeConfirm()
 			} else {
 				currentViewState.accept(.init(state: .auth, enabled: false))
 			}
 		}
 	}
 	
-	public func fetchEmailAuth() {
-		useCase.fetchEmailAuth(email: emailRelay.value)
-			.subscribe(onSuccess: { [weak self] responseData in
+	public func fetchEmailCodeSent() {
+		useCase.fetchEmailCodeSent(email: emailRelay.value)
+			.subscribe(onSuccess: { [weak self] _ in
 				guard let self else { return }
 				
-				if responseData.success {
-					self.currentViewState.accept(.init(state: .auth, enabled: nil))
+				self.currentViewState.accept(.init(state: .auth, enabled: nil))
+			}, onFailure: { error in
+				guard let error = error as? NetworkErrorModel else {
+					os_log(.error, log: .APIError, "%@", "[EmailCode] \(error.localizedDescription)")
+					self.currentViewState.accept(.init(state: .email, enabled: false))
+					self.emailCautionRelay.accept(error.localizedDescription)
+					return
 				}
+				
+				os_log(.error, log: .APIError, "%@", "[EmailCode] \(error.message)")
+				self.currentViewState.accept(.init(state: .email, enabled: false))
+				self.emailCautionRelay.accept(error.message)
 			}).disposed(by: disposeBag)
 	}
 	
@@ -123,24 +134,51 @@ public final class EmailSignupIDViewModel: EmailSignupIDViewModelInterface {
 private extension EmailSignupIDViewModel {
 	func fetchEmailConfirm() {
 		useCase.fetchEmailConfirm(email: emailRelay.value)
-			.subscribe(onSuccess: { [weak self] responseData in
+			.subscribe(onSuccess: { [weak self] _ in
 				guard let self else { return }
 				
 				self.currentViewState.accept(
-					.init(state: .email, enabled: responseData.success)
+					.init(state: .email, enabled: true)
 				)
+			}, onFailure: {  [weak self] error in
+				guard let self else { return }
+				guard let error = error as? NetworkErrorModel else {
+					os_log(.error, log: .APIError, "%@", "[EmailConfirm] \(error.localizedDescription)")
+					self.currentViewState.accept(
+						.init(state: .email, enabled: false)
+					)
+					self.emailCautionRelay.accept(error.localizedDescription)
+					return
+				}
 				
-				self.emailCautionRelay.accept(responseData.message)
+				os_log(.error, log: .APIError, "%@", "[EmailConfirm] \(error.message)")
+				self.currentViewState.accept(
+					.init(state: .email, enabled: false)
+				)
+				self.emailCautionRelay.accept(error.message)
 			}).disposed(by: disposeBag)
 	}
 	
-	func fetchEmailCode() {
-		useCase.fetchEmailCode(email: emailRelay.value, code: authRelay.value)
-			.subscribe(onSuccess: { [weak self] responseData in
+	func fetchEmailCodeConfirm() {
+		useCase.fetchEmailCodeConfirm(email: emailRelay.value, code: authRelay.value)
+			.subscribe(onSuccess: { [weak self] _ in
 				guard let self else { return }
 				
 				self.currentViewState.accept(
-					.init(state: .auth, enabled: responseData.success)
+					.init(state: .auth, enabled: true)
+				)
+			}, onFailure: { error in
+				guard let error = error as? NetworkErrorModel else {
+					os_log(.error, log: .APIError, "%@", "[EmailCodeConfirm] \(error.localizedDescription)")
+					self.currentViewState.accept(
+						.init(state: .auth, enabled: false)
+					)
+					return
+				}
+				
+				os_log(.error, log: .APIError, "%@", "[EmailCodeConfirm] \(error.message)")
+				self.currentViewState.accept(
+					.init(state: .auth, enabled: false)
 				)
 			}).disposed(by: disposeBag)
 	}

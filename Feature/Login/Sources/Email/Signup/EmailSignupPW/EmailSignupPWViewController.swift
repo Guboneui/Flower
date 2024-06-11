@@ -102,10 +102,10 @@ public final class EmailSignupPWViewController: UIViewController {
 		static let pwLabelText: String = "비밀번호"
 		static let pwCheckLabelText: String = "비밀번호 확인"
 		
-		static let pwCautionLabelSuccessText: String = "사용가능한 비밀번호 입니다"
+		static let pwCautionLabelSuccessText: String = "사용가능한 비밀번호입니다"
 		static let pwCautionLabelFailureText: String = "특수문자를 포함해 주세요"
 		
-		static let pwCheckCautionLabelSuccessText: String = "사용가능한 비밀번호 입니다"
+		static let pwCheckCautionLabelSuccessText: String = "사용가능한 비밀번호입니다"
 		static let pwCheckCautionLabelFailureText: String = "비밀번호가 일치하지 않습니다"
 		
 		static let pwAnnouncementLabelText: String = "영문+숫자+특수문자 8~20자리"

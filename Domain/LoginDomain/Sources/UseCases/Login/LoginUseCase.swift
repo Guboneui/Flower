@@ -8,6 +8,7 @@
 import Foundation
 
 import LoginEntity
+import NetworkHelper
 
 import RxSwift
 
@@ -20,22 +21,22 @@ public final class LoginUseCase: LoginUseCaseInterface {
 	}
 	
 	public func fetchEmailLogin(email: String, password: String) -> Single<EmailLoginResponse> {
-		return loginRepository.fetchEmailLoginAPI(email: email, password: password)
+		loginRepository.fetchEmailLoginAPI(email: email, password: password)
 	}
 	
-	public func fetchEmailConfirm(email: String) -> Single<EmailConfirmResponse> {
-		return loginRepository.fetchEmailConfirmAPI(email: email)
+	public func fetchEmailConfirm(email: String) -> Single<EmptyResponse> {
+		loginRepository.fetchEmailConfirmAPI(email: email)
 	}
 	
-	public func fetchEmailAuth(email: String) -> Single<EmailAuthResponse> {
-		return loginRepository.fetchEmailAuthAPI(email: email)
+	public func fetchEmailCodeSent(email: String) -> Single<EmptyResponse> {
+		loginRepository.fetchEmailCodeSentAPI(email: email)
 	}
 	
-	public func fetchEmailCode(email: String, code: String) -> Single<EmailCodeResponse> {
-		return loginRepository.fetchEmailCodeAPI(email: email, code: code)
+	public func fetchEmailCodeConfirm(email: String, code: String) -> Single<EmptyResponse> {
+		loginRepository.fetchEmailCodeConfirmAPI(email: email, code: code)
 	}
 	
-	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
-		return loginRepository.fetchEmailSignupAPI(userSignupDTO: userSignupDTO)
+	public func fetchEmailSignup(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse> {
+		loginRepository.fetchEmailSignupAPI(userSignupDTO: userSignupDTO)
 	}
 }

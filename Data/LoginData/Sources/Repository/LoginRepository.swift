@@ -19,27 +19,27 @@ public final class LoginRepository: NetworkRepository<LoginAPI>, LoginRepository
 		request(endPoint: .emailLogin(email: email, password: password))
 	}
 	
-	public func fetchEmailConfirmAPI(email: String) -> Single<EmailConfirmResponse> {
+	public func fetchEmailConfirmAPI(email: String) -> Single<EmptyResponse> {
 		request(endPoint: .emailConfirm(email: email))
 	}
 	
-	public func fetchEmailAuthAPI(email: String) -> Single<EmailAuthResponse> {
-		request(endPoint: .emailAuth(email: email))
+	public func fetchEmailCodeSentAPI(email: String) -> Single<EmptyResponse> {
+		request(endPoint: .emailCodeSent(email: email))
 	}
 	
-	public func fetchEmailCodeAPI(email: String, code: String) -> Single<EmailCodeResponse> {
-		request(endPoint: .emailCode(email: email, code: code))
+	public func fetchEmailCodeConfirmAPI(email: String, code: String) -> Single<EmptyResponse> {
+		request(endPoint: .emailCodeConfirm(email: email, code: code))
 	}
 	
-	public func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmailSignupResponse> {
+	public func fetchEmailSignupAPI(userSignupDTO: UserSignupDTO) -> Single<EmptyResponse> {
 		request(
 			endPoint: .emailSignup(
 				email: userSignupDTO.email,
 				password: userSignupDTO.password,
-				userName: userSignupDTO.userName,
-				userNickName: userSignupDTO.userNickName,
+				name: userSignupDTO.name,
+				nickname: userSignupDTO.nickname,
 				birth: userSignupDTO.birth,
-				profileImg: userSignupDTO.profileImg,
+				avatar: userSignupDTO.avatar,
 				phoneNum: userSignupDTO.phoneNum
 			)
 		)
@@ -49,4 +49,3 @@ public final class LoginRepository: NetworkRepository<LoginAPI>, LoginRepository
 		super.init(networkProvider: NetworkProvider())
 	}
 }
-

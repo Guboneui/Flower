@@ -11,36 +11,44 @@ import Moya
 
 public enum LoginAPI {
 	case emailLogin(email: String, password: String)
-	case emailAuth(email: String)
+	case emailCodeSent(email: String)
 	case emailConfirm(email: String)
-	case emailCode(email: String, code: String)
+	case emailCodeConfirm(email: String, code: String)
 	case emailSignup(
-		email: String?,
-		password: String?,
-		userName: String?,
-		userNickName: String?,
-		birth: String?,
-		profileImg: Data?,
-		phoneNum: String?
+		email: String,
+		password: String,
+		name: String,
+		nickname: String,
+		birth: String,
+		avatar: Data?,
+		phoneNum: String
 	)
 }
 
 extension LoginAPI: TargetType {
-	public var baseURL: URL { return GuestHouseAPIInfo.usersURL }
+	public var baseURL: URL {
+		switch self {
+		case .emailLogin, .emailCodeSent, .emailConfirm, .emailCodeConfirm:
+			return GuestHouseAPIInfo.authURL
+			
+		case .emailSignup:
+			return GuestHouseAPIInfo.usersURL
+		}
+	}
 	
 	public var path: String {
 		switch self {
 		case .emailLogin:
 			return "/login"
 			
-		case .emailAuth:
-			return "/mail/send"
+		case .emailCodeSent:
+			return "/email-code"
 			
 		case .emailConfirm:
-			return "/mail/confirm"
+			return "/verify/email"
 			
-		case .emailCode:
-			return "/mail/code"
+		case .emailCodeConfirm:
+			return "/email-code/confirm"
 			
 		case .emailSignup:
 			return "/signup"
@@ -52,13 +60,13 @@ extension LoginAPI: TargetType {
 		case .emailLogin:
 			return .post
 			
-		case .emailAuth:
+		case .emailCodeSent:
 			return .post
 			
 		case .emailConfirm:
 			return .post
 			
-		case .emailCode:
+		case .emailCodeConfirm:
 			return .post
 			
 		case .emailSignup:
@@ -74,7 +82,7 @@ extension LoginAPI: TargetType {
 				encoding: JSONEncoding.default
 			)
 			
-		case let .emailAuth(email):
+		case let .emailCodeSent(email):
 			return .requestParameters(
 				parameters: ["email": email],
 				encoding: JSONEncoding.default
@@ -86,7 +94,7 @@ extension LoginAPI: TargetType {
 				encoding: JSONEncoding.default
 			)
 			
-		case let .emailCode(email, code):
+		case let .emailCodeConfirm(email, code):
 			return .requestParameters(
 				parameters: ["email": email, "code": code],
 				encoding: JSONEncoding.default
@@ -95,21 +103,21 @@ extension LoginAPI: TargetType {
 		case let .emailSignup(
 			email,
 			password,
-			userName,
-			userNickName,
+			name,
+			nickname,
 			birth,
-			profileImg,
+			avatar,
 			phoneNum):
 			
 			var multipartFormData: [MultipartFormData] = []
 			
 			let parameters: [String: Any] = [
-				"email": email ?? "",
-				"password": password ?? "",
-				"userName": userName ?? "",
-				"userNickName": userNickName ?? "",
-				"birth": birth ?? "",
-				"phoneNum": phoneNum ?? ""
+				"email": email,
+				"password": password,
+				"name": name,
+				"nickname": nickname,
+				"birth": birth,
+				"phoneNum": phoneNum
 			]
 			
 			for (key, value) in parameters {
@@ -120,9 +128,9 @@ extension LoginAPI: TargetType {
 			
 			multipartFormData.append(
 				MultipartFormData(
-					provider: .data(profileImg ?? Data()),
+					provider: .data(avatar ?? Data()),
 					name: "profileImg",
-					fileName: "\(userName ?? "UnKnown").jpeg",
+					fileName: "\(name).jpeg",
 					mimeType: "image/jpeg"
 				)
 			)
@@ -131,10 +139,14 @@ extension LoginAPI: TargetType {
 		}
 	}
 	
+	public var validationType: ValidationType {
+		return .successCodes
+	}
+	
 	public var headers: [String: String]? {
 		switch self {
-		case .emailLogin, .emailAuth, .emailCode, .emailConfirm:
-			return nil
+		case .emailLogin, .emailCodeSent, .emailCodeConfirm, .emailConfirm:
+			return ["Content-Type": "application/json"]
 			
 		case .emailSignup:
 			return ["Content-Type": "multipart/form-data"]

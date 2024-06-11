@@ -8,9 +8,18 @@
 import Foundation
 
 public enum GuestHouseAPIInfo {
-	static let baseURLString: String = "http://43.202.77.12:8080/api"
+	static let baseURLString: String = "http://52.78.141.54:80"
 	
-	static let usersURLString: String = baseURLString + "/users"
+	static let authURLString: String = baseURLString + "/v1/auth"
+	static let usersURLString: String = baseURLString + "/v1/users"
+	
+	static var authURL: URL {
+		guard let url = URL(string: authURLString) else {
+			fatalError("Invalid base URL")
+		}
+		return url
+	}
+	
 	static var usersURL: URL {
 		guard let url = URL(string: usersURLString) else {
 			fatalError("Invalid base URL")

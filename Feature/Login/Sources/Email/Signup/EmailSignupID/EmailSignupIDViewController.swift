@@ -401,13 +401,11 @@ private extension EmailSignupIDViewController {
 				
 				switch emailSignupIDViewModel.currentViewState.value.state {
 				case .email:
+					self.emailSignupIDViewModel.fetchEmailCodeSent()
+
 					UIView.animate(withDuration: 1, delay: 0, animations: {
 						self.authView.alpha = 1
 					})
-					
-					self.emailSignupIDViewModel.fetchEmailAuth()
-					
-					self.emailTextField.isUserInteractionEnabled = false
 					self.emailSignupIDViewModel.startTimer(sec: 600)
 					
 				case .auth:
@@ -436,7 +434,7 @@ private extension EmailSignupIDViewController {
 				
 				self.authTextField.updateText(text: "")
 				
-				self.emailSignupIDViewModel.fetchEmailAuth()
+				self.emailSignupIDViewModel.fetchEmailCodeSent()
 				
 				self.emailSignupIDViewModel.startTimer(sec: 600)
 			}.disposed(by: disposeBag)
@@ -491,6 +489,7 @@ private extension EmailSignupIDViewController {
 					self.setEmailState(isEmailValid: viewState.enabled)
 					
 				case .auth:
+					self.emailTextField.isUserInteractionEnabled = false
 					self.setAuthState(isAuthVaild: viewState.enabled)
 				}
 			}).disposed(by: disposeBag)
@@ -531,10 +530,10 @@ private extension EmailSignupIDViewController {
 			authCautionView.alpha = 0
 			authTextField.currentState = .normal
 			authTextField.isUserInteractionEnabled = true
+			authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 			return
 		}
 		
-		authSendButton.setTitle(TextSet.authSendButtonDidSandText, for: .normal)
 		authCautionView.alpha = 1
 		authTextField.isUserInteractionEnabled = !isAuthVaild
 		
