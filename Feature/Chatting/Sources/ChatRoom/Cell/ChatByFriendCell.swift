@@ -7,7 +7,6 @@
 
 import UIKit
 
-import DesignSystem
 import ResourceKit
 import UtilityKit
 
@@ -36,7 +35,7 @@ final class ChatByFriendCell: UICollectionViewCell {
 		$0.makeCornerRadius(Metric.messageBubbleViewCornerRadius)
 	}
 	
-	public let messageLabel: UILabel = UILabel().then {
+	private let messageLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_12
 		$0.textColor = AppTheme.Color.neutral900
 		$0.numberOfLines = Metric.messageLabelNumberOfLines
@@ -61,6 +60,16 @@ final class ChatByFriendCell: UICollectionViewCell {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	public func messageConfiguration(
+		message: String,
+		time: String,
+		timeHide: Bool
+	) {
+		self.messageLabel.text = message
+		self.timeLabel.text = time
+		self.timeLabel.isHidden = timeHide
 	}
 }
 

@@ -26,7 +26,7 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 		
 		static let messageBubbleViewCornerRadius: CGFloat = 12
 		static let messageBubbleViewTopMargin: CGFloat = 4
-		static let messageBubbleViewBottomMargin: CGFloat = 4
+		static let messageBubbleViewBottomMargin: CGFloat = 8
 		
 		static let messageLabelNumberOfLines: Int = 0
 		static let messageLabelVerticalMargin: CGFloat = 8
@@ -60,7 +60,7 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 		$0.lineBreakMode = .byCharWrapping
 	}
 	
-	private let timeLabel: UILabel = UILabel().then {
+	public let timeLabel: UILabel = UILabel().then {
 		$0.font = AppTheme.Font.Regular_10
 		$0.textColor = AppTheme.Color.neutral900
 		$0.setContentCompressionResistancePriority(
@@ -78,6 +78,18 @@ final class ChatByFriendWithProfileImageCell: UICollectionViewCell {
 	
 	required init?(coder: NSCoder) {
 		fatalError("init(coder:) has not been implemented")
+	}
+	
+	public func messageConfiguration(
+		name: String,
+		message: String,
+		time: String,
+		timeHide: Bool
+	) {
+		self.userNameLabel.text = name
+		self.messageLabel.text = message
+		self.timeLabel.text = time
+		self.timeLabel.isHidden = timeHide
 	}
 }
 
